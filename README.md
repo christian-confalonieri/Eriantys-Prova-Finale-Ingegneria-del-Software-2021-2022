@@ -1,5 +1,3 @@
-# ing-sw-2022-Airoldi-Confalonieri-Ettore
+# ingsw2022-AM03 
 
 Software Engineering Final Project
-
-Ho cambiato account
