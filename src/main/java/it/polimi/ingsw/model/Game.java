@@ -13,7 +13,8 @@ public class Game {
     private List<GameCharacter> characters;
     private int boardNoEntryCards;
 
-    /** Given 2 Islands, unifies them into a single island block and refresh all the references
+    /**
+     * Given 2 Islands, unifies them into a single island block and refresh all the references
      * to the old islands, including:
      *  - prevIsland and nextIsland of the communicating Islands
      *  - motherNature island

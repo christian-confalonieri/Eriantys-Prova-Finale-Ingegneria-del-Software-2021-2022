@@ -39,5 +39,12 @@ public class Island implements PawnHandler {
     public void moveTowers() {
 
     }
+    
+    public Island getPrevIsland() {
+        return prevIsland;
+    }
 
+    public Island getNextIsland() {
+        return nextIsland;
+    }
 }
