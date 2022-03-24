@@ -36,9 +36,11 @@ public class Game {
 
         if(island1.getNextIsland().equals(island2)) {
             island1.setNextIsland(island2.getNextIsland());
+            island2.getNextIsland().setPrevIsland(island1);
         }
         else {
-            island2.setPrevIsland(island2.getPrevIsland());
+            island1.setPrevIsland(island2.getPrevIsland());
+            island2.getPrevIsland().setNextIsland(island1);
         }
 
         motherNature.setIsland(island1);
