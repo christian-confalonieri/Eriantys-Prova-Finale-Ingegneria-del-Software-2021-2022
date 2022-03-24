@@ -20,11 +20,30 @@ public class Game {
      *  - motherNature island
      *  - game islands list
      *
+     * Requires the two islands to be communicating
+     *
      * @param island1 The island to unify with island2
      * @param island2 The island to unify with island1
+     *
      */
     public void unifyIsland(Island island1, Island island2) {
+        for(Student s : island2.getStudents()) {
+            island1.addPawn(s);
+        }
+        for(Tower t : island2.getTowers()) {
+            island1.addTower(t);
+        }
 
+        if(island1.getNextIsland().equals(island2)) {
+            island1.setNextIsland(island2.getNextIsland());
+        }
+        else {
+            island2.setPrevIsland(island2.getPrevIsland());
+        }
+
+        motherNature.setIsland(island1);
+
+        islands.remove(island2);
     }
 
 

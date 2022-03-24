@@ -39,6 +39,10 @@ public class Island implements PawnHandler {
     public void moveTowers() {
 
     }
+
+    public void addTower(Tower tower) {
+
+    }
     
     public Island getPrevIsland() {
         return prevIsland;
@@ -46,5 +50,21 @@ public class Island implements PawnHandler {
 
     public Island getNextIsland() {
         return nextIsland;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public List<Tower> getTowers() {
+        return towers;
+    }
+
+    public void setPrevIsland(Island prevIsland) {
+        this.prevIsland = prevIsland;
+    }
+
+    public void setNextIsland(Island nextIsland) {
+        this.nextIsland = nextIsland;
     }
 }
