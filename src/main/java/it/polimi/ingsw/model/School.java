@@ -7,7 +7,7 @@ public class School implements PawnHandler{
 
     private Map<PawnColor, List<Student>> diningRoom;
     private List<Student> entrance;
-    private Professor professorTable;
+    private List<Professor> professorTable;
     private List<Tower> towers;
 
 
@@ -29,8 +29,19 @@ public class School implements PawnHandler{
 
     }
 
-    public void getStudentsNumber(PawnColor color) {
+    public int getStudentsNumber(PawnColor color) {
 
     }
 
+    public List<Professor> getProfessorTable() {
+        return professorTable;
+    }
+
+    public boolean hasProfessor(PawnColor color) {
+        return professorTable.stream().map(Pawn::getColor).anyMatch(profColor -> profColor.equals(color));
+    }
+
+    public Professor getProfessor(PawnColor color) {
+        return professorTable.stream().filter(professor -> professor.getColor().equals(color)).findAny().get();
+    }
 }

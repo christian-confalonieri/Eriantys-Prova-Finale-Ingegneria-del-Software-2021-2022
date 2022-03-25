@@ -14,4 +14,7 @@ public class Player {
 
     }
 
+    public School getSchool() {
+        return school;
+    }
 }

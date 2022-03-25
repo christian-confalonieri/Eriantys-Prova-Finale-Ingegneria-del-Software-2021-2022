@@ -4,4 +4,7 @@ public abstract class Pawn {
 
     private PawnColor color;
 
+    public PawnColor getColor() {
+        return color;
+    }
 }
