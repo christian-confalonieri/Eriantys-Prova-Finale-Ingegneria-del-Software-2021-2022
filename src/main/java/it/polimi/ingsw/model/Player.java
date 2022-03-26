@@ -17,4 +17,12 @@ public class Player {
     public School getSchool() {
         return school;
     }
+
+    public List<Card> getHandCards() {
+        return handCards;
+    }
+
+    public Card getLastPlayedCard() {
+        return usedCards.get(usedCards.size() - 1);
+    }
 }

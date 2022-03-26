@@ -31,4 +31,8 @@ public class Bag implements PawnHandler{
         return students.remove(randomGenerator.nextInt(students.size()));
     }
 
+    public boolean isEmpty() {
+        return students.isEmpty();
+    }
+
 }

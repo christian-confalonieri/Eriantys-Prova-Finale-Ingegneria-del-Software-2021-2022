@@ -67,4 +67,12 @@ public class Island implements PawnHandler {
     public void setNextIsland(Island nextIsland) {
         this.nextIsland = nextIsland;
     }
+
+    public int getInfluenceTeam(Team team) {
+
+    }
+
+    public Team getInfluenceTeam(List<Team> team) {
+
+    }
 }

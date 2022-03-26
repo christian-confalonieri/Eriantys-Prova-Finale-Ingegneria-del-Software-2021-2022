@@ -22,4 +22,11 @@ public class GameState {
 
     }
 
+    public boolean isEnded() {
+        return ended;
+    }
+
+    void setEnded(boolean ended) {
+        this.ended = ended;
+    }
 }
