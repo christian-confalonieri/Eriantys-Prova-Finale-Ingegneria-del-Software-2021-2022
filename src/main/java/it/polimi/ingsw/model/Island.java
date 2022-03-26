@@ -248,6 +248,36 @@ public class Island implements PawnHandler {
         towers.add(tower);
     }
 
+    /**
+     * Check if the current island and the next island can be merged.
+     * Check if the two adjacent islands have towers of the same color.
+     *
+     * @return a boolean that tells if the two islands can be merged
+     */
+    public boolean checkUnifyNext() {
+        if(!towers.isEmpty() && !nextIsland.towers.isEmpty()) {
+                return towers.get(0).getColor() == nextIsland.towers.get(0).getColor();
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * Check if the current island and the previous island can be merged.
+     * Check if the two adjacent islands have towers of the same color.
+     *
+     * @return a boolean that tells if the two islands can be merged
+     */
+    public boolean checkUnifyPrev() {
+        if(!towers.isEmpty() && !prevIsland.towers.isEmpty()) {
+            return towers.get(0).getColor() == prevIsland.towers.get(0).getColor();
+        }
+        else {
+            return false;
+        }
+    }
+
     public List<Student> getStudents() {
         return students;
     }
