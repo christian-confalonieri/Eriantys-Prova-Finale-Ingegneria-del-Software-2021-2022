@@ -66,4 +66,8 @@ public class School implements PawnHandler{
     public Professor getProfessor(PawnColor color) {
         return professorTable.stream().filter(professor -> professor.getColor().equals(color)).findAny().get();
     }
+
+    public List<Tower> getTowers() {
+        return towers;
+    }
 }

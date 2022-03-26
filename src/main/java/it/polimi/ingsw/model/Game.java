@@ -1,17 +1,19 @@
 package it.polimi.ingsw.model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Game implements PawnHandler {
 
-    private List<Island> islands;
-    private List<Player> players;
+    protected List<Island> islands;
+    protected List<Player> players;
     protected List<Cloud> clouds;
     private List<Professor> boardProfessors;
     private MotherNature motherNature;
     protected Bag bag;
     private List<GameCharacter> characters;
     private int boardNoEntryCards;
+    protected GameState gameState;
 
     /**
      * Given 2 Islands, unifies them into a single island block and refresh all the references
@@ -88,17 +90,48 @@ public abstract class Game implements PawnHandler {
 
     /**
      * Check if the game is in an end situation and update the gameState if so
-     * @return The leaderboard if the game has ended. Otherwise return null.
+     *
+     * @return true if the game has ended
      */
-    public List<Player> checkEndGame() {
-
+    public boolean checkEndGame() {
+        boolean finished =  // One player has finished his towers
+                players.stream().map(p -> p.getSchool().getTowers().size()).anyMatch(size -> size == 0) ||
+                // There are only 3 islands
+                islands.size() <= 3 ||
+                // The cards or the students finished and all the players finished their turns
+                (players.stream().map(p -> p.getHandCards().size()).anyMatch(size -> size == 0) ) //&& // TODO)
+                // The students in the bag finished and all the players finished their turns
+                || bag.isEmpty() //&& // TODO
+                ;
+        gameState.setEnded(finished);
+        return finished;
     }
 
 
+    /**
+     * Get the current game leaderboard.
+     * Can be used in the middle of the game too.
+     *
+     * @return the game leaderboard
+     */
+    public List<Player> getLeaderBoard() {
+        return players.stream()
+                .sorted((p1, p2) -> {
+                    if(p1.getSchool().getTowers().size() == p2.getSchool().getTowers().size())
+                        return (p1.getSchool().getProfessorTable().size() > p2.getSchool().getProfessorTable().size()) ? 1 : -1;
+                    return (p1.getSchool().getTowers().size() > p2.getSchool().getTowers().size()) ? 1 : -1;
+                }).collect(Collectors.toList());
+    }
+
+
+    /**
+     * @param pawn the professor to add to the boardProfessors
+     */
     @Override
     public void addPawn(Pawn pawn) {
         boardProfessors.add((Professor) pawn);
     }
+
 
     /**
      * Move the professors on the board
@@ -106,10 +139,9 @@ public abstract class Game implements PawnHandler {
      * @param destination the destination school of the professor
      * @param pawn the professor to move
      */
-
     @Override
     public void movePawnTo(PawnHandler destination, Pawn pawn) {
-        boardProfessors.remove(pawn);
+        boardProfessors.remove((Professor) pawn);
         destination.addPawn(pawn);
     }
 
