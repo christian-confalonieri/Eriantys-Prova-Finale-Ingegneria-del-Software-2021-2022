@@ -70,4 +70,8 @@ public class School implements PawnHandler{
     public List<Tower> getTowers() {
         return towers;
     }
+
+    public void addTower() {
+
+    }
 }
