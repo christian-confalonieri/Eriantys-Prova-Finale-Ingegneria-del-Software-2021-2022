@@ -10,10 +10,10 @@ public interface PawnHandler {
     void addPawn(Pawn pawn);
 
     /**
-     * The pawn is moved to the destination specified
+     * The pawn (2nd parameter) is moved to the destination specified as the 1st parameter.
      *
      * @param destination the destination of the pawn
-     * @param pawn the pawn to move
+     * @param pawn the pawn to be moved
      */
     void movePawnTo(PawnHandler destination, Pawn pawn);
 

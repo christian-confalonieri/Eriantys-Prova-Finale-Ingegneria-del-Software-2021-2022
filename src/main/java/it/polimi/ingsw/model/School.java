@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +15,8 @@ public class School implements PawnHandler{
 
     @Override
     public void addPawn(Pawn pawn) {
-
+        // The pawn received as input is added to the students at the entrance.
+        this.entrance.add((Student) pawn);
     }
 
     @Override
@@ -23,14 +26,33 @@ public class School implements PawnHandler{
 
     public int entranceToDiningRoom(Student student) {
 
+        return 0;
     }
 
-    public void moveTower(Island island) {
-
+    /**
+     * This method moves the first tower available in the school to the island specified ad the parameter.
+     *
+     * @param island is where the tower has to be moved
+     */
+    public void moveTower(@NotNull Island island) {
+        // The first tower is removed from the list in this class and is placed on the island
+        island.addTower(this.towers.get(0));
+        this.towers.remove(0);
     }
 
+    /**
+     * This method returns the total number of students of a specific color that are sitting in the dining room.
+     *
+     * @param color the color of which we want to know the number of pawns
+     */
     public int getStudentsNumber(PawnColor color) {
+        List<Student> value = diningRoom.get(color);
 
+        if ( value == null ) {
+            return 0;
+        } else {
+            return value.size();
+        }
     }
 
     public List<Professor> getProfessorTable() {
