@@ -17,7 +17,11 @@ public class Bag implements PawnHandler{
 
     @Override
     public void addPawn(Pawn pawn) {
+        students.add((Student) pawn);
+    }
 
+    public void addAllStudents(List<Student> students) {
+        students.addAll(students);
     }
 
     @Override

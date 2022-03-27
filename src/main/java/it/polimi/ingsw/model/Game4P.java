@@ -17,7 +17,7 @@ public class Game4P extends Game{
                 try {
                     Student s = bag.pickStudent();
                     bag.movePawnTo(cloud, s);
-                } catch (EmptyBagException e) {};
+                } catch (EmptyBagException e) {}
 
             }
 
@@ -64,4 +64,14 @@ public class Game4P extends Game{
         for (Team t : teamLeaderBoard) leaderBoard.addAll(t.getTeam());
         return leaderBoard;
     }
+
+
+    /**
+     * Construct and initialize a 2 player game
+     * @param playerNames The list of the player names
+     */
+    public Game4P(List<String> playerNames) {
+
+    }
+
 }

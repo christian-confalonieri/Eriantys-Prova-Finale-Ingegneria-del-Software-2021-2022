@@ -7,4 +7,8 @@ public abstract class Pawn {
     public PawnColor getColor() {
         return color;
     }
+
+    public Pawn(PawnColor color) {
+        this.color = color;
+    }
 }

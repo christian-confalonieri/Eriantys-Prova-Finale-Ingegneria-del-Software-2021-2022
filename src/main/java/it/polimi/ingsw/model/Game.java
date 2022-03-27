@@ -8,11 +8,11 @@ public abstract class Game implements PawnHandler {
     protected List<Island> islands;
     protected List<Player> players;
     protected List<Cloud> clouds;
-    private List<Professor> boardProfessors;
-    private MotherNature motherNature;
+    protected List<Professor> boardProfessors;
+    protected MotherNature motherNature;
     protected Bag bag;
-    private List<GameCharacter> characters;
-    private int boardNoEntryCards;
+    protected List<GameCharacter> characters;
+    protected int boardNoEntryCards;
     protected GameState gameState;
 
     /**
@@ -145,10 +145,21 @@ public abstract class Game implements PawnHandler {
         destination.addPawn(pawn);
     }
 
+    /**
+     * Returns true if on the board there is a professor of the given color
+     * @param color The color for the professor to search
+     * @return If the professor is on the board
+     */
     public boolean hasProfessor(PawnColor color) {
         return boardProfessors.stream().map(Pawn::getColor).anyMatch(profColor -> profColor.equals(color));
     }
 
+    /**
+     * Return the professor object given its color
+     * @param color The color for the professor to get
+     * @return The professor
+     * @throws java.util.NoSuchElementException if the professor is not on the board
+     */
     public Professor getProfessor(PawnColor color) {
         return boardProfessors.stream().filter(professor -> professor.getColor().equals(color)).findAny().get();
     }
