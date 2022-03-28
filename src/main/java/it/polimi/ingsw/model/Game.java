@@ -11,7 +11,8 @@ public abstract class Game implements PawnHandler {
     protected List<Professor> boardProfessors;
     protected MotherNature motherNature;
     protected Bag bag;
-    protected List<GameCharacter> characters;
+    protected List<PowerCard> powerCards;
+    protected int boardCoins;
     protected int boardNoEntryCards;
     protected GameState gameState;
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class GameCharacter {
+public class PowerCard {
 
     private int cost;
 

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Player {
@@ -11,12 +13,15 @@ public class Player {
     private int coins;
 
     public Player() {
-
+        usedCards = new ArrayList<>();
+        handCards = new ArrayList<Card>(Arrays.asList(Card.values()));
+        coins = 0;
     }
 
-    public Player(String name, School school) {
+    public Player(String name, School school, int coins) {
         this.name = name;
         this.school = school;
+        this.coins = coins;
     }
 
     /**

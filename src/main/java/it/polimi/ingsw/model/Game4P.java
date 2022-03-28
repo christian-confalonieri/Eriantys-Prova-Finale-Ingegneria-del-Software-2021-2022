@@ -61,7 +61,7 @@ public class Game4P extends Game{
                 }).collect(Collectors.toList());
 
         List<Player> leaderBoard = new ArrayList<>();
-        for (Team t : teamLeaderBoard) leaderBoard.addAll(t.getTeam());
+        for (Team t : teamLeaderBoard) leaderBoard.addAll(t.getPlayers());
         return leaderBoard;
     }
 

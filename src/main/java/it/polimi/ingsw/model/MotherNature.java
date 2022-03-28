@@ -38,11 +38,4 @@ public class MotherNature {
         return island;
     }
 
-
-    /**
-     * @param island
-     */
-    void setIsland(Island island) {
-        this.island = island;
-    }
 }

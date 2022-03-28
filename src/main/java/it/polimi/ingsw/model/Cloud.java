@@ -14,7 +14,8 @@ public class Cloud implements PawnHandler{
 
     @Override
     public void movePawnTo(PawnHandler destination, Pawn pawn) {
-
+        students.remove((Student)pawn);
+        destination.addPawn(pawn);
     }
 
     /**

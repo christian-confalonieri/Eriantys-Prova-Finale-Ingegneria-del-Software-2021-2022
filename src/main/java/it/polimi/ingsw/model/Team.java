@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
-    private final List<Player> team;
+    private final List<Player> players;
     private final Player towerPlayer;
 
     /**
      * Build a team with two players
-     * The two players have to be alreay instatiated, with one player having the towers and the other not
-     * @param team the list of players of the team
+     * The two players have to be already instantiated, with one player having the towers and the other not
+     * @param players the list of players of the team
      */
-    public Team(List<Player> team) {
-        this.team = team;
-        this.towerPlayer = team.stream().filter(p -> !p.getSchool().getTowers().isEmpty()).findAny().get();
+    public Team(List<Player> players) {
+        this.players = players;
+        this.towerPlayer = players.stream().filter(p -> !p.getSchool().getTowers().isEmpty()).findAny().get();
     }
 
     public List<Tower> getTeamTowers() {
@@ -23,13 +23,13 @@ public class Team {
 
     public List<Professor> getTeamProfessors() {
         List<Professor> teamProfessors = new ArrayList<>();
-        for (Player p : team) {
+        for (Player p : players) {
             teamProfessors.addAll(p.getSchool().getProfessorTable());
         }
         return teamProfessors;
     }
 
-    public List<Player> getTeam() {
-        return team;
+    public List<Player> getPlayers() {
+        return players;
     }
 }

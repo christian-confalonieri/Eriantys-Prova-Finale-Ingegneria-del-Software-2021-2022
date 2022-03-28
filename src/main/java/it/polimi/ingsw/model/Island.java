@@ -13,14 +13,18 @@ import java.util.List;
  */
 public class Island implements PawnHandler {
 
-    private List<Student> students = new ArrayList<>();
-    private List<Tower> towers = new ArrayList<>();
-    private boolean noEntry = false;
+    private final List<Student> students;
+    private final List<Tower> towers;
+    private boolean noEntry;
     private Island prevIsland;
     private Island nextIsland;
 
-    public Island() {
-
+    public Island(Island prevIsland, Island nextIsland) {
+        this.prevIsland = prevIsland;
+        this.nextIsland = nextIsland;
+        students = new ArrayList<>();
+        towers = new ArrayList<>();
+        noEntry = false;
     }
 
     /**
@@ -91,8 +95,13 @@ public class Island implements PawnHandler {
     public int getInfluencePoints(Player player) {
 
         List<Professor> professors = player.getSchool().getProfessorTable();
-        return getInfluencePoints(professors);
-
+        int pointNoTower = getInfluencePoints(professors);
+        if (!towers.isEmpty() && towers.get(0).getOwner() == player) {
+            return pointNoTower + towers.size();
+        }
+        else {
+            return pointNoTower;
+        }
     }
 
     /**
@@ -107,8 +116,13 @@ public class Island implements PawnHandler {
     public int getInfluencePoints(Team team) {
 
         List<Professor> professors = team.getTeamProfessors();
-        return getInfluencePoints(professors);
-
+        int pointNoTower = getInfluencePoints(professors);
+        if (!towers.isEmpty() && team.getPlayers().contains(towers.get(0).getOwner())) {
+            return pointNoTower + towers.size();
+        }
+        else {
+            return pointNoTower;
+        }
     }
 
     /**
@@ -123,16 +137,14 @@ public class Island implements PawnHandler {
 
         int max=0;
 
-        for(Professor professor: professors)    {
+        for(Professor professor: professors) {
             int i=0;
             for(Student student: students) {
                 if(student.getColor() == professor.getColor()) {
                     i++;
                 }
             }
-            if(i>max) {
-                max=i;
-            }
+            max+=i;
         }
 
         return max;
@@ -202,7 +214,7 @@ public class Island implements PawnHandler {
         if(!towers.isEmpty())  {
             Player ownerTower = towers.get(0).getOwner();
             for(Team team: teams) {
-                List<Player> playersTeam = team.getTeam();
+                List<Player> playersTeam = team.getPlayers();
                 for (Player player: playersTeam) {
                     if(player == ownerTower) {
                         prevInfluenceTeam = team;
