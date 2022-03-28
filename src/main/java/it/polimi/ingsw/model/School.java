@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +11,7 @@ public class School implements PawnHandler{
     private Map<PawnColor, List<Student>> diningRoom;
     private List<Student> entrance;
     private List<Professor> professorTable;
-    private List<Tower> towers;
-
+    private List<Tower> towers = new ArrayList<>();
 
     @Override
     public void addPawn(Pawn pawn) {
@@ -71,7 +71,7 @@ public class School implements PawnHandler{
         return towers;
     }
 
-    public void addTower() {
-
+    public void addTower(Tower tower) {
+        towers.add(tower);
     }
 }

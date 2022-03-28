@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,11 +13,15 @@ import java.util.List;
  */
 public class Island implements PawnHandler {
 
-    private List<Student> students;
-    private List<Tower> towers;
-    private boolean noEntry;
+    private List<Student> students = new ArrayList<>();
+    private List<Tower> towers = new ArrayList<>();
+    private boolean noEntry = false;
     private Island prevIsland;
     private Island nextIsland;
+
+    public Island() {
+
+    }
 
     /**
      * Adds a student on the island
@@ -234,9 +239,9 @@ public class Island implements PawnHandler {
     public void moveTowers() {
         for(Tower tower: towers) {
             School destination = towers.get(0).getOwner().getSchool();
-            towers.remove(tower);
-            destination.addTower();
+            destination.addTower(tower);
         }
+        towers.clear();
     }
 
     /**

@@ -10,6 +10,15 @@ public class Player {
     private List<Card> usedCards;
     private int coins;
 
+    public Player() {
+
+    }
+
+    public Player(String name, School school) {
+        this.name = name;
+        this.school = school;
+    }
+
     /**
      * This method moves the card received as the parameter from the deck to the waste deck.
      *
