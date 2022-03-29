@@ -11,6 +11,7 @@ public class Player {
     private List<Card> handCards;
     private List<Card> usedCards;
     private int coins;
+    private Wizard wizard;
 
     public Player() {
         usedCards = new ArrayList<>();

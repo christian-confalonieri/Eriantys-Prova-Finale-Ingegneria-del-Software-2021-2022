@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Bag implements PawnHandler{
+public class Bag{
 
     private final Random randomGenerator;
     private final List<Student> students;
@@ -22,18 +22,6 @@ public class Bag implements PawnHandler{
         this.students = new ArrayList<>(students);
     }
 
-
-    /**
-     * Add a student to the bag
-     * The pawn must be a student
-     *
-     * @param pawn the pawn to add to the bag
-     */
-    @Override
-    public void addPawn(Pawn pawn) {
-        students.add((Student) pawn);
-    }
-
     /**
      * Add all the students in the list to the bag
      *
@@ -41,20 +29,6 @@ public class Bag implements PawnHandler{
      */
     public void addAllStudents(List<Student> students) {
         this.students.addAll(students);
-    }
-
-    /**
-     * Remove the pawn from the bag and put it in the destination
-     * WARNING: as there is no public way to get a student from inside the bag
-     * use pickStudent instead
-     *
-     * @param destination the destination of the pawn
-     * @param pawn the pawn to be moved
-     */
-    @Override
-    public void movePawnTo(PawnHandler destination, Pawn pawn) {
-        students.remove((Student) pawn);
-        destination.addPawn(pawn);
     }
 
     /**

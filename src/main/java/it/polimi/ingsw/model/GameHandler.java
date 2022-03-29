@@ -2,13 +2,14 @@ package it.polimi.ingsw.model;
 
 import java.util.List;
 
-public class GameState {
+public class GameHandler {
 
     private Player currentPlayer;
     private GamePhase gamePhase;
     private TurnPhase turnPhase;
     private Player firstTurnPlayer;
     private boolean ended;
+    private Game game;
 
     public void nextGamePhase() {
 

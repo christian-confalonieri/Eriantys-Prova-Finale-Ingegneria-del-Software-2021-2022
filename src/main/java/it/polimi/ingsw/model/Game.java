@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.nio.file.ProviderNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,7 @@ public abstract class Game implements PawnHandler {
     protected List<PowerCard> powerCards;
     protected int boardCoins;
     protected int boardNoEntryCards;
-    protected GameState gameState;
+    protected boolean isExpert;
 
     /**
      * Given 2 Islands, unifies them into a single island block and refresh all the references
@@ -126,24 +127,14 @@ public abstract class Game implements PawnHandler {
 
 
     /**
-     * @param pawn the professor to add to the boardProfessors
+     * @param professor the professor to add to the boardProfessors
      */
-    @Override
-    public void addPawn(Pawn pawn) {
-        boardProfessors.add((Professor) pawn);
+    public void addProfessor(Professor professor) {
+        boardProfessors.add(professor);
     }
 
+    public void removeProfessor(Professor professor) {
 
-    /**
-     * Move the professors on the board
-     *
-     * @param destination the destination school of the professor
-     * @param pawn the professor to move
-     */
-    @Override
-    public void movePawnTo(PawnHandler destination, Pawn pawn) {
-        boardProfessors.remove((Professor) pawn);
-        destination.addPawn(pawn);
     }
 
     /**
@@ -163,5 +154,9 @@ public abstract class Game implements PawnHandler {
      */
     public Professor getProfessor(PawnColor color) {
         return boardProfessors.stream().filter(professor -> professor.getColor().equals(color)).findAny().get();
+    }
+
+    public boolean isExpert() {
+
     }
 }

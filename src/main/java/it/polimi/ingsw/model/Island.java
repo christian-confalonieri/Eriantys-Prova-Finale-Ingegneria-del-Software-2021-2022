@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Christian Confalonieri
  */
-public class Island implements PawnHandler {
+public class Island {
 
     private final List<Student> students;
     private final List<Tower> towers;
@@ -30,24 +30,16 @@ public class Island implements PawnHandler {
     /**
      * Adds a student on the island
      *
-     * @param pawn the student to be added
+     * @param student the student to be added
      */
-    @Override
-    public void addPawn(Pawn pawn) {
-        students.add((Student) pawn);
+    public void addStudent(Student student) {
+        students.add(student);
     }
 
-    /**
-     * Moves a student from the island to the specified destination
-     *
-     * @param destination where the student should be moved
-     * @param pawn the student to be moved
-     */
-    @Override
-    public void movePawnTo(PawnHandler destination, Pawn pawn) {
-        students.remove((Student)pawn);
-        destination.addPawn(pawn);
+    public void removeStudent(Student student) {
+
     }
+
 
     /**
      * Returns the size of the island.

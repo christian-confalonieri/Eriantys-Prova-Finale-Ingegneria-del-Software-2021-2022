@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class School implements PawnHandler{
+public class School {
 
     private Map<PawnColor, List<Student>> diningRoom;
     private List<Student> entrance;
@@ -22,26 +22,32 @@ public class School implements PawnHandler{
         this.towers = towers;
     }
 
-    @Override
-    public void addPawn(Pawn pawn) {
-        // The pawn received as input is added to the students at the entrance.
-        if (pawn instanceof Student) {
-            this.entrance.add((Student) pawn);
-        }
-        else {
-            this.professorTable.add((Professor) pawn);
-        }
+    public void addProfessor(Professor professor) {
+
     }
 
-    @Override
-    public void movePawnTo(PawnHandler destination, Pawn pawn) {
-        if (pawn instanceof Student) {
-            this.entrance.add((Student) pawn);
-        }
-        else {
-            this.professorTable.add((Professor) pawn);
-        }
-        // TODO Check where the pawn is (Entrance, dining room, professorTable and moves It)
+    public void removeProfessor(Professor professor) {
+
+    }
+
+    public void addEntrance(Student student) {
+
+    }
+
+    public void removeEntrance(Student student) {
+
+    }
+
+    public void addDiningRoom(Student student) {
+
+    }
+
+    public void removeDiningRoom(Student student) {
+
+    }
+
+    public List<Student> getStudentsDiningRoom(PawnColor color) {
+
     }
 
     /**
