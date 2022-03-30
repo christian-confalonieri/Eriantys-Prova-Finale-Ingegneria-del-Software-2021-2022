@@ -12,11 +12,10 @@ public class Game3P extends Game{
             for (int i = 0; i < 4; i++) {
                 try {
                     Student s = bag.pickStudent();
-                    bag.movePawnTo(cloud, s);
+                    cloud.addStudent(s);
                 } catch (EmptyBagException e) {}
 
             }
-
     }
 
     /**

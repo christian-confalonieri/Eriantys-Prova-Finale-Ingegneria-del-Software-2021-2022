@@ -13,7 +13,7 @@ public class Game2P extends Game{
             for (int i = 0; i < 3; i++) {
                 try {
                     Student s = bag.pickStudent();
-                    bag.movePawnTo(cloud, s);
+                    cloud.addStudent(s);
                 } catch (EmptyBagException e) {}
 
             }
@@ -47,13 +47,12 @@ public class Game2P extends Game{
         bag = new Bag(startingStudents);
         for (Island island : islands) {
             try {
-                island.addPawn(bag.pickStudent());
+                island.addStudent(bag.pickStudent());
             } catch (EmptyBagException e) {
                 e.printStackTrace();
             }
         }
         // Add all pawns of island 0 and 6 back to the bag
-        islands.get(0).(bag, islands.get(0).getStudents().get(0));
 
 
 

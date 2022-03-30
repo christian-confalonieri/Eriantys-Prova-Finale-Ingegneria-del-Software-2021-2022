@@ -4,7 +4,7 @@ import java.nio.file.ProviderNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Game implements PawnHandler {
+public abstract class Game {
 
     protected List<Island> islands;
     protected List<Player> players;
@@ -15,7 +15,7 @@ public abstract class Game implements PawnHandler {
     protected List<PowerCard> powerCards;
     protected int boardCoins;
     protected int boardNoEntryCards;
-    protected boolean isExpert;
+    protected boolean expert;
 
     /**
      * Given 2 Islands, unifies them into a single island block and refresh all the references
@@ -32,7 +32,7 @@ public abstract class Game implements PawnHandler {
      */
     public void unifyIsland(Island island1, Island island2) {
         for(Student s : island2.getStudents()) {
-            island1.addPawn(s);
+            island1.addStudent(s);
         }
         for(Tower t : island2.getTowers()) {
             island1.addTower(t);
@@ -79,8 +79,14 @@ public abstract class Game implements PawnHandler {
                 }
             }
             if (allZero) return;
-            if (professorOnBoard) { this.movePawnTo(maxPlayerColor.getSchool(), profToMove); }
-            else { hasProfessor.getSchool().movePawnTo(maxPlayerColor.getSchool(), profToMove);}
+            if (professorOnBoard) {
+                maxPlayerColor.getSchool().addProfessor(profToMove);
+                this.removeProfessor(profToMove);
+            }
+            else {
+                maxPlayerColor.getSchool().addProfessor(profToMove);
+                hasProfessor.getSchool().removeProfessor(profToMove);
+            }
         }
     }
 
@@ -88,26 +94,6 @@ public abstract class Game implements PawnHandler {
      * Routine to refill all the board clouds with students picked from the bag
      */
     public abstract void refillClouds();
-
-
-    /**
-     * Check if the game is in an end situation and update the gameState if so
-     *
-     * @return true if the game has ended
-     */
-    public boolean checkEndGame() {
-        boolean finished =  // One player has finished his towers
-                players.stream().map(p -> p.getSchool().getTowers().size()).anyMatch(size -> size == 0) ||
-                // There are only 3 islands
-                islands.size() <= 3 ||
-                // The cards or the students finished and all the players finished their turns
-                (players.stream().map(p -> p.getHandCards().size()).anyMatch(size -> size == 0) ) //&& // TODO)
-                // The students in the bag finished and all the players finished their turns
-                || bag.isEmpty() //&& // TODO
-                ;
-        gameState.setEnded(finished);
-        return finished;
-    }
 
 
     /**
@@ -157,6 +143,15 @@ public abstract class Game implements PawnHandler {
     }
 
     public boolean isExpert() {
+        return expert;
+    }
 
+    /**
+     * Return the first player of the turn after the preparation by comparing the last played card
+     *
+     * @return the player with the smallest number lastPlayedCard
+     */
+    public Player calculateFirstTurnPlayer() {
+        return players.stream().reduce((p1, p2) -> p1.getLastPlayedCard().getNumber() < p2.getLastPlayedCard().getNumber() ? p1 : p2).get();
     }
 }

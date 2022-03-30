@@ -38,4 +38,7 @@ public class MotherNature {
         return island;
     }
 
+    public void setIsland(Island island) {
+        this.island = island;
+    }
 }

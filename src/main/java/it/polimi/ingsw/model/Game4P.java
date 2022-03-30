@@ -16,31 +16,15 @@ public class Game4P extends Game{
             for (int i = 0; i < 3; i++) {
                 try {
                     Student s = bag.pickStudent();
-                    bag.movePawnTo(cloud, s);
+                    cloud.addStudent(s);
                 } catch (EmptyBagException e) {}
 
             }
 
     }
 
-    /**
-     * Check if the game is in an end situation and update the gameState if so
-     *
-     * @return true if the game has ended
-     */
-    @Override
-    public boolean checkEndGame() {
-        boolean finished =  // One team has finished his towers
-                teams.stream().map(t -> t.getTeamTowers().size()).anyMatch(size -> size == 0) ||
-                        // There are only 3 islands
-                        islands.size() <= 3 ||
-                        // The cards or the students finished and all the players finished their turns
-                        (players.stream().map(p -> p.getHandCards().size()).anyMatch(size -> size == 0) ) //&& // TODO)
-                        // The students in the bag finished and all the players finished their turns
-                        || bag.isEmpty() //&& // TODO
-                ;
-        gameState.setEnded(finished);
-        return finished;
+    public List<Team> getTeams() {
+        return teams;
     }
 
     /**
@@ -67,7 +51,7 @@ public class Game4P extends Game{
 
 
     /**
-     * Construct and initialize a 2 player game
+     * Construct and initialize a 4 player game
      * @param playerNames The list of the player names
      */
     public Game4P(List<String> playerNames) {
