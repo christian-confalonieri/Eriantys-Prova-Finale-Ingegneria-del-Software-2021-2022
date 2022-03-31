@@ -76,7 +76,7 @@ class IslandTest {
     @Test
     void getInfluencePointsPlayer() {
 
-        Player myPlayer = new Player("Mario",mySchool1,0);
+        Player myPlayer = new Player("Mario", Wizard.BLUE, mySchool1,0);
         mySchool1.addProfessor(new Professor(PawnColor.RED));
         mySchool1.addProfessor(new Professor(PawnColor.GREEN));
         int red=4, yellow=6, green= 6, blue=5, pink=0;
@@ -107,8 +107,8 @@ class IslandTest {
     @Test
     void GetInfluencePointsTeam() {
 
-        Player myPlayer1 = new Player("Mario",mySchool1,0);
-        Player myPlayer2 = new Player("Luigi",mySchool2,0);
+        Player myPlayer1 = new Player("Mario", Wizard.GREEN, mySchool1,0);
+        Player myPlayer2 = new Player("Luigi", Wizard.PURPLE, mySchool2,0);
         mySchool1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
 
 
@@ -157,7 +157,7 @@ class IslandTest {
     @Test
     void moveTowers() {
         
-        Player myPlayer = new Player("Luigi", mySchool1,0);
+        Player myPlayer = new Player("Luigi", Wizard.YELLOW, mySchool1,0);
 
         Tower myTower1 = new Tower(TowerColor.WHITE, myPlayer);
         Tower myTower2 = new Tower(TowerColor.WHITE, myPlayer);

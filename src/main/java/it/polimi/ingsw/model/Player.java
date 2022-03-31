@@ -19,8 +19,9 @@ public class Player {
         coins = 0;
     }
 
-    public Player(String name, School school, int coins) {
+    public Player(String name, Wizard wizard, School school, int coins) {
         this();
+        this.wizard = wizard;
         this.name = name;
         this.school = school;
         this.coins = coins;
@@ -56,5 +57,9 @@ public class Player {
 
     public Card getLastPlayedCard() {
         return usedCards.get(usedCards.size() - 1);
+    }
+
+    public String getName() {
+        return name;
     }
 }

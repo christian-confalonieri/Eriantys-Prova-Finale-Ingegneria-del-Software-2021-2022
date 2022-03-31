@@ -40,6 +40,7 @@ public class GameHandler {
                         return;
                     case MOVEFROMCLOUD:
                         currentPlayer = getNextPlayer();
+                        turnPhase = TurnPhase.MOVESTUDENTS;
                         if(currentPlayer == firstTurnPlayer) {
                             gamePhase = GamePhase.PREPARATION;
                         }
@@ -67,7 +68,7 @@ public class GameHandler {
      */
     public GameHandler(Game game) {
         this.game = game;
-        firstTurnPlayer = game.players.get(0);
+        firstTurnPlayer = game.players.get(game.gameRules.playerRules.startingPlayer);
         gamePhase = GamePhase.PREPARATION;
         turnPhase = TurnPhase.MOVESTUDENTS;
         currentPlayer = firstTurnPlayer;

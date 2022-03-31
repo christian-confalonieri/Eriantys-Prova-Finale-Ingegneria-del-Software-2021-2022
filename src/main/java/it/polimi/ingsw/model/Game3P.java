@@ -3,26 +3,18 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.EmptyBagException;
 
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
 
 public class Game3P extends Game{
 
-    @Override
-    public void refillClouds() {
-        for (Cloud cloud : clouds)
-            for (int i = 0; i < 4; i++) {
-                try {
-                    Student s = bag.pickStudent();
-                    cloud.addStudent(s);
-                } catch (EmptyBagException e) {}
-
-            }
-    }
-
     /**
      * Construct and initialize a 3 player game
-     * @param playerNames The list of the player names
+     *
+     * @param playersData A map containing the name of the player and the wizard of the player
+     * @param gameRules an instance of the gameRules class containing the parameters of the game
      */
-    protected Game3P(List<String> playerNames) {
+    protected Game3P(SortedMap<String, Wizard> playersData, GameRules gameRules) {
 
     }
 }

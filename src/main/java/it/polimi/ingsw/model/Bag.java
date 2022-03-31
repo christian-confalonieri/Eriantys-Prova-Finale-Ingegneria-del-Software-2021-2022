@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Random;
 
 public class Bag{
-    private static final int nOfStartingStudents = PawnColor.values().length * 2;
     private static final int nOfTotalStudents = PawnColor.values().length * 26;
 
     private final Random randomGenerator;
@@ -54,12 +53,16 @@ public class Bag{
     /**
      *
      */
-    public static Bag getNewStartingBag() {
-        return new Bag(Student.generateNStudents(nOfStartingStudents));
+    public static Bag getNewStartingBag(GameRules gameRules) {
+        double nOfStartingStudents = (double)(gameRules.islandsRules.numberOfIslands - 2) * (gameRules.studentsRules.startingStudentsOnIsland) / PawnColor.values().length;
+        int roundedNOfStartingStudents = (int) Math.ceil(nOfStartingStudents);
+        return new Bag(Student.generateNStudentsPerColor(roundedNOfStartingStudents));
     }
 
-    public static Bag getRefilledGameBag(Bag startingBag) {
-        startingBag.addAllStudents(Student.generateNStudents(nOfTotalStudents - nOfStartingStudents));
+    public static Bag getRefilledGameBag(Bag startingBag, GameRules gameRules) {
+        double nOfStartingStudents = (double)(gameRules.islandsRules.numberOfIslands - 2) * (gameRules.studentsRules.startingStudentsOnIsland) / PawnColor.values().length;
+        int roundedNOfStartingStudents = (int) Math.ceil(nOfStartingStudents) * PawnColor.values().length;
+        startingBag.addAllStudents(Student.generateNStudentsPerColor(nOfTotalStudents - roundedNOfStartingStudents));
         return startingBag;
     }
 

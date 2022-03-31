@@ -1,0 +1,23 @@
+{
+  "islandsRules" : {
+    "number" : 12,
+    "description" : "The number of Islands on the board"
+  },
+  "cloudsRules" : { "number" :  2, "description" :  "The number of clouds on the board"},
+  "studentsRules" : {
+    "startingStudentsOnIsland" : { "number" : 1, "description" : "The number of students on each Islands at the start of the game" },
+    "startingStudentsEntrance" : {"number" :  7, "description" :  "The number of students on each school entrance at the start of the game"},
+    "turnStudents" : { "number" :  3, "description" :  "The number of students to move from the entrance each turn. The same as the number of students in the clouds"}
+  },
+  "towersRules" : {
+    "number" : 8,
+    "description" : "The number of towers per player (or per team)"
+  },
+  "coinsRules" : {
+    "startingCoinsPerPlayer" : { "number" : 3, "description" :  "The number of coins for each player at the start of the game"},
+    "startingBoardCoins" : { "number" : 14, "description" :  "The number of coins on the board at the start of the game"}
+  },
+  "playerRules" : { "startingPlayer":  0, "description" :  "The number of the starting player"},
+  "expertMode" : true,
+  "teamsRules" : { "one" : { "player1" : 0, "player2" :  1}, "two" : { "player1" : 2, "player2" : 3 }, "description" : "The number of the players in the two teams (Only matters in a teams match)"}
+}
