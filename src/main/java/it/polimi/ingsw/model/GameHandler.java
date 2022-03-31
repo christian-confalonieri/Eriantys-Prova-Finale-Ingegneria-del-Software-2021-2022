@@ -60,6 +60,11 @@ public class GameHandler {
         return game;
     }
 
+    /**
+     * Constructs a game handler, adding the state to the passed game object
+     *
+     * @param game the game to handle
+     */
     public GameHandler(Game game) {
         this.game = game;
         firstTurnPlayer = game.players.get(0);

@@ -1,11 +1,17 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.EmptyBagException;
 import it.polimi.ingsw.exceptions.NotContainedException;
 
 import java.nio.file.ProviderNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The game class represent the board of the game and contains all the objects
+ * that interact with it.
+ */
 public abstract class Game {
 
     protected List<Island> islands;
@@ -155,5 +161,28 @@ public abstract class Game {
      */
     public Player calculateFirstTurnPlayer() {
         return players.stream().reduce((p1, p2) -> p1.getLastPlayedCard().getNumber() < p2.getLastPlayedCard().getNumber() ? p1 : p2).get();
+    }
+
+    public Island getNextIsland(Island island) {
+        int index = islands.indexOf(island);
+        return islands.get((index + 1) % islands.size());
+    }
+
+    public Island getPrevIsland(Island island) {
+        int index = islands.indexOf(island);
+        return islands.get((index + islands.size() - 1) % islands.size());
+    }
+
+    protected void initIslandsWithStudents(Bag startingBag) {
+        // Fill all the clouds except 0 and middle one
+        for (int i = 1; i < islands.size(); i++) {
+            if(i != islands.size() / 2) {
+                try {
+                    islands.get(i).addStudent(startingBag.pickStudent());
+                } catch (EmptyBagException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

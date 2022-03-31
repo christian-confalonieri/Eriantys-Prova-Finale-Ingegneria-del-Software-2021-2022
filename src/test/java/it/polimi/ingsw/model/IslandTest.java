@@ -13,8 +13,9 @@ class IslandTest {
     Island myIsland1 = new Island();
     Island myIsland2 = new Island();
     Island myIsland3 = new Island();
-    School mySchool1 = new School(null,new ArrayList<>());
-    School mySchool2 = new School(null,new ArrayList<>());
+
+    School mySchool1 = new School();
+    School mySchool2 = new School();
 
     Student student1 = new Student(PawnColor.RED);
     Student student2 = new Student(PawnColor.BLUE);

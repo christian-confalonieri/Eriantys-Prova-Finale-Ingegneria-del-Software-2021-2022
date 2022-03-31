@@ -22,7 +22,7 @@ public class Game3P extends Game{
      * Construct and initialize a 3 player game
      * @param playerNames The list of the player names
      */
-    public Game3P(List<String> playerNames) {
+    protected Game3P(List<String> playerNames) {
 
     }
 }

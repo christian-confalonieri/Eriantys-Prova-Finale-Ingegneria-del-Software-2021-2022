@@ -16,11 +16,11 @@ public class School {
     private List<Tower> towers;
 
 
-    public School(List<Student> entrance, List<Tower> towers) {
+    public School() {
         diningRoom = new HashMap<>();
         professorTable = new ArrayList<>();
-        this.entrance = entrance;
-        this.towers = towers;
+        entrance = new ArrayList<>();
+        towers = new ArrayList<>();
     }
 
     /**

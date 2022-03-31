@@ -59,6 +59,14 @@ public class Island {
     }
 
     /**
+     * Removes all the students from the island
+     *
+     */
+    public void removeAllStudents() {
+        students.clear();
+    }
+
+    /**
      * Returns the size of the island.
      * The size of an island is defined as how many initial islands it consists of.
      *

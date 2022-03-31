@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Bag{
+    private static final int nOfStartingStudents = PawnColor.values().length * 2;
+    private static final int nOfTotalStudents = PawnColor.values().length * 26;
 
     private final Random randomGenerator;
     private final List<Student> students;
@@ -17,7 +19,7 @@ public class Bag{
      *
      * @param students the students to put in the bag
      */
-    public Bag(List<Student> students) {
+    private Bag(List<Student> students) {
         randomGenerator = new Random();
         this.students = new ArrayList<>(students);
     }
@@ -47,6 +49,18 @@ public class Bag{
      */
     public boolean isEmpty() {
         return students.isEmpty();
+    }
+
+    /**
+     *
+     */
+    public static Bag getNewStartingBag() {
+        return new Bag(Student.generateNStudents(nOfStartingStudents));
+    }
+
+    public static Bag getRefilledGameBag(Bag startingBag) {
+        startingBag.addAllStudents(Student.generateNStudents(nOfTotalStudents - nOfStartingStudents));
+        return startingBag;
     }
 
 }

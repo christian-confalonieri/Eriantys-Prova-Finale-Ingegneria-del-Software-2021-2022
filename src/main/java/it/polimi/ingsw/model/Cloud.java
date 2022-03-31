@@ -10,6 +10,11 @@ public class Cloud{
 
     private List<Student> students;
 
+
+    public Cloud() {
+        this.students = new ArrayList<>();
+    }
+
     /**
      * Adds a student to the cloud.
      *

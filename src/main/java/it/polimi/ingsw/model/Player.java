@@ -20,6 +20,7 @@ public class Player {
     }
 
     public Player(String name, School school, int coins) {
+        this();
         this.name = name;
         this.school = school;
         this.coins = coins;

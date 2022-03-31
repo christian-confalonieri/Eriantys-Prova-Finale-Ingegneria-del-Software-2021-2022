@@ -54,7 +54,7 @@ public class Game4P extends Game{
      * Construct and initialize a 4 player game
      * @param playerNames The list of the player names
      */
-    public Game4P(List<String> playerNames) {
+    protected Game4P(List<String> playerNames) {
 
     }
 
