@@ -2,42 +2,27 @@ package it.polimi.ingsw.model;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 class IslandTest {
 
     Island myIsland1 = new Island();
     Island myIsland2 = new Island();
     Island myIsland3 = new Island();
-    School mySchool = new School();
+    School mySchool = new School(null,new ArrayList<>());
 
     Student student1 = new Student(PawnColor.RED);
     Student student2 = new Student(PawnColor.BLUE);
     Student student3 = new Student(PawnColor.YELLOW);
 
     @Test
-    void addPawn() {
+    void addStudents() {
 
-        myIsland1.addPawn(student1);
-        myIsland1.addPawn(student2);
-        myIsland1.addPawn(student3);
+        myIsland1.addStudent(student1);
+        myIsland1.addStudent(student2);
+        myIsland1.addStudent(student3);
 
         assertEquals(3, myIsland1.getStudents().size());
-
-    }
-
-
-    @Test
-    void movePawnTo() {
-
-        myIsland1.addPawn(student1);
-        myIsland1.addPawn(student2);
-        myIsland1.addPawn(student3);
-
-        myIsland1.movePawnTo(myIsland2,student1);
-        myIsland1.movePawnTo(myIsland2,student2);
-        myIsland1.movePawnTo(myIsland2,student3);
-
-        assertEquals(0, myIsland1.getStudents().size());
-        assertEquals(3, myIsland2.getStudents().size());
 
     }
 
@@ -85,7 +70,7 @@ class IslandTest {
     @Test
     void moveTowers() {
         
-        Player myPlayer = new Player("Luigi", mySchool);
+        Player myPlayer = new Player("Luigi", mySchool,0);
 
         Tower myTower1 = new Tower(TowerColor.WHITE, myPlayer);
         Tower myTower2 = new Tower(TowerColor.WHITE, myPlayer);

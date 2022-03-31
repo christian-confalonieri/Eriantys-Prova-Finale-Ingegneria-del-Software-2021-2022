@@ -1,23 +1,39 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.EmptyBagException;
+import it.polimi.ingsw.exceptions.EmptyCloudException;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cloud{
 
     private List<Student> students;
 
-    public void addStudent(Student student) {
-        // The student received as input is added to the list of students.
-        this.students.add(student);
-    }
+    /**
+     * Adds a student to the cloud.
+     *
+     * @param student the student to be added
+     */
+    public void addStudent(Student student) { students.add(student); }
 
     /**
-     * Every student on the cloud is moved to another location.
+     * Returns a list containing all students on the cloud and empties it.
      *
-     * @param destination the destination of the students
+     * @return the list containing all students on the cloud
      *
      */
-    public List<Student> pickAllStudents() {
+    public List<Student> pickAllStudents() throws EmptyCloudException {
+
+        if(!students.isEmpty()) {
+            List<Student> allStudents = new ArrayList<>();
+            allStudents.addAll(students);
+            students.clear();
+            return allStudents;
+        }
+        else {
+            throw new EmptyCloudException();
+        }
 
     }
 

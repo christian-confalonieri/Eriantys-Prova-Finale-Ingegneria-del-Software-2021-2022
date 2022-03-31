@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.NotContainedException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +10,6 @@ import java.util.List;
  * and a boolean variable noEntry dedicated to the expert mode.
  * It also contains references to the previous and next island used by the Game() class.
  * It implements methods related to moving towers and students and calculating the influence of a player.
- *
- * @author Christian Confalonieri
  */
 public class Island {
 
@@ -18,6 +18,14 @@ public class Island {
     private boolean noEntry;
     private Island prevIsland;
     private Island nextIsland;
+
+    public Island() {
+        prevIsland = null;
+        nextIsland = null;
+        students = new ArrayList<>();
+        towers = new ArrayList<>();
+        noEntry = false;
+    }
 
     public Island(Island prevIsland, Island nextIsland) {
         this.prevIsland = prevIsland;
@@ -28,7 +36,7 @@ public class Island {
     }
 
     /**
-     * Adds a student on the island
+     * Adds a student on the island.
      *
      * @param student the student to be added
      */
@@ -36,10 +44,19 @@ public class Island {
         students.add(student);
     }
 
-    public void removeStudent(Student student) {
-
+    /**
+     * Removes a student on the island.
+     *
+     * @param student the student to be removed
+     */
+    public void removeStudent(Student student) throws NotContainedException {
+        if(students.contains(student)) {
+            students.remove(student);
+        }
+        else {
+            throw new NotContainedException();
+        }
     }
-
 
     /**
      * Returns the size of the island.
@@ -238,7 +255,7 @@ public class Island {
     }
 
     /**
-     * Move towers from the island to their owner's school
+     * Move towers from the island to their owner's school.
      */
     public void moveTowers() {
         for(Tower tower: towers) {
@@ -249,7 +266,7 @@ public class Island {
     }
 
     /**
-     * Adds a tower on the island
+     * Adds a tower on the island.
      *
      * @param tower the tower that needs to be added
      */
