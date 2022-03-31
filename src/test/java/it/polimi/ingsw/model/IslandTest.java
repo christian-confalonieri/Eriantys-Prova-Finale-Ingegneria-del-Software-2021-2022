@@ -1,22 +1,27 @@
 package it.polimi.ingsw.model;
 import static org.junit.jupiter.api.Assertions.*;
+
+import it.polimi.ingsw.exceptions.NotContainedException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.WeakHashMap;
 
 class IslandTest {
 
     Island myIsland1 = new Island();
     Island myIsland2 = new Island();
     Island myIsland3 = new Island();
-    School mySchool = new School(null,new ArrayList<>());
+    School mySchool1 = new School(null,new ArrayList<>());
+    School mySchool2 = new School(null,new ArrayList<>());
 
     Student student1 = new Student(PawnColor.RED);
     Student student2 = new Student(PawnColor.BLUE);
     Student student3 = new Student(PawnColor.YELLOW);
 
     @Test
-    void addStudents() {
+    void addStudent() {
 
         myIsland1.addStudent(student1);
         myIsland1.addStudent(student2);
@@ -24,6 +29,22 @@ class IslandTest {
 
         assertEquals(3, myIsland1.getStudents().size());
 
+    }
+
+    @Test
+    void removeStudent() throws NotContainedException {
+
+        myIsland1.addStudent(student1);
+        myIsland1.addStudent(student2);
+        myIsland1.addStudent(student3);
+
+        assertEquals(3, myIsland1.getStudents().size());
+
+        myIsland1.removeStudent(student1);
+        myIsland1.removeStudent(student2);
+        myIsland1.removeStudent(student3);
+
+        assertEquals(0, myIsland1.getStudents().size());
     }
 
     @Test
@@ -53,10 +74,75 @@ class IslandTest {
 
     @Test
     void getInfluencePointsPlayer() {
+
+        Player myPlayer = new Player("Mario",mySchool1,0);
+        mySchool1.addProfessor(new Professor(PawnColor.RED));
+        mySchool1.addProfessor(new Professor(PawnColor.GREEN));
+        int red=4, yellow=6, green= 6, blue=5, pink=0;
+
+        for(int i=0;i<red;i++) {
+            myIsland1.addStudent(new Student(PawnColor.RED));
+        }
+
+        for(int i=0;i<yellow;i++) {
+            myIsland1.addStudent(new Student(PawnColor.YELLOW));
+        }
+
+        for(int i=0;i<green;i++) {
+            myIsland1.addStudent(new Student(PawnColor.GREEN));
+        }
+
+        for(int i=0;i<blue;i++) {
+            myIsland1.addStudent(new Student(PawnColor.BLUE));
+        }
+
+        for(int i=0;i<pink;i++) {
+            myIsland1.addStudent(new Student(PawnColor.PINK));
+        }
+
+        assertEquals(10,myIsland1.getInfluencePoints(myPlayer));
     }
 
     @Test
     void GetInfluencePointsTeam() {
+
+        Player myPlayer1 = new Player("Mario",mySchool1,0);
+        Player myPlayer2 = new Player("Luigi",mySchool2,0);
+        mySchool1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+
+
+
+        List<Player> myPlayers = new ArrayList<>();
+        myPlayers.add(myPlayer1);
+        myPlayers.add(myPlayer2);
+
+        Team myTeam = new Team(myPlayers);
+        mySchool1.addProfessor(new Professor(PawnColor.RED));
+        mySchool1.addProfessor(new Professor(PawnColor.GREEN));
+        mySchool2.addProfessor(new Professor(PawnColor.PINK));
+        int red=4, yellow=6, green= 6, blue=5, pink=0;
+
+        for(int i=0;i<red;i++) {
+            myIsland1.addStudent(new Student(PawnColor.RED));
+        }
+
+        for(int i=0;i<yellow;i++) {
+            myIsland1.addStudent(new Student(PawnColor.YELLOW));
+        }
+
+        for(int i=0;i<green;i++) {
+            myIsland1.addStudent(new Student(PawnColor.GREEN));
+        }
+
+        for(int i=0;i<blue;i++) {
+            myIsland1.addStudent(new Student(PawnColor.BLUE));
+        }
+
+        for(int i=0;i<pink;i++) {
+            myIsland1.addStudent(new Student(PawnColor.PINK));
+        }
+
+        assertEquals(10,myIsland1.getInfluencePoints(myTeam));
     }
 
     @Test
@@ -70,7 +156,7 @@ class IslandTest {
     @Test
     void moveTowers() {
         
-        Player myPlayer = new Player("Luigi", mySchool,0);
+        Player myPlayer = new Player("Luigi", mySchool1,0);
 
         Tower myTower1 = new Tower(TowerColor.WHITE, myPlayer);
         Tower myTower2 = new Tower(TowerColor.WHITE, myPlayer);
@@ -85,7 +171,7 @@ class IslandTest {
         myIsland1.moveTowers();
 
         assertEquals(0,myIsland1.getTowers().size());
-        assertEquals(3,mySchool.getTowers().size());
+        assertEquals(3,mySchool1.getTowers().size());
 
     }
 
@@ -131,4 +217,5 @@ class IslandTest {
         assertFalse(myIsland1.checkUnifyPrev());
 
     }
+
 }

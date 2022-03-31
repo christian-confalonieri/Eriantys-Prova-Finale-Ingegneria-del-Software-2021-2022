@@ -111,6 +111,7 @@ public class Island {
         else {
             return pointNoTower;
         }
+
     }
 
     /**
@@ -132,6 +133,7 @@ public class Island {
         else {
             return pointNoTower;
         }
+
     }
 
     /**
