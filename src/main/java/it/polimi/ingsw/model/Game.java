@@ -138,7 +138,6 @@ public abstract class Game {
         boardProfessors.add(professor);
     }
 
-
     /**
      * Removes a professor from the professor's borard
      * @param professor The professor to be removed

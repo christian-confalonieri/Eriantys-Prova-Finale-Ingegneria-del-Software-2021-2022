@@ -4,8 +4,6 @@ import it.polimi.ingsw.exceptions.EmptyBagException;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.SortedMap;
 
 public class Game2P extends Game {

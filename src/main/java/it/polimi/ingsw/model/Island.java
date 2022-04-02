@@ -5,6 +5,22 @@ import it.polimi.ingsw.exceptions.NotContainedException;
 import java.util.ArrayList;
 import java.util.List;
 
+//class EntityBase <T> {
+//    public T key { get; set; }
+//
+//    public bool Equals(EntityBase<T> other) { }
+//}
+//
+//class Pawn : EntityBase<int> {
+//
+//
+//}
+//
+//class Island : EntityBase<UUID> {
+//
+//
+//}
+
 /**
  * The island implements the PawnHandler interface, contains the list of students, towers
  * and a boolean variable noEntry dedicated to the expert mode.

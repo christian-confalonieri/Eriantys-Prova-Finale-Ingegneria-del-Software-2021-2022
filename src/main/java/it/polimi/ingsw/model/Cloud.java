@@ -6,7 +6,7 @@ import it.polimi.ingsw.exceptions.EmptyCloudException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cloud{
+public class Cloud {
 
     private List<Student> students;
 
