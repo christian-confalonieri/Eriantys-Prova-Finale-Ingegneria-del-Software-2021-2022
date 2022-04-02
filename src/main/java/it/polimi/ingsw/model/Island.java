@@ -195,7 +195,7 @@ public class Island {
      *
      * @return the player with the most influence on the island
      */
-    public Player getInfluencePlayer(List<Player> players) {
+    public Player getInfluencePlayer(List<Player> players, GameEffectHandler gameEffectHandler) { // TODO
 
         Player currentInfluencePlayer = null;
         int currentInfluencePoints, max = 0;
@@ -239,7 +239,7 @@ public class Island {
      *
      * @return the team with the most influence on the island
      */
-    public Team getInfluenceTeam(List<Team> teams) {
+    public Team getInfluenceTeam(List<Team> teams, GameEffectHandler gameEffectHandler) {
 
         Team currentInfluenceTeam = null;
         int currentInfluencePoints, max = 0;

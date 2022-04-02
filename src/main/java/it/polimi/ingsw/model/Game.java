@@ -27,7 +27,6 @@ public abstract class Game {
     protected int boardCoins;
     protected int boardNoEntryCards;
 
-
     /**
      * Given 2 Islands, unifies them into a single island block and refresh all the references
      * to the old islands, including:
@@ -174,7 +173,7 @@ public abstract class Game {
      *
      * @return the player with the smallest number lastPlayedCard
      */
-    public Player calculateFirstTurnPlayer() {
+    public Player calculateFirstTurnPlayer() { // TODO FIX
         return players.stream().reduce((p1, p2) -> p1.getLastPlayedCard().getNumber() < p2.getLastPlayedCard().getNumber() ? p1 : p2).get();
     }
 

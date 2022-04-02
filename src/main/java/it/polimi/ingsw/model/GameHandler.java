@@ -5,6 +5,7 @@ import java.util.List;
 public class GameHandler {
 
     protected Player currentPlayer;
+    private List<Player> orderedTurnPlayers; // TODO
     protected GamePhase gamePhase;
     protected TurnPhase turnPhase;
     protected Player firstTurnPlayer;
@@ -49,7 +50,7 @@ public class GameHandler {
     }
 
 
-    public Player getNextPlayer() {
+    public Player getNextPlayer() { // TODO FIX
         return game.players.get((game.players.indexOf(currentPlayer) + 1) % (game.players.size()));
     }
 
