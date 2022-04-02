@@ -20,10 +20,13 @@ public abstract class Game {
     protected List<Professor> boardProfessors;
     protected MotherNature motherNature;
     protected Bag bag;
+
+    protected GameRules gameRules;
+
     protected List<PowerCard> powerCards;
     protected int boardCoins;
     protected int boardNoEntryCards;
-    protected boolean expert;
+
 
     /**
      * Given 2 Islands, unifies them into a single island block and refresh all the references
@@ -101,8 +104,16 @@ public abstract class Game {
     /**
      * Routine to refill all the board clouds with students picked from the bag
      */
-    public abstract void refillClouds();
+    public void refillClouds() {
+        for (Cloud cloud : clouds)
+            for (int i = 0; i < gameRules.studentsRules.turnStudents; i++) {
+                try {
+                    Student s = bag.pickStudent();
+                    cloud.addStudent(s);
+                } catch (EmptyBagException e) { e.printStackTrace(); }
 
+            }
+    }
 
     /**
      * Get the current game leaderboard.
@@ -156,7 +167,7 @@ public abstract class Game {
     }
 
     public boolean isExpert() {
-        return expert;
+        return gameRules.expertMode;
     }
 
     /**
@@ -183,7 +194,9 @@ public abstract class Game {
         for (int i = 1; i < islands.size(); i++) {
             if(i != islands.size() / 2) {
                 try {
-                    islands.get(i).addStudent(startingBag.pickStudent());
+                    for (int j = 0; j < gameRules.studentsRules.startingStudentsOnIsland; j++) {
+                        islands.get(i).addStudent(startingBag.pickStudent());
+                    }
                 } catch (EmptyBagException e) {
                     e.printStackTrace();
                 }

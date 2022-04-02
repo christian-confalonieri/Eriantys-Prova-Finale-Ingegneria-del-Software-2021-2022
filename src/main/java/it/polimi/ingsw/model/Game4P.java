@@ -4,24 +4,13 @@ import it.polimi.ingsw.exceptions.EmptyBagException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
 import java.util.stream.Collectors;
 
 public class Game4P extends Game{
 
     private List<Team> teams;
-
-    @Override
-    public void refillClouds() {
-        for (Cloud cloud : clouds)
-            for (int i = 0; i < 3; i++) {
-                try {
-                    Student s = bag.pickStudent();
-                    cloud.addStudent(s);
-                } catch (EmptyBagException e) {}
-
-            }
-
-    }
 
     public List<Team> getTeams() {
         return teams;
@@ -52,9 +41,11 @@ public class Game4P extends Game{
 
     /**
      * Construct and initialize a 4 player game
-     * @param playerNames The list of the player names
+     *
+     * @param playersData A map containing the name of the player and the wizard of the player
+     * @param gameRules an instance of the gameRules class containing the parameters of the game
      */
-    protected Game4P(List<String> playerNames) {
+    protected Game4P(SortedMap<String, Wizard> playersData, GameRules gameRules) {
 
     }
 

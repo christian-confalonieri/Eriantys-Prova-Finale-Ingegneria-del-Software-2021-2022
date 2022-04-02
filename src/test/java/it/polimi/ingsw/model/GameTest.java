@@ -3,8 +3,11 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,15 +15,26 @@ class GameTest {
 
     @Test
     void unifyIslandInTheMiddle() {
-        List<String> names = new ArrayList<>();
-        names.add("Pippo");
-        names.add("Topolino");
-        GameHandler gameHandler = null;
+        SortedMap<String, Wizard> playerData = new TreeMap<>();
+        playerData.put("Pippo", Wizard.YELLOW);
+        playerData.put("Topolino",Wizard.GREEN);
+
+        String rulesJson = null;
         try {
-            gameHandler = GameCreator.createGame(names);
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2Psimple.json")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameHandler gameHandler = null;
+
+        try {
+            gameHandler = GameCreator.createGame(playerData, rulesJson);
         } catch (InvalidNewGameException e) {
             e.printStackTrace();
         }
+
+
         Game game = gameHandler.getGame();
 
         School pippoSchool = game.players.get(0).getSchool();
@@ -40,15 +54,26 @@ class GameTest {
 
     @Test
     void unifyIslandInBorder() {
-        List<String> names = new ArrayList<>();
-        names.add("Pippo");
-        names.add("Topolino");
-        GameHandler gameHandler = null;
+        SortedMap<String, Wizard> playerData = new TreeMap<>();
+        playerData.put("Pippo", Wizard.YELLOW);
+        playerData.put("Topolino",Wizard.GREEN);
+
+        String rulesJson = null;
         try {
-            gameHandler = GameCreator.createGame(names);
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2Psimple.json")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameHandler gameHandler = null;
+
+        try {
+            gameHandler = GameCreator.createGame(playerData, rulesJson);
         } catch (InvalidNewGameException e) {
             e.printStackTrace();
         }
+
+
         Game game = gameHandler.getGame();
 
         School pippoSchool = game.players.get(0).getSchool();
@@ -68,15 +93,26 @@ class GameTest {
 
     @Test
     void unifyIslandTriple() {
-        List<String> names = new ArrayList<>();
-        names.add("Pippo");
-        names.add("Topolino");
-        GameHandler gameHandler = null;
+        SortedMap<String, Wizard> playerData = new TreeMap<>();
+        playerData.put("Pippo", Wizard.YELLOW);
+        playerData.put("Topolino",Wizard.GREEN);
+
+        String rulesJson = null;
         try {
-            gameHandler = GameCreator.createGame(names);
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2Psimple.json")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameHandler gameHandler = null;
+
+        try {
+            gameHandler = GameCreator.createGame(playerData, rulesJson);
         } catch (InvalidNewGameException e) {
             e.printStackTrace();
         }
+
+
         Game game = gameHandler.getGame();
 
         School pippoSchool = game.players.get(0).getSchool();
