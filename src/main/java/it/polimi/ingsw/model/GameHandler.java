@@ -1,11 +1,13 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameHandler {
 
     protected Player currentPlayer;
-    private List<Player> orderedTurnPlayers; // TODO
+    private List<Player> orderedTurnPlayers;
     protected GamePhase gamePhase;
     protected TurnPhase turnPhase;
     protected Player firstTurnPlayer;
@@ -23,7 +25,7 @@ public class GameHandler {
                 if(currentPlayer == firstTurnPlayer) { // All players played a card
                     gamePhase = GamePhase.TURN;
                     turnPhase = TurnPhase.MOVESTUDENTS;
-                    firstTurnPlayer = game.calculateFirstTurnPlayer();
+                    orderedTurnPlayers = calculateTurnOrder(); // Calculate the turn order
                     currentPlayer = firstTurnPlayer;
                 }
                 else {
@@ -43,15 +45,29 @@ public class GameHandler {
                         currentPlayer = getNextPlayer();
                         turnPhase = TurnPhase.MOVESTUDENTS;
                         if(currentPlayer == firstTurnPlayer) {
+                            orderedTurnPlayers = new ArrayList<>(game.players); // Return to a clockwise order for preparation
                             gamePhase = GamePhase.PREPARATION;
                         }
                 }
         }
     }
 
+    /**
+     * Get the player that has to play after the current player
+     *
+     * @return the player that has to play after the current player
+     */
+    public Player getNextPlayer() {
+        return orderedTurnPlayers.get((orderedTurnPlayers.indexOf(currentPlayer) + 1) % (orderedTurnPlayers.size()));
+    }
 
-    public Player getNextPlayer() { // TODO FIX
-        return game.players.get((game.players.indexOf(currentPlayer) + 1) % (game.players.size()));
+    /**
+     * Return the first player of the turn after the preparation by comparing the last played card
+     *
+     * @return the player with the smallest number lastPlayedCard
+     */
+    public List<Player> calculateTurnOrder() {
+        return game.players.stream().sorted((p1, p2) -> p1.getLastPlayedCard().getNumber() <= p2.getLastPlayedCard().getNumber() ? -1 : 1).collect(Collectors.toList());
     }
 
     public boolean isEnded() {
@@ -70,6 +86,7 @@ public class GameHandler {
     public GameHandler(Game game) {
         this.game = game;
         firstTurnPlayer = game.players.get(game.gameRules.playerRules.startingPlayer);
+        orderedTurnPlayers = new ArrayList<>(game.players);
         gamePhase = GamePhase.PREPARATION;
         turnPhase = TurnPhase.MOVESTUDENTS;
         currentPlayer = firstTurnPlayer;

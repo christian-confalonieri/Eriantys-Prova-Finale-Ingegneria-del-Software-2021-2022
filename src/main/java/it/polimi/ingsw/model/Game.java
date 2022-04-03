@@ -1,16 +1,17 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.EmptyBagException;
+import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.model.powers.PowerCard;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * The game class represent the board of the game and contains all the objects
  * that interact with it.
  */
-public abstract class Game {
+public class Game {
 
     protected List<Island> islands;
     protected List<Player> players;
@@ -166,25 +167,23 @@ public abstract class Game {
         return gameRules.expertMode;
     }
 
-    /**
-     * Return the first player of the turn after the preparation by comparing the last played card
-     *
-     * @return the player with the smallest number lastPlayedCard
-     */
-    public Player calculateFirstTurnPlayer() { // TODO FIX
-        return players.stream().reduce((p1, p2) -> p1.getLastPlayedCard().getNumber() < p2.getLastPlayedCard().getNumber() ? p1 : p2).get();
-    }
 
     public Island getNextIsland(Island island) {
         int index = islands.indexOf(island);
         return islands.get((index + 1) % islands.size());
     }
 
+
     public Island getPrevIsland(Island island) {
         int index = islands.indexOf(island);
         return islands.get((index + islands.size() - 1) % islands.size());
     }
 
+    /**
+     * Initialize all the games islands with the right number of students on them
+     *
+     * @param startingBag A starting bag to pick the students from
+     */
     protected void initIslandsWithStudents(Bag startingBag) {
         // Fill all the clouds except 0 and middle one
         for (int i = 1; i < islands.size(); i++) {
@@ -199,4 +198,94 @@ public abstract class Game {
             }
         }
     }
+
+    /**
+     * Given an island, calculates and move the towers if a player has conquered that island
+     * and give the towers back to the previous owner
+     *
+     * @param island the island to conquered
+     */
+    public void conquerIsland(Island island) {
+        // TODO
+    }
+
+
+
+
+    /**
+     * Construct and initialize a player game with no team play
+     *
+     * @param playersData A map containing the name of the player and the wizard of the player
+     * @param gameRules an instance of the gameRules class containing the parameters of the game
+     */
+    protected Game(SortedMap<String, Wizard> playersData, GameRules gameRules) throws InvalidNewGameException {
+        this.gameRules = gameRules;
+
+        // Construct the islands
+        islands = new ArrayList<>();
+        for (int i = 0; i < gameRules.islandsRules.numberOfIslands; i++) {
+            islands.add(new Island());
+        }
+        for (Island isl : islands) {
+            isl.setNextIsland(getNextIsland(isl));
+            isl.setPrevIsland(getPrevIsland(isl));
+        }
+
+        // Constructs mothernature
+        motherNature = new MotherNature(islands.get(0));
+
+        // Add the first students to the islands
+        bag = Bag.getNewStartingBag(gameRules);
+        initIslandsWithStudents(bag);
+
+        // Fill the bag with all the students
+        Bag.getRefilledGameBag(bag, gameRules);
+
+
+        // Creates the clouds and fill them
+        if(players.size() != gameRules.cloudsRules.numberOfClouds)
+            throw new InvalidNewGameException("Bad rules: number of players doesn't match number of clouds");
+        clouds = new ArrayList<>();
+        for (int i = 0; i < gameRules.cloudsRules.numberOfClouds; i++) {
+            clouds.add(new Cloud());
+        }
+        refillClouds();
+
+        // Add the professors to the gameBoard
+        boardProfessors = new ArrayList<>();
+        for (PawnColor color : PawnColor.values()) {
+            boardProfessors.add(new Professor(color));
+        }
+
+        // Creates the players
+        players = new ArrayList<>();
+        for (String name : playersData.keySet()) {
+            players.add(new Player(name, playersData.get(name), new School(), gameRules.coinRules.startingCoinsPerPlayer));
+        }
+
+
+        // Create the players with their school
+        if(players.size() > TowerColor.values().length) throw new InvalidNewGameException("Not enough tower colors");
+        Iterator<TowerColor> playerTowerColorIterator = Arrays.stream(TowerColor.values()).iterator();
+        for (Player player : players) {
+            for (int i = 0; i < gameRules.studentsRules.startingStudentsEntrance; i++) {
+                try {
+                    player.getSchool().addEntrance(bag.pickStudent());
+                } catch (EmptyBagException e) {
+                    e.printStackTrace();
+                }
+            }
+            TowerColor towerColor = playerTowerColorIterator.next();
+            for (int i = 0; i < gameRules.towersRules.numberOfTowers; i++) {
+                player.getSchool().addTower(new Tower(towerColor, player));
+            }
+        }
+
+        // Set board coins
+        boardCoins = gameRules.coinRules.startingBoardCoins;
+
+        // Set noEntryCards
+        boardNoEntryCards = 4;
+    }
+
 }

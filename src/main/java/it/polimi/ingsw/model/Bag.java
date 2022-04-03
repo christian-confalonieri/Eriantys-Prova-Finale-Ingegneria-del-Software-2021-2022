@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.EmptyBagException;
+import it.polimi.ingsw.exceptions.InvalidNewGameException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,10 +60,12 @@ public class Bag{
         return new Bag(Student.generateNStudentsPerColor(roundedNOfStartingStudents));
     }
 
-    public static Bag getRefilledGameBag(Bag startingBag, GameRules gameRules) {
+    public static Bag getRefilledGameBag(Bag startingBag, GameRules gameRules) throws InvalidNewGameException {
         double nOfStartingStudents = (double)(gameRules.islandsRules.numberOfIslands - 2) * (gameRules.studentsRules.startingStudentsOnIsland) / PawnColor.values().length;
         int roundedNOfStartingStudents = (int) Math.ceil(nOfStartingStudents) * PawnColor.values().length;
-        startingBag.addAllStudents(Student.generateNStudentsPerColor(nOfTotalStudents - roundedNOfStartingStudents));
+
+        if(nOfTotalStudents < roundedNOfStartingStudents) throw new InvalidNewGameException("Too few total students in the bag");
+        startingBag.addAllStudents(Student.generateNStudentsPerColor((nOfTotalStudents - roundedNOfStartingStudents) / PawnColor.values().length));
         return startingBag;
     }
 
