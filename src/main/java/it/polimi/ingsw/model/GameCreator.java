@@ -1,12 +1,7 @@
 package it.polimi.ingsw.model;
 
-import com.google.gson.Gson;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
-
-import java.io.FileReader;
-import java.io.Reader;
-import java.util.Map;
 import java.util.SortedMap;
 
 public class GameCreator {

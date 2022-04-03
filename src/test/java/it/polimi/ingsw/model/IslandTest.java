@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.model.powers.EffectHandler;
 import org.junit.jupiter.api.Test;
 
@@ -10,25 +9,28 @@ import java.util.List;
 
 class IslandTest {
 
-    Island myIsland1 = new Island();
-    Island myIsland2 = new Island();
-    Island myIsland3 = new Island();
+    private final Island myIsland1 = new Island();
+    private final Island myIsland2 = new Island();
+    private final Island myIsland3 = new Island();
 
-    School mySchool1 = new School();
-    School mySchool2 = new School();
+    private final School mySchool1 = new School();
+    private final School mySchool2 = new School();
+    private final School mySchool3 = new School();
+    private final School mySchool4 = new School();
 
-    Student student1 = new Student(PawnColor.RED);
-    Student student2 = new Student(PawnColor.BLUE);
-    Student student3 = new Student(PawnColor.YELLOW);
+    private final Player myPlayer1 = new Player("Mario", Wizard.GREEN, mySchool1,0);
+    private final Player myPlayer2 = new Player("Luigi", Wizard.PURPLE, mySchool2,0);
+    private final Player myPlayer3 = new Player("Wario", Wizard.YELLOW, mySchool3,0);
+    private final Player myPlayer4 = new Player("Waluigi", Wizard.BLUE, mySchool4,0);
 
-    EffectHandler effectHandler = new EffectHandler();
+    private final EffectHandler effectHandler = new EffectHandler();
 
     @Test
     void addStudent() {
 
-        myIsland1.addStudent(student1);
-        myIsland1.addStudent(student2);
-        myIsland1.addStudent(student3);
+        myIsland1.addStudent(new Student(PawnColor.RED));
+        myIsland1.addStudent(new Student(PawnColor.BLUE));
+        myIsland1.addStudent(new Student(PawnColor.YELLOW));
 
         assertEquals(3, myIsland1.getStudents().size());
 
@@ -37,15 +39,19 @@ class IslandTest {
     @Test
     void removeStudent() {
 
-        myIsland1.addStudent(student1);
-        myIsland1.addStudent(student2);
-        myIsland1.addStudent(student3);
+        Student myStudent1 = new Student(PawnColor.RED);
+        Student myStudent2= new Student(PawnColor.BLUE);
+        Student myStudent3 = new Student(PawnColor.YELLOW);
+
+        myIsland1.addStudent(myStudent1);
+        myIsland1.addStudent(myStudent2);
+        myIsland1.addStudent(myStudent3);
 
         assertEquals(3, myIsland1.getStudents().size());
 
-        myIsland1.removeStudent(student1);
-        myIsland1.removeStudent(student2);
-        myIsland1.removeStudent(student3);
+        myIsland1.removeStudent(myStudent1);
+        myIsland1.removeStudent(myStudent2);
+        myIsland1.removeStudent(myStudent3);
 
         assertEquals(0, myIsland1.getStudents().size());
     }
@@ -53,23 +59,29 @@ class IslandTest {
     @Test
     void getIslandSize() {
 
+        // base case (1 island)
         assertEquals(1, myIsland1.getIslandSize());
 
-        myIsland1.addTower(new Tower(TowerColor.WHITE, new Player()));
+        // one tower (1 island)
+        myIsland1.addTower(new Tower(TowerColor.WHITE, myPlayer1));
 
         assertEquals(1, myIsland1.getIslandSize());
 
-        myIsland1.addTower(new Tower(TowerColor.WHITE, new Player()));
-        myIsland1.addTower(new Tower(TowerColor.WHITE, new Player()));
+        // more towers (more islands)
+        myIsland1.addTower(new Tower(TowerColor.WHITE, myPlayer1));
+        myIsland1.addTower(new Tower(TowerColor.WHITE, myPlayer1));
 
         assertEquals(3, myIsland1.getIslandSize());
+
+
+
 
     }
 
     @Test
     void getTowerColor() {
 
-        Tower myTower = new Tower(TowerColor.WHITE, new Player());
+        Tower myTower = new Tower(TowerColor.WHITE, myPlayer1);
         myIsland1.addTower(myTower);
         assertEquals("WHITE",myIsland1.getTowerColor().toString());
 
@@ -78,91 +90,253 @@ class IslandTest {
     @Test
     void getInfluencePointsPlayer() {
 
-        Player myPlayer = new Player("Mario", Wizard.BLUE, mySchool1,0);
-        mySchool1.addProfessor(new Professor(PawnColor.RED));
-        mySchool1.addProfessor(new Professor(PawnColor.GREEN));
-        int red=4, yellow=6, green= 6, blue=5, pink=0;
+        Professor professor1 = new Professor(PawnColor.RED);
+        Professor professor2 = new Professor(PawnColor.GREEN);
 
-        for(int i=0;i<red;i++) {
-            myIsland1.addStudent(new Student(PawnColor.RED));
-        }
+        // no influence points
+        assertEquals(0,myIsland1.getInfluencePoints(myPlayer1, effectHandler));
 
-        for(int i=0;i<yellow;i++) {
-            myIsland1.addStudent(new Student(PawnColor.YELLOW));
-        }
+        // standard case
+        mySchool1.addProfessor(professor1);
+        mySchool1.addProfessor(professor2);
 
-        for(int i=0;i<green;i++) {
-            myIsland1.addStudent(new Student(PawnColor.GREEN));
-        }
+        populateIsland(myIsland1,4,6,6,5,0);
 
-        for(int i=0;i<blue;i++) {
-            myIsland1.addStudent(new Student(PawnColor.BLUE));
-        }
+        assertEquals(10,myIsland1.getInfluencePoints(myPlayer1, effectHandler));
 
-        for(int i=0;i<pink;i++) {
-            myIsland1.addStudent(new Student(PawnColor.PINK));
-        }
+        // 1 tower on the island
+        myIsland1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
 
-        assertEquals(10,myIsland1.getInfluencePoints(myPlayer, effectHandler));
+        assertEquals(11,myIsland1.getInfluencePoints(myPlayer1, effectHandler));
+
+        // 3 towers on the island
+        myIsland1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+        myIsland1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+
+        assertEquals(13,myIsland1.getInfluencePoints(myPlayer1, effectHandler));
+
+        // 1 tower of another player on the island
+
+        populateIsland(myIsland2,4,6,6,5,0);
+        myIsland2.addTower(new Tower(TowerColor.BLACK,myPlayer2));
+
+        assertEquals(10,myIsland2.getInfluencePoints(myPlayer1, effectHandler));
+
     }
 
     @Test
-    void GetInfluencePointsTeam() throws InvalidNewGameException {
+    void GetInfluencePointsTeam() {
 
-        Player myPlayer1 = new Player("Mario", Wizard.GREEN, mySchool1,0);
-        Player myPlayer2 = new Player("Luigi", Wizard.PURPLE, mySchool2,0);
+        mySchool1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+        mySchool2.addTower(new Tower(TowerColor.BLACK,myPlayer2));
+
+        List<Player> myPlayers1 = new ArrayList<>();
+        myPlayers1.add(myPlayer1);
+        myPlayers1.add(myPlayer3);
+
+        Team myTeam1 = new Team(myPlayers1);
+
+        Professor professor1 = new Professor(PawnColor.RED);
+        Professor professor2 = new Professor(PawnColor.GREEN);
+        Professor professor3 = new Professor(PawnColor.BLUE);
+        Professor professor4 = new Professor(PawnColor.YELLOW);
+
+        // no influence points
+        assertEquals(0,myIsland1.getInfluencePoints(myTeam1, effectHandler));
+
+        // standard case
+        mySchool1.addProfessor(professor1);
+        mySchool1.addProfessor(professor2);
+        mySchool2.addProfessor(professor3);
+        mySchool3.addProfessor(professor4);
+
+        populateIsland(myIsland1,4,6,6,5,0);
+
+        assertEquals(16,myIsland1.getInfluencePoints(myTeam1, effectHandler));
+
+        // 1 tower on the island
+        myIsland1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+
+        assertEquals(17,myIsland1.getInfluencePoints(myTeam1, effectHandler));
+
+        // 3 towers on the island
+        myIsland1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+        myIsland1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+
+        assertEquals(19,myIsland1.getInfluencePoints(myTeam1, effectHandler));
+
+        // 1 tower of another player on the island
+
+        populateIsland(myIsland2,4,6,6,5,0);
+        myIsland2.addTower(new Tower(TowerColor.BLACK,myPlayer2));
+
+        assertEquals(16,myIsland2.getInfluencePoints(myTeam1, effectHandler));
+
+    }
+
+    @Test
+    void getInfluencePlayer() {
+
+        Professor professor1 = new Professor(PawnColor.RED);
+        Professor professor2 = new Professor(PawnColor.GREEN);
+        Professor professor3 = new Professor(PawnColor.PINK);
+
         mySchool1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
 
         List<Player> myPlayers = new ArrayList<>();
         myPlayers.add(myPlayer1);
         myPlayers.add(myPlayer2);
 
-        Team myTeam = new Team(myPlayers);
-        mySchool1.addProfessor(new Professor(PawnColor.RED));
-        mySchool1.addProfessor(new Professor(PawnColor.GREEN));
-        mySchool2.addProfessor(new Professor(PawnColor.PINK));
-        int red=4, yellow=6, green= 6, blue=5, pink=0;
+        mySchool1.addProfessor(professor1);
+        mySchool1.addProfessor(professor2);
+        mySchool2.addProfessor(professor3);
 
-        for(int i=0;i<red;i++) {
-            myIsland1.addStudent(new Student(PawnColor.RED));
-        }
+        // standard case
 
-        for(int i=0;i<yellow;i++) {
-            myIsland1.addStudent(new Student(PawnColor.YELLOW));
-        }
+        populateIsland(myIsland1,4,6,6,5,0);
 
-        for(int i=0;i<green;i++) {
-            myIsland1.addStudent(new Student(PawnColor.GREEN));
-        }
+        assertEquals(myPlayer1, myIsland1.getInfluencePlayer(myPlayers, effectHandler));
 
-        for(int i=0;i<blue;i++) {
-            myIsland1.addStudent(new Student(PawnColor.BLUE));
-        }
+        populateIsland(myIsland2,4,6,6,5,11);
 
-        for(int i=0;i<pink;i++) {
-            myIsland1.addStudent(new Student(PawnColor.PINK));
-        }
+        assertEquals(myPlayer2, myIsland2.getInfluencePlayer(myPlayers, effectHandler));
 
-        assertEquals(10,myIsland1.getInfluencePoints(myTeam, new EffectHandler()));
+        // no influence
 
-    }
+        mySchool1.removeProfessor(professor1);
+        mySchool1.removeProfessor(professor2);
+        mySchool2.removeProfessor(professor3);
 
-    @Test
-    void getInfluencePlayer() {
+        assertNull(myIsland1.getInfluencePlayer(myPlayers, effectHandler));
+
+        // island with towers
+
+        myIsland1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+        myIsland1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+        myIsland1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+
+        mySchool1.addProfessor(professor1);
+        mySchool2.addProfessor(professor2);
+
+        assertEquals(myPlayer1, myIsland1.getInfluencePlayer(myPlayers, effectHandler));
+
+        // island with towers but skipTowers = TRUE
+        effectHandler.setSkipTowers(true);
+
+        assertEquals(myPlayer2, myIsland1.getInfluencePlayer(myPlayers, effectHandler));
+
+        effectHandler.setSkipTowers(false);
+
+        // island with additionalInfluence = 2
+        effectHandler.setAdditionalInfluence(2);
+        effectHandler.setEffectPlayer(myPlayer2);
+
+        assertEquals(myPlayer2, myIsland1.getInfluencePlayer(myPlayers, effectHandler));
+
+        effectHandler.setAdditionalInfluence(0);
+        effectHandler.setEffectPlayer(null);
+
+        // island with harvesterColor = RED
+        effectHandler.setHarvesterColor(PawnColor.RED);
+
+        assertEquals(myPlayer2, myIsland1.getInfluencePlayer(myPlayers, effectHandler));
+
+        effectHandler.setHarvesterColor(null);
+
     }
 
     @Test
     void getInfluenceTeam() {
+
+        Professor professor1 = new Professor(PawnColor.RED);
+        Professor professor2 = new Professor(PawnColor.GREEN);
+        Professor professor3 = new Professor(PawnColor.PINK);
+
+        mySchool1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+        mySchool2.addTower(new Tower(TowerColor.BLACK,myPlayer2));
+
+        List<Player> myPlayers1 = new ArrayList<>();
+        myPlayers1.add(myPlayer1);
+        myPlayers1.add(myPlayer3);
+
+        Team myTeam1 = new Team(myPlayers1);
+
+        List<Player> myPlayers2 = new ArrayList<>();
+        myPlayers2.add(myPlayer2);
+        myPlayers2.add(myPlayer4);
+
+        Team myTeam2 = new Team(myPlayers2);
+
+        List<Team> myTeams = new ArrayList<>();
+        myTeams.add(myTeam1);
+        myTeams.add(myTeam2);
+
+        mySchool1.addProfessor(new Professor(PawnColor.RED));
+        mySchool3.addProfessor(new Professor(PawnColor.GREEN));
+        mySchool2.addProfessor(new Professor(PawnColor.PINK));
+
+
+        // standard case
+        populateIsland(myIsland1,4,6,6,5,0);
+
+        assertEquals(myTeam1,myIsland1.getInfluenceTeam(myTeams, effectHandler));
+
+        assertEquals(myTeam1, myIsland1.getInfluenceTeam(myTeams, effectHandler));
+
+        populateIsland(myIsland2,4,6,6,5,11);
+
+        assertEquals(myTeam2, myIsland2.getInfluenceTeam(myTeams, effectHandler));
+
+        // no influence
+
+        mySchool1.removeProfessor(professor1);
+        mySchool1.removeProfessor(professor2);
+        mySchool2.removeProfessor(professor3);
+
+        assertNull(myIsland1.getInfluenceTeam(myTeams, effectHandler));
+
+        // island with towers
+
+        myIsland1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+        myIsland1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+        myIsland1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
+
+        mySchool1.addProfessor(professor1);
+        mySchool2.addProfessor(professor2);
+
+        assertEquals(myTeam2, myIsland1.getInfluenceTeam(myTeams, effectHandler));
+
+        // island with towers but skipTowers = TRUE
+        effectHandler.setSkipTowers(true);
+
+        assertEquals(myTeam2, myIsland1.getInfluenceTeam(myTeams, effectHandler));
+
+        effectHandler.setSkipTowers(false);
+
+        // island with additionalInfluence = 2
+        effectHandler.setAdditionalInfluence(2);
+        effectHandler.setEffectPlayer(myPlayer2);
+
+        assertEquals(myTeam2, myIsland1.getInfluenceTeam(myTeams, effectHandler));
+
+        effectHandler.setAdditionalInfluence(0);
+        effectHandler.setEffectPlayer(null);
+
+        // island with harvesterColor = RED
+        effectHandler.setHarvesterColor(PawnColor.RED);
+
+        assertEquals(myTeam2, myIsland1.getInfluenceTeam(myTeams, effectHandler));
+
+        effectHandler.setHarvesterColor(null);
+
     }
 
     @Test
     void moveTowers() {
-        
-        Player myPlayer = new Player("Luigi", Wizard.YELLOW, mySchool1,0);
 
-        Tower myTower1 = new Tower(TowerColor.WHITE, myPlayer);
-        Tower myTower2 = new Tower(TowerColor.WHITE, myPlayer);
-        Tower myTower3 = new Tower(TowerColor.WHITE, myPlayer);
+        Tower myTower1 = new Tower(TowerColor.WHITE, myPlayer1);
+        Tower myTower2 = new Tower(TowerColor.WHITE, myPlayer1);
+        Tower myTower3 = new Tower(TowerColor.WHITE, myPlayer1);
 
         myIsland1.addTower(myTower1);
         myIsland1.addTower(myTower2);
@@ -180,9 +354,9 @@ class IslandTest {
     @Test
     void addTower() {
 
-        myIsland1.addTower(new Tower(TowerColor.WHITE, new Player()));
-        myIsland1.addTower(new Tower(TowerColor.WHITE, new Player()));
-        myIsland1.addTower(new Tower(TowerColor.WHITE, new Player()));
+        myIsland1.addTower(new Tower(TowerColor.WHITE, myPlayer1));
+        myIsland1.addTower(new Tower(TowerColor.WHITE, myPlayer1));
+        myIsland1.addTower(new Tower(TowerColor.WHITE, myPlayer1));
 
         assertEquals(3, myIsland1.getTowers().size());
 
@@ -195,8 +369,8 @@ class IslandTest {
         myIsland2.setNextIsland(myIsland3);
         myIsland3.setNextIsland(myIsland1);
 
-        myIsland1.addTower(new Tower(TowerColor.BLACK, new Player()));
-        myIsland2.addTower(new Tower(TowerColor.BLACK, new Player()));
+        myIsland1.addTower(new Tower(TowerColor.BLACK, myPlayer1));
+        myIsland2.addTower(new Tower(TowerColor.BLACK, myPlayer1));
 
 
         assertTrue(myIsland1.checkUnifyNext());
@@ -211,13 +385,36 @@ class IslandTest {
         myIsland2.setPrevIsland(myIsland1);
         myIsland3.setPrevIsland(myIsland2);
 
-        myIsland1.addTower(new Tower(TowerColor.BLACK, new Player()));
-        myIsland2.addTower(new Tower(TowerColor.BLACK, new Player()));
+        myIsland1.addTower(new Tower(TowerColor.BLACK, myPlayer1));
+        myIsland2.addTower(new Tower(TowerColor.BLACK, myPlayer1));
 
 
         assertTrue(myIsland2.checkUnifyPrev());
         assertFalse(myIsland1.checkUnifyPrev());
 
+    }
+
+    private void populateIsland(Island island, int red, int yellow, int green, int blue, int pink) {
+
+        for(int i=0;i<red;i++) {
+            island.addStudent(new Student(PawnColor.RED));
+        }
+
+        for(int i=0;i<yellow;i++) {
+            island.addStudent(new Student(PawnColor.YELLOW));
+        }
+
+        for(int i=0;i<green;i++) {
+            island.addStudent(new Student(PawnColor.GREEN));
+        }
+
+        for(int i=0;i<blue;i++) {
+            island.addStudent(new Student(PawnColor.BLUE));
+        }
+
+        for(int i=0;i<pink;i++) {
+            island.addStudent(new Student(PawnColor.PINK));
+        }
     }
 
 }

@@ -34,6 +34,20 @@ public class EffectHandler {
 
     }
 
+    public EffectHandler(PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents,
+                         Island chosenIsland, int additionalMoves, int additionalInfluence, boolean skipTowers,
+                         boolean effectActive, Player effectPlayer) {
+        this.harvesterColor = harvesterColor;
+        this.thiefColor = thiefColor;
+        this.chosenStudents = chosenStudents;
+        this.chosenIsland = chosenIsland;
+        this.additionalMoves = additionalMoves;
+        this.additionalInfluence = additionalInfluence;
+        this.skipTowers = skipTowers;
+        this.effectActive = effectActive;
+        this.effectPlayer = effectPlayer;
+    }
+
     public PawnColor getHarvesterColor() {
         return harvesterColor;
     }

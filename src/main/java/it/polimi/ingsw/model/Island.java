@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.powers.EffectHandler;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -190,7 +189,7 @@ public class Island {
      *
      * @return the player with the most influence on the island
      */
-    public Player getInfluencePlayer(List<Player> players, EffectHandler effectHandler) { // TODO
+    public Player getInfluencePlayer(List<Player> players, EffectHandler effectHandler) {
 
         Player currentInfluencePlayer = null;
         int currentInfluencePoints, max = 0;
