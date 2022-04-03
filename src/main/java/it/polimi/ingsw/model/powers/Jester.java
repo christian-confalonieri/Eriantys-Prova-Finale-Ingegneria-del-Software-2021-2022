@@ -1,8 +1,11 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.powers;
+
+import it.polimi.ingsw.model.GameHandler;
+import it.polimi.ingsw.model.Student;
 
 import java.util.List;
 
-public class Jester extends PowerCard{
+public class Jester extends PowerCard {
 
     private List<Student> students;
 

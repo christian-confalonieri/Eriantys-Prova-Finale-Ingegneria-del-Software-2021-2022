@@ -1,8 +1,10 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.powers;
 
-public class Knight extends PowerCard{
+import it.polimi.ingsw.model.GameHandler;
 
-    public Knight(GameHandler gameHandler) {
+public class Centaur extends PowerCard {
+
+    public Centaur(GameHandler gameHandler) {
         super(gameHandler);
     }
 

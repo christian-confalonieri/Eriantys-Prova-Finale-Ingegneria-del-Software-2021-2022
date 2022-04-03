@@ -1,6 +1,8 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.powers;
 
-public class Minstrel extends PowerCard{
+import it.polimi.ingsw.model.GameHandler;
+
+public class Minstrel extends PowerCard {
 
     public Minstrel(GameHandler gameHandler) {
         super(gameHandler);

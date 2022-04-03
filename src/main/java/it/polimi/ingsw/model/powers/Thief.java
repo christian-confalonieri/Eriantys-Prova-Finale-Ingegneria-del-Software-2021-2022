@@ -1,6 +1,8 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.powers;
 
-public class Thief extends PowerCard{
+import it.polimi.ingsw.model.GameHandler;
+
+public class Thief extends PowerCard {
 
     public Thief(GameHandler gameHandler) {
         super(gameHandler);

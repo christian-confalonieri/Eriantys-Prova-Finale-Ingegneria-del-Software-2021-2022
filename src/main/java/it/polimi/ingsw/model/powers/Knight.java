@@ -1,8 +1,10 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.powers;
 
-public class Harvester extends PowerCard{
+import it.polimi.ingsw.model.GameHandler;
 
-    public Harvester(GameHandler gameHandler) {
+public class Knight extends PowerCard {
+
+    public Knight(GameHandler gameHandler) {
         super(gameHandler);
     }
 

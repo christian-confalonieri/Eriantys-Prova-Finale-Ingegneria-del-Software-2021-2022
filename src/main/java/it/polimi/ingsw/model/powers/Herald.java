@@ -1,6 +1,8 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.powers;
 
-public class Herald extends PowerCard{
+import it.polimi.ingsw.model.GameHandler;
+
+public class Herald extends PowerCard {
 
     public Herald(GameHandler gameHandler) {
         super(gameHandler);

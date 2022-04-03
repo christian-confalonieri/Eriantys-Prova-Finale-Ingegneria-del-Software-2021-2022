@@ -1,4 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.powers;
+
+import it.polimi.ingsw.model.GameHandler;
+import it.polimi.ingsw.model.powers.PowerType;
 
 public abstract class PowerCard {
 

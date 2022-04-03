@@ -1,4 +1,9 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.powers;
+
+import it.polimi.ingsw.model.Island;
+import it.polimi.ingsw.model.PawnColor;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Student;
 
 import java.util.List;
 

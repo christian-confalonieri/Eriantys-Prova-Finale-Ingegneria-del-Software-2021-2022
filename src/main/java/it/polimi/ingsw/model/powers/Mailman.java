@@ -1,6 +1,8 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.powers;
 
-public class Mailman extends PowerCard{
+import it.polimi.ingsw.model.GameHandler;
+
+public class Mailman extends PowerCard {
 
     public Mailman(GameHandler gameHandler) {
         super(gameHandler);

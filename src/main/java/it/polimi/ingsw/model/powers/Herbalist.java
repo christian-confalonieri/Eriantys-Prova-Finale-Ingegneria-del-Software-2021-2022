@@ -1,6 +1,8 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.powers;
 
-public class Herbalist extends PowerCard{
+import it.polimi.ingsw.model.GameHandler;
+
+public class Herbalist extends PowerCard {
 
     private int noEntryCards;
 

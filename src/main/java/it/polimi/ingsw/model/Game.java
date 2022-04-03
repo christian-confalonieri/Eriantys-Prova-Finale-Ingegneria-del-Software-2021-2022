@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.EmptyBagException;
+import it.polimi.ingsw.model.powers.PowerCard;
 
 import java.util.List;
 import java.util.stream.Collectors;
