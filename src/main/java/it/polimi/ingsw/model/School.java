@@ -1,8 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.NotContainedException;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,16 +32,7 @@ public class School {
      *
      * @param professor the professor to be removed
      */
-    public void removeProfessor(Professor professor) throws NotContainedException {
-
-        if(professorTable.contains(professor)) {
-            professorTable.remove(professor);
-        }
-        else {
-            throw new NotContainedException();
-        }
-
-    }
+    public void removeProfessor(Professor professor) { professorTable.remove(professor); }
 
     /**
      * Adds a student to the entrance of the school.
@@ -58,16 +46,7 @@ public class School {
      *
      * @param student the student to be removed
      */
-    public void removeEntrance(Student student) throws NotContainedException{
-
-        if(entrance.contains(student)) {
-            entrance.remove(student);
-        }
-        else {
-            throw new NotContainedException();
-        }
-
-    }
+    public void removeEntrance(Student student) { entrance.remove(student); }
 
     /**
      * Adds a student to the dining room of the school.
@@ -81,16 +60,7 @@ public class School {
      *
      * @param student the student to be removed
      */
-    public void removeDiningRoom(Student student) throws NotContainedException{
-
-        if(diningRoom.get(student.getColor()).contains(student)) {
-            diningRoom.get(student.getColor()).remove(student);
-        }
-        else {
-            throw new NotContainedException();
-        }
-
-    }
+    public void removeDiningRoom(Student student) { diningRoom.get(student.getColor()).remove(student); }
 
     /**
      * returns students to the dining room.
@@ -106,9 +76,8 @@ public class School {
      * @param student student to move
      * @return the number of coins earned (max 1 with the current rules)
      */
-    public int entranceToDiningRoom(Student student) throws NotContainedException{
+    public int entranceToDiningRoom(Student student) {
 
-        if(entrance.contains(student)) {
             entrance.remove(student);
             diningRoom.get(student.getColor()).add(student);
             if(diningRoom.get(student.getColor()).size() % 3 == 0) {
@@ -117,10 +86,6 @@ public class School {
             else {
                 return 0;
             }
-        }
-        else {
-            throw new NotContainedException();
-        }
 
     }
 

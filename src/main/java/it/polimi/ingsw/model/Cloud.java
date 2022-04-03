@@ -1,8 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.EmptyBagException;
-import it.polimi.ingsw.exceptions.EmptyCloudException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,17 +25,12 @@ public class Cloud {
      * @return the list containing all students on the cloud
      *
      */
-    public List<Student> pickAllStudents() throws EmptyCloudException {
+    public List<Student> pickAllStudents() {
 
-        if(!students.isEmpty()) {
             List<Student> allStudents = new ArrayList<>();
             allStudents.addAll(students);
             students.clear();
             return allStudents;
-        }
-        else {
-            throw new EmptyCloudException();
-        }
 
     }
 

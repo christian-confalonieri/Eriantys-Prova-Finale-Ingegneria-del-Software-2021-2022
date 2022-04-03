@@ -1,11 +1,16 @@
 package it.polimi.ingsw.model;
 
-public class PowerCard {
+public abstract class PowerCard {
 
     private int cost;
+    private PowerType type;
 
-    public void power(Game game) {
+    public PowerCard(GameHandler gameHandler) {
 
     }
+
+    public void power() { }
+
+    public void endPower() { }
 
 }

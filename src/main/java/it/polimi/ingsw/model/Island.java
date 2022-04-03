@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.exceptions.NotContainedException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,22 +63,7 @@ public class Island {
      *
      * @param student the student to be removed
      */
-    public void removeStudent(Student student) throws NotContainedException {
-        if(students.contains(student)) {
-            students.remove(student);
-        }
-        else {
-            throw new NotContainedException();
-        }
-    }
-
-    /**
-     * Removes all the students from the island
-     *
-     */
-    public void removeAllStudents() {
-        students.clear();
-    }
+    public void removeStudent(Student student) { students.remove(student); }
 
     /**
      * Returns the size of the island.
@@ -195,7 +178,7 @@ public class Island {
      *
      * @return the player with the most influence on the island
      */
-    public Player getInfluencePlayer(List<Player> players, GameEffectHandler gameEffectHandler) { // TODO
+    public Player getInfluencePlayer(List<Player> players, EffectHandler effectHandler) { // TODO
 
         Player currentInfluencePlayer = null;
         int currentInfluencePoints, max = 0;
@@ -239,7 +222,7 @@ public class Island {
      *
      * @return the team with the most influence on the island
      */
-    public Team getInfluenceTeam(List<Team> teams, GameEffectHandler gameEffectHandler) {
+    public Team getInfluenceTeam(List<Team> teams, EffectHandler effectHandler) {
 
         Team currentInfluenceTeam = null;
         int currentInfluencePoints, max = 0;

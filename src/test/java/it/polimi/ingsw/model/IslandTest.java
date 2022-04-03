@@ -1,12 +1,10 @@
 package it.polimi.ingsw.model;
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.exceptions.NotContainedException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.WeakHashMap;
 
 class IslandTest {
 
@@ -33,7 +31,7 @@ class IslandTest {
     }
 
     @Test
-    void removeStudent() throws NotContainedException {
+    void removeStudent() {
 
         myIsland1.addStudent(student1);
         myIsland1.addStudent(student2);

@@ -1,10 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.EmptyBagException;
-import it.polimi.ingsw.exceptions.NotContainedException;
 
-import java.nio.file.ProviderNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,7 +63,7 @@ public abstract class Game {
     /**
      * Routine to check and move the professors according to the game rules.
      */
-    public void professorRelocate() throws NotContainedException {
+    public void professorRelocate() {
         for (PawnColor color : PawnColor.values()) {
 
             boolean professorOnBoard = boardProfessors.stream().map((Pawn::getColor)).anyMatch((col -> col == color));
