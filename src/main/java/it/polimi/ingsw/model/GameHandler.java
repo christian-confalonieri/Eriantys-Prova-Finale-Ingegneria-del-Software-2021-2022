@@ -26,6 +26,7 @@ public class GameHandler {
                     gamePhase = GamePhase.TURN;
                     turnPhase = TurnPhase.MOVESTUDENTS;
                     orderedTurnPlayers = calculateTurnOrder(); // Calculate the turn order
+                    firstTurnPlayer = orderedTurnPlayers.get(0);
                     currentPlayer = firstTurnPlayer;
                 }
                 else {

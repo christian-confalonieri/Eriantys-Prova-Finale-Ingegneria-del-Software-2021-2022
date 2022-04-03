@@ -243,7 +243,7 @@ public class Game {
 
 
         // Creates the clouds and fill them
-        if(players.size() != gameRules.cloudsRules.numberOfClouds)
+        if(playersData.size() != gameRules.cloudsRules.numberOfClouds)
             throw new InvalidNewGameException("Bad rules: number of players doesn't match number of clouds");
         clouds = new ArrayList<>();
         for (int i = 0; i < gameRules.cloudsRules.numberOfClouds; i++) {

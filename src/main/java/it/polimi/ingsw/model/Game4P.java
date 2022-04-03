@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.EmptyBagException;
+import it.polimi.ingsw.exceptions.InvalidNewGameException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,8 @@ public class Game4P extends Game{
      * @param playersData A map containing the name of the player and the wizard of the player
      * @param gameRules an instance of the gameRules class containing the parameters of the game
      */
-    protected Game4P(SortedMap<String, Wizard> playersData, GameRules gameRules) {
+    protected Game4P(SortedMap<String, Wizard> playersData, GameRules gameRules) throws InvalidNewGameException {
+        super(playersData, gameRules);
 
     }
 

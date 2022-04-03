@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
+import it.polimi.ingsw.exceptions.InvalidRulesException;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -21,7 +22,7 @@ class GameTest {
 
         String rulesJson = null;
         try {
-            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2Psimple.json")));
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -30,7 +31,7 @@ class GameTest {
 
         try {
             gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException e) {
+        } catch (InvalidNewGameException | InvalidRulesException e) {
             e.printStackTrace();
         }
 
@@ -60,7 +61,7 @@ class GameTest {
 
         String rulesJson = null;
         try {
-            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2Psimple.json")));
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,7 +70,7 @@ class GameTest {
 
         try {
             gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException e) {
+        } catch (InvalidNewGameException | InvalidRulesException e) {
             e.printStackTrace();
         }
 
@@ -99,7 +100,7 @@ class GameTest {
 
         String rulesJson = null;
         try {
-            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2Psimple.json")));
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,7 +109,7 @@ class GameTest {
 
         try {
             gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException e) {
+        } catch (InvalidNewGameException | InvalidRulesException e) {
             e.printStackTrace();
         }
 
