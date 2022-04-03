@@ -210,15 +210,12 @@ public class Game {
     }
 
 
-
-
     /**
-     * Construct and initialize a player game with no team play
+     * Construct a game without the players inside
      *
-     * @param playersData A map containing the name of the player and the wizard of the player
      * @param gameRules an instance of the gameRules class containing the parameters of the game
      */
-    protected Game(SortedMap<String, Wizard> playersData, GameRules gameRules) throws InvalidNewGameException {
+    protected Game(GameRules gameRules) throws InvalidNewGameException {
         this.gameRules = gameRules;
 
         // Construct the islands
@@ -241,10 +238,7 @@ public class Game {
         // Fill the bag with all the students
         Bag.getRefilledGameBag(bag, gameRules);
 
-
         // Creates the clouds and fill them
-        if(playersData.size() != gameRules.cloudsRules.numberOfClouds)
-            throw new InvalidNewGameException("Bad rules: number of players doesn't match number of clouds");
         clouds = new ArrayList<>();
         for (int i = 0; i < gameRules.cloudsRules.numberOfClouds; i++) {
             clouds.add(new Cloud());
@@ -257,12 +251,30 @@ public class Game {
             boardProfessors.add(new Professor(color));
         }
 
+        // Set board coins
+        boardCoins = gameRules.coinRules.startingBoardCoins;
+
+        // Set noEntryCards
+        boardNoEntryCards = 4;
+    }
+
+    /**
+     * Construct and initialize a player game with no team play
+     *
+     * @param playersData A map containing the name of the player and the wizard of the player
+     * @param gameRules an instance of the gameRules class containing the parameters of the game
+     */
+    protected Game(SortedMap<String, Wizard> playersData, GameRules gameRules) throws InvalidNewGameException {
+        this(gameRules);
+
+        if(playersData.size() != gameRules.cloudsRules.numberOfClouds)
+            throw new InvalidNewGameException("Bad rules: number of players doesn't match number of clouds");
+
         // Creates the players
         players = new ArrayList<>();
         for (String name : playersData.keySet()) {
             players.add(new Player(name, playersData.get(name), new School(), gameRules.coinRules.startingCoinsPerPlayer));
         }
-
 
         // Create the players with their school
         if(players.size() > TowerColor.values().length) throw new InvalidNewGameException("Not enough tower colors");
@@ -281,11 +293,7 @@ public class Game {
             }
         }
 
-        // Set board coins
-        boardCoins = gameRules.coinRules.startingBoardCoins;
 
-        // Set noEntryCards
-        boardNoEntryCards = 4;
     }
 
 }

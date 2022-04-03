@@ -12,7 +12,9 @@ public abstract class PowerCard {
 
     }
 
-    public void power() { }
+    public void power() {
+        this.cost++;
+    }
 
     public void endPower() { }
 
