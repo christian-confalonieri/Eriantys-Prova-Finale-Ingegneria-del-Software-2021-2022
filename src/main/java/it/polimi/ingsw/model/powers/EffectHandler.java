@@ -9,7 +9,8 @@ import java.util.List;
 
 public class EffectHandler {
 
-    private PawnColor chosenColor;
+    private PawnColor harvesterColor;
+    private PawnColor thiefColor;
     private List<Student> chosenStudents;
     private Island chosenIsland;
     private int additionalMoves;
@@ -18,4 +19,19 @@ public class EffectHandler {
     private boolean effectActive;
     private Player effectPlayer;
 
+    public boolean isSkipTowers() {
+        return skipTowers;
+    }
+
+    public int getAdditionalInfluence() {
+        return additionalInfluence;
+    }
+
+    public Player getEffectPlayer() {
+        return effectPlayer;
+    }
+
+    public PawnColor getHarvesterColor() {
+        return harvesterColor;
+    }
 }

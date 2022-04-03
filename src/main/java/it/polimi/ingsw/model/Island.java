@@ -110,16 +110,21 @@ public class Island {
      * @param player the player on which to calculate the influence points
      * @return the influence points
      */
-    public int getInfluencePoints(Player player) {
+    public int getInfluencePoints(Player player, EffectHandler effectHandler) {
 
         List<Professor> professors = player.getSchool().getProfessorTable();
-        int pointNoTower = getInfluencePoints(professors);
-        if (!towers.isEmpty() && towers.get(0).getOwner() == player) {
-            return pointNoTower + towers.size();
+        int points = getInfluencePoints(professors, effectHandler);
+
+        if (!towers.isEmpty() && towers.get(0).getOwner() == player && !effectHandler.isSkipTowers()) {
+            points += towers.size();
         }
-        else {
-            return pointNoTower;
+
+        // It is assumed to zero the value of additional influence at the end of the effect
+        if(player==effectHandler.getEffectPlayer()) {
+            points += effectHandler.getAdditionalInfluence();
         }
+
+        return points;
 
     }
 
@@ -132,17 +137,21 @@ public class Island {
      * @param team the team on which to calculate the influence points
      * @return the influence points
      */
-    public int getInfluencePoints(Team team) {
+    public int getInfluencePoints(Team team, EffectHandler effectHandler) {
 
         List<Professor> professors = team.getTeamProfessors();
-        int pointNoTower = getInfluencePoints(professors);
-        if (!towers.isEmpty() && team.getPlayers().contains(towers.get(0).getOwner())) {
-            return pointNoTower + towers.size();
-        }
-        else {
-            return pointNoTower;
+        int points = getInfluencePoints(professors, effectHandler);
+
+        if (!towers.isEmpty() && team.getPlayers().contains(towers.get(0).getOwner()) && !effectHandler.isSkipTowers()) {
+            points += towers.size();
         }
 
+        // It is assumed to zero the value of additional influence at the end of the effect
+        if(team.getPlayers().contains(effectHandler.getEffectPlayer())) {
+            points += effectHandler.getAdditionalInfluence();
+        }
+
+        return points;
     }
 
     /**
@@ -153,14 +162,15 @@ public class Island {
      * @param professors the professors through which to calculate the influence points
      * @return the influence points
      */
-    private int getInfluencePoints(List<Professor> professors) {
+    private int getInfluencePoints(List<Professor> professors, EffectHandler effectHandler) {
 
         int max=0;
 
         for(Professor professor: professors) {
             int i=0;
             for(Student student: students) {
-                if(student.getColor() == professor.getColor()) {
+                // It is supposed to set the value of harvesterColor to null at the end of the effect
+                if(student.getColor() == professor.getColor() && student.getColor()!=effectHandler.getHarvesterColor()) {
                     i++;
                 }
             }
@@ -189,14 +199,16 @@ public class Island {
 
         if(!towers.isEmpty())  {
             prevInfluencePlayer = towers.get(0).getOwner();
-            prevInfluencePoints = getInfluencePoints(prevInfluencePlayer);
+            prevInfluencePoints = getInfluencePoints(prevInfluencePlayer, effectHandler);
         }
 
         for(Player player: players) {
-            currentInfluencePoints = getInfluencePoints(player);
-            if(currentInfluencePoints > max) {
-                max = currentInfluencePoints;
-                currentInfluencePlayer = player;
+            if(player!=prevInfluencePlayer) {
+                currentInfluencePoints = getInfluencePoints(player,effectHandler);
+                if(currentInfluencePoints > max) {
+                    max = currentInfluencePoints;
+                    currentInfluencePlayer = player;
+                }
             }
         }
 
@@ -234,21 +246,22 @@ public class Island {
         if(!towers.isEmpty())  {
             Player ownerTower = towers.get(0).getOwner();
             for(Team team: teams) {
-                List<Player> playersTeam = team.getPlayers();
-                for (Player player: playersTeam) {
+                for (Player player: team.getPlayers()) {
                     if(player == ownerTower) {
                         prevInfluenceTeam = team;
-                        prevInfluencePoints = getInfluencePoints(prevInfluenceTeam);
+                        prevInfluencePoints = getInfluencePoints(prevInfluenceTeam, effectHandler);
                     }
                 }
             }
         }
 
         for(Team team: teams) {
-            currentInfluencePoints = getInfluencePoints(team);
-            if(currentInfluencePoints > max) {
-                max = currentInfluencePoints;
-                currentInfluenceTeam = team;
+            if(team!=prevInfluenceTeam) {
+                currentInfluencePoints = getInfluencePoints(team, effectHandler);
+                if (currentInfluencePoints > max) {
+                    max = currentInfluencePoints;
+                    currentInfluenceTeam = team;
+                }
             }
         }
 
