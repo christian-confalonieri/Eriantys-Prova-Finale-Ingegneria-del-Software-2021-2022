@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.exceptions.InvalidNewGameException;
+import it.polimi.ingsw.model.powers.EffectHandler;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ class IslandTest {
     Student student1 = new Student(PawnColor.RED);
     Student student2 = new Student(PawnColor.BLUE);
     Student student3 = new Student(PawnColor.YELLOW);
+
+    EffectHandler effectHandler = new EffectHandler();
 
     @Test
     void addStudent() {
@@ -99,17 +103,15 @@ class IslandTest {
             myIsland1.addStudent(new Student(PawnColor.PINK));
         }
 
-        // assertEquals(10,myIsland1.getInfluencePoints(myPlayer, null));
+        assertEquals(10,myIsland1.getInfluencePoints(myPlayer, effectHandler));
     }
 
     @Test
-    void GetInfluencePointsTeam() {
+    void GetInfluencePointsTeam() throws InvalidNewGameException {
 
         Player myPlayer1 = new Player("Mario", Wizard.GREEN, mySchool1,0);
         Player myPlayer2 = new Player("Luigi", Wizard.PURPLE, mySchool2,0);
         mySchool1.addTower(new Tower(TowerColor.WHITE,myPlayer1));
-
-
 
         List<Player> myPlayers = new ArrayList<>();
         myPlayers.add(myPlayer1);
@@ -141,7 +143,8 @@ class IslandTest {
             myIsland1.addStudent(new Student(PawnColor.PINK));
         }
 
-        // assertEquals(10,myIsland1.getInfluencePoints(myTeam, null));
+        assertEquals(10,myIsland1.getInfluencePoints(myTeam, new EffectHandler()));
+
     }
 
     @Test
