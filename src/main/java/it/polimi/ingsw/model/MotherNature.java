@@ -25,10 +25,10 @@ public class MotherNature {
      * Moves mother nature n steps on the board
      * @param n number of steps
      * @return the island on which mother nature lands on
-     * @throws IllegalMoveException when n <= 0
+     *
      */
-    public Island move(int n) throws IllegalMoveException {
-        if(n <= 0) throw new IllegalMoveException();
+    public Island move(int n) {
+        // if(n <= 0) throw new IllegalMoveException();
 
         Island landingIsland = island;
         for (int i = 0; i < n; i++) {

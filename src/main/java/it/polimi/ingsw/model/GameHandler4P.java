@@ -15,7 +15,7 @@ public class GameHandler4P extends GameHandler{
     @Override
     public boolean checkEndGame() {
         Game4P game4p = (Game4P) game;
-        boolean finished =  // One team has finished his towers
+        return  // One team has finished his towers
                 game4p.getTeams().stream().map(t -> t.getTeamTowers().size()).anyMatch(size -> size == 0) ||
                         // There are only 3 islands
                         game4p.islands.size() <= 3 ||
@@ -26,7 +26,5 @@ public class GameHandler4P extends GameHandler{
                         || game4p.bag.isEmpty() && gamePhase == GamePhase.TURN && turnPhase == TurnPhase.MOVEFROMCLOUD &&
                                 firstTurnPlayer == getNextPlayer()
                 ;
-        ended = finished;
-        return finished;
     }
 }

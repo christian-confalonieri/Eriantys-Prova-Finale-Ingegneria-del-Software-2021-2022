@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.EmptyBagException;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
+import it.polimi.ingsw.model.powers.EffectHandler;
 import it.polimi.ingsw.model.powers.PowerCard;
 
 import java.util.*;
@@ -23,6 +24,7 @@ public class Game {
     protected GameRules gameRules;
 
     protected List<PowerCard> powerCards;
+    protected EffectHandler effectHandler;
     protected int boardCoins;
     protected int boardNoEntryCards;
 
@@ -80,19 +82,21 @@ public class Game {
             boolean allZero = professorOnBoard;
 
 
+
             for (Player p : players)
             {
-                if(p.getSchool().getStudentsNumber(color) > maxPlayerColor.getSchool().getStudentsNumber(color)) {
+                if (p.getSchool().getStudentsNumber(color) > 0) allZero = false;
+                if (p.getSchool().getStudentsNumber(color) > maxPlayerColor.getSchool().getStudentsNumber(color)) {
                     maxPlayerColor = p;
                     allZero = false;
                 }
             }
-            if (allZero) return;
-            if (professorOnBoard) {
+
+            if (professorOnBoard && !allZero) {
                 maxPlayerColor.getSchool().addProfessor(profToMove);
                 this.removeProfessor(profToMove);
             }
-            else {
+            else if(!allZero) {
                 maxPlayerColor.getSchool().addProfessor(profToMove);
                 hasProfessor.getSchool().removeProfessor(profToMove);
             }
@@ -256,6 +260,9 @@ public class Game {
 
         // Set noEntryCards
         boardNoEntryCards = 4;
+
+        // Construct effectHandler
+        effectHandler = new EffectHandler();
     }
 
     /**

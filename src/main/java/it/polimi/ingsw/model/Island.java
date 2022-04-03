@@ -187,7 +187,7 @@ public class Island {
      * If there are no towers on the island, I return the player with the most influence points.
      * If no player has influence on the island return null.
      *
-     * @return the player with the most influence on the island
+     * @return the player with the most influence on the island, null if no one owns the island
      */
     public Player getInfluencePlayer(List<Player> players, EffectHandler effectHandler) {
 

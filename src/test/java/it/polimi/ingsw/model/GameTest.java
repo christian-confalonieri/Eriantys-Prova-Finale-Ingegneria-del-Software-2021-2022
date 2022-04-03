@@ -135,6 +135,65 @@ class GameTest {
 
     @Test
     void professorRelocate() {
+        SortedMap<String, Wizard> playerData = new TreeMap<>();
+        playerData.put("Pippo", Wizard.YELLOW);
+        playerData.put("Topolino",Wizard.GREEN);
+
+        String rulesJson = null;
+        try {
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameHandler gameHandler = null;
+
+        try {
+            gameHandler = GameCreator.createGame(playerData, rulesJson);
+        } catch (InvalidNewGameException | InvalidRulesException e) {
+            System.out.println(e.getMessage());
+        }
+
+        Player pippo = gameHandler.game.players.get(0);
+        pippo.getSchool().addDiningRoom(new Student(PawnColor.RED));
+        pippo.getSchool().addDiningRoom(new Student(PawnColor.BLUE));
+        pippo.getSchool().addDiningRoom(new Student(PawnColor.YELLOW));
+        pippo.getSchool().addDiningRoom(new Student(PawnColor.YELLOW));
+        pippo.getSchool().addDiningRoom(new Student(PawnColor.YELLOW));
+
+        gameHandler.game.professorRelocate();
+
+        assertTrue(pippo.getSchool().hasProfessor(PawnColor.RED));
+        assertTrue(pippo.getSchool().hasProfessor(PawnColor.BLUE));
+        assertTrue(pippo.getSchool().hasProfessor(PawnColor.YELLOW));
+        assertEquals(pippo.getSchool().getProfessorTable().size(), 3);
+
+
+        Player topolino = gameHandler.game.players.get(1);
+        topolino.getSchool().addDiningRoom(new Student(PawnColor.RED));
+        topolino.getSchool().addDiningRoom(new Student(PawnColor.YELLOW));
+        topolino.getSchool().addDiningRoom(new Student(PawnColor.PINK));
+
+        gameHandler.game.professorRelocate();
+
+        assertTrue(pippo.getSchool().hasProfessor(PawnColor.RED));
+        assertTrue(pippo.getSchool().hasProfessor(PawnColor.BLUE));
+        assertTrue(pippo.getSchool().hasProfessor(PawnColor.YELLOW));
+        assertEquals(pippo.getSchool().getProfessorTable().size(), 3);
+        assertTrue(topolino.getSchool().hasProfessor(PawnColor.PINK));
+
+        pippo.getSchool().addDiningRoom(new Student(PawnColor.PINK));
+        pippo.getSchool().addDiningRoom((new Student(PawnColor.PINK)));
+
+        gameHandler.game.professorRelocate();
+
+        assertTrue(pippo.getSchool().hasProfessor(PawnColor.RED));
+        assertTrue(pippo.getSchool().hasProfessor(PawnColor.BLUE));
+        assertTrue(pippo.getSchool().hasProfessor(PawnColor.YELLOW));
+        assertTrue(pippo.getSchool().hasProfessor((PawnColor.PINK)));
+        assertEquals(pippo.getSchool().getProfessorTable().size(), 4);
+        assertEquals(topolino.getSchool().getProfessorTable().size(), 0);
+
     }
 
     @Test

@@ -18,7 +18,7 @@ class GameHandlerTest {
     }
 
     @Test
-    void TwoPlayerMatchAdvance() {
+    void twoPlayerMatchAdvance() {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Pippo", Wizard.YELLOW);
         playerData.put("Topolino",Wizard.GREEN);
@@ -113,7 +113,7 @@ class GameHandlerTest {
     }
 
     @Test
-    void ThreePlayerMatchAdvance() {
+    void threePlayerMatchAdvance() {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Abbate", Wizard.YELLOW);
         playerData.put("Bertoldo",Wizard.GREEN);
@@ -206,7 +206,7 @@ class GameHandlerTest {
     }
 
     @Test
-    void FourPlayerMatchAdvance() {
+    void fourPlayerMatchAdvance() {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Abbate", Wizard.YELLOW);
         playerData.put("Bertoldo",Wizard.GREEN);
@@ -315,5 +315,81 @@ class GameHandlerTest {
         assertEquals(gameHandler.turnPhase, TurnPhase.MOVEFROMCLOUD);
         assertEquals(gameHandler.currentPlayer.getName(), "Abbate");
         gameHandler.advance();
+    }
+
+    @Test
+    void checkEndGameWithOneTurnSimulation() {
+        SortedMap<String, Wizard> playerData = new TreeMap<>();
+        playerData.put("Pippo", Wizard.YELLOW);
+        playerData.put("Topolino",Wizard.GREEN);
+
+        String rulesJson = null;
+        try {
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameHandler gameHandler = null;
+
+        try {
+            gameHandler = GameCreator.createGame(playerData, rulesJson);
+        } catch (InvalidNewGameException | InvalidRulesException e) {
+            System.out.println(e.getMessage());
+        }
+
+        // Pippo plays card
+        gameHandler.currentPlayer.playCard(Card.THREE);
+        gameHandler.advance();
+
+        // Topolino plays card
+        gameHandler.currentPlayer.playCard(Card.FIVE);
+        gameHandler.advance();
+
+        // Pippo moves 3 student MOVESTUDENTS
+        assertEquals(gameHandler.currentPlayer.getName(), "Pippo");
+        Student s1 = gameHandler.currentPlayer.getSchool().getEntrance().get(0);
+        Student s2 = gameHandler.currentPlayer.getSchool().getEntrance().get(1);
+        Student s3 = gameHandler.currentPlayer.getSchool().getEntrance().get(2);
+        gameHandler.currentPlayer.getSchool().entranceToDiningRoom(s1);
+        gameHandler.currentPlayer.getSchool().entranceToDiningRoom(s2);
+        gameHandler.currentPlayer.getSchool().entranceToIsland(s3, gameHandler.game.islands.get(1));
+
+        gameHandler.game.professorRelocate(); // Pippo earnes professors
+        assertTrue(gameHandler.currentPlayer.getSchool().getProfessorTable().size() >= 1);
+        gameHandler.advance();
+
+        // Pippo moves mothernature MOVEMOTHER
+        gameHandler.game.motherNature.move(1);
+        // IF NOT NULL
+        Player influenceOnIsland = gameHandler.game.motherNature.isOn().getInfluencePlayer(gameHandler.game.players, gameHandler.game.effectHandler);
+        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn()); // Moves all the tower on so wins at the end of this turn
+        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
+        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
+        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
+        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
+        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
+        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
+        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
+
+        if (gameHandler.game.motherNature.isOn().checkUnifyNext())
+            gameHandler.game.unifyIsland(gameHandler.game.motherNature.isOn(), gameHandler.game.motherNature.isOn().getNextIsland());
+        if (gameHandler.game.motherNature.isOn().checkUnifyPrev())
+            gameHandler.game.unifyIsland(gameHandler.game.motherNature.isOn(), gameHandler.game.motherNature.isOn().getPrevIsland());
+
+        gameHandler.advance();
+
+        // Pippo choses an Cloud MOVECLOUD
+        List<Student> pickedCloud = gameHandler.game.clouds.get(0).pickAllStudents();
+        for (Student student : pickedCloud)
+            gameHandler.currentPlayer.getSchool().addEntrance(student);
+
+        gameHandler.advance();
+
+        assertTrue(gameHandler.isEnded());
+        List<Player> leaderBoard = gameHandler.getGame().getLeaderBoard();
+        Player winner = leaderBoard.get(0);
+
+        assertEquals(winner, influenceOnIsland);
     }
 }

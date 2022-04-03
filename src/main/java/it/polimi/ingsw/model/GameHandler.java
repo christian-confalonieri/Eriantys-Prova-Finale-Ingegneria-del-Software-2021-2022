@@ -43,11 +43,13 @@ public class GameHandler {
                         turnPhase = TurnPhase.MOVEFROMCLOUD;
                         return;
                     case MOVEFROMCLOUD:
+                        this.ended = checkEndGame(); // Checks at the end of each turn if the game has ended
                         currentPlayer = getNextPlayer();
                         turnPhase = TurnPhase.MOVESTUDENTS;
                         if(currentPlayer == firstTurnPlayer) {
                             orderedTurnPlayers = new ArrayList<>(game.players); // Return to a clockwise order for preparation
                             gamePhase = GamePhase.PREPARATION;
+
                         }
                 }
         }
@@ -97,11 +99,12 @@ public class GameHandler {
     /**
      * Check if the game is in an end situation
      * Must be called at the end of each player turn
+     * this.advance calls
      *
      * @return true if the game has ended
      */
     public boolean checkEndGame() {
-        boolean finished =  // One player has finished his towers
+        return  // One player has finished his towers
                 game.players.stream().map(p -> p.getSchool().getTowers().size()).anyMatch(size -> size == 0) ||
                         // There are only 3 islands
                         game.islands.size() <= 3 ||
@@ -112,7 +115,5 @@ public class GameHandler {
                         || game.bag.isEmpty() && gamePhase == GamePhase.TURN && turnPhase == TurnPhase.MOVEFROMCLOUD &&
                                 firstTurnPlayer == getNextPlayer()
                 ;
-        ended = finished;
-        return finished;
     }
 }

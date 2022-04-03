@@ -15,24 +15,15 @@ public class School {
 
     public School() {
         diningRoom = new HashMap<>();
+        for (PawnColor pawnColor: PawnColor.values()) {
+            diningRoom.put(pawnColor, new ArrayList<>());
+        }
         professorTable = new ArrayList<>();
         entrance = new ArrayList<>();
         towers = new ArrayList<>();
     }
 
-    /**
-     * Adds a professor to the school.
-     *
-     * @param professor the professor to be added
-     */
-    public void addProfessor(Professor professor) { professorTable.add(professor); }
-
-    /**
-     * Removes a professor to the school.
-     *
-     * @param professor the professor to be removed
-     */
-    public void removeProfessor(Professor professor) { professorTable.remove(professor); }
+    public List<Student> getEntrance() { return this.entrance; }
 
     /**
      * Adds a student to the entrance of the school.
@@ -90,14 +81,14 @@ public class School {
     }
 
     /**
-     * This method moves the first tower available in the school to the island specified ad the parameter.
+     * Move a student from the entrance of the school to the chosen island
      *
-     * @param island is where the tower has to be moved
+     * @param student the student to move
+     * @param island the island to put the student on
      */
-    public void moveTower(Island island) {
-        // The first tower is removed from the list in this class and is placed on the island
-        island.addTower(this.towers.get(0));
-        this.towers.remove(0);
+    public void entranceToIsland(Student student, Island island) {
+        this.entrance.remove(student);
+        island.addStudent(student);
     }
 
     /**
@@ -114,6 +105,23 @@ public class School {
             return value.size();
         }
     }
+
+
+
+    /**
+     * Adds a professor to the school.
+     *
+     * @param professor the professor to be added
+     */
+    public void addProfessor(Professor professor) { professorTable.add(professor); }
+
+    /**
+     * Removes a professor to the school.
+     *
+     * @param professor the professor to be removed
+     */
+    public void removeProfessor(Professor professor) { professorTable.remove(professor); }
+
 
     public List<Professor> getProfessorTable() {
         return professorTable;
@@ -139,9 +147,23 @@ public class School {
         return professorTable.stream().filter(professor -> professor.getColor().equals(color)).findAny().get();
     }
 
+
+
     public List<Tower> getTowers() {
         return towers;
     }
+
+    /**
+     * This method moves the first tower available in the school to the island specified ad the parameter.
+     *
+     * @param island is where the tower has to be moved
+     */
+    public void moveTower(Island island) {
+        // The first tower is removed from the list in this class and is placed on the island
+        island.addTower(this.towers.get(0));
+        this.towers.remove(0);
+    }
+
 
     /**
      * Adds a tower to the school.
