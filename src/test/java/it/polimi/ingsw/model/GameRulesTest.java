@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.InvalidRulesException;
+import it.polimi.ingsw.model.game.rules.GameRules;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;

@@ -2,6 +2,13 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
+import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.entity.Student;
+import it.polimi.ingsw.model.enumeration.Card;
+import it.polimi.ingsw.model.enumeration.GamePhase;
+import it.polimi.ingsw.model.enumeration.TurnPhase;
+import it.polimi.ingsw.model.enumeration.Wizard;
+import it.polimi.ingsw.model.game.*;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
@@ -230,7 +237,7 @@ class GameHandlerTest {
 
         Game board = gameHandler.getGame();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
+        assertEquals(gameHandler.getGamePhase, GamePhase.PREPARATION);
         assertEquals(gameHandler.currentPlayer.getName(), "Bertoldo");
         gameHandler.currentPlayer.playCard(Card.EIGHT);
         gameHandler.advance();
@@ -342,9 +349,11 @@ class GameHandlerTest {
         gameHandler.currentPlayer.playCard(Card.THREE);
         gameHandler.advance();
 
+
         // Topolino plays card
         gameHandler.currentPlayer.playCard(Card.FIVE);
         gameHandler.advance();
+
 
         // Pippo moves 3 student MOVESTUDENTS
         assertEquals(gameHandler.currentPlayer.getName(), "Pippo");
@@ -359,9 +368,10 @@ class GameHandlerTest {
         assertTrue(gameHandler.currentPlayer.getSchool().getProfessorTable().size() >= 1);
         gameHandler.advance();
 
+
         // Pippo moves mothernature MOVEMOTHER
         gameHandler.game.motherNature.move(1);
-        // IF NOT NULL
+
         Player influenceOnIsland = gameHandler.game.motherNature.isOn().getInfluencePlayer(gameHandler.game.players, gameHandler.game.effectHandler);
         influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn()); // Moves all the tower on so wins at the end of this turn
         influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());

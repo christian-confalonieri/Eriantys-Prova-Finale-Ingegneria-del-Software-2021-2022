@@ -1,7 +1,11 @@
 package it.polimi.ingsw.model;
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.model.powers.EffectHandler;
+import it.polimi.ingsw.model.entity.*;
+import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.TowerColor;
+import it.polimi.ingsw.model.enumeration.Wizard;
+import it.polimi.ingsw.model.power.EffectHandler;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

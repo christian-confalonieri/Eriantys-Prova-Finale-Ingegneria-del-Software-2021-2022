@@ -2,10 +2,16 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
+import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.entity.School;
+import it.polimi.ingsw.model.entity.Student;
+import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.Wizard;
+import it.polimi.ingsw.model.game.Game;
+import it.polimi.ingsw.model.game.GameCreator;
+import it.polimi.ingsw.model.game.GameHandler;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
