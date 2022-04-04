@@ -26,6 +26,9 @@ public class Farmer extends PowerCard {
     }
 
     // SHOULD BE ACTIVATED AFTER MOVING STUDENTS FROM THE ENTRANCE TO THE DINING ROOM.
+    /**
+     * @author Christian Confalonieri
+     */
     @Override
     public void power() {
         super.power();
@@ -61,6 +64,9 @@ public class Farmer extends PowerCard {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Override
     public void endPower() {
         super.endPower();
