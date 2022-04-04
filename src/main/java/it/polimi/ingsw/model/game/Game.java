@@ -340,4 +340,20 @@ public class Game {
     public Bag getBag() {
         return bag;
     }
+
+    public List<Island> getIslands() {
+        return islands;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public List<Cloud> getClouds() {
+        return clouds;
+    }
+
+    public MotherNature getMotherNature() {
+        return motherNature;
+    }
 }

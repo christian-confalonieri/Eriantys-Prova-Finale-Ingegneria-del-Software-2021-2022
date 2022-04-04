@@ -51,71 +51,71 @@ class GameHandlerTest {
 
         assertNotNull(board);
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Pippo");
-        gameHandler.currentPlayer.playCard(Card.FOUR);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Pippo");
+        gameHandler.getCurrentPlayer().playCard(Card.FOUR);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Topolino");
-        gameHandler.currentPlayer.playCard(Card.FIVE);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Topolino");
+        gameHandler.getCurrentPlayer().playCard(Card.FIVE);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVESTUDENTS);
-        assertEquals(gameHandler.currentPlayer.getName(), "Pippo");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Pippo");
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVEMOTHER);
-        assertEquals(gameHandler.currentPlayer.getName(), "Pippo");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVEMOTHER);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Pippo");
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVEFROMCLOUD);
-        assertEquals(gameHandler.currentPlayer.getName(), "Pippo");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVEFROMCLOUD);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Pippo");
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVESTUDENTS);
-        assertEquals(gameHandler.currentPlayer.getName(), "Topolino");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Topolino");
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVEMOTHER);
-        assertEquals(gameHandler.currentPlayer.getName(), "Topolino");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVEMOTHER);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Topolino");
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVEFROMCLOUD);
-        assertEquals(gameHandler.currentPlayer.getName(), "Topolino");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVEFROMCLOUD);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Topolino");
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Pippo");
-        gameHandler.currentPlayer.playCard(Card.EIGHT);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Pippo");
+        gameHandler.getCurrentPlayer().playCard(Card.EIGHT);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Topolino");
-        gameHandler.currentPlayer.playCard(Card.THREE);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Topolino");
+        gameHandler.getCurrentPlayer().playCard(Card.THREE);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVESTUDENTS);
-        assertEquals(gameHandler.currentPlayer.getName(), "Topolino");
-        gameHandler.advance();
-
-        gameHandler.advance();
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Topolino");
         gameHandler.advance();
 
         gameHandler.advance();
         gameHandler.advance();
+
+        gameHandler.advance();
+        gameHandler.advance();
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Topolino");
-        gameHandler.currentPlayer.playCard(Card.THREE);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Topolino");
+        gameHandler.getCurrentPlayer().playCard(Card.THREE);
         gameHandler.advance();
     }
 
@@ -143,72 +143,72 @@ class GameHandlerTest {
 
         Game board = gameHandler.getGame();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Abbate");
-        gameHandler.currentPlayer.playCard(Card.EIGHT);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Abbate");
+        gameHandler.getCurrentPlayer().playCard(Card.EIGHT);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Bertoldo");
-        gameHandler.currentPlayer.playCard(Card.FIVE);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Bertoldo");
+        gameHandler.getCurrentPlayer().playCard(Card.FIVE);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Carnaroli");
-        gameHandler.currentPlayer.playCard(Card.NINE);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Carnaroli");
+        gameHandler.getCurrentPlayer().playCard(Card.NINE);
         gameHandler.advance();
 
 
         //In turno si procede in ordine di carta
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVESTUDENTS);
-        assertEquals(gameHandler.currentPlayer.getName(), "Bertoldo");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Bertoldo");
         gameHandler.advance();
         gameHandler.advance();
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVESTUDENTS);
-        assertEquals(gameHandler.currentPlayer.getName(), "Abbate");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Abbate");
         gameHandler.advance();
         gameHandler.advance();
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVESTUDENTS);
-        assertEquals(gameHandler.currentPlayer.getName(), "Carnaroli");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Carnaroli");
         gameHandler.advance();
         gameHandler.advance();
         gameHandler.advance();
 
 
         // In preparazione si prosegue in senso orario
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Bertoldo");
-        gameHandler.currentPlayer.playCard(Card.THREE);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Bertoldo");
+        gameHandler.getCurrentPlayer().playCard(Card.THREE);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Carnaroli");
-        gameHandler.currentPlayer.playCard(Card.TWO);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Carnaroli");
+        gameHandler.getCurrentPlayer().playCard(Card.TWO);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Abbate");
-        gameHandler.currentPlayer.playCard(Card.TEN);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Abbate");
+        gameHandler.getCurrentPlayer().playCard(Card.TEN);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVESTUDENTS);
-        assertEquals(gameHandler.currentPlayer.getName(), "Carnaroli");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Carnaroli");
         gameHandler.advance();
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVEMOTHER);
-        assertEquals(gameHandler.currentPlayer.getName(), "Carnaroli");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVEMOTHER);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Carnaroli");
         gameHandler.advance();
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVEFROMCLOUD);
-        assertEquals(gameHandler.currentPlayer.getName(), "Carnaroli");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVEFROMCLOUD);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Carnaroli");
         gameHandler.advance();
     }
 
@@ -237,90 +237,90 @@ class GameHandlerTest {
 
         Game board = gameHandler.getGame();
 
-        assertEquals(gameHandler.getGamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Bertoldo");
-        gameHandler.currentPlayer.playCard(Card.EIGHT);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Bertoldo");
+        gameHandler.getCurrentPlayer().playCard(Card.EIGHT);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Carnaroli");
-        gameHandler.currentPlayer.playCard(Card.FIVE);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Carnaroli");
+        gameHandler.getCurrentPlayer().playCard(Card.FIVE);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Drondo");
-        gameHandler.currentPlayer.playCard(Card.NINE);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Drondo");
+        gameHandler.getCurrentPlayer().playCard(Card.NINE);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Abbate");
-        gameHandler.currentPlayer.playCard(Card.TEN);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Abbate");
+        gameHandler.getCurrentPlayer().playCard(Card.TEN);
         gameHandler.advance();
 
 
         //In turno si procede in ordine di carta
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVESTUDENTS);
-        assertEquals(gameHandler.currentPlayer.getName(), "Carnaroli");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Carnaroli");
         gameHandler.advance();
         gameHandler.advance();
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVESTUDENTS);
-        assertEquals(gameHandler.currentPlayer.getName(), "Bertoldo");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Bertoldo");
         gameHandler.advance();
         gameHandler.advance();
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVESTUDENTS);
-        assertEquals(gameHandler.currentPlayer.getName(), "Drondo");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Drondo");
         gameHandler.advance();
         gameHandler.advance();
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVESTUDENTS);
-        assertEquals(gameHandler.currentPlayer.getName(), "Abbate");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Abbate");
         gameHandler.advance();
         gameHandler.advance();
         gameHandler.advance();
 
 
         // In preparazione si prosegue in senso orario
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Carnaroli");
-        gameHandler.currentPlayer.playCard(Card.THREE);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Carnaroli");
+        gameHandler.getCurrentPlayer().playCard(Card.THREE);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Drondo");
-        gameHandler.currentPlayer.playCard(Card.TWO);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Drondo");
+        gameHandler.getCurrentPlayer().playCard(Card.TWO);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Abbate");
-        gameHandler.currentPlayer.playCard(Card.ONE);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Abbate");
+        gameHandler.getCurrentPlayer().playCard(Card.ONE);
         gameHandler.advance();
 
-        assertEquals(gameHandler.gamePhase, GamePhase.PREPARATION);
-        assertEquals(gameHandler.currentPlayer.getName(), "Bertoldo");
-        gameHandler.currentPlayer.playCard(Card.FOUR);
+        assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Bertoldo");
+        gameHandler.getCurrentPlayer().playCard(Card.FOUR);
         gameHandler.advance();
 
 
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVESTUDENTS);
-        assertEquals(gameHandler.currentPlayer.getName(), "Abbate");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Abbate");
         gameHandler.advance();
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVEMOTHER);
-        assertEquals(gameHandler.currentPlayer.getName(), "Abbate");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVEMOTHER);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Abbate");
         gameHandler.advance();
-        assertEquals(gameHandler.gamePhase, GamePhase.TURN);
-        assertEquals(gameHandler.turnPhase, TurnPhase.MOVEFROMCLOUD);
-        assertEquals(gameHandler.currentPlayer.getName(), "Abbate");
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVEFROMCLOUD);
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Abbate");
         gameHandler.advance();
     }
 
@@ -346,53 +346,54 @@ class GameHandlerTest {
         }
 
         // Pippo plays card
-        gameHandler.currentPlayer.playCard(Card.THREE);
+        assertNotNull(gameHandler);
+        gameHandler.getCurrentPlayer().playCard(Card.THREE);
         gameHandler.advance();
 
 
         // Topolino plays card
-        gameHandler.currentPlayer.playCard(Card.FIVE);
+        gameHandler.getCurrentPlayer().playCard(Card.FIVE);
         gameHandler.advance();
 
 
         // Pippo moves 3 student MOVESTUDENTS
-        assertEquals(gameHandler.currentPlayer.getName(), "Pippo");
-        Student s1 = gameHandler.currentPlayer.getSchool().getEntrance().get(0);
-        Student s2 = gameHandler.currentPlayer.getSchool().getEntrance().get(1);
-        Student s3 = gameHandler.currentPlayer.getSchool().getEntrance().get(2);
-        gameHandler.currentPlayer.getSchool().entranceToDiningRoom(s1);
-        gameHandler.currentPlayer.getSchool().entranceToDiningRoom(s2);
-        gameHandler.currentPlayer.getSchool().entranceToIsland(s3, gameHandler.game.islands.get(1));
+        assertEquals(gameHandler.getCurrentPlayer().getName(), "Pippo");
+        Student s1 = gameHandler.getCurrentPlayer().getSchool().getEntrance().get(0);
+        Student s2 = gameHandler.getCurrentPlayer().getSchool().getEntrance().get(1);
+        Student s3 = gameHandler.getCurrentPlayer().getSchool().getEntrance().get(2);
+        gameHandler.getCurrentPlayer().getSchool().entranceToDiningRoom(s1);
+        gameHandler.getCurrentPlayer().getSchool().entranceToDiningRoom(s2);
+        gameHandler.getCurrentPlayer().getSchool().entranceToIsland(s3, gameHandler.getGame().getIslands().get(1));
 
-        gameHandler.game.professorRelocate(); // Pippo earnes professors
-        assertTrue(gameHandler.currentPlayer.getSchool().getProfessorTable().size() >= 1);
+        gameHandler.getGame().professorRelocate(); // Pippo earnes professors
+        assertTrue(gameHandler.getCurrentPlayer().getSchool().getProfessorTable().size() >= 1);
         gameHandler.advance();
 
 
         // Pippo moves mothernature MOVEMOTHER
-        gameHandler.game.motherNature.move(1);
+        gameHandler.getGame().getMotherNature().move(1);
 
-        Player influenceOnIsland = gameHandler.game.motherNature.isOn().getInfluencePlayer(gameHandler.game.players, gameHandler.game.effectHandler);
-        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn()); // Moves all the tower on so wins at the end of this turn
-        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
-        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
-        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
-        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
-        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
-        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
-        influenceOnIsland.getSchool().moveTower(gameHandler.game.motherNature.isOn());
+        Player influenceOnIsland = gameHandler.getGame().getMotherNature().isOn().getInfluencePlayer(gameHandler.getGame().getPlayers(), gameHandler.getGame().getEffectHandler());
+        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn()); // Moves all the tower on so wins at the end of this turn
+        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
+        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
+        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
+        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
+        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
+        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
+        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
 
-        if (gameHandler.game.motherNature.isOn().checkUnifyNext())
-            gameHandler.game.unifyIsland(gameHandler.game.motherNature.isOn(), gameHandler.game.motherNature.isOn().getNextIsland());
-        if (gameHandler.game.motherNature.isOn().checkUnifyPrev())
-            gameHandler.game.unifyIsland(gameHandler.game.motherNature.isOn(), gameHandler.game.motherNature.isOn().getPrevIsland());
+        if (gameHandler.getGame().getMotherNature().isOn().checkUnifyNext())
+            gameHandler.getGame().unifyIsland(gameHandler.getGame().getMotherNature().isOn(), gameHandler.getGame().getMotherNature().isOn().getNextIsland());
+        if (gameHandler.getGame().getMotherNature().isOn().checkUnifyPrev())
+            gameHandler.getGame().unifyIsland(gameHandler.getGame().getMotherNature().isOn(), gameHandler.getGame().getMotherNature().isOn().getPrevIsland());
 
         gameHandler.advance();
 
         // Pippo choses an Cloud MOVECLOUD
-        List<Student> pickedCloud = gameHandler.game.clouds.get(0).pickAllStudents();
+        List<Student> pickedCloud = gameHandler.getGame().getClouds().get(0).pickAllStudents();
         for (Student student : pickedCloud)
-            gameHandler.currentPlayer.getSchool().addEntrance(student);
+            gameHandler.getCurrentPlayer().getSchool().addEntrance(student);
 
         gameHandler.advance();
 

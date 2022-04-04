@@ -120,4 +120,16 @@ public class GameHandler {
                                 firstTurnPlayer == getNextPlayer()
                 ;
     }
+
+    public GamePhase getGamePhase() {
+        return gamePhase;
+    }
+
+    public TurnPhase getTurnPhase() {
+        return turnPhase;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 }

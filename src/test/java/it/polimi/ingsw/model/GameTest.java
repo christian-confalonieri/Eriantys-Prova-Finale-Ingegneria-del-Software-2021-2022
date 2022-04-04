@@ -44,19 +44,19 @@ class GameTest {
 
         Game game = gameHandler.getGame();
 
-        School pippoSchool = game.players.get(0).getSchool();
+        School pippoSchool = game.getPlayers().get(0).getSchool();
         assertEquals(pippoSchool.getTowers().size(), 8);
-        pippoSchool.moveTower(game.islands.get(4));
-        pippoSchool.moveTower(game.islands.get(5));
+        pippoSchool.moveTower(game.getIslands().get(4));
+        pippoSchool.moveTower(game.getIslands().get(5));
         assertEquals(pippoSchool.getTowers().size(), 6);
-        assertFalse(game.islands.get(4).checkUnifyPrev());
-        assertFalse(game.islands.get(5).checkUnifyNext());
-        assertTrue(game.islands.get(4).checkUnifyNext());
-        assertTrue(game.islands.get(5).checkUnifyPrev());
+        assertFalse(game.getIslands().get(4).checkUnifyPrev());
+        assertFalse(game.getIslands().get(5).checkUnifyNext());
+        assertTrue(game.getIslands().get(4).checkUnifyNext());
+        assertTrue(game.getIslands().get(5).checkUnifyPrev());
 
-        game.unifyIsland(game.islands.get(5), game.islands.get(4));
-        assertEquals(game.islands.size(), 11);
-        assertEquals(game.motherNature.isOn().getIslandSize(), 2);
+        game.unifyIsland(game.getIslands().get(5), game.getIslands().get(4));
+        assertEquals(game.getIslands().size(), 11);
+        assertEquals(game.getMotherNature().isOn().getIslandSize(), 2);
     }
 
     @Test
@@ -83,19 +83,19 @@ class GameTest {
 
         Game game = gameHandler.getGame();
 
-        School pippoSchool = game.players.get(0).getSchool();
+        School pippoSchool = game.getPlayers().get(0).getSchool();
         assertEquals(pippoSchool.getTowers().size(), 8);
-        pippoSchool.moveTower(game.islands.get(0));
-        pippoSchool.moveTower(game.islands.get(11));
+        pippoSchool.moveTower(game.getIslands().get(0));
+        pippoSchool.moveTower(game.getIslands().get(11));
         assertEquals(pippoSchool.getTowers().size(), 6);
-        assertFalse(game.islands.get(11).checkUnifyPrev());
-        assertFalse(game.islands.get(0).checkUnifyNext());
-        assertTrue(game.islands.get(11).checkUnifyNext());
-        assertTrue(game.islands.get(0).checkUnifyPrev());
+        assertFalse(game.getIslands().get(11).checkUnifyPrev());
+        assertFalse(game.getIslands().get(0).checkUnifyNext());
+        assertTrue(game.getIslands().get(11).checkUnifyNext());
+        assertTrue(game.getIslands().get(0).checkUnifyPrev());
 
-        game.unifyIsland(game.islands.get(0), game.islands.get(11));
-        assertEquals(game.islands.size(), 11);
-        assertEquals(game.motherNature.isOn().getIslandSize(), 2);
+        game.unifyIsland(game.getIslands().get(0), game.getIslands().get(11));
+        assertEquals(game.getIslands().size(), 11);
+        assertEquals(game.getMotherNature().isOn().getIslandSize(), 2);
     }
 
     @Test
@@ -122,21 +122,21 @@ class GameTest {
 
         Game game = gameHandler.getGame();
 
-        School pippoSchool = game.players.get(0).getSchool();
+        School pippoSchool = game.getPlayers().get(0).getSchool();
         assertEquals(pippoSchool.getTowers().size(), 8);
-        pippoSchool.moveTower(game.islands.get(1));
-        pippoSchool.moveTower(game.islands.get(11));
+        pippoSchool.moveTower(game.getIslands().get(1));
+        pippoSchool.moveTower(game.getIslands().get(11));
         assertEquals(pippoSchool.getTowers().size(), 6);
         // Pippo puts a tower in island0, in between other two islands
-        pippoSchool.moveTower((game.islands.get(0)));
-        assertTrue(game.islands.get(0).checkUnifyNext());
-        game.unifyIsland(game.islands.get(0), game.islands.get(0).getNextIsland());
-        assertFalse(game.motherNature.isOn().checkUnifyNext());
-        assertTrue(game.motherNature.isOn().checkUnifyPrev());
-        game.unifyIsland(game.motherNature.isOn(), game.motherNature.isOn().getPrevIsland());
+        pippoSchool.moveTower((game.getIslands().get(0)));
+        assertTrue(game.getIslands().get(0).checkUnifyNext());
+        game.unifyIsland(game.getIslands().get(0), game.getIslands().get(0).getNextIsland());
+        assertFalse(game.getMotherNature().isOn().checkUnifyNext());
+        assertTrue(game.getMotherNature().isOn().checkUnifyPrev());
+        game.unifyIsland(game.getMotherNature().isOn(), game.getMotherNature().isOn().getPrevIsland());
 
-        assertEquals(game.islands.size(), 10);
-        assertEquals(game.motherNature.isOn().getIslandSize(), 3);
+        assertEquals(game.getIslands().size(), 10);
+        assertEquals(game.getMotherNature().isOn().getIslandSize(), 3);
     }
 
     @Test
@@ -160,14 +160,14 @@ class GameTest {
             System.out.println(e.getMessage());
         }
 
-        Player pippo = gameHandler.game.players.get(0);
+        Player pippo = gameHandler.getGame().getPlayers().get(0);
         pippo.getSchool().addDiningRoom(new Student(PawnColor.RED));
         pippo.getSchool().addDiningRoom(new Student(PawnColor.BLUE));
         pippo.getSchool().addDiningRoom(new Student(PawnColor.YELLOW));
         pippo.getSchool().addDiningRoom(new Student(PawnColor.YELLOW));
         pippo.getSchool().addDiningRoom(new Student(PawnColor.YELLOW));
 
-        gameHandler.game.professorRelocate();
+        gameHandler.getGame().professorRelocate();
 
         assertTrue(pippo.getSchool().hasProfessor(PawnColor.RED));
         assertTrue(pippo.getSchool().hasProfessor(PawnColor.BLUE));
@@ -175,12 +175,12 @@ class GameTest {
         assertEquals(pippo.getSchool().getProfessorTable().size(), 3);
 
 
-        Player topolino = gameHandler.game.players.get(1);
+        Player topolino = gameHandler.getGame().getPlayers().get(1);
         topolino.getSchool().addDiningRoom(new Student(PawnColor.RED));
         topolino.getSchool().addDiningRoom(new Student(PawnColor.YELLOW));
         topolino.getSchool().addDiningRoom(new Student(PawnColor.PINK));
 
-        gameHandler.game.professorRelocate();
+        gameHandler.getGame().professorRelocate();
 
         assertTrue(pippo.getSchool().hasProfessor(PawnColor.RED));
         assertTrue(pippo.getSchool().hasProfessor(PawnColor.BLUE));
@@ -191,7 +191,7 @@ class GameTest {
         pippo.getSchool().addDiningRoom(new Student(PawnColor.PINK));
         pippo.getSchool().addDiningRoom((new Student(PawnColor.PINK)));
 
-        gameHandler.game.professorRelocate();
+        gameHandler.getGame().professorRelocate();
 
         assertTrue(pippo.getSchool().hasProfessor(PawnColor.RED));
         assertTrue(pippo.getSchool().hasProfessor(PawnColor.BLUE));
