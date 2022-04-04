@@ -5,8 +5,11 @@ import it.polimi.ingsw.exceptions.InvalidRulesException;
 public class CloudsRules {
     public final int numberOfClouds;
 
-    CloudsRules(int numberOfClouds) throws InvalidRulesException {
+    protected void validate() throws InvalidRulesException {
         if (numberOfClouds < 0) throw new InvalidRulesException();
+    }
+
+    protected CloudsRules(int numberOfClouds) {
         this.numberOfClouds = numberOfClouds;
     }
 }

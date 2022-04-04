@@ -5,8 +5,11 @@ import it.polimi.ingsw.exceptions.InvalidRulesException;
 public class PlayerRules {
     public final int startingPlayer;
 
-    PlayerRules(int startingPlayer) throws InvalidRulesException {
+    protected void validate() throws InvalidRulesException {
         if (startingPlayer < 0) throw new InvalidRulesException();
+    }
+
+    protected PlayerRules(int startingPlayer) {
         this.startingPlayer = startingPlayer;
     }
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
+import it.polimi.ingsw.model.entity.Pawn;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.Card;
@@ -325,7 +326,7 @@ class GameHandlerTest {
     }
 
     @Test
-    void checkEndGameWithOneTurnSimulation() {
+    void turnSimulation() {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Pippo", Wizard.YELLOW);
         playerData.put("Topolino",Wizard.GREEN);
@@ -364,6 +365,8 @@ class GameHandlerTest {
         gameHandler.getCurrentPlayer().getSchool().entranceToDiningRoom(s1);
         gameHandler.getCurrentPlayer().getSchool().entranceToDiningRoom(s2);
         gameHandler.getCurrentPlayer().getSchool().entranceToIsland(s3, gameHandler.getGame().getIslands().get(1));
+        assertEquals(gameHandler.getGame().getIslands().get(1).getStudents().size(), 2);
+
 
         gameHandler.getGame().professorRelocate(); // Pippo earnes professors
         assertTrue(gameHandler.getCurrentPlayer().getSchool().getProfessorTable().size() >= 1);
@@ -373,21 +376,23 @@ class GameHandlerTest {
         // Pippo moves mothernature MOVEMOTHER
         gameHandler.getGame().getMotherNature().move(1);
 
-        // Call to conquerIsland(isOn) TODO
-        Player influenceOnIsland = gameHandler.getGame().getMotherNature().isOn().getInfluencePlayer(gameHandler.getGame().getPlayers(), gameHandler.getGame().getEffectHandler());
-        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn()); // Moves all the tower on so wins at the end of this turn
-        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
-        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
-        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
-        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
-        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
-        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
-        influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
+        // Call to conquerIsland(isOn)
+        gameHandler.getGame().conquerIsland(gameHandler.getGame().getMotherNature().isOn());
 
+        GameHandler finalGameHandler = gameHandler;
+        if(gameHandler.getGame().getMotherNature().isOn().getStudents().stream().map(Pawn::getColor)
+                .anyMatch(pawnColor -> finalGameHandler.getCurrentPlayer().getSchool().hasProfessor(pawnColor))) { // Pippo conquered the island!
+            assertEquals(gameHandler.getGame().getMotherNature().isOn().getTowers().size(), 1);
+        }
+        else {
+            assertEquals(gameHandler.getGame().getMotherNature().isOn().getTowers().size(), 0);
+        }
+        // Check unification (must not unificate)
         if (gameHandler.getGame().getMotherNature().isOn().checkUnifyNext())
             gameHandler.getGame().unifyIsland(gameHandler.getGame().getMotherNature().isOn(), gameHandler.getGame().getMotherNature().isOn().getNextIsland());
         if (gameHandler.getGame().getMotherNature().isOn().checkUnifyPrev())
             gameHandler.getGame().unifyIsland(gameHandler.getGame().getMotherNature().isOn(), gameHandler.getGame().getMotherNature().isOn().getPrevIsland());
+        assertEquals(gameHandler.getGame().getIslands().size(), 12);
 
         gameHandler.advance();
 
@@ -398,10 +403,11 @@ class GameHandlerTest {
 
         gameHandler.advance();
 
-        assertTrue(gameHandler.isEnded());
+        assertFalse(gameHandler.isEnded());
         List<Player> leaderBoard = gameHandler.getGame().getLeaderBoard();
         Player winner = leaderBoard.get(0);
 
-        assertEquals(winner, influenceOnIsland);
+
+        assertEquals(winner, gameHandler.getGame().getPlayers().get(0)); // Pippo must be the winner (it has most professors and maybe a tower)
     }
 }

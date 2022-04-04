@@ -7,12 +7,15 @@ public class StudentsRules {
     public final int startingStudentsEntrance;
     public final int turnStudents;
 
-    StudentsRules(int startingStudentsOnIsland, int startingStudentsEntrance, int turnStudents) throws InvalidRulesException {
+    protected void validate() throws InvalidRulesException {
         if (startingStudentsOnIsland < 0) throw new InvalidRulesException();
-        this.startingStudentsOnIsland = startingStudentsOnIsland;
         if (startingStudentsEntrance < 0) throw new InvalidRulesException();
-        this.startingStudentsEntrance = startingStudentsEntrance;
         if (turnStudents < 0) throw new InvalidRulesException();
+    }
+
+    protected StudentsRules(int startingStudentsOnIsland, int startingStudentsEntrance, int turnStudents) throws InvalidRulesException {
+        this.startingStudentsOnIsland = startingStudentsOnIsland;
+        this.startingStudentsEntrance = startingStudentsEntrance;
         this.turnStudents = turnStudents;
     }
 }

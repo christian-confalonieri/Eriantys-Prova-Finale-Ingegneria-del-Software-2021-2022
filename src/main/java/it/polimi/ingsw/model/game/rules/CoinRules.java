@@ -6,10 +6,13 @@ public class CoinRules {
     public final int startingCoinsPerPlayer;
     public final int startingBoardCoins;
 
-    CoinRules(int startingCoinsPerPlayer, int startingBoardCoins) throws InvalidRulesException {
+    protected void validate() throws InvalidRulesException {
         if (startingCoinsPerPlayer < 0) throw new InvalidRulesException();
-        this.startingCoinsPerPlayer = startingCoinsPerPlayer;
         if (startingBoardCoins < 0) throw new InvalidRulesException();
+    }
+
+    protected CoinRules(int startingCoinsPerPlayer, int startingBoardCoins) {
+        this.startingCoinsPerPlayer = startingCoinsPerPlayer;
         this.startingBoardCoins = startingBoardCoins;
     }
 }

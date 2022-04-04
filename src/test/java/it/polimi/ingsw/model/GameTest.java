@@ -2,9 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
-import it.polimi.ingsw.model.entity.Player;
-import it.polimi.ingsw.model.entity.School;
-import it.polimi.ingsw.model.entity.Student;
+import it.polimi.ingsw.model.entity.*;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.Game;
@@ -200,6 +198,81 @@ class GameTest {
         assertEquals(pippo.getSchool().getProfessorTable().size(), 4);
         assertEquals(topolino.getSchool().getProfessorTable().size(), 0);
 
+    }
+
+    @Test
+    void getLeaderBoard() {
+        SortedMap<String, Wizard> playerData = new TreeMap<>();
+        playerData.put("Pippo", Wizard.YELLOW);
+        playerData.put("Topolino",Wizard.GREEN);
+
+        String rulesJson = null;
+        try {
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameHandler gameHandler = null;
+
+        try {
+            gameHandler = GameCreator.createGame(playerData, rulesJson);
+        } catch (InvalidNewGameException | InvalidRulesException e) {
+            System.out.println(e.getMessage());
+        }
+
+        Island island = gameHandler.getGame().getIslands().get(0);
+        Player pippo = gameHandler.getGame().getPlayers().get(0);
+        Player topolino = gameHandler.getGame().getPlayers().get(1);
+
+        topolino.getSchool().moveTower(island);
+        topolino.getSchool().moveTower(island);
+        pippo.getSchool().addProfessor(new Professor(PawnColor.GREEN));
+        pippo.getSchool().addProfessor(new Professor(PawnColor.PINK));
+        pippo.getSchool().addProfessor(new Professor(PawnColor.BLUE));
+
+        Player winner = gameHandler.getGame().getLeaderBoard().get(0);
+        assertEquals(winner, topolino);
+    }
+
+    @Test
+    void getLeaderBoardEqualTowers() {
+        SortedMap<String, Wizard> playerData = new TreeMap<>();
+        playerData.put("Pippo", Wizard.YELLOW);
+        playerData.put("Topolino",Wizard.GREEN);
+
+        String rulesJson = null;
+        try {
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameHandler gameHandler = null;
+
+        try {
+            gameHandler = GameCreator.createGame(playerData, rulesJson);
+        } catch (InvalidNewGameException | InvalidRulesException e) {
+            System.out.println(e.getMessage());
+        }
+
+        Island island = gameHandler.getGame().getIslands().get(0);
+        Player pippo = gameHandler.getGame().getPlayers().get(0);
+        Player topolino = gameHandler.getGame().getPlayers().get(1);
+
+        topolino.getSchool().moveTower(island);
+        topolino.getSchool().moveTower(island);
+        pippo.getSchool().moveTower(island.getNextIsland());
+        pippo.getSchool().moveTower(island.getNextIsland());
+
+        pippo.getSchool().addProfessor(new Professor(PawnColor.GREEN));
+        pippo.getSchool().addProfessor(new Professor(PawnColor.PINK));
+        pippo.getSchool().addProfessor(new Professor(PawnColor.BLUE));
+        topolino.getSchool().addProfessor(new Professor(PawnColor.YELLOW));
+        topolino.getSchool().addProfessor(new Professor(PawnColor.RED));
+
+        Player winner = gameHandler.getGame().getLeaderBoard().get(0);
+        assertEquals(winner, pippo);
     }
 
     @Test

@@ -129,12 +129,16 @@ public class Game {
      * @return the game leaderboard
      */
     public List<Player> getLeaderBoard() {
-        return players.stream()
-                .sorted((p1, p2) -> {
-                    if(p1.getSchool().getTowers().size() == p2.getSchool().getTowers().size())
-                        return (p1.getSchool().getProfessorTable().size() > p2.getSchool().getProfessorTable().size()) ? 1 : -1;
-                    return (p1.getSchool().getTowers().size() > p2.getSchool().getTowers().size()) ? 1 : -1;
-                }).collect(Collectors.toList());
+        List<Player> leaderBoard = new ArrayList<>(players);
+        leaderBoard.sort(
+                (p1, p2) -> {
+                    if(p1.getSchool().getTowers().size() == p2.getSchool().getTowers().size()) {
+                        return (p1.getSchool().getProfessorTable().size() > p2.getSchool().getProfessorTable().size()) ? -1 : 1;
+                    }
+                    return (p1.getSchool().getTowers().size() < p2.getSchool().getTowers().size()) ? -1 : 1;
+                }
+        );
+        return leaderBoard;
     }
 
 
