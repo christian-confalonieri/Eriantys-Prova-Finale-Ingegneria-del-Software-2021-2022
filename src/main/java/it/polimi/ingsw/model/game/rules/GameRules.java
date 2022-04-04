@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
 
 
-public class GameRules {
+public class GameRules { // TODO VALIDATE INSTEAD OF CONSTRUCTORS
     public IslandsRules islandsRules;
     public CloudsRules cloudsRules;
     public StudentsRules studentsRules;

@@ -373,6 +373,7 @@ class GameHandlerTest {
         // Pippo moves mothernature MOVEMOTHER
         gameHandler.getGame().getMotherNature().move(1);
 
+        // Call to conquerIsland(isOn) TODO
         Player influenceOnIsland = gameHandler.getGame().getMotherNature().isOn().getInfluencePlayer(gameHandler.getGame().getPlayers(), gameHandler.getGame().getEffectHandler());
         influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn()); // Moves all the tower on so wins at the end of this turn
         influenceOnIsland.getSchool().moveTower(gameHandler.getGame().getMotherNature().isOn());
