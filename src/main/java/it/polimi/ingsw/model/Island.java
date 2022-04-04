@@ -25,6 +25,8 @@ import java.util.List;
  * and a boolean variable noEntry dedicated to the expert mode.
  * It also contains references to the previous and next island used by the Game() class.
  * It implements methods related to moving towers and students and calculating the influence of a player.
+ *
+ * @author Christian Confalonieri
  */
 public class Island {
 
@@ -34,6 +36,9 @@ public class Island {
     private Island prevIsland;
     private Island nextIsland;
 
+    /**
+     * @author Christian Confalonieri
+     */
     public Island() {
         prevIsland = null;
         nextIsland = null;
@@ -42,6 +47,9 @@ public class Island {
         noEntry = false;
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     public Island(Island prevIsland, Island nextIsland) {
         this.prevIsland = prevIsland;
         this.nextIsland = nextIsland;
@@ -54,6 +62,7 @@ public class Island {
      * Adds a student on the island.
      *
      * @param student the student to be added
+     * @author Christian Confalonieri
      */
     public void addStudent(Student student) {
         students.add(student);
@@ -63,6 +72,7 @@ public class Island {
      * Removes a student on the island.
      *
      * @param student the student to be removed
+     * @author Christian Confalonieri
      */
     public void removeStudent(Student student) { students.remove(student); }
 
@@ -71,6 +81,7 @@ public class Island {
      * The size of an island is defined as how many initial islands it consists of.
      *
      * @return the size of the island
+     * @author Christian Confalonieri
      */
     public int getIslandSize() {
 
@@ -90,6 +101,7 @@ public class Island {
      * If there are no towers on the island it returns null.
      *
      * @return the color of the towers
+     * @author Christian Confalonieri
      */
     public TowerColor getTowerColor() {
 
@@ -108,6 +120,7 @@ public class Island {
      *
      * @param player the player on which to calculate the influence points
      * @return the influence points
+     * @author Christian Confalonieri
      */
     public int getInfluencePoints(Player player, EffectHandler effectHandler) {
 
@@ -135,6 +148,7 @@ public class Island {
      *
      * @param team the team on which to calculate the influence points
      * @return the influence points
+     * @author Christian Confalonieri
      */
     public int getInfluencePoints(Team team, EffectHandler effectHandler) {
 
@@ -160,6 +174,7 @@ public class Island {
      *
      * @param professors the professors through which to calculate the influence points
      * @return the influence points
+     * @author Christian Confalonieri
      */
     private int getInfluencePoints(List<Professor> professors, EffectHandler effectHandler) {
 
@@ -188,6 +203,7 @@ public class Island {
      * If no player has influence on the island return null.
      *
      * @return the player with the most influence on the island, null if no one owns the island
+     * @author Christian Confalonieri
      */
     public Player getInfluencePlayer(List<Player> players, EffectHandler effectHandler) {
 
@@ -234,6 +250,7 @@ public class Island {
      *If no team has influence on the island return null
      *
      * @return the team with the most influence on the island
+     * @author Christian Confalonieri
      */
     public Team getInfluenceTeam(List<Team> teams, EffectHandler effectHandler) {
 
@@ -279,6 +296,7 @@ public class Island {
 
     /**
      * Move towers from the island to their owner's school.
+     * @author Christian Confalonieri
      */
     public void moveTowers() {
         for(Tower tower: towers) {
@@ -292,6 +310,7 @@ public class Island {
      * Adds a tower on the island.
      *
      * @param tower the tower that needs to be added
+     * @author Christian Confalonieri
      */
     public void addTower(Tower tower) {
         towers.add(tower);
@@ -302,6 +321,7 @@ public class Island {
      * Check if the two adjacent islands have towers of the same color.
      *
      * @return a boolean that tells if the two islands can be merged
+     * @author Christian Confalonieri
      */
     public boolean checkUnifyNext() {
         if(!towers.isEmpty() && !nextIsland.towers.isEmpty()) {
@@ -317,6 +337,7 @@ public class Island {
      * Check if the two adjacent islands have towers of the same color.
      *
      * @return a boolean that tells if the two islands can be merged
+     * @author Christian Confalonieri
      */
     public boolean checkUnifyPrev() {
         if(!towers.isEmpty() && !prevIsland.towers.isEmpty()) {

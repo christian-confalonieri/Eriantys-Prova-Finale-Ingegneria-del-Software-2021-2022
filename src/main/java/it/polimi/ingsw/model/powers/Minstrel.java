@@ -3,14 +3,23 @@ package it.polimi.ingsw.model.powers;
 import it.polimi.ingsw.exceptions.EmptyBagException;
 import it.polimi.ingsw.model.GameHandler;
 
+/**
+ * @author Christian Confalonieri
+ */
 public class Minstrel extends PowerCard {
 
+    /**
+     * @author Christian Confalonieri
+     */
     public Minstrel(GameHandler gameHandler) {
         super(gameHandler);
         setType(PowerType.MINSTREL);
         setCost(1);
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Override
     public void power() throws EmptyBagException {
         super.power();

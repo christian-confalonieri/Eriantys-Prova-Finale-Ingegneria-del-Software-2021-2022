@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.GameHandler;
 
 public class Mailman extends PowerCard {
 
+    /**
+     * @author Christian Confalonieri
+     */
     public Mailman(GameHandler gameHandler) {
         super(gameHandler);
         setType(PowerType.MAILMAN);

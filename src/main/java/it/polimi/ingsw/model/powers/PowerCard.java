@@ -3,6 +3,9 @@ package it.polimi.ingsw.model.powers;
 import it.polimi.ingsw.exceptions.EmptyBagException;
 import it.polimi.ingsw.model.GameHandler;
 
+/**
+ * @author Christian Confalonieri
+ */
 public abstract class PowerCard {
 
     private int cost;
@@ -13,6 +16,9 @@ public abstract class PowerCard {
         this.gameHandler = gameHandler;
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     public void power() throws EmptyBagException {
 
         gameHandler.getGame().getEffectHandler().setEffectActive(true);
@@ -20,6 +26,9 @@ public abstract class PowerCard {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     public void endPower() {
 
         gameHandler.getGame().getEffectHandler().setEffectActive(false);

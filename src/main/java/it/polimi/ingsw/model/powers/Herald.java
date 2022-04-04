@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.GameHandler;
 
 public class Herald extends PowerCard {
 
+    /**
+     * @author Christian Confalonieri
+     */
     public Herald(GameHandler gameHandler) {
         super(gameHandler);
         setType(PowerType.HERALD);

@@ -11,6 +11,9 @@ public class Farmer extends PowerCard {
 
     private Map<Player, Professor> movedProfessors;
 
+    /**
+     * @author Christian Confalonieri
+     */
     public Farmer(GameHandler gameHandler) {
         super(gameHandler);
         setType(PowerType.FARMER);

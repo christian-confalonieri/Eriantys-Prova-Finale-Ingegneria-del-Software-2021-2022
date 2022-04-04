@@ -6,10 +6,16 @@ import it.polimi.ingsw.model.Student;
 
 import java.util.List;
 
+/**
+ * @author Christian Confalonieri
+ */
 public class Jester extends PowerCard {
 
     private List<Student> students;
 
+    /**
+     * @author Christian Confalonieri
+     */
     public Jester(GameHandler gameHandler) throws EmptyBagException {
         super(gameHandler);
         setType(PowerType.JESTER);
@@ -20,6 +26,9 @@ public class Jester extends PowerCard {
         }
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Override
     public void power() throws EmptyBagException {
         super.power();

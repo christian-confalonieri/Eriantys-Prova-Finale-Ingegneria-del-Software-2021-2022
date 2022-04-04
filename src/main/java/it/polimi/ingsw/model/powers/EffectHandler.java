@@ -8,6 +8,9 @@ import it.polimi.ingsw.model.Student;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Christian Confalonieri
+ */
 public class EffectHandler {
 
     private PawnColor harvesterColor;
@@ -21,6 +24,9 @@ public class EffectHandler {
     private boolean effectActive;
     private Player effectPlayer;
 
+    /**
+     * @author Christian Confalonieri
+     */
     public EffectHandler() {
 
         harvesterColor = null;
@@ -37,6 +43,9 @@ public class EffectHandler {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     public EffectHandler(PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2,
                          Island chosenIsland, int additionalMoves, int additionalInfluence, boolean skipTowers,
                          boolean effectActive, Player effectPlayer) {

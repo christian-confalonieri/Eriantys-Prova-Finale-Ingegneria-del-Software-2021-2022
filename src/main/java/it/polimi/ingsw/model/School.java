@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Leonardo Airoldi, Christian Confalonieri, Alessandro Ettore
+ */
 public class School {
 
     private Map<PawnColor, List<Student>> diningRoom;
@@ -29,6 +32,7 @@ public class School {
      * Adds a student to the entrance of the school.
      *
      * @param student the student to be added
+     * @author Christian Confalonieri
      */
     public void addEntrance(Student student) { entrance.add(student); }
 
@@ -36,6 +40,7 @@ public class School {
      * Removes a student to the entrance of the school.
      *
      * @param student the student to be removed
+     * @author Christian Confalonieri
      */
     public void removeEntrance(Student student) { entrance.remove(student); }
 
@@ -43,6 +48,7 @@ public class School {
      * Adds a student to the dining room of the school.
      *
      * @param student the student to be added
+     * @author Christian Confalonieri
      */
     public void addDiningRoom(Student student) { diningRoom.get(student.getColor()).add(student); }
 
@@ -50,6 +56,7 @@ public class School {
      * Removes a student to the dining room of the school.
      *
      * @param student the student to be removed
+     * @author Christian Confalonieri
      */
     public void removeDiningRoom(Student student) { diningRoom.get(student.getColor()).remove(student); }
 
@@ -57,6 +64,7 @@ public class School {
      * returns students to the dining room.
      *
      * @param color the color of the dining room section
+     * @author Christian Confalonieri
      */
     public List<Student> getStudentsDiningRoom(PawnColor color) { return diningRoom.get(color); }
 
@@ -66,6 +74,7 @@ public class School {
      *
      * @param student student to move
      * @return the number of coins earned (max 1 with the current rules)
+     * @author Christian Confalonieri
      */
     public int entranceToDiningRoom(Student student) {
 
@@ -96,6 +105,7 @@ public class School {
      *
      * @param color the color of which we want to know the number of pawns
      * @return the total number of students of a specific color that are sitting in the dining room
+     * @author Christian Confalonieri
      */
     public int getStudentsNumber(PawnColor color) {
         List<Student> value = diningRoom.get(color);
@@ -112,6 +122,7 @@ public class School {
      * Adds a professor to the school.
      *
      * @param professor the professor to be added
+     * @author Christian Confalonieri
      */
     public void addProfessor(Professor professor) { professorTable.add(professor); }
 
@@ -119,6 +130,7 @@ public class School {
      * Removes a professor to the school.
      *
      * @param professor the professor to be removed
+     * @author Christian Confalonieri
      */
     public void removeProfessor(Professor professor) { professorTable.remove(professor); }
 

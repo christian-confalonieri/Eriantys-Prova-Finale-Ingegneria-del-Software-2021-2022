@@ -6,10 +6,16 @@ import it.polimi.ingsw.model.Student;
 
 import java.util.List;
 
+/**
+ * @author Christian Confalonieri
+ */
 public class Princess extends PowerCard {
 
     private List<Student> students;
 
+    /**
+     * @author Christian Confalonieri
+     */
     public Princess(GameHandler gameHandler) throws EmptyBagException {
         super(gameHandler);
         setType(PowerType.PRINCESS);
@@ -20,6 +26,9 @@ public class Princess extends PowerCard {
         }
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Override
     public void power() throws EmptyBagException {
         super.power();

@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.GameHandler;
 
 public class Thief extends PowerCard {
 
+    /**
+     * @author Christian Confalonieri
+     */
     public Thief(GameHandler gameHandler) {
         super(gameHandler);
         setType(PowerType.THIEF);

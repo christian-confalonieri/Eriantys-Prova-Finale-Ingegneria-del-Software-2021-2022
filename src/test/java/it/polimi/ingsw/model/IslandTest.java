@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Christian Confalonieri
+ */
 class IslandTest {
 
     private final Island myIsland1 = new Island();
@@ -25,6 +28,9 @@ class IslandTest {
 
     private final EffectHandler effectHandler = new EffectHandler();
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void addStudent() {
 
@@ -36,6 +42,9 @@ class IslandTest {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void removeStudent() {
 
@@ -56,6 +65,9 @@ class IslandTest {
         assertEquals(0, myIsland1.getStudents().size());
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void getIslandSize() {
 
@@ -78,6 +90,9 @@ class IslandTest {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void getTowerColor() {
 
@@ -87,6 +102,9 @@ class IslandTest {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void getInfluencePointsPlayer() {
 
@@ -124,6 +142,9 @@ class IslandTest {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void GetInfluencePointsTeam() {
 
@@ -174,6 +195,9 @@ class IslandTest {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void getInfluencePlayer() {
 
@@ -245,6 +269,9 @@ class IslandTest {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void getInfluenceTeam() {
 
@@ -331,6 +358,9 @@ class IslandTest {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void moveTowers() {
 
@@ -351,6 +381,9 @@ class IslandTest {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void addTower() {
 
@@ -362,6 +395,9 @@ class IslandTest {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void checkUnifyNext() {
 
@@ -378,6 +414,9 @@ class IslandTest {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void checkUnifyPrev() {
 
@@ -394,6 +433,9 @@ class IslandTest {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     private void populateIsland(Island island, int red, int yellow, int green, int blue, int pink) {
 
         for(int i=0;i<red;i++) {
