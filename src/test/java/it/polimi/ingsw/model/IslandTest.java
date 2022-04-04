@@ -271,9 +271,9 @@ class IslandTest {
         myTeams.add(myTeam1);
         myTeams.add(myTeam2);
 
-        mySchool1.addProfessor(new Professor(PawnColor.RED));
-        mySchool3.addProfessor(new Professor(PawnColor.GREEN));
-        mySchool2.addProfessor(new Professor(PawnColor.PINK));
+        mySchool1.addProfessor(professor1);
+        mySchool3.addProfessor(professor2);
+        mySchool2.addProfessor(professor3);
 
 
         // standard case
@@ -290,7 +290,7 @@ class IslandTest {
         // no influence
 
         mySchool1.removeProfessor(professor1);
-        mySchool1.removeProfessor(professor2);
+        mySchool3.removeProfessor(professor2);
         mySchool2.removeProfessor(professor3);
 
         assertNull(myIsland1.getInfluenceTeam(myTeams, effectHandler));
@@ -304,7 +304,7 @@ class IslandTest {
         mySchool1.addProfessor(professor1);
         mySchool2.addProfessor(professor2);
 
-        assertEquals(myTeam2, myIsland1.getInfluenceTeam(myTeams, effectHandler));
+        assertEquals(myTeam1, myIsland1.getInfluenceTeam(myTeams, effectHandler));
 
         // island with towers but skipTowers = TRUE
         effectHandler.setSkipTowers(true);
