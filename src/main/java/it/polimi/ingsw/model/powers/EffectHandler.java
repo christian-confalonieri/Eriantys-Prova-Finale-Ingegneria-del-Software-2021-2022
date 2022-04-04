@@ -12,7 +12,8 @@ public class EffectHandler {
 
     private PawnColor harvesterColor;
     private PawnColor thiefColor;
-    private List<Student> chosenStudents;
+    private List<Student> chosenStudents1;
+    private List<Student> chosenStudents2;
     private Island chosenIsland;
     private int additionalMoves;
     private int additionalInfluence;
@@ -24,8 +25,10 @@ public class EffectHandler {
 
         harvesterColor = null;
         thiefColor = null;
-        chosenStudents = null;
-        chosenStudents = null;
+        // I have added two lists of students, basically you will use the first one, the second one is needed in case of exchanges
+        chosenStudents1 = null;
+        chosenStudents2 = null;
+        chosenIsland = null;
         additionalMoves = 0;
         additionalInfluence = 0;
         skipTowers = false;
@@ -34,12 +37,13 @@ public class EffectHandler {
 
     }
 
-    public EffectHandler(PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents,
+    public EffectHandler(PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2,
                          Island chosenIsland, int additionalMoves, int additionalInfluence, boolean skipTowers,
                          boolean effectActive, Player effectPlayer) {
         this.harvesterColor = harvesterColor;
         this.thiefColor = thiefColor;
-        this.chosenStudents = chosenStudents;
+        this.chosenStudents1 = chosenStudents1;
+        this.chosenStudents2 = chosenStudents2;
         this.chosenIsland = chosenIsland;
         this.additionalMoves = additionalMoves;
         this.additionalInfluence = additionalInfluence;
@@ -64,12 +68,20 @@ public class EffectHandler {
         this.thiefColor = thiefColor;
     }
 
-    public List<Student> getChosenStudents() {
-        return chosenStudents;
+    public List<Student> getChosenStudents1() {
+        return chosenStudents1;
     }
 
-    public void setChosenStudents(List<Student> chosenStudents) {
-        this.chosenStudents = chosenStudents;
+    public void setChosenStudents1(List<Student> chosenStudents1) {
+        this.chosenStudents1 = chosenStudents1;
+    }
+
+    public List<Student> getChosenStudents2() {
+        return chosenStudents2;
+    }
+
+    public void setChosenStudents2(List<Student> chosenStudents2) {
+        this.chosenStudents2 = chosenStudents2;
     }
 
     public Island getChosenIsland() {

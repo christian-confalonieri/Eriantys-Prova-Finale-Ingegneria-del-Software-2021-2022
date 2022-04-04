@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.powers;
 
+import it.polimi.ingsw.exceptions.EmptyBagException;
 import it.polimi.ingsw.model.GameHandler;
 
 public class Herbalist extends PowerCard {
@@ -10,21 +11,25 @@ public class Herbalist extends PowerCard {
         super(gameHandler);
         setType(PowerType.HERBALIST);
         setCost(2);
+
+        noEntryCards = 4;
     }
 
     @Override
-    public void power() {
+    public void power() throws EmptyBagException {
         super.power();
 
-        //TODO
+        getGameHandler().getGame().getEffectHandler().getChosenIsland().setNoEntry(true);
+        noEntryCards--;
 
-        getGameHandler().getGame().getEffectHandler().setEffectActive(false);
     }
 
-    public void addEntryCard() {
+    @Override
+    public void endPower() {
+        super.endPower();
 
-        //TODO
-
+        getGameHandler().getGame().getEffectHandler().getChosenIsland().setNoEntry(false);
+        noEntryCards++;
     }
 
 }

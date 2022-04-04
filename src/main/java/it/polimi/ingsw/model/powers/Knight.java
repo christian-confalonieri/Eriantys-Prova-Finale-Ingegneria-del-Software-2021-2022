@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.powers;
 
+import it.polimi.ingsw.exceptions.EmptyBagException;
 import it.polimi.ingsw.model.GameHandler;
 
 public class Knight extends PowerCard {
@@ -11,7 +12,7 @@ public class Knight extends PowerCard {
     }
 
     @Override
-    public void power() {
+    public void power() throws EmptyBagException {
 
         super.power();
         getGameHandler().getGame().getEffectHandler().setAdditionalInfluence(2);

@@ -350,4 +350,12 @@ public class Island {
     public void setNextIsland(Island nextIsland) {
         this.nextIsland = nextIsland;
     }
+
+    public boolean isNoEntry() {
+        return noEntry;
+    }
+
+    public void setNoEntry(boolean noEntry) {
+        this.noEntry = noEntry;
+    }
 }

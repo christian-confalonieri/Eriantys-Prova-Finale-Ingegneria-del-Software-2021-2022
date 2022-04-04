@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.powers;
 
+import it.polimi.ingsw.exceptions.EmptyBagException;
 import it.polimi.ingsw.model.GameHandler;
 import it.polimi.ingsw.model.PawnColor;
 
@@ -14,7 +15,7 @@ public class Harvester extends PowerCard {
     }
 
     @Override
-    public void power() {
+    public void power() throws EmptyBagException {
         super.power();
     }
 

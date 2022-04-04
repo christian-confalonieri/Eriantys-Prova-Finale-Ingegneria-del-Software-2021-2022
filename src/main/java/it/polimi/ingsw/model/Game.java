@@ -306,4 +306,8 @@ public class Game {
     public EffectHandler getEffectHandler() {
         return effectHandler;
     }
+
+    public Bag getBag() {
+        return bag;
+    }
 }
