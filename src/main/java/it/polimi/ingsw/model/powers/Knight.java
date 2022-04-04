@@ -6,16 +6,24 @@ public class Knight extends PowerCard {
 
     public Knight(GameHandler gameHandler) {
         super(gameHandler);
+        setType(PowerType.KNIGHT);
+        setCost(2);
     }
 
     @Override
     public void power() {
+
         super.power();
+        getGameHandler().getGame().getEffectHandler().setAdditionalInfluence(2);
+
     }
 
     @Override
     public void endPower() {
+
         super.endPower();
+        getGameHandler().getGame().getEffectHandler().setAdditionalInfluence(0);
+
     }
 
 }

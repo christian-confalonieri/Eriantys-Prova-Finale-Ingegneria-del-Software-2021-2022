@@ -11,11 +11,17 @@ public class Friar extends PowerCard {
 
     public Friar(GameHandler gameHandler) {
         super(gameHandler);
+        setType(PowerType.FRIAR);
+        setCost(1);
     }
 
     @Override
     public void power() {
         super.power();
+
+        //TODO
+
+        getGameHandler().getGame().getEffectHandler().setEffectActive(false);
     }
 
 }

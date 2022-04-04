@@ -8,14 +8,22 @@ public class Herbalist extends PowerCard {
 
     public Herbalist(GameHandler gameHandler) {
         super(gameHandler);
+        setType(PowerType.HERBALIST);
+        setCost(2);
     }
 
     @Override
     public void power() {
         super.power();
+
+        //TODO
+
+        getGameHandler().getGame().getEffectHandler().setEffectActive(false);
     }
 
     public void addEntryCard() {
+
+        //TODO
 
     }
 

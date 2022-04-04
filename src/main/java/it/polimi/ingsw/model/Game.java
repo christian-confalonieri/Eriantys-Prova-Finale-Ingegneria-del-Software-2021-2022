@@ -303,4 +303,7 @@ public class Game {
 
     }
 
+    public EffectHandler getEffectHandler() {
+        return effectHandler;
+    }
 }

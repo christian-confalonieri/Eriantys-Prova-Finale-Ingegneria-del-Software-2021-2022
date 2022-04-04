@@ -12,16 +12,22 @@ public class Farmer extends PowerCard {
 
     public Farmer(GameHandler gameHandler) {
         super(gameHandler);
+        setType(PowerType.FARMER);
+        setCost(2);
     }
 
     @Override
     public void power() {
         super.power();
+
+        //TODO
     }
 
     @Override
     public void endPower() {
         super.endPower();
+
+        //TODO
     }
 
 }
