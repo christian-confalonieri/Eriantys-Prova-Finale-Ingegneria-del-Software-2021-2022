@@ -43,8 +43,6 @@ public class Jester extends PowerCard {
             getGameHandler().getGame().getEffectHandler().getEffectPlayer().getSchool().removeEntrance(getGameHandler().getGame().getEffectHandler().getChosenStudents2().get(i));
             getGameHandler().getGame().getEffectHandler().getEffectPlayer().getSchool().addEntrance(getGameHandler().getGame().getEffectHandler().getChosenStudents1().get(i));
         }
-
-        getGameHandler().getGame().getEffectHandler().setEffectActive(false);
     }
 
 }

@@ -21,7 +21,6 @@ public abstract class PowerCard {
      */
     public void power() {
 
-        gameHandler.getGame().getEffectHandler().setEffectActive(true);
         cost++;
 
     }
@@ -30,8 +29,6 @@ public abstract class PowerCard {
      * @author Christian Confalonieri
      */
     public void endPower() {
-
-        gameHandler.getGame().getEffectHandler().setEffectActive(false);
 
     }
 

@@ -19,8 +19,6 @@ public class Herald extends PowerCard {
         super.power();
 
         //TODO
-
-        getGameHandler().getGame().getEffectHandler().setEffectActive(false);
     }
 
 }

@@ -19,8 +19,6 @@ public class Thief extends PowerCard {
         super.power();
 
         //TODO
-
-        getGameHandler().getGame().getEffectHandler().setEffectActive(false);
     }
 
 }

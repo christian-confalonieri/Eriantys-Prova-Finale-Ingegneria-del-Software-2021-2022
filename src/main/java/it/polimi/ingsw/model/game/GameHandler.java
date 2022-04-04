@@ -132,4 +132,8 @@ public class GameHandler {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
+    public List<Player> getOrderedTurnPlayers() {
+        return orderedTurnPlayers;
+    }
 }
