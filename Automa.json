@@ -1,0 +1,22 @@
+{
+  "Start": [
+    { "Action": { "Name": "CreateGame" } },
+    { "Action": { "Name": "Exit", "Description": "Uscita", "Targets": [ "Exit", "Self" ] } }
+  ],
+  "Active": {
+    "Preparation": [
+      { "Action": { "Name": "PreparePlayer", "Description": "Prepara Giocatore", "Targets": [ "Preparation", "Turn" ] } },
+      { "Action": { "Name": "Exit", "Description": "Uscita", "Targets": [ "Exit" ] } }
+    ],
+    "Turn": [
+      { "Action": { "Name": "MoveStudent", "Description": "Muovi Studente", "Targets": [ "Turn" ]  } },
+      { "Action": { "Name": "MoveMother" }, "Targets": [ "Preparation", "Turn" ]  },
+      { "Action": { "Name": "Exit", "Description": "Uscita", "Targets": [ "Exit", "Self" ] } }
+    ]
+
+
+  },
+  "Exit": {
+
+  }
+}
