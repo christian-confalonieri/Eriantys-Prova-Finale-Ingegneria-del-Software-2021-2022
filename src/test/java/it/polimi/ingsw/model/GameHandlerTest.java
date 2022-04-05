@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.*;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -326,33 +327,29 @@ class GameHandlerTest {
     }
 
     @Test
-    void turnSimulation() {
+    void turnSimulation() throws IOException, InvalidNewGameException, InvalidRulesException {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Pippo", Wizard.YELLOW);
         playerData.put("Topolino",Wizard.GREEN);
 
         String rulesJson = null;
-        try {
-            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
+
 
         GameHandler gameHandler = null;
 
-        try {
-            gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException | InvalidRulesException e) {
-            System.out.println(e.getMessage());
-        }
 
-        // Pippo plays card
+        gameHandler = GameCreator.createGame(playerData, rulesJson);
         assertNotNull(gameHandler);
+
+        // PREPARATION
+        // Pippo plays card PREPARATION
         gameHandler.getCurrentPlayer().playCard(Card.THREE);
         gameHandler.advance();
 
 
-        // Topolino plays card
+        // Topolino plays card PREPARATION
         gameHandler.getCurrentPlayer().playCard(Card.FIVE);
         gameHandler.advance();
 
