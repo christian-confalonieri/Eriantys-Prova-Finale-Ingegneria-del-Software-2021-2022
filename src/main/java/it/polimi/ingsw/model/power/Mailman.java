@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.power;
 
+import it.polimi.ingsw.model.entity.Island;
+import it.polimi.ingsw.model.entity.MotherNature;
 import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.game.GameHandler;
 
@@ -14,18 +16,26 @@ public class Mailman extends PowerCard {
         setCost(1);
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Override
     public void power() {
         super.power();
 
-        //TODO
-    }
+        int n=getGameHandler().getGame().getEffectHandler().getAdditionalMoves();
+        MotherNature motherNature = getGameHandler().getGame().getMotherNature();
 
-    @Override
-    public void endPower() {
-        super.endPower();
+        Island island = motherNature.isOn();
+        Island landingIsland = island;
+        for (int i = 0; i < n; i++) {
+            landingIsland = landingIsland.getNextIsland();
+        }
+        island = landingIsland;
 
-        //TODO
+        motherNature.setIsland(island);
+
+        getGameHandler().getGame().getEffectHandler().setAdditionalMoves(0);
     }
 
 }
