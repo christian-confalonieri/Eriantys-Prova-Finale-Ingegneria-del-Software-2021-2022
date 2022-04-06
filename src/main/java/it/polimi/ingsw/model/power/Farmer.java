@@ -38,6 +38,8 @@ public class Farmer extends PowerCard {
      * (and having called the professorRelocate method),
      * in this way it rechecks the schools and relocates the professors even if the students of the same color are equal in number.
      *
+     * We have assumed that this power acts only in case the other players already have the color tower to compare.
+     *
      * @author Christian Confalonieri
      */
     @Override
@@ -52,19 +54,18 @@ public class Farmer extends PowerCard {
 
         List<Professor> playerProfessors;
         School playerSchool;
+        PawnColor color;
 
-        Map<Player, List<Professor>> chosenProfessors = new HashMap<>();
+        Map<Professor, Player> chosenProfessors = new HashMap<>();
 
         for(Player player : players) {
             playerSchool = player.getSchool();
             playerProfessors = playerSchool.getProfessorTable();
 
-            for(Professor professor: playerProfessors) {
-                PawnColor color = professor.getColor();
+            for(Professor professor : playerProfessors) {
+                color = professor.getColor();
                 if(effectPlayerSchool.getStudentsDiningRoom(color).size() == playerSchool.getStudentsDiningRoom(color).size()) {
-                    List<Professor> professors = chosenProfessors.get(player);
-                    professors.add(professor);
-                    chosenProfessors.put(player,professors);
+                    chosenProfessors.put(professor,player);
 
                     playerSchool.removeProfessor(professor);
                     effectPlayerSchool.addProfessor(professor);
@@ -72,7 +73,6 @@ public class Farmer extends PowerCard {
             }
         }
         getGameHandler().getGame().getEffectHandler().setChosenProfessors(chosenProfessors);
-
     }
 
     /**
@@ -84,23 +84,11 @@ public class Farmer extends PowerCard {
     public void endPower() {
         super.endPower();
 
-        Map<Player, List<Professor>> chosenProfessors = getGameHandler().getGame().getEffectHandler().getChosenProfessors();
-        List<Professor> professors;
+        Map<Professor,Player> chosenProfessors = getGameHandler().getGame().getEffectHandler().getChosenProfessors();
         Player effectPlayer = getGameHandler().getGame().getEffectHandler().getEffectPlayer();
-        List<Player> players = new ArrayList<>();
-        players.addAll(getGameHandler().getOrderedTurnPlayers());
-        players.remove(effectPlayer);
-
-        while(!chosenProfessors.isEmpty()){
-            for(Player player : players) {
-                if(chosenProfessors.containsKey(player)) {
-                    professors = chosenProfessors.get(player);
-                    for(Professor professor : professors) {
-                        getGameHandler().getGame().getEffectHandler().getEffectPlayer().getSchool().removeProfessor(professor);
-                        player.getSchool().addProfessor(professor);
-                    }
-                }
-            }
+        for(Professor professor : chosenProfessors.keySet()) {
+            effectPlayer.getSchool().removeProfessor(professor);
+            chosenProfessors.get(professor).getSchool().addProfessor(professor);
         }
     }
 

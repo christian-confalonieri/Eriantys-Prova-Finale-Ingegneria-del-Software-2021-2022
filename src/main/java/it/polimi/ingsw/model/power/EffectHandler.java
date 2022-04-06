@@ -18,7 +18,7 @@ public class EffectHandler {
     private PawnColor thiefColor;
     private List<Student> chosenStudents1;
     private List<Student> chosenStudents2;
-    private Map<Player, List<Professor>> chosenProfessors;
+    private Map<Professor, Player> chosenProfessors;
     private Island chosenIsland;
     private int additionalMoves;
     private int additionalInfluence;
@@ -47,7 +47,7 @@ public class EffectHandler {
     /**
      * @author Christian Confalonieri
      */
-    public EffectHandler(PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2, Map<Player,List<Professor>> chosenProfessors,
+    public EffectHandler(PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2, Map<Professor,Player> chosenProfessors,
                          Island chosenIsland, int additionalMoves, int additionalInfluence, boolean skipTowers, Player effectPlayer) {
         this.harvesterColor = harvesterColor;
         this.thiefColor = thiefColor;
@@ -133,11 +133,11 @@ public class EffectHandler {
         this.effectPlayer = effectPlayer;
     }
 
-    public Map<Player, List<Professor>> getChosenProfessors() {
+    public Map<Professor, Player> getChosenProfessors() {
         return chosenProfessors;
     }
 
-    public void setChosenProfessors(Map<Player, List<Professor>> chosenProfessors) {
+    public void setChosenProfessors(Map<Professor, Player> chosenProfessors) {
         this.chosenProfessors = chosenProfessors;
     }
 }
