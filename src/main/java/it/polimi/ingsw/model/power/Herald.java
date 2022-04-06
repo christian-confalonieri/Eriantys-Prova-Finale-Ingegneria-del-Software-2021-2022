@@ -14,11 +14,13 @@ public class Herald extends PowerCard {
         setCost(3);
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Override
     public void power() {
         super.power();
-
-        //TODO
+        getGameHandler().getGame().conquerIsland(getGameHandler().getGame().getEffectHandler().getChosenIsland());
     }
 
 }
