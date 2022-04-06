@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.entity.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public class Jester extends PowerCard {
 
-    private List<Student> students;
+    private List<Student> students = new ArrayList<>();
 
     /**
      * In the constructor the character type and its usage cost is set.

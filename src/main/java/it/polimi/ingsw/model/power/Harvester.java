@@ -11,8 +11,6 @@ import it.polimi.ingsw.model.enumeration.PawnColor;
  */
 public class Harvester extends PowerCard {
 
-    PawnColor color;
-
     /**
      * In the constructor the character type and its usage cost is set.
      *

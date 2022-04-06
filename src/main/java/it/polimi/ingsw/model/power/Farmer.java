@@ -19,8 +19,6 @@ import java.util.Map;
  */
 public class Farmer extends PowerCard {
 
-    private Map<Player, Professor> movedProfessors;
-
     /**
      * In the constructor the character type and its usage cost is set.
      *
