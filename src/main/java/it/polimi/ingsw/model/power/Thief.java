@@ -9,9 +9,19 @@ import it.polimi.ingsw.model.game.GameHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * EFFECT: Choose a type of Student: every player (including yourself)
+ * must return 3 Students of that type from their Dining Room to the bag.
+ * If any player has fewer than 3 Students of that type, return as many Students as they have.
+ *
+ * @author Christian Confalonieri
+ */
 public class Thief extends PowerCard {
 
     /**
+     * In the constructor the character type and its usage cost is set.
+     *
+     * @param gameHandler
      * @author Christian Confalonieri
      */
     public Thief(GameHandler gameHandler) {
@@ -21,6 +31,9 @@ public class Thief extends PowerCard {
     }
 
     /**
+     * This method moves 3 students of a chosen color from each player's dining room to the bag.
+     * In case there are not enough students to move all of them are sent.
+     *
      * @author Christian Confalonieri
      */
     @Override

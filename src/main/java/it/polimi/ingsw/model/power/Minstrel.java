@@ -4,11 +4,16 @@ import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.game.GameHandler;
 
 /**
+ * EFFECT: You may exchange up to 2 Students between your Entrance and your Dining Room.
+ *
  * @author Christian Confalonieri
  */
 public class Minstrel extends PowerCard {
 
     /**
+     * In the constructor the character type and its usage cost is set.
+     *
+     * @param gameHandler
      * @author Christian Confalonieri
      */
     public Minstrel(GameHandler gameHandler) {
@@ -18,6 +23,9 @@ public class Minstrel extends PowerCard {
     }
 
     /**
+     * This method simply exchange up to 2 Students between your Entrance and your Dining Room.
+     * The students to be moved belonging to the entrance are copied in the chosenStudents1 list, while those of the dining room in the chosenStudents2 list.
+     *
      * @author Christian Confalonieri
      */
     @Override

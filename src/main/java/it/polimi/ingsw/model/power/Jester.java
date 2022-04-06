@@ -8,6 +8,9 @@ import it.polimi.ingsw.model.entity.Student;
 import java.util.List;
 
 /**
+ * In Setup, draw 6 Students and place them on this card.
+ * EFFECT: You may take up to 3 Students from this card and replace them with the same number of Students from your Entrance.
+ *
  * @author Christian Confalonieri
  */
 public class Jester extends PowerCard {
@@ -15,6 +18,11 @@ public class Jester extends PowerCard {
     private List<Student> students;
 
     /**
+     * In the constructor the character type and its usage cost is set.
+     * 6 students are also added from the bag.
+     * The students are copied in the chosenStudents1 list.
+     *
+     * @param gameHandler
      * @author Christian Confalonieri
      */
     public Jester(GameHandler gameHandler) {
@@ -30,6 +38,9 @@ public class Jester extends PowerCard {
     }
 
     /**
+     * This method exchanges up to 3 students on this card for equal numbers of students who are at the entrance of their school.
+     * The students to be moved belonging to the card are copied in the chosenStudents1 list, while those of the entrance in the chosenStudents2 list.
+     *
      * @author Christian Confalonieri
      */
     @Override

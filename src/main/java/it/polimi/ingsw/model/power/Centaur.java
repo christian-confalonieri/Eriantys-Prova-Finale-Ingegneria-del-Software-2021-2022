@@ -4,11 +4,16 @@ import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.game.GameHandler;
 
 /**
+ * EFFECT: When resolving a Conquering on an Island, Towers do not count towards influence.
+ *
  * @author Christian Confalonieri
  */
 public class Centaur extends PowerCard {
 
     /**
+     * In the constructor the character type and its usage cost is set.
+     *
+     * @param gameHandler
      * @author Christian Confalonieri
      */
     public Centaur(GameHandler gameHandler) {
@@ -18,6 +23,9 @@ public class Centaur extends PowerCard {
     }
 
     /**
+     * Simply change the value of the boolean skipTowers to true,
+     * checking that value and calculating the influence will be handled by the methods in the Island class.
+     *
      * @author Christian Confalonieri
      */
     @Override
@@ -27,6 +35,8 @@ public class Centaur extends PowerCard {
     }
 
     /**
+     * Simply change the value of the boolean skipTowers to false
+     *
      * @author Christian Confalonieri
      */
     @Override

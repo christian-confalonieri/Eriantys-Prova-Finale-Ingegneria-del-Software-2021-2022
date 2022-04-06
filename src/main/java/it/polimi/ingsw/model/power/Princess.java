@@ -8,6 +8,10 @@ import it.polimi.ingsw.model.entity.Student;
 import java.util.List;
 
 /**
+ * In Setup, draw 4 Students and place them on this card.
+ * EFFECT: Take 1 Student from this card and place it in your Dining Room.
+ * Then, draw a new Student from the Bag and place it on this card.
+ *
  * @author Christian Confalonieri
  */
 public class Princess extends PowerCard {
@@ -15,6 +19,11 @@ public class Princess extends PowerCard {
     private List<Student> students;
 
     /**
+     * In the constructor the character type and its usage cost is set.
+     * 4 students are also added from the bag.
+     * The students are copied in the chosenStudents1 list.
+     *
+     * @param gameHandler
      * @author Christian Confalonieri
      */
     public Princess(GameHandler gameHandler) {
@@ -30,6 +39,9 @@ public class Princess extends PowerCard {
     }
 
     /**
+     * This method moves a chosen student from this card to their dining room,
+     * then draws a new student from the bag and places them on the card.
+     *
      * @author Christian Confalonieri
      */
     @Override

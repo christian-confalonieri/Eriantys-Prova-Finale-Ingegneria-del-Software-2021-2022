@@ -12,11 +12,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * EFFECT: During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them.
+ *
+ * @author Christian Confalonieri
+ */
 public class Farmer extends PowerCard {
 
     private Map<Player, Professor> movedProfessors;
 
     /**
+     * In the constructor the character type and its usage cost is set.
+     *
+     * @param gameHandler
      * @author Christian Confalonieri
      */
     public Farmer(GameHandler gameHandler) {
@@ -25,8 +33,11 @@ public class Farmer extends PowerCard {
         setCost(2);
     }
 
-    // SHOULD BE ACTIVATED AFTER MOVING STUDENTS FROM THE ENTRANCE TO THE DINING ROOM.
     /**
+     * This method should be activated after having moved the students from the entrance to the dining room
+     * (and having called the professorRelocate method),
+     * in this way it rechecks the schools and relocates the professors even if the students of the same color are equal in number.
+     *
      * @author Christian Confalonieri
      */
     @Override
@@ -65,6 +76,8 @@ public class Farmer extends PowerCard {
     }
 
     /**
+     * At the end of the turn it relocates the professors moved via this power to their respective owners.
+     *
      * @author Christian Confalonieri
      */
     @Override

@@ -17,6 +17,8 @@ public abstract class PowerCard {
     }
 
     /**
+     * This method increases the cost of the card
+     *
      * @author Christian Confalonieri
      */
     public void power() {
