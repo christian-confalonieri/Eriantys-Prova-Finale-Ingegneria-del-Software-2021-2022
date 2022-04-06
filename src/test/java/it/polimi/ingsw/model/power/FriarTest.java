@@ -20,8 +20,14 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+/**
+ * @author Christian Confalonieri
+ */
 class FriarTest {
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void power() throws InvalidNewGameException, InvalidRulesException, IOException {
         GameHandler gameHandler = createGame();

@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.power;
 
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
-import it.polimi.ingsw.model.entity.Pawn;
+import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.entity.Professor;
 import it.polimi.ingsw.model.entity.Student;
@@ -25,19 +25,19 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Christian Confalonieri
  */
-class FarmerTest {
+class HeraldTest {
 
     /**
      * @author Christian Confalonieri
      */
     @Test
-    void power_endPower() throws InvalidNewGameException, IOException, InvalidRulesException {
+    void power() throws InvalidNewGameException, IOException, InvalidRulesException {
         GameHandler gameHandler = createGame();
 
-        Farmer farmer = new Farmer(gameHandler);
+        Herald herald = new Herald(gameHandler);
 
-        assertEquals(PowerType.FARMER,farmer.getType());
-        assertEquals(2,farmer.getCost());
+        assertEquals(PowerType.HERALD,herald.getType());
+        assertEquals(3,herald.getCost());
 
         List<Player> players = gameHandler.getOrderedTurnPlayers();
         // 0: Luigi, 1: Mario
@@ -87,18 +87,27 @@ class FarmerTest {
         assertEquals(2,players.get(0).getSchool().getProfessorTable().size());
         assertEquals(redProfessor,players.get(1).getSchool().getProfessorTable().get(0));
 
-        gameHandler.getGame().getEffectHandler().setEffectPlayer(players.get(1));
-        farmer.power();
+        Island island = new Island();
+        for(int i=0;i<3;i++) {
+            island.addStudent(new Student(PawnColor.RED));
+        }
 
-        assertEquals(2,players.get(1).getSchool().getProfessorTable().size());
-        assertEquals(1,players.get(0).getSchool().getProfessorTable().size());
-        assertEquals(yellowProfessor,players.get(0).getSchool().getProfessorTable().get(0));
+        for(int i=0;i<2;i++) {
+            island.addStudent(new Student(PawnColor.GREEN));
+        }
 
-        farmer.endPower();
+        for(int i=0;i<4;i++) {
+            island.addStudent(new Student(PawnColor.PINK));
+        }
 
-        assertEquals(1,players.get(1).getSchool().getProfessorTable().size());
-        assertEquals(2,players.get(0).getSchool().getProfessorTable().size());
-        assertEquals(redProfessor,players.get(1).getSchool().getProfessorTable().get(0));
+        assertEquals(0, island.getTowers().size());
+
+        gameHandler.getGame().getEffectHandler().setChosenIsland(island);
+        herald.power();
+
+        assertEquals(1, island.getTowers().size());
+        assertEquals(players.get(1),island.getTowers().get(0).getOwner());
+
     }
 
     private GameHandler createGame() throws IOException, InvalidNewGameException, InvalidRulesException {
