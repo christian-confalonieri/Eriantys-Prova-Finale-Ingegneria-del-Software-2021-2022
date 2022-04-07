@@ -17,8 +17,14 @@ import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Christian Confalonieri
+ */
 class MailmanTest {
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void power() throws InvalidNewGameException, IOException, InvalidRulesException {
         GameHandler gameHandler = createGame();

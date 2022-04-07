@@ -46,4 +46,11 @@ public class Herbalist extends PowerCard {
 
     }
 
+    public int getNoEntryCards() {
+        return noEntryCards;
+    }
+
+    public void setNoEntryCards(int noEntryCards) {
+        this.noEntryCards = noEntryCards;
+    }
 }

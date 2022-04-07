@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model.entity;
 
+import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.power.EffectHandler;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 
 /**
@@ -164,20 +166,11 @@ public class Island {
      */
     private int getInfluencePoints(List<Professor> professors, EffectHandler effectHandler) {
 
-        int max=0;
-
+        List<Student> temp = new ArrayList<>(students);
         for(Professor professor: professors) {
-            int i=0;
-            for(Student student: students) {
-                // It is supposed to set the value of harvesterColor to null at the end of the effect
-                if(student.getColor() == professor.getColor() && student.getColor()!=effectHandler.getHarvesterColor()) {
-                    i++;
-                }
-            }
-            max+=i;
+            temp.removeIf(a->(a.getColor()==professor.getColor() && a.getColor()!=effectHandler.getHarvesterColor()));
         }
-
-        return max;
+        return students.size() - temp.size();
 
     }
 

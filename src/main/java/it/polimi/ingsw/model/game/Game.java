@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.rules.GameRules;
 import it.polimi.ingsw.model.power.EffectHandler;
+import it.polimi.ingsw.model.power.Herbalist;
 import it.polimi.ingsw.model.power.PowerCard;
 import it.polimi.ingsw.model.enumeration.PowerType;
 
@@ -225,8 +226,8 @@ public class Game {
 
         if (island.isNoEntry()) {
             island.setNoEntry(false);
-            PowerCard herbalist = powerCards.stream().filter(p -> p.getType().equals(PowerType.HERBALIST)).findAny().get();
-            herbalist.setCost(herbalist.getCost() + 1);
+            Herbalist herbalist = (Herbalist) powerCards.stream().filter(p -> p.getType().equals(PowerType.HERBALIST)).findAny().get();
+            herbalist.setNoEntryCards(herbalist.getNoEntryCards() + 1);
             return;
         }
 
@@ -359,5 +360,9 @@ public class Game {
 
     public MotherNature getMotherNature() {
         return motherNature;
+    }
+
+    public void setPowerCards(List<PowerCard> powerCards) {
+        this.powerCards = powerCards;
     }
 }
