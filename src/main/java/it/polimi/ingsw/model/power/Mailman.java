@@ -34,17 +34,10 @@ public class Mailman extends PowerCard {
     public void power() {
         super.power();
 
-        int n=getGameHandler().getGame().getEffectHandler().getAdditionalMoves();
+        int n = getGameHandler().getGame().getEffectHandler().getAdditionalMoves();
         MotherNature motherNature = getGameHandler().getGame().getMotherNature();
 
-        Island island = motherNature.isOn();
-        Island landingIsland = island;
-        for (int i = 0; i < n; i++) {
-            landingIsland = landingIsland.getNextIsland();
-        }
-        island = landingIsland;
-
-        motherNature.setIsland(island);
+        motherNature.move(n);
 
         getGameHandler().getGame().getEffectHandler().setAdditionalMoves(0);
     }

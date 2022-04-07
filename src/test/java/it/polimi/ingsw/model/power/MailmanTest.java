@@ -16,7 +16,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * @author Christian Confalonieri
  */

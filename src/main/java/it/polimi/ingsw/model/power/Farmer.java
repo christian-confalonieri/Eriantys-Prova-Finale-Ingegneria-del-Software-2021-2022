@@ -83,10 +83,13 @@ public class Farmer extends PowerCard {
         super.endPower();
 
         Map<Professor,Player> chosenProfessors = getGameHandler().getGame().getEffectHandler().getChosenProfessors();
-        Player effectPlayer = getGameHandler().getGame().getEffectHandler().getEffectPlayer();
-        for(Professor professor : chosenProfessors.keySet()) {
-            effectPlayer.getSchool().removeProfessor(professor);
-            chosenProfessors.get(professor).getSchool().addProfessor(professor);
+        if(chosenProfessors!=null) {
+            Player effectPlayer = getGameHandler().getGame().getEffectHandler().getEffectPlayer();
+            for(Professor professor : chosenProfessors.keySet()) {
+                effectPlayer.getSchool().removeProfessor(professor);
+                chosenProfessors.get(professor).getSchool().addProfessor(professor);
+            }
+            getGameHandler().getGame().getEffectHandler().setChosenProfessors(null);
         }
     }
 

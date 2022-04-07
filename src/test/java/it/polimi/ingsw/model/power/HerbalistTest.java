@@ -141,7 +141,7 @@ class HerbalistTest {
         assertEquals(players.get(1),gameHandler.getGame().getMotherNature().isOn().getTowers().get(0).getOwner());
         assertEquals(island0,gameHandler.getGame().getMotherNature().isOn());
 
-        gameHandler.getGame().getMotherNature().setIsland(gameHandler.getGame().getMotherNature().move(1));
+        gameHandler.getGame().getMotherNature().move(1);
         assertEquals(3,herbalist.getNoEntryCards());
         gameHandler.getGame().conquerIsland(gameHandler.getGame().getMotherNature().isOn());
         assertEquals(4,herbalist.getNoEntryCards());
