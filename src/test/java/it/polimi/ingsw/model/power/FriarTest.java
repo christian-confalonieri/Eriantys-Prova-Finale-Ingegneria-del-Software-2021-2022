@@ -32,7 +32,7 @@ class FriarTest {
     void power() throws InvalidNewGameException, InvalidRulesException, IOException {
         GameHandler gameHandler = createGame();
 
-        Island island = new Island();
+        Island island = gameHandler.getGame().getIslands().get(0);
         Friar friar = new Friar(gameHandler);
 
         assertEquals(PowerType.FRIAR,friar.getType());

@@ -41,13 +41,16 @@ class HeraldTest {
 
         List<Player> players = gameHandler.getOrderedTurnPlayers();
         // 0: Luigi, 1: Mario
-        Professor redProfessor = new Professor(PawnColor.RED);
-        Professor greenProfessor = new Professor(PawnColor.GREEN);
-        Professor yellowProfessor = new Professor(PawnColor.YELLOW);
+        Professor redProfessor = gameHandler.getGame().getProfessor(PawnColor.RED);;
+        Professor greenProfessor = gameHandler.getGame().getProfessor(PawnColor.GREEN);;
+        Professor yellowProfessor = gameHandler.getGame().getProfessor(PawnColor.YELLOW);;
 
         players.get(1).getSchool().addProfessor(redProfessor);
+        gameHandler.getGame().removeProfessor(redProfessor);
         players.get(0).getSchool().addProfessor(greenProfessor);
+        gameHandler.getGame().removeProfessor(greenProfessor);
         players.get(0).getSchool().addProfessor(yellowProfessor);
+        gameHandler.getGame().removeProfessor(yellowProfessor);
 
         // add students in the Luigi's dining room
         for(int i=0; i<3; i++) {
@@ -87,7 +90,7 @@ class HeraldTest {
         assertEquals(2,players.get(0).getSchool().getProfessorTable().size());
         assertEquals(redProfessor,players.get(1).getSchool().getProfessorTable().get(0));
 
-        Island island = new Island();
+        Island island = gameHandler.getGame().getIslands().get(0);
         for(int i=0;i<3;i++) {
             island.addStudent(new Student(PawnColor.RED));
         }
