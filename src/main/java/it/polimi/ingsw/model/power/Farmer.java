@@ -80,8 +80,6 @@ public class Farmer extends PowerCard {
      */
     @Override
     public void endPower() {
-        super.endPower();
-
         Map<Professor,Player> chosenProfessors = getGameHandler().getGame().getEffectHandler().getChosenProfessors();
         if(chosenProfessors!=null) {
             Player effectPlayer = getGameHandler().getGame().getEffectHandler().getEffectPlayer();
@@ -91,6 +89,7 @@ public class Farmer extends PowerCard {
             }
             getGameHandler().getGame().getEffectHandler().setChosenProfessors(null);
         }
+        getGameHandler().getGame().getEffectHandler().setEffectPlayer(null);
     }
 
 }

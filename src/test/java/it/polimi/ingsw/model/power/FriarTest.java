@@ -46,7 +46,6 @@ class FriarTest {
         students.add(friar.getStudents().get(0));
         gameHandler.getGame().getEffectHandler().setChosenStudents1(students);
 
-        gameHandler.getGame().getEffectHandler().setEffectPlayer(players.get(1));
         friar.power();
 
         assertEquals(4,friar.getStudents().size());

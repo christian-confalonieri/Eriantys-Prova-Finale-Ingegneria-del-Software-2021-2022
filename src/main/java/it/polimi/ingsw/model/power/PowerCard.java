@@ -22,16 +22,15 @@ public abstract class PowerCard {
      * @author Christian Confalonieri
      */
     public void power() {
-
+        gameHandler.getGame().getEffectHandler().setEffectPlayer(gameHandler.getCurrentPlayer());
         cost++;
-
     }
 
     /**
      * @author Christian Confalonieri
      */
     public void endPower() {
-
+        gameHandler.getGame().getEffectHandler().setEffectPlayer(null);
     }
 
     public int getCost() {

@@ -46,11 +46,11 @@ class FarmerTest {
         Professor greenProfessor = gameHandler.getGame().getProfessor(PawnColor.GREEN);;
         Professor yellowProfessor = gameHandler.getGame().getProfessor(PawnColor.YELLOW);;
 
-        players.get(1).getSchool().addProfessor(redProfessor);
+        players.get(0).getSchool().addProfessor(redProfessor);
         gameHandler.getGame().removeProfessor(redProfessor);
-        players.get(0).getSchool().addProfessor(greenProfessor);
+        players.get(1).getSchool().addProfessor(greenProfessor);
         gameHandler.getGame().removeProfessor(greenProfessor);
-        players.get(0).getSchool().addProfessor(yellowProfessor);
+        players.get(1).getSchool().addProfessor(yellowProfessor);
         gameHandler.getGame().removeProfessor(yellowProfessor);
 
         // add students in the Luigi's dining room
@@ -87,22 +87,21 @@ class FarmerTest {
             players.get(1).getSchool().addDiningRoom(new Student(PawnColor.PINK));
         }
 
-        assertEquals(1,players.get(1).getSchool().getProfessorTable().size());
-        assertEquals(2,players.get(0).getSchool().getProfessorTable().size());
-        assertEquals(redProfessor,players.get(1).getSchool().getProfessorTable().get(0));
-
-        gameHandler.getGame().getEffectHandler().setEffectPlayer(players.get(1));
-        farmer.power();
-
         assertEquals(2,players.get(1).getSchool().getProfessorTable().size());
         assertEquals(1,players.get(0).getSchool().getProfessorTable().size());
-        assertEquals(yellowProfessor,players.get(0).getSchool().getProfessorTable().get(0));
+        assertEquals(redProfessor,players.get(0).getSchool().getProfessorTable().get(0));
+
+        farmer.power();
+
+        assertEquals(1,players.get(1).getSchool().getProfessorTable().size());
+        assertEquals(2,players.get(0).getSchool().getProfessorTable().size());
+        assertEquals(yellowProfessor,players.get(1).getSchool().getProfessorTable().get(0));
 
         farmer.endPower();
 
-        assertEquals(1,players.get(1).getSchool().getProfessorTable().size());
-        assertEquals(2,players.get(0).getSchool().getProfessorTable().size());
-        assertEquals(redProfessor,players.get(1).getSchool().getProfessorTable().get(0));
+        assertEquals(2,players.get(1).getSchool().getProfessorTable().size());
+        assertEquals(1,players.get(0).getSchool().getProfessorTable().size());
+        assertEquals(redProfessor,players.get(0).getSchool().getProfessorTable().get(0));
     }
 
     private GameHandler createGame() throws IOException, InvalidNewGameException, InvalidRulesException {

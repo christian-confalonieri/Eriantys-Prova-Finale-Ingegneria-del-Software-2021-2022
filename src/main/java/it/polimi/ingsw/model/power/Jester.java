@@ -48,13 +48,16 @@ public class Jester extends PowerCard {
     public void power() {
         super.power();
 
-        int size = students.size();
+        int size = getGameHandler().getGame().getEffectHandler().getChosenStudents1().size();
         students.removeAll(getGameHandler().getGame().getEffectHandler().getChosenStudents1());
         students.addAll(getGameHandler().getGame().getEffectHandler().getChosenStudents2());
-        for(int i=0; i< size; i++) {
+        for(int i=0; i < size; i++) {
             getGameHandler().getGame().getEffectHandler().getEffectPlayer().getSchool().removeEntrance(getGameHandler().getGame().getEffectHandler().getChosenStudents2().get(i));
             getGameHandler().getGame().getEffectHandler().getEffectPlayer().getSchool().addEntrance(getGameHandler().getGame().getEffectHandler().getChosenStudents1().get(i));
         }
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
 }
