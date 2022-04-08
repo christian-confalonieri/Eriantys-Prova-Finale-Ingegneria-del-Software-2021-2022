@@ -6,22 +6,36 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerNetworkHandler {
+public class ServerNetworkHandler implements Runnable {
 
-    ServerSocket serverSocket;
+    private final ServerSocket serverSocket;
+    private boolean shutdown;
 
     public ServerNetworkHandler(int port) throws IOException {
         serverSocket = new ServerSocket(port);
+        shutdown = false;
     }
 
-    public void run() throws IOException {
-        System.out.println("ServerNetworkHandler started...");
-        while(true) {
-            Socket clientSocket = serverSocket.accept();
-            System.out.println(clientSocket.getInetAddress().toString() + " connected...");
+    public void shutdown() {
+        shutdown = true;
+    }
 
-            ClientNetworkHandler clientNetHandler = new ClientNetworkHandler(clientSocket); // Launch a thread starting the listening
-            Server.getInstance().addClientConnection(clientNetHandler);
+    public void run() {
+        System.out.println("ServerNetworkHandler started...");
+
+        while(!shutdown) {
+            try {
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("@" + clientSocket.getInetAddress().toString() + ":" + clientSocket.getPort() + " connected...");
+
+                new ClientNetworkHandler(clientSocket); // Launch a thread starting the listening
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                this.shutdown();
+            }
         }
+
+        System.out.println("ServerNetworkHandler stopped: Not accepting new connections");
     }
 }

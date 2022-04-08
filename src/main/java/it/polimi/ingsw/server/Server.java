@@ -27,6 +27,10 @@ public class Server {
     private List<GameHandler> hostedGames;
     private Map<String, GameHandler> loggedPlayersInGame; // Refers to the game in which the player is logged in
     private Map<String, Player> playersInGameReference; // The player is logged in as Player@...
+
+    private Map<String, ClientNetworkHandler> assignedConnections;
+    private List<ClientNetworkHandler> notAssignedConnections;
+
     private List<ClientNetworkHandler> clientConnections; // List of handlers referred to the connections
     private ServerNetworkHandler serverNetworkHandler;
 
@@ -41,6 +45,7 @@ public class Server {
     }
     public Player getPlayerReference(String playerId) { return playersInGameReference.get(playerId); }
     public void addClientConnection(ClientNetworkHandler clientConnection) { clientConnections.add(clientConnection); }
+    public void removeClientConnection(ClientNetworkHandler clientConnection) {clientConnections.remove(clientConnection); }
 
     private Server(int serverPort) {
         this.hostedGames = new ArrayList<>();
