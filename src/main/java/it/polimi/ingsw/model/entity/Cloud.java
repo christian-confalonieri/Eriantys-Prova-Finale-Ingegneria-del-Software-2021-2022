@@ -38,4 +38,8 @@ public class Cloud {
 
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
 }
