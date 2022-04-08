@@ -17,7 +17,7 @@ public class PlayAction extends Action {
     }
 
 
-    public PlayAction(String actionType, String playerId) {
+    public PlayAction(ActionType actionType, String playerId) {
         super(actionType, playerId);
     }
 }

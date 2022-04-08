@@ -13,10 +13,10 @@ public class ActionHandler {
 
         Action castedAction = null;
         switch (action.getActionType()) {
-            case "login":
+            case LOGIN:
                 castedAction = gson.fromJson(json, LoginAction.class);
                 break;
-            case "playcard":
+            case PLAYCARD:
                 castedAction = gson.fromJson(json, PlayCardAction.class);
                 break;
         }

@@ -10,10 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameControllerTest {
 
-
     @Test
     void actionExecutor() throws IOException {
-        String json = new String(Files.readAllBytes(Paths.get("src/main/resources/actions/Action.json")));
+        String json = new String(Files.readAllBytes(Paths.get("src/main/resources/actions/LoginTestMessage.json")));
         GameController controller = new GameController();
         controller.actionExecutor(json);
     }

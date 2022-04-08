@@ -8,8 +8,8 @@ import it.polimi.ingsw.server.Server;
 public class PlayCardAction extends PlayAction {
     protected Card playedCard;
 
-    public PlayCardAction(String actionType, String playerId) {
-        super(actionType, playerId);
+    public PlayCardAction(String playerId) {
+        super(ActionType.PLAYCARD, playerId);
     }
 
     @Override

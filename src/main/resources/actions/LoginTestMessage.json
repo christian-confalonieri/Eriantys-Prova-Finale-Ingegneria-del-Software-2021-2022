@@ -1,4 +1,4 @@
 {
-  "actionType" : "login",
+  "actionType" : "LOGIN",
   "playerId" : "abcd-1234"
 }

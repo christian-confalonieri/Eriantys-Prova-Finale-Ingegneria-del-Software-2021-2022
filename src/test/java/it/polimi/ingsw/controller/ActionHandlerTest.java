@@ -14,7 +14,7 @@ class ActionHandlerTest {
 
     @Test
     void fromJson() throws IOException {
-        String json = new String(Files.readAllBytes(Paths.get("src/main/resources/actions/Action.json")));
+        String json = new String(Files.readAllBytes(Paths.get("src/main/resources/actions/LoginTestMessage.json")));
         Action action = ActionHandler.fromJson(json);
         assertInstanceOf(LoginAction.class, action);
         LoginAction loginAction = (LoginAction) action;

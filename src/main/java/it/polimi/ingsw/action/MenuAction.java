@@ -4,7 +4,7 @@ import it.polimi.ingsw.server.Server;
 
 public class MenuAction extends Action {
 
-    public MenuAction(String actionType, String playerId) {
+    public MenuAction(ActionType actionType, String playerId) {
         super(actionType, playerId);
     }
 }

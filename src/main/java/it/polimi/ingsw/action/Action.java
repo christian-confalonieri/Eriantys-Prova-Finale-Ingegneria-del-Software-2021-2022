@@ -7,12 +7,12 @@ import it.polimi.ingsw.server.Server;
 
 public class Action {
 
-    protected String actionType;
+    protected ActionType actionType;
     protected String playerId;
 
     public void execute() throws InvalidAction {}
 
-    public String getActionType() {
+    public ActionType getActionType() {
         return actionType;
     }
 
@@ -20,7 +20,7 @@ public class Action {
         return playerId;
     }
 
-    public Action(String actionType, String playerId) {
+    public Action(ActionType actionType, String playerId) {
         this.actionType = actionType;
         this.playerId = playerId;
     }
