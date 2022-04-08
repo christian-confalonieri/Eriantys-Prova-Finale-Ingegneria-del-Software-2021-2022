@@ -8,6 +8,7 @@ public class LoginAction extends MenuAction {
 
     @Override
     public void execute() {
+        System.out.println("Login effettuato...");
         if (playerId.isBlank() || playerId.isEmpty()) {
             // Generate a new id
             // Will return the serialized id to send back
