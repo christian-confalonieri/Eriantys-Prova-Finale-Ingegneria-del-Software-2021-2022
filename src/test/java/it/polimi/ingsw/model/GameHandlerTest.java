@@ -39,6 +39,7 @@ class GameHandlerTest {
             e.printStackTrace();
         }
 
+
         GameHandler gameHandler = null;
 
         try {
@@ -46,7 +47,6 @@ class GameHandlerTest {
         } catch (InvalidNewGameException | InvalidRulesException e) {
             System.out.println(e.getMessage());
         }
-
 
         Game board = gameHandler.getGame();
 

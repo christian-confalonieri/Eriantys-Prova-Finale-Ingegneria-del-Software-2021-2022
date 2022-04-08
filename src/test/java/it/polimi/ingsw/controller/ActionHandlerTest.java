@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.action.Action;
+import it.polimi.ingsw.action.LoginAction;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -16,7 +18,7 @@ class ActionHandlerTest {
         Action action = ActionHandler.fromJson(json);
         assertInstanceOf(LoginAction.class, action);
         LoginAction loginAction = (LoginAction) action;
-        assertEquals(loginAction.name, "leonardo");
+        assertEquals(loginAction.getPlayerId(), "abcd-1234");
         assertNotNull(action);
     }
 }
