@@ -14,6 +14,7 @@ import java.util.Map;
  */
 public class EffectHandler {
 
+    private boolean activeHarvester;
     private PawnColor harvesterColor;
     private PawnColor thiefColor;
     private List<Student> chosenStudents1;
@@ -30,6 +31,7 @@ public class EffectHandler {
      */
     public EffectHandler() {
 
+        activeHarvester = false;
         harvesterColor = null;
         thiefColor = null;
         // I have added two lists of students, basically you will use the first one, the second one is needed in case of exchanges
@@ -47,8 +49,9 @@ public class EffectHandler {
     /**
      * @author Christian Confalonieri
      */
-    public EffectHandler(PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2, Map<Professor,Player> chosenProfessors,
+    public EffectHandler(boolean activeHarvester,PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2, Map<Professor,Player> chosenProfessors,
                          Island chosenIsland, int additionalMoves, int additionalInfluence, boolean skipTowers, Player effectPlayer) {
+        this.activeHarvester = activeHarvester;
         this.harvesterColor = harvesterColor;
         this.thiefColor = thiefColor;
         this.chosenStudents1 = chosenStudents1;
@@ -59,6 +62,14 @@ public class EffectHandler {
         this.additionalInfluence = additionalInfluence;
         this.skipTowers = skipTowers;
         this.effectPlayer = effectPlayer;
+    }
+
+    public boolean isActiveHarvester() {
+        return activeHarvester;
+    }
+
+    public void setActiveHarvester(boolean activeHarvester) {
+        this.activeHarvester = activeHarvester;
     }
 
     public PawnColor getHarvesterColor() {

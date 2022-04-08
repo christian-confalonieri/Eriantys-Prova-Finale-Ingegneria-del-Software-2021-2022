@@ -32,6 +32,7 @@ public class Harvester extends PowerCard {
     @Override
     public void power() {
         super.power();
+        getGameHandler().getGame().getEffectHandler().setActiveHarvester(true);
     }
 
     /**
@@ -43,6 +44,7 @@ public class Harvester extends PowerCard {
     public void endPower() {
         super.endPower();
         getGameHandler().getGame().getEffectHandler().setHarvesterColor(null);
+        getGameHandler().getGame().getEffectHandler().setActiveHarvester(false);
     }
 
 }

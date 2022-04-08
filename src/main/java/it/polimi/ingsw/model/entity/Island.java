@@ -168,7 +168,7 @@ public class Island {
 
         List<Student> temp = new ArrayList<>(students);
         for(Professor professor: professors) {
-            temp.removeIf(a->(a.getColor()==professor.getColor() && a.getColor()!=effectHandler.getHarvesterColor()));
+            temp.removeIf(a->(a.getColor() == professor.getColor() && !(a.getColor()==effectHandler.getHarvesterColor() && effectHandler.isActiveHarvester())));
         }
         return students.size() - temp.size();
 
