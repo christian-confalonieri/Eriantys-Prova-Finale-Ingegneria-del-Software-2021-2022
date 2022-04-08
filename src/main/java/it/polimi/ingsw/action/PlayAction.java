@@ -6,20 +6,18 @@ import it.polimi.ingsw.server.Server;
 
 public class PlayAction extends Action {
 
-    GameHandler gameHandler;
-
     @Override
     public void execute() throws InvalidAction {
         super.execute();
+        GameHandler gameHandler = Server.getInstance().getGameHandler(playerId);
         if (!this.playerId.equals(gameHandler.getCurrentPlayer().getName())) {
             // Action refused
             throw new InvalidAction("Action sent by not the current player");
         }
     }
 
-    @Override
-    public void init(Server serverApp) {
-        super.init(serverApp);
-        gameHandler = serverApp.getGameHandler(this.playerId);
+
+    public PlayAction(String actionType, String playerId) {
+        super(actionType, playerId);
     }
 }

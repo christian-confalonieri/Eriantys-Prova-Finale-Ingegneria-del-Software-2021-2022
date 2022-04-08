@@ -11,7 +11,6 @@ public class Action {
     protected String playerId;
 
     public void execute() throws InvalidAction {}
-    public void init(Server serverApp) {}
 
     public String getActionType() {
         return actionType;
@@ -21,4 +20,8 @@ public class Action {
         return playerId;
     }
 
+    public Action(String actionType, String playerId) {
+        this.actionType = actionType;
+        this.playerId = playerId;
+    }
 }

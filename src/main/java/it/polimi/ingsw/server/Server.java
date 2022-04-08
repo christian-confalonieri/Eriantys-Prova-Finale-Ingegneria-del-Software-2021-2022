@@ -1,9 +1,10 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.model.entity.Player;
-import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.GameHandler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,11 @@ public class Server {
         return singleton;
     }
 
-    private Server() {}
+    private Server() {
+        this.hostedGames = new ArrayList<>();
+        this.loggedPlayersInGame = new HashMap<>();
+        this.playersInGameReference = new HashMap<>();
+    }
 
     private List<GameHandler> hostedGames;
     private Map<String, GameHandler> loggedPlayersInGame; // Refers to the game in which the player is logged in

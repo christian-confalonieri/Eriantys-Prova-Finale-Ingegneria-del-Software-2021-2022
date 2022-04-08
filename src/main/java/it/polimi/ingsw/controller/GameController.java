@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 public class GameController {
     public void actionExecutor(String json) {
         Action action = ActionHandler.fromJson(json);
-        action.init(Server.getInstance());
 
         try {
             action.execute();

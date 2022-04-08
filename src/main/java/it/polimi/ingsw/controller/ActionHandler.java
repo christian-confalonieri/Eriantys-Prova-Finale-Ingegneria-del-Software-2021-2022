@@ -2,7 +2,7 @@ package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.action.Action;
-import it.polimi.ingsw.action.ActionPlayCard;
+import it.polimi.ingsw.action.PlayCardAction;
 import it.polimi.ingsw.action.LoginAction;
 
 public class ActionHandler {
@@ -17,7 +17,7 @@ public class ActionHandler {
                 castedAction = gson.fromJson(json, LoginAction.class);
                 break;
             case "playcard":
-                castedAction = gson.fromJson(json, ActionPlayCard.class);
+                castedAction = gson.fromJson(json, PlayCardAction.class);
                 break;
         }
 
