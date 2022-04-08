@@ -34,7 +34,7 @@ public class Friar extends PowerCard {
         for(int i=0; i<4; i++) {
             try {
                 students.add(getGameHandler().getGame().getBag().pickStudent());
-            } catch (EmptyBagException e) { }
+            } catch (EmptyBagException e) {  }
         }
     }
 
