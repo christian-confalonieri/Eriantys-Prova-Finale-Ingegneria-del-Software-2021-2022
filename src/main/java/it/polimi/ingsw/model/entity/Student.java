@@ -17,7 +17,7 @@ public class Student extends Pawn{
      * @param n the number of students to generate
      * @return the list of the students generated
      */
-    static List<Student> generateNStudentsPerColor(int n) {
+    public static List<Student> generateNStudentsPerColor(int n) {
 
         List<Student> studentList = new ArrayList<>();
         for (PawnColor color : PawnColor.values()) {
