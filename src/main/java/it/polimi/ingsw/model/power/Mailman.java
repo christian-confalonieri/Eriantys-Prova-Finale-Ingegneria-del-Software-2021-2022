@@ -25,8 +25,7 @@ public class Mailman extends PowerCard {
     }
 
     /**
-     * This method should be called after calling the method to move mother nature,
-     * this way you just move it further by a number of places equal to the integer additionalMoves.
+     * This method just move mother nature by a number of places equal to the integer additionalMoves.
      *
      * @author Christian Confalonieri
      */

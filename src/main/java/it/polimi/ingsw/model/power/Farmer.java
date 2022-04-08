@@ -32,11 +32,9 @@ public class Farmer extends PowerCard {
     }
 
     /**
-     * This method should be activated after having moved the students from the entrance to the dining room
-     * (and having called the professorRelocate method),
-     * in this way it rechecks the schools and relocates the professors even if the students of the same color are equal in number.
+     * This method checks the schools and relocates the professors even if the students of the same color are equal in number.
      *
-     * We have assumed that this power acts only in case the other players already have the color tower to compare.
+     * We have assumed that this power acts only in case the other players already have the color professor to compare.
      *
      * @author Christian Confalonieri
      */
@@ -84,8 +82,11 @@ public class Farmer extends PowerCard {
         if(chosenProfessors!=null) {
             Player effectPlayer = getGameHandler().getGame().getEffectHandler().getEffectPlayer();
             for(Professor professor : chosenProfessors.keySet()) {
-                effectPlayer.getSchool().removeProfessor(professor);
-                chosenProfessors.get(professor).getSchool().addProfessor(professor);
+                if(effectPlayer.getSchool().getStudentsDiningRoom(professor.getColor()).size() ==
+                        chosenProfessors.get(professor).getSchool().getStudentsDiningRoom(professor.getColor()).size()) {
+                    effectPlayer.getSchool().removeProfessor(professor);
+                    chosenProfessors.get(professor).getSchool().addProfessor(professor);
+                }
             }
             getGameHandler().getGame().getEffectHandler().setChosenProfessors(null);
         }

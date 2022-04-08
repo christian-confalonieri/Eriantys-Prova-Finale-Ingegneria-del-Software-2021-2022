@@ -24,7 +24,7 @@ public class Harvester extends PowerCard {
     }
 
     /**
-     * This method does nothing besides increasing the cost of the card
+     * This method does nothing besides increasing the cost of the card and set the value of activeHarvester to true
      * since the control of the chosen color and the calculation of the influence is handled by the methods of the Island class.
      *
      * @author Christian Confalonieri
@@ -36,7 +36,7 @@ public class Harvester extends PowerCard {
     }
 
     /**
-     * Simply change the value of the harvesterColor to null
+     * Simply change the value of the harvesterColor to null and set the value of activeHarvester to false
      *
      * @author Christian Confalonieri
      */

@@ -23,8 +23,14 @@ import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Christian Confalonieri
+ */
 class KnightTest {
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void power_endPower() throws InvalidNewGameException, IOException, InvalidRulesException {
         GameHandler gameHandler = createGame();
