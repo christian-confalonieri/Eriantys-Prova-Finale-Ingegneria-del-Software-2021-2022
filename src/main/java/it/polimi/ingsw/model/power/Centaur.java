@@ -20,6 +20,8 @@ public class Centaur extends PowerCard {
         super(gameHandler);
         setType(PowerType.CENTAUR);
         setCost(3);
+
+
     }
 
     /**
