@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Christian Confalonieri
  */
-class MinstrelTest {
+class PrincessTest {
 
     /**
      * @author Christian Confalonieri
@@ -34,13 +34,14 @@ class MinstrelTest {
     void power() throws InvalidNewGameException, IOException, InvalidRulesException {
         GameHandler gameHandler = createGame();
 
-        Minstrel minstrel = new Minstrel(gameHandler);
+        Princess princess = new Princess(gameHandler);
         List<PowerCard> powerCards = new ArrayList<>();
-        powerCards.add(minstrel);
+        powerCards.add(princess);
         gameHandler.getGame().setPowerCards(powerCards);
 
-        assertEquals(PowerType.MINSTREL,minstrel.getType());
-        assertEquals(1,minstrel.getCost());
+        assertEquals(PowerType.PRINCESS,princess.getType());
+        assertEquals(2,princess.getCost());
+        assertEquals(4,princess.getStudents().size());
 
         List<Player> players = gameHandler.getOrderedTurnPlayers();
         // 0: Luigi, 1: Mario
@@ -93,39 +94,27 @@ class MinstrelTest {
         assertEquals(2,players.get(0).getSchool().getProfessorTable().size());
         assertEquals(redProfessor,players.get(1).getSchool().getProfessorTable().get(0));
 
-        List<Student> students1 = new ArrayList<>();
-        List<Student> students2 = new ArrayList<>();
         List<Student> studentsDiningRoom = new ArrayList<>();
+        List<Student> students = new ArrayList<>();
+        students.add(princess.getStudents().get(0));
+        gameHandler.getGame().getEffectHandler().setChosenStudents1(students);
 
+        assertTrue(princess.getStudents().containsAll(students));
         for(PawnColor color : PawnColor.values()) {
             studentsDiningRoom.addAll(gameHandler.getCurrentPlayer().getSchool().getStudentsDiningRoom(color));
         }
+        assertFalse(studentsDiningRoom.containsAll(students));
+        assertEquals(4,princess.getStudents().size());
 
-        for(int i=0; i<2;i++) {
-            students1.add(gameHandler.getCurrentPlayer().getSchool().getEntrance().get(i));
-            students2.add(studentsDiningRoom.get(i));
-        }
+        princess.power();
 
-        gameHandler.getGame().getEffectHandler().setChosenStudents1(students1);
-        gameHandler.getGame().getEffectHandler().setChosenStudents2(students2);
-
-        assertTrue(gameHandler.getCurrentPlayer().getSchool().getEntrance().containsAll(students1));
-        assertTrue(studentsDiningRoom.containsAll(students2));
-        assertFalse(gameHandler.getCurrentPlayer().getSchool().getEntrance().containsAll(students2));
-        assertFalse(studentsDiningRoom.containsAll(students1));
-
-        minstrel.power();
-
+        assertFalse(princess.getStudents().containsAll(students));
         studentsDiningRoom.clear();
         for(PawnColor color : PawnColor.values()) {
             studentsDiningRoom.addAll(gameHandler.getCurrentPlayer().getSchool().getStudentsDiningRoom(color));
         }
-
-        assertTrue(gameHandler.getCurrentPlayer().getSchool().getEntrance().containsAll(students2));
-        assertTrue(studentsDiningRoom.containsAll(students1));
-        assertFalse(gameHandler.getCurrentPlayer().getSchool().getEntrance().containsAll(students1));
-        assertFalse(studentsDiningRoom.containsAll(students2));
-
+        assertTrue(studentsDiningRoom.containsAll(students));
+        assertEquals(4,princess.getStudents().size());
     }
 
     private GameHandler createGame() throws IOException, InvalidNewGameException, InvalidRulesException {

@@ -56,4 +56,7 @@ public class Princess extends PowerCard {
         } catch (EmptyBagException e) {}
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
 }
