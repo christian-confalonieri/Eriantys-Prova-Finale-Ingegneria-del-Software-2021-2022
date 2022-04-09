@@ -13,6 +13,7 @@ public class LoginAction extends MenuAction {
         if (playerId.isBlank() || playerId.isEmpty()) {
             // Generate a new id
             // Will return the serialized id to send back
+
         }
         else {
             // check if present and connected to a game
