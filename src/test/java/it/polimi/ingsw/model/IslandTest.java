@@ -264,13 +264,6 @@ class IslandTest {
         effectHandler.setAdditionalInfluence(0);
         effectHandler.setEffectPlayer(null);
 
-        // island with harvesterColor = RED
-        effectHandler.setHarvesterColor(PawnColor.RED);
-
-        assertEquals(myPlayer2, myIsland1.getInfluencePlayer(myPlayers, effectHandler));
-
-        effectHandler.setHarvesterColor(null);
-
     }
 
     /**
@@ -352,13 +345,6 @@ class IslandTest {
 
         effectHandler.setAdditionalInfluence(0);
         effectHandler.setEffectPlayer(null);
-
-        // island with harvesterColor = RED
-        effectHandler.setHarvesterColor(PawnColor.RED);
-
-        assertEquals(myTeam2, myIsland1.getInfluenceTeam(myTeams, effectHandler));
-
-        effectHandler.setHarvesterColor(null);
 
     }
 
