@@ -6,18 +6,15 @@ import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.server.Server;
 
 public class PlayCardAction extends PlayAction {
+    public Card getPlayedCard() {
+        return playedCard;
+    }
+
     protected Card playedCard;
 
-    public PlayCardAction(String playerId) {
+    public PlayCardAction(String playerId, Card card) {
         super(ActionType.PLAYCARD, playerId);
+        this.playedCard = card;
     }
 
-    @Override
-    public void execute() throws InvalidAction {
-        super.execute();
-        GameHandler gameHandler = Server.getInstance().getGameHandler(playerId);
-
-        // if (Nessuno prima di me ha giocato questa carta o non c'è alternativa
-        gameHandler.getCurrentPlayer().playCard(playedCard);
-    }
 }

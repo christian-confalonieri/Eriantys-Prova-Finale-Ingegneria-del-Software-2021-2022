@@ -10,8 +10,6 @@ public class Action {
     protected ActionType actionType;
     protected String playerId;
 
-    public void execute() throws InvalidAction {}
-
     public ActionType getActionType() {
         return actionType;
     }

@@ -67,6 +67,9 @@ public class Server {
         loggedPlayersInGame.remove(playerId);
         playersInGameReference.remove(playerId);
     }
+    public boolean isInGame(String playerId) {
+        return loggedPlayersInGame.containsKey(playerId);
+    }
 
     public List<ClientNetworkHandler> getConnectionsForGameBroadcast(GameHandler gameHandler) {
         List<String> playerIds = loggedPlayersInGame.keySet().stream().filter(id -> loggedPlayersInGame.get(id).equals(gameHandler)).toList();

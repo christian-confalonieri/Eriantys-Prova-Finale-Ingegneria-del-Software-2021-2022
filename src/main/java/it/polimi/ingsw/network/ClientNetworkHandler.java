@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+
 public class ClientNetworkHandler implements Runnable{
     private Socket clientSocket;
     private boolean shutdown;
@@ -52,11 +53,12 @@ public class ClientNetworkHandler implements Runnable{
         }
 
         Scanner s = new Scanner(inputStream).useDelimiter("\n");
+        String ipAddress = clientSocket.getInetAddress().toString();
 
         while (!shutdown) {
             // TODO Define a close connection message and a ack system to close broken connections
             if(s.hasNext()) // Blocking:waits for input (But if client disconnects deadlock)
-                Server.getInstance().getGameController().actionExecutor(s.next());
+                Server.getInstance().getGameController().actionExecutor(s.next(), this);
         }
         System.out.println("@" + clientSocket.getInetAddress().toString() + ":" + clientSocket.getPort() + " listening thread closed");
     }
