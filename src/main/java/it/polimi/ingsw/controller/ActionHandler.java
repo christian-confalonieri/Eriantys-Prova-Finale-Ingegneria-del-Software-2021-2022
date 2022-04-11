@@ -2,15 +2,14 @@ package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.action.*;
+import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.services.GameService;
 import it.polimi.ingsw.controller.services.LoginService;
 import it.polimi.ingsw.exceptions.InvalidAction;
-import it.polimi.ingsw.model.entity.Player;
-import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
 
-import java.util.NoSuchElementException;
+import java.io.Console;
 
 public class ActionHandler {
 
@@ -46,9 +45,16 @@ public class ActionHandler {
      * @param clientNet the ClientNetworkHandler from where the action was received
      */
     public static void actionServiceInvoker(Action action, ClientNetworkHandler clientNet) {
-        if (ignorePlayAction(action)) return;
-        if (ignoreMenuAction(action)) return;
+        if (ignorePlayAction(action)) {
+            System.out.println(ConsoleColor.YELLOW + clientNet.toString() + " PlayAction ignored" + ConsoleColor.RESET);
+            return;
+        }
+        if (ignoreMenuAction(action)) {
+            System.out.println(ConsoleColor.YELLOW + clientNet.toString() + " MenuAction ignored" + ConsoleColor.RESET);
+            return;
+        }
 
+        System.out.println(ConsoleColor.BLUE + clientNet.toString() + " Action services invoked" + ConsoleColor.RESET);
         switch (action.getActionType()) {
             case LOGIN -> LoginService.clientLogin((LoginAction) action, clientNet);
             case PLAYCARD -> GameService.playCard((PlayCardAction) action);

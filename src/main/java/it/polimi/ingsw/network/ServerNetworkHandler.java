@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.server.Server;
 
 import java.io.IOException;
@@ -21,12 +22,12 @@ public class ServerNetworkHandler implements Runnable {
     }
 
     public void run() {
-        System.out.println("ServerNetworkHandler started...");
+        System.out.println(ConsoleColor.GREEN + "ServerNetworkHandler started on port " + serverSocket.getLocalPort() + ConsoleColor.RESET);
 
         while(!shutdown) {
             try {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("@" + clientSocket.getInetAddress().toString() + ":" + clientSocket.getPort() + " connected...");
+                System.out.println(ConsoleColor.GREEN + "@" + clientSocket.getInetAddress().toString() + ":" + clientSocket.getPort() + " connected..." + ConsoleColor.RESET);
 
                 new ClientNetworkHandler(clientSocket); // Launch a thread starting the listening
 
@@ -36,6 +37,7 @@ public class ServerNetworkHandler implements Runnable {
             }
         }
 
-        System.out.println("ServerNetworkHandler stopped: Not accepting new connections");
+        System.out.println(ConsoleColor.RED + "ServerNetworkHandler stopped: Not accepting new connections" + ConsoleColor.RESET);
     }
+
 }

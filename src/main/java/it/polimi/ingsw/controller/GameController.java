@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 
 import it.polimi.ingsw.action.Action;
+import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
@@ -21,7 +22,7 @@ public class GameController {
             Action action = ActionHandler.fromJson(json);
             ActionHandler.actionServiceInvoker(action, netHandler);
         } catch (InvalidAction e) {
-            e.printStackTrace();
+            System.out.println(ConsoleColor.YELLOW + netHandler.toString() + " Invalid Action: " + e.getMessage() + ConsoleColor.RESET);
         }
     }
 

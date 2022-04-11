@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.server.Server;
 
 import java.io.*;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class ClientNetworkHandler implements Runnable{
     private Socket clientSocket;
+    Thread listenerThread;
     private boolean shutdown;
 
     public ClientNetworkHandler(Socket clientSocket) {
@@ -22,26 +24,27 @@ public class ClientNetworkHandler implements Runnable{
         //} catch (SocketException e) {
         //    e.printStackTrace();
         //}
-
-
         shutdown = false;
-        new Thread(this).start();
         Server.getInstance().addClientConnection(this);
+
+        listenerThread = new Thread(this);
+        listenerThread.start();
     }
 
     public void shutdown() {
         try {
             clientSocket.close();
         } catch (IOException e) {
-            System.out.println("@" + clientSocket.getInetAddress().toString() + ":" + clientSocket.getPort() + " lost connection");
+            System.out.println(this.toString() + " lost connection");
         }
         Server.getInstance().removeClientConnection(this);
+        listenerThread.interrupt();
         shutdown = true;
     }
 
     @Override
     public void run() {
-        System.out.println("@" + clientSocket.getInetAddress().toString() + ":" + clientSocket.getPort() + " listening...");
+        System.out.println(this.toString() + " listening...");
         InputStream inputStream = null;
 
         try {
@@ -60,6 +63,12 @@ public class ClientNetworkHandler implements Runnable{
             if(s.hasNext()) // Blocking:waits for input (But if client disconnects deadlock)
                 Server.getInstance().getGameController().actionExecutor(s.next(), this);
         }
-        System.out.println("@" + clientSocket.getInetAddress().toString() + ":" + clientSocket.getPort() + " listening thread closed");
+        System.out.println(ConsoleColor.RED + this.toString() + " listening thread closed" + ConsoleColor.RESET);
+    }
+
+
+    @Override
+    public String toString() {
+        return "@" + clientSocket.getInetAddress() + ":" + clientSocket.getPort();
     }
 }

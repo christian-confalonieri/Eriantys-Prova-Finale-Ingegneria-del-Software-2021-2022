@@ -1,11 +1,13 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.network.ServerNetworkHandler;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,9 +19,6 @@ public class Server {
 
     private static Server singleton;
     public static Server getInstance() {
-        if(singleton == null) {
-            singleton = new Server();
-        }
         return singleton;
     }
 
@@ -80,6 +79,13 @@ public class Server {
     public void addGame(GameHandler gameHandler) { hostedGames.add(gameHandler); }
     public void removeGame(GameHandler gameHandler) { hostedGames.remove(gameHandler); }
 
+    public GameController getGameController() {
+        return gameController;
+    }
+
+
+
+
     private Server(int serverPort) {
         this.hostedGames = new ArrayList<>();
         this.loggedPlayersInGame = new HashMap<>();
@@ -87,6 +93,8 @@ public class Server {
         this.gameController = new GameController();
         this.clientConnections = new ArrayList<>();
         this.serverPort = serverPort;
+
+        System.out.println(ConsoleColor.PURPLE_BOLD_BRIGHT + "ERYANTIS SERVER" + ConsoleColor.RESET);
     }
 
     private Server() {
@@ -94,23 +102,27 @@ public class Server {
     }
 
 
+    /**
+     * Set up and run all the server components
+     *
+     * @throws IOException when setting up a serverSocket fails
+     */
     public void run() throws IOException {
         serverNetworkHandler = new ServerNetworkHandler(serverPort);
         serverNetworkHandler.run();
     }
 
-    public GameController getGameController() {
-        return gameController;
-    }
-
-    public static void main(String[] args) throws IOException {
-        Server server;
+    public static void main(String[] args) {
         if(args.length == 0)
-            server = new Server();
+            singleton = new Server();
         else {
-            server = new Server(Integer.getInteger(args[0]));
+            singleton = new Server(Integer.parseInt(args[0]));
         }
-        server.run();
 
+        try {
+            singleton.run();
+        } catch (IOException e) {
+            System.out.println(ConsoleColor.RED + "An IO error occurred. Please check your network connection" + ConsoleColor.RESET);
+        }
     }
 }
