@@ -27,12 +27,13 @@ public class ActionHandler {
 
             return switch (action.getActionType()) {
                 case LOGIN -> gson.fromJson(json, LoginAction.class);
+                case LOGOUT -> gson.fromJson(json, LogoutAction.class);
                 case PLAYCARD -> gson.fromJson(json, PlayCardAction.class);
             };
         } catch (com.google.gson.JsonSyntaxException e) {
-            throw new InvalidAction("Invalid json conversion");
-        } catch (NullPointerException e) {
-            throw new InvalidAction("Empty or bad action recieved");
+            throw new InvalidAction("Bad formatted JSON");
+        } catch (NullPointerException e) { // action.getActionType is null
+            throw new InvalidAction("Empty or bad action");
         }
     }
 
@@ -57,6 +58,7 @@ public class ActionHandler {
         System.out.println(ConsoleColor.BLUE + clientNet.toString() + " Action services invoked" + ConsoleColor.RESET);
         switch (action.getActionType()) {
             case LOGIN -> LoginService.clientLogin((LoginAction) action, clientNet);
+            case LOGOUT -> LoginService.clientLogout((LogoutAction) action, clientNet);
             case PLAYCARD -> GameService.playCard((PlayCardAction) action);
         }
     }

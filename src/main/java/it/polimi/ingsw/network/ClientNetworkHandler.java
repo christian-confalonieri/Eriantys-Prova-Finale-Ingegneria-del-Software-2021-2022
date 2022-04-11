@@ -66,6 +66,18 @@ public class ClientNetworkHandler implements Runnable{
         System.out.println(ConsoleColor.RED + this.toString() + " listening thread closed" + ConsoleColor.RESET);
     }
 
+    public void send(Object obj) {
+        if (obj instanceof String) {
+            try {
+                PrintWriter pw = new PrintWriter(clientSocket.getOutputStream());
+                pw.println(obj);
+                pw.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     @Override
     public String toString() {

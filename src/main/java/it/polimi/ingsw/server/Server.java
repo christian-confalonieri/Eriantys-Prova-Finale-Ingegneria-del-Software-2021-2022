@@ -22,22 +22,21 @@ public class Server {
         return singleton;
     }
 
-    private int serverPort;
+    private final int serverPort;
 
-    private List<GameHandler> hostedGames;
+    private final List<GameHandler> hostedGames;
 
     // Logged players in game
-    private Map<String, GameHandler> loggedPlayersInGame; // Refers to the game in which the player is logged in
-    private Map<String, Player> playersInGameReference; // The player is logged in as Player@...
+    private final Map<String, GameHandler> loggedPlayersInGame; // Refers to the game in which the player is logged in
+    private final Map<String, Player> playersInGameReference; // The player is logged in as Player@...
 
     // Id to net handler bound
-    private Map<String, ClientNetworkHandler> assignedConnections;
+    private final Map<String, ClientNetworkHandler> assignedConnections;
 
 
-    private List<ClientNetworkHandler> clientConnections; // List of handlers referred to the connections
-    private ServerNetworkHandler serverNetworkHandler;
+    private final List<ClientNetworkHandler> clientConnections; // List of handlers referred to the connections
 
-    private GameController gameController;
+    private final GameController gameController;
 
     public List<GameHandler> getHostedGames() {
         return hostedGames;
@@ -53,10 +52,13 @@ public class Server {
         clientConnections.add(clientConnection);
     }
     public void removeClientConnection(ClientNetworkHandler clientConnection) { clientConnections.remove(clientConnection); }
+
     public void assignConnection(String playerId, ClientNetworkHandler networkHandler) {
         assignedConnections.put(playerId, networkHandler);
     }
     public void unassignConnection(String playerId) { assignedConnections.remove(playerId); }
+    public boolean isAssigned(String playerId) { return assignedConnections.containsKey(playerId); }
+    public boolean isAssigned(ClientNetworkHandler clientNetworkHandler) { return assignedConnections.containsValue(clientNetworkHandler); }
 
     public void addPlayerInGame(String playerId, GameHandler game, Player player) {
         loggedPlayersInGame.put(playerId, game);
@@ -88,11 +90,18 @@ public class Server {
 
     private Server(int serverPort) {
         this.hostedGames = new ArrayList<>();
+
         this.loggedPlayersInGame = new HashMap<>();
         this.playersInGameReference = new HashMap<>();
-        this.gameController = new GameController();
+
         this.clientConnections = new ArrayList<>();
+
+        this.assignedConnections = new HashMap<>();
+
+        this.gameController = new GameController();
         this.serverPort = serverPort;
+
+
 
         System.out.println(ConsoleColor.PURPLE_BOLD_BRIGHT + "ERYANTIS SERVER" + ConsoleColor.RESET);
     }
@@ -108,7 +117,7 @@ public class Server {
      * @throws IOException when setting up a serverSocket fails
      */
     public void run() throws IOException {
-        serverNetworkHandler = new ServerNetworkHandler(serverPort);
+        ServerNetworkHandler serverNetworkHandler = new ServerNetworkHandler(serverPort);
         serverNetworkHandler.run();
     }
 
