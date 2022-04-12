@@ -30,12 +30,10 @@ public class Cloud {
      * @author Christian Confalonieri
      */
     public List<Student> pickAllStudents() {
-
             List<Student> allStudents = new ArrayList<>();
             allStudents.addAll(students);
             students.clear();
             return allStudents;
-
     }
 
     public List<Student> getStudents() {

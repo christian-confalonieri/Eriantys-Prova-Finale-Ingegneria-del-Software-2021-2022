@@ -24,6 +24,7 @@ public class Server {
 
     private final int serverPort;
 
+    private final List<GameLobby> lobbyGames; // gameId to players waiting to play
     private final List<GameHandler> hostedGames;
 
     // Logged players in game
@@ -38,7 +39,7 @@ public class Server {
 
     private final GameController gameController;
 
-    public List<GameHandler> getHostedGames() {
+    public List<GameHandler> getAllHostedGames() {
         return hostedGames;
     }
 
@@ -90,6 +91,7 @@ public class Server {
 
     private Server(int serverPort) {
         this.hostedGames = new ArrayList<>();
+        this.lobbyGames = new ArrayList<>();
 
         this.loggedPlayersInGame = new HashMap<>();
         this.playersInGameReference = new HashMap<>();

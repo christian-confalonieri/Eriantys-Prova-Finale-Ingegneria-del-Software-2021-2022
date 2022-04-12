@@ -15,7 +15,7 @@ public class GameService {
             if(gameHandler.previousPlayedCards().contains(action.getPlayedCard())) {
                 if(gameHandler.previousPlayedCards().containsAll(gameHandler.getCurrentPlayer().getHandCards())) { // all your cards are already played: no alternative
                     gameHandler.getCurrentPlayer().playCard(action.getPlayedCard());
-
+                    gameHandler.advance();
                     // TODO send changes to all players
                 }
                 else { // invalid card (you can play other valid cards)
@@ -24,7 +24,7 @@ public class GameService {
             }
             else { // valid card (nobody played this card in this turn)
                 gameHandler.getCurrentPlayer().playCard(action.getPlayedCard());
-
+                gameHandler.advance();
                 // TODO send changes to all players
             }
         }

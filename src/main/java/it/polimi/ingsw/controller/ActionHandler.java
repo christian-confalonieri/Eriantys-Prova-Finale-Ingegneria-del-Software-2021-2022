@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.action.*;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.services.GameService;
+import it.polimi.ingsw.controller.services.LobbyService;
 import it.polimi.ingsw.controller.services.LoginService;
 import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.network.ClientNetworkHandler;
@@ -29,6 +30,7 @@ public class ActionHandler {
                 case LOGIN -> gson.fromJson(json, LoginAction.class);
                 case LOGOUT -> gson.fromJson(json, LogoutAction.class);
                 case PLAYCARD -> gson.fromJson(json, PlayCardAction.class);
+                case NEWGAME -> gson.fromJson(json, NewGameAction.class);
             };
         } catch (com.google.gson.JsonSyntaxException e) {
             throw new InvalidAction("Bad formatted JSON");
@@ -45,7 +47,7 @@ public class ActionHandler {
      * @param action the action to execute
      * @param clientNet the ClientNetworkHandler from where the action was received
      */
-    public static void actionServiceInvoker(Action action, ClientNetworkHandler clientNet) {
+    public static void actionServiceInvoker(Action action, ClientNetworkHandler clientNet)  {
         if (ignorePlayAction(action)) {
             System.out.println(ConsoleColor.YELLOW + clientNet.toString() + " PlayAction ignored" + ConsoleColor.RESET);
             return;
@@ -60,6 +62,7 @@ public class ActionHandler {
             case LOGIN -> LoginService.clientLogin((LoginAction) action, clientNet);
             case LOGOUT -> LoginService.clientLogout((LogoutAction) action, clientNet);
             case PLAYCARD -> GameService.playCard((PlayCardAction) action);
+            case NEWGAME -> LobbyService.newGame((NewGameAction) action);
         }
     }
 
@@ -76,7 +79,7 @@ public class ActionHandler {
                 String actionPlayerName = Server.getInstance().getInGamePlayer(action.getPlayerId()).getName();
                 String currentPlayerName = Server.getInstance().getGameHandler(action.getPlayerId()).getCurrentPlayer().getName();
 
-                return !actionPlayerName.equals(currentPlayerName);
+                return !actionPlayerName.equals(currentPlayerName); // returns if the player is the current player
             }
             else return true; // Player is not in a game
         }
