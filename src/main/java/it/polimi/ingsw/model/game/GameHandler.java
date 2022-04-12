@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.game;
 
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.enumeration.Card;
 import it.polimi.ingsw.model.enumeration.GamePhase;
 import it.polimi.ingsw.model.enumeration.TurnPhase;
 
@@ -69,11 +70,26 @@ public class GameHandler {
     }
 
     /**
+     * Returns a list of the cards played from the players before the current player
+     *
+     * @return the list of cards
+     */
+    public List<Card> previousPlayedCards() {
+        List<Card> playedCard = new ArrayList<>();
+        for (Player iplayer = firstTurnPlayer; iplayer.equals(currentPlayer);
+             iplayer = orderedTurnPlayers.get((orderedTurnPlayers.indexOf(iplayer) + 1) % orderedTurnPlayers.size()) ) {
+            playedCard.add(iplayer.getLastPlayedCard());
+        }
+        return playedCard;
+    }
+
+    /**
      * Return the first player of the turn after the preparation by comparing the last played card
      *
      * @return the player with the smallest number lastPlayedCard
      */
     public List<Player> calculateTurnOrder() {
+        // TODO check equals card priority
         return game.players.stream().sorted((p1, p2) -> p1.getLastPlayedCard().getNumber() <= p2.getLastPlayedCard().getNumber() ? -1 : 1).collect(Collectors.toList());
     }
 

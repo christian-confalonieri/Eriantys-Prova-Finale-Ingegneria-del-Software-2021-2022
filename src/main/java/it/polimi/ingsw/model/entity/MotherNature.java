@@ -21,6 +21,7 @@ public class MotherNature {
 
     /**
      * Moves mother nature n steps on the board
+     * Requires a valid number of steps
      * @param n number of steps
      * @return the island on which mother nature lands on
      *
