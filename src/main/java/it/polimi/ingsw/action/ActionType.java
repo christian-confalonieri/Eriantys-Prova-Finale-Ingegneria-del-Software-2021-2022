@@ -6,5 +6,6 @@ public enum ActionType {
     LOGOUT,
     MOVESTUDENTS,
     MOVEMOTHERNATURE,
-    MOVECLOUD
+    MOVECLOUD,
+    POWER
 }

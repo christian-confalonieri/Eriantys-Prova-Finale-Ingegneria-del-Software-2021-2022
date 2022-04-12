@@ -25,20 +25,21 @@ public class Mailman extends PowerCard {
     }
 
     /**
-     * This method just move mother nature by a number of places equal to the integer additionalMoves.
-     *
      * @author Christian Confalonieri
      */
     @Override
     public void power() {
         super.power();
-
-        int n = getGameHandler().getGame().getEffectHandler().getAdditionalMoves();
-        MotherNature motherNature = getGameHandler().getGame().getMotherNature();
-
-        motherNature.move(n);
-
-        getGameHandler().getGame().getEffectHandler().setAdditionalMoves(0);
+        getGameHandler().getGame().getEffectHandler().setActiveMailman(true);
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
+    @Override
+    public void endPower() {
+        super.endPower();
+        getGameHandler().getGame().getEffectHandler().setActiveMailman(false);
+        getGameHandler().getGame().getEffectHandler().setAdditionalMoves(0);
+    }
 }

@@ -1,9 +1,6 @@
 package it.polimi.ingsw.controller.services;
 
-import it.polimi.ingsw.action.MoveCloudAction;
-import it.polimi.ingsw.action.MoveMotherNatureAction;
-import it.polimi.ingsw.action.MoveStudentsAction;
-import it.polimi.ingsw.action.PlayCardAction;
+import it.polimi.ingsw.action.*;
 import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
@@ -11,6 +8,7 @@ import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.GamePhase;
 import it.polimi.ingsw.model.enumeration.TurnPhase;
 import it.polimi.ingsw.model.game.GameHandler;
+import it.polimi.ingsw.model.power.PowerCard;
 import it.polimi.ingsw.server.Server;
 
 import java.util.List;
@@ -99,8 +97,16 @@ public class GameService {
         if (gameHandler.getGamePhase().equals(GamePhase.TURN) &&
                 gameHandler.getTurnPhase().equals(TurnPhase.MOVEMOTHER)) {
 
+            int maxMovements;
+            if(gameHandler.getGame().getEffectHandler().isActiveMailman()) {
+                maxMovements = gameHandler.getCurrentPlayer().getLastPlayedCard().getMovements() + gameHandler.getGame().getEffectHandler().getAdditionalMoves();
+            }
+            else {
+                maxMovements = gameHandler.getCurrentPlayer().getLastPlayedCard().getMovements();
+            }
+
             if(action.getSteps() > 0 &&
-                    action.getSteps() <= gameHandler.getCurrentPlayer().getLastPlayedCard().getMovements()) {
+                    action.getSteps() <= maxMovements) {
 
                 gameHandler.getGame().getMotherNature().move(action.getSteps());
                 Island currentIsland = gameHandler.getGame().getMotherNature().isOn();
@@ -144,5 +150,34 @@ public class GameService {
         }
         gameHandler.advance();
         // TODO send changes to all players
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public static void power(PowerAction action) throws InvalidAction {
+        GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
+        PowerCard powerCard = gameHandler.getGame().getPowerCard(action.getType());
+
+        if(!gameHandler.getGame().getPowerCards().contains(powerCard)) {
+            throw new InvalidAction("Power: invalid power");
+        }
+
+        if(action.getType() == null) {
+            throw new InvalidAction("Power: invalid power type");
+        }
+
+        if(action.getEffectHandler() == null) {
+            throw new InvalidAction("Power: invalid effectHandler");
+        }
+
+        if (gameHandler.getGamePhase().equals(GamePhase.TURN)) {
+            gameHandler.getGame().setEffectHandler(action.getEffectHandler());
+
+            powerCard.power();
+        }
+        else {
+            throw new InvalidAction("Power: invalid phase");
+        }
     }
 }
