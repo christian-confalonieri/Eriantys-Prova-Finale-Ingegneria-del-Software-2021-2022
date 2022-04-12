@@ -29,6 +29,7 @@ public class ActionHandler {
                 case LOGIN -> gson.fromJson(json, LoginAction.class);
                 case LOGOUT -> gson.fromJson(json, LogoutAction.class);
                 case PLAYCARD -> gson.fromJson(json, PlayCardAction.class);
+                case MOVESTUDENTS -> gson.fromJson(json, MoveStudentsAction.class);
             };
         } catch (com.google.gson.JsonSyntaxException e) {
             throw new InvalidAction("Bad formatted JSON");
@@ -60,6 +61,7 @@ public class ActionHandler {
             case LOGIN -> LoginService.clientLogin((LoginAction) action, clientNet);
             case LOGOUT -> LoginService.clientLogout((LogoutAction) action, clientNet);
             case PLAYCARD -> GameService.playCard((PlayCardAction) action);
+            case MOVESTUDENTS -> GameService.moveStudents((MoveStudentsAction) action);
         }
     }
 
