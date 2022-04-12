@@ -36,6 +36,7 @@ public class ActionHandler {
                 case MOVEMOTHERNATURE -> gson.fromJson(json, MoveMotherNatureAction.class);
                 case MOVECLOUD -> gson.fromJson(json, MoveCloudAction.class);
                 case POWER -> gson.fromJson(json, PowerAction.class);
+                case JOINGAME -> gson.fromJson(json, JoinGameAction.class);
             };
         } catch (com.google.gson.JsonSyntaxException e) {
             throw new InvalidAction("Bad formatted JSON");
@@ -73,6 +74,7 @@ public class ActionHandler {
             case MOVEMOTHERNATURE -> GameService.moveMotherNature((MoveMotherNatureAction) action);
             case MOVECLOUD -> GameService.moveCloud((MoveCloudAction) action);
             case POWER -> GameService.power((PowerAction) action);
+            case JOINGAME -> LobbyService.joinGame((JoinGameAction) action);
         }
     }
 

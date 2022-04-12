@@ -175,6 +175,7 @@ public class GameService {
             gameHandler.getGame().setEffectHandler(action.getEffectHandler());
 
             powerCard.power();
+            // TODO send changes to all players
         }
         else {
             throw new InvalidAction("Power: invalid phase");

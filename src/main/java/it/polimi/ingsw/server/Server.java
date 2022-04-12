@@ -2,17 +2,17 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.enumeration.Wizard;
+import it.polimi.ingsw.model.game.GameCreator;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.network.ServerNetworkHandler;
 
 import java.io.Console;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Server {
@@ -39,6 +39,27 @@ public class Server {
 
     private final GameController gameController;
 
+    public void addNewGameLobby(GameLobby gameLobby) { lobbyGames.add(gameLobby); }
+    public void startGame(GameLobby gameLobby) throws InvalidNewGameException {
+        if(gameLobby.canStart()) {
+            lobbyGames.remove(gameLobby);
+            SortedMap<String, Wizard> playerMap = new TreeMap<>();
+            for(String playerId : gameLobby.getPlayersWaiting()) {
+                playerMap.put(gameLobby.getInGameName(playerId), gameLobby.getWizard(playerId));
+            }
+            GameHandler newGame = GameCreator.createGame(playerMap, gameLobby.getGameRules());
+            addGame(newGame);
+            int i = 0;
+            for(String playerId : gameLobby.getPlayersWaiting()) {
+                addPlayerInGame(playerId, newGame, newGame.getGame().getPlayers().get(i));
+                i++;
+            }
+        }
+    }
+    public List<GameLobby> getAllGameLobbys() { return lobbyGames; }
+    public GameLobby getGameLobby(String lobbyId) {
+        return lobbyGames.stream().filter(lb -> lb.getGameLobbyId().equals(lobbyId)).findAny().orElse(null);
+    }
     public List<GameHandler> getAllHostedGames() {
         return hostedGames;
     }

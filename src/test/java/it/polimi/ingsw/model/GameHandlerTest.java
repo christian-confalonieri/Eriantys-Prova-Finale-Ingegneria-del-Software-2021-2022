@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.enumeration.GamePhase;
 import it.polimi.ingsw.model.enumeration.TurnPhase;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.*;
+import it.polimi.ingsw.model.game.rules.GameRules;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ class GameHandlerTest {
     }
 
     @Test
-    void twoPlayerMatchAdvance() {
+    void twoPlayerMatchAdvance() throws InvalidRulesException, InvalidNewGameException {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Pippo", Wizard.YELLOW);
         playerData.put("Topolino",Wizard.GREEN);
@@ -42,16 +43,23 @@ class GameHandlerTest {
 
         GameHandler gameHandler = null;
 
-        try {
-            gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException | InvalidRulesException e) {
-            System.out.println(e.getMessage());
-        }
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
+
 
         Game board = gameHandler.getGame();
 
 
         assertNotNull(board);
+
+        assertEquals(board.getPowerCards().size(), 3);
+        assertNotEquals(board.getPowerCards().get(0).getType(), board.getPowerCards().get(1).getType());
+        assertNotEquals(board.getPowerCards().get(1).getType(), board.getPowerCards().get(2).getType());
+        assertNotEquals(board.getPowerCards().get(0).getType(), board.getPowerCards().get(2).getType());
+
+        assertEquals(board.getPowerCards().get(0).getGameHandler(), gameHandler);
+        assertEquals(board.getPowerCards().get(1).getGameHandler(), gameHandler);
+        assertEquals(board.getPowerCards().get(2).getGameHandler(), gameHandler);
 
         assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
         assertEquals(gameHandler.getCurrentPlayer().getName(), "Pippo");
@@ -122,7 +130,7 @@ class GameHandlerTest {
     }
 
     @Test
-    void threePlayerMatchAdvance() {
+    void threePlayerMatchAdvance() throws InvalidRulesException, InvalidNewGameException {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Abbate", Wizard.YELLOW);
         playerData.put("Bertoldo",Wizard.GREEN);
@@ -137,11 +145,10 @@ class GameHandlerTest {
 
         GameHandler gameHandler = null;
 
-        try {
-            gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException | InvalidRulesException e) {
-            System.out.println(e.getMessage());
-        }
+
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
+
 
         Game board = gameHandler.getGame();
 
@@ -215,7 +222,7 @@ class GameHandlerTest {
     }
 
     @Test
-    void fourPlayerMatchAdvance() {
+    void fourPlayerMatchAdvance() throws InvalidRulesException, InvalidNewGameException {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Abbate", Wizard.YELLOW);
         playerData.put("Bertoldo",Wizard.GREEN);
@@ -231,13 +238,14 @@ class GameHandlerTest {
 
         GameHandler gameHandler = null;
 
-        try {
-            gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException | InvalidRulesException e) {
-            System.out.println(e.getMessage());
-        }
+
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
+
 
         Game board = gameHandler.getGame();
+
+        assertEquals(board.getPowerCards().size(), 3);
 
         assertEquals(gameHandler.getGamePhase(), GamePhase.PREPARATION);
         assertEquals(gameHandler.getCurrentPlayer().getName(), "Bertoldo");
@@ -340,7 +348,8 @@ class GameHandlerTest {
         GameHandler gameHandler = null;
 
 
-        gameHandler = GameCreator.createGame(playerData, rulesJson);
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
         assertNotNull(gameHandler);
 
         // PREPARATION

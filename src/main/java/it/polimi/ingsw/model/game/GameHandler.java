@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.enumeration.Card;
 import it.polimi.ingsw.model.enumeration.GamePhase;
 import it.polimi.ingsw.model.enumeration.TurnPhase;
+import it.polimi.ingsw.model.power.PowerCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,14 +48,17 @@ public class GameHandler {
                     case MOVEMOTHER:
                         turnPhase = TurnPhase.MOVEFROMCLOUD;
                         return;
-                    case MOVEFROMCLOUD:
+                    case MOVEFROMCLOUD: // END TURN
                         this.ended = checkEndGame(); // Checks at the end of each turn if the game has ended
                         currentPlayer = getNextPlayer();
+                        for(PowerCard pc : game.powerCards) {
+                            pc.endPower();
+                        }
                         turnPhase = TurnPhase.MOVESTUDENTS;
                         if(currentPlayer == firstTurnPlayer) {
                             orderedTurnPlayers = new ArrayList<>(game.players); // Return to a clockwise order for preparation
                             gamePhase = GamePhase.PREPARATION;
-
+                            game.refillClouds();
                         }
                 }
         }
@@ -106,7 +110,7 @@ public class GameHandler {
      *
      * @param game the game to handle
      */
-    public GameHandler(Game game) {
+    protected GameHandler(Game game) {
         this.game = game;
         firstTurnPlayer = game.players.get(game.gameRules.playerRules.startingPlayer);
         orderedTurnPlayers = new ArrayList<>(game.players);
@@ -114,6 +118,18 @@ public class GameHandler {
         turnPhase = TurnPhase.MOVESTUDENTS;
         currentPlayer = firstTurnPlayer;
         ended = false;
+    }
+
+    /**
+     * Constructs a game handler, adding the state to the passed game object
+     * Initializes then the PowerCards giving them the access to the handler
+     *
+     * @param game the game to handle
+     */
+    public static GameHandler gameHandlerBuilder(Game game) {
+        GameHandler gameHandler = new GameHandler(game);
+        game.powerCards = PowerCard.getThreeUniquePowerCards(gameHandler);
+        return gameHandler;
     }
 
     /**

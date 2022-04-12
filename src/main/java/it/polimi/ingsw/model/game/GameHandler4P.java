@@ -2,13 +2,19 @@ package it.polimi.ingsw.model.game;
 
 import it.polimi.ingsw.model.enumeration.GamePhase;
 import it.polimi.ingsw.model.enumeration.TurnPhase;
+import it.polimi.ingsw.model.power.PowerCard;
 
 public class GameHandler4P extends GameHandler{
 
-    public GameHandler4P(Game game) {
+    protected GameHandler4P(Game game) {
         super(game);
     }
 
+    public static GameHandler gameHandlerBuilder4P(Game game) {
+        GameHandler gameHandler = new GameHandler4P(game);
+        game.powerCards = PowerCard.getThreeUniquePowerCards(gameHandler);
+        return gameHandler;
+    }
 
     /**
      * Check if the game is in an end situation and update the gameState if so

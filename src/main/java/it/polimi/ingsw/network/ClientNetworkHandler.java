@@ -16,7 +16,7 @@ public class ClientNetworkHandler implements Runnable{
     Thread listenerThread;
     private boolean shutdown;
 
-    public ClientNetworkHandler(Socket clientSocket) {
+    private ClientNetworkHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
 
         // try {
@@ -25,10 +25,14 @@ public class ClientNetworkHandler implements Runnable{
         //    e.printStackTrace();
         //}
         shutdown = false;
-        Server.getInstance().addClientConnection(this);
+    }
 
-        listenerThread = new Thread(this);
-        listenerThread.start();
+    public static void clientNetworkHandlerFactory(Socket clientSocket) {
+        ClientNetworkHandler clientNetworkHandler = new ClientNetworkHandler(clientSocket);
+        Server.getInstance().addClientConnection(clientNetworkHandler);
+
+        clientNetworkHandler.listenerThread = new Thread(clientNetworkHandler);
+        clientNetworkHandler.listenerThread.start();
     }
 
     public void shutdown() {

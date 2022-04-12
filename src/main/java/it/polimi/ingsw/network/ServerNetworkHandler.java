@@ -29,7 +29,7 @@ public class ServerNetworkHandler implements Runnable {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println(ConsoleColor.GREEN + "@" + clientSocket.getInetAddress().toString() + ":" + clientSocket.getPort() + " connected..." + ConsoleColor.RESET);
 
-                new ClientNetworkHandler(clientSocket); // Launch a thread starting the listening
+                ClientNetworkHandler.clientNetworkHandlerFactory(clientSocket); // Launch a thread starting the listening
 
             } catch (IOException e) {
                 e.printStackTrace();

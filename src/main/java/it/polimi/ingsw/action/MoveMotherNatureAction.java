@@ -4,9 +4,10 @@ package it.polimi.ingsw.action;
  * @author Christian Confalonieri
  */
 public class MoveMotherNatureAction extends PlayAction{
-    int steps;
-    public MoveMotherNatureAction(ActionType actionType, String playerId, int steps) {
-        super(actionType, playerId);
+    private final int steps;
+
+    public MoveMotherNatureAction(String playerId, int steps) {
+        super(ActionType.MOVEMOTHERNATURE, playerId);
         this.steps = steps;
     }
 

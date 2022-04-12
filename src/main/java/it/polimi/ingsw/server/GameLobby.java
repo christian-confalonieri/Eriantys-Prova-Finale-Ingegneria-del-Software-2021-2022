@@ -3,29 +3,30 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.rules.GameRules;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameLobby {
     public List<String> getPlayersWaiting() {
         return playersWaiting;
     }
 
-    public Map<String, String> getNames() {
-        return names;
+    public String getInGameName(String playerId) {
+        return names.get(playerId);
     }
 
-    public Map<String, Wizard> getWizards() {
-        return wizards;
+    public Wizard getWizard(String playerId) {
+        return wizards.get(playerId);
     }
 
     public GameRules getGameRules() {
         return gameRules;
     }
 
+    public String getGameLobbyId() {
+        return gameLobbyId;
+    }
 
+    private final String gameLobbyId;
     private final List<String> playersWaiting;
     private final Map<String, String> names;
     private final Map<String, Wizard> wizards;
@@ -62,6 +63,7 @@ public class GameLobby {
 
 
     public GameLobby(GameRules gameRules, int numberOfPlayers) {
+        this.gameLobbyId = UUID.randomUUID().toString();
         this.gameRules = gameRules;
         this.numberOfPlayers = numberOfPlayers;
         this.playersWaiting = new ArrayList<>();

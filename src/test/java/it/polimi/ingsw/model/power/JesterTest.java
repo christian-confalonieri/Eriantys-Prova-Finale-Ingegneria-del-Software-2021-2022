@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.GameCreator;
 import it.polimi.ingsw.model.game.GameHandler;
+import it.polimi.ingsw.model.game.rules.GameRules;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -72,7 +73,8 @@ class JesterTest {
         playerData.put("Luigi",Wizard.GREEN);
         String rulesJson;
         rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
-        GameHandler gameHandler = GameCreator.createGame(playerData, rulesJson);
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        GameHandler gameHandler = GameCreator.createGame(playerData, gameRules);
         return gameHandler;
     }
 }

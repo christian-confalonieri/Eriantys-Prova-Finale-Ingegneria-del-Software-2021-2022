@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.GameCreator;
 import it.polimi.ingsw.model.game.GameHandler;
+import it.polimi.ingsw.model.game.rules.GameRules;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameTest {
 
     @Test
-    void unifyIslandInTheMiddle() {
+    void unifyIslandInTheMiddle() throws InvalidRulesException, InvalidNewGameException {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Pippo", Wizard.YELLOW);
         playerData.put("Topolino",Wizard.GREEN);
@@ -33,11 +34,10 @@ class GameTest {
 
         GameHandler gameHandler = null;
 
-        try {
-            gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException | InvalidRulesException e) {
-            e.printStackTrace();
-        }
+
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
+
 
 
         Game game = gameHandler.getGame();
@@ -58,7 +58,7 @@ class GameTest {
     }
 
     @Test
-    void unifyIslandInBorder() {
+    void unifyIslandInBorder() throws InvalidRulesException, InvalidNewGameException {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Pippo", Wizard.YELLOW);
         playerData.put("Topolino",Wizard.GREEN);
@@ -72,11 +72,8 @@ class GameTest {
 
         GameHandler gameHandler = null;
 
-        try {
-            gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException | InvalidRulesException e) {
-            e.printStackTrace();
-        }
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
 
 
         Game game = gameHandler.getGame();
@@ -97,7 +94,7 @@ class GameTest {
     }
 
     @Test
-    void unifyIslandTriple() {
+    void unifyIslandTriple() throws InvalidRulesException, InvalidNewGameException {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Pippo", Wizard.YELLOW);
         playerData.put("Topolino",Wizard.GREEN);
@@ -111,11 +108,8 @@ class GameTest {
 
         GameHandler gameHandler = null;
 
-        try {
-            gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException | InvalidRulesException e) {
-            e.printStackTrace();
-        }
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
 
 
         Game game = gameHandler.getGame();
@@ -138,7 +132,7 @@ class GameTest {
     }
 
     @Test
-    void professorRelocate() {
+    void professorRelocate() throws InvalidRulesException, InvalidNewGameException {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Pippo", Wizard.YELLOW);
         playerData.put("Topolino",Wizard.GREEN);
@@ -152,11 +146,8 @@ class GameTest {
 
         GameHandler gameHandler = null;
 
-        try {
-            gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException | InvalidRulesException e) {
-            System.out.println(e.getMessage());
-        }
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
 
         Player pippo = gameHandler.getGame().getPlayers().get(0);
         pippo.getSchool().addDiningRoom(new Student(PawnColor.RED));
@@ -201,7 +192,7 @@ class GameTest {
     }
 
     @Test
-    void getLeaderBoard() {
+    void getLeaderBoard() throws InvalidRulesException, InvalidNewGameException {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Pippo", Wizard.YELLOW);
         playerData.put("Topolino",Wizard.GREEN);
@@ -215,11 +206,8 @@ class GameTest {
 
         GameHandler gameHandler = null;
 
-        try {
-            gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException | InvalidRulesException e) {
-            System.out.println(e.getMessage());
-        }
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
 
         Island island = gameHandler.getGame().getIslands().get(0);
         Player pippo = gameHandler.getGame().getPlayers().get(0);
@@ -236,7 +224,7 @@ class GameTest {
     }
 
     @Test
-    void getLeaderBoardEqualTowers() {
+    void getLeaderBoardEqualTowers() throws InvalidRulesException, InvalidNewGameException {
         SortedMap<String, Wizard> playerData = new TreeMap<>();
         playerData.put("Pippo", Wizard.YELLOW);
         playerData.put("Topolino",Wizard.GREEN);
@@ -250,11 +238,8 @@ class GameTest {
 
         GameHandler gameHandler = null;
 
-        try {
-            gameHandler = GameCreator.createGame(playerData, rulesJson);
-        } catch (InvalidNewGameException | InvalidRulesException e) {
-            System.out.println(e.getMessage());
-        }
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
 
         Island island = gameHandler.getGame().getIslands().get(0);
         Player pippo = gameHandler.getGame().getPlayers().get(0);

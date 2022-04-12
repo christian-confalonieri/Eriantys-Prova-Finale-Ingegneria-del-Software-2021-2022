@@ -296,6 +296,9 @@ public class Game {
         // Set noEntryCards
         boardNoEntryCards = 4;
 
+        // Pick 3 PowerCards to use
+        // Powercards are created by GameHandler constructor
+
         // Construct effectHandler
         effectHandler = new EffectHandler();
     }
@@ -304,7 +307,6 @@ public class Game {
      * Construct and initialize a player game with no team play
      *
      * @param playersData A map containing the name of the player and the wizard of the player
-     * @param gameRules an instance of the gameRules class containing the parameters of the game
      */
     protected Game(SortedMap<String, Wizard> playersData, GameRules gameRules) throws InvalidNewGameException {
         this(gameRules);

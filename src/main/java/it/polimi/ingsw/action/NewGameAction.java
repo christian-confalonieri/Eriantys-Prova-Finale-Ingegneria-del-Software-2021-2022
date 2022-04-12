@@ -7,11 +7,27 @@ public class NewGameAction extends MenuAction {
     private int numberOfPlayers;
     private GameRules gameRules;
 
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
+    public GameRules getGameRules() {
+        return gameRules;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public Wizard getWizard() {
+        return wizard;
+    }
+
     private String playerName; // Join as
     private Wizard wizard;
 
-    public NewGameAction(ActionType actionType, String playerId, int numberOfPlayers, GameRules gameRules, String playerName, Wizard wizard) {
-        super(actionType, playerId);
+    public NewGameAction(String playerId, int numberOfPlayers, GameRules gameRules, String playerName, Wizard wizard) {
+        super(ActionType.NEWGAME, playerId);
         this.gameRules = gameRules;
         this.numberOfPlayers = numberOfPlayers;
         this.playerName = playerName;

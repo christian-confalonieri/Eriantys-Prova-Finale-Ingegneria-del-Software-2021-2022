@@ -7,10 +7,12 @@ import it.polimi.ingsw.model.power.EffectHandler;
  * @author Christian Confalonieri
  */
 public class PowerAction extends PlayAction{
-    PowerType type;
-    EffectHandler effectHandler;
-    public PowerAction(ActionType actionType, String playerId, PowerType type, EffectHandler effectHandler) {
-        super(actionType, playerId);
+
+    private PowerType type;
+    private EffectHandler effectHandler;
+
+    public PowerAction(String playerId, PowerType type, EffectHandler effectHandler) {
+        super(ActionType.POWER, playerId);
         this.type = type;
         this.effectHandler = effectHandler;
     }

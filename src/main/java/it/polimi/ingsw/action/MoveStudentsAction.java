@@ -10,11 +10,11 @@ import java.util.Map;
  * @author Christian Confalonieri
  */
 public class MoveStudentsAction extends PlayAction{
-    private List<Student> toDiningRoom;
-    private Map<Student, Island>  toIsland;
+    private final List<Student> toDiningRoom;
+    private final Map<Student, Island>  toIsland;
     
-    public MoveStudentsAction(ActionType actionType, String playerId, List<Student> toDiningRoom, Map<Student, Island> toIsland) {
-        super(actionType, playerId);
+    public MoveStudentsAction(String playerId, List<Student> toDiningRoom, Map<Student, Island> toIsland) {
+        super(ActionType.MOVESTUDENTS, playerId);
         this.toDiningRoom = toDiningRoom;
         this.toIsland = toIsland;
     }

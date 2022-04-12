@@ -8,5 +8,6 @@ public enum ActionType {
     MOVESTUDENTS,
     MOVEMOTHERNATURE,
     MOVECLOUD,
-    POWER
+    POWER,
+    JOINGAME
 }

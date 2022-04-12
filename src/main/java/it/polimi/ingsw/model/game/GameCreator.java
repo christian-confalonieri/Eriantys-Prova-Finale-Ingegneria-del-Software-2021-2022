@@ -8,15 +8,14 @@ import it.polimi.ingsw.model.game.rules.GameRules;
 import java.util.SortedMap;
 
 public class GameCreator {
-    public static GameHandler createGame(SortedMap<String, Wizard> playersData, String rulesJson) throws InvalidNewGameException, InvalidRulesException {
-        GameRules gameRules = GameRules.fromJson(rulesJson);
+    public static GameHandler createGame(SortedMap<String, Wizard> playersData, GameRules gameRules) throws InvalidNewGameException {
         switch (playersData.size()) {
             case 2:
-                return new GameHandler(new Game(playersData, gameRules));
+                return GameHandler.gameHandlerBuilder(new Game(playersData, gameRules));
             case 3:
-                return new GameHandler(new Game(playersData, gameRules));
+                return GameHandler.gameHandlerBuilder(new Game(playersData, gameRules));
             case 4:
-                return new GameHandler4P(new Game4P(playersData, gameRules));
+                return GameHandler4P.gameHandlerBuilder4P(new Game4P(playersData, gameRules));
         }
         throw new InvalidNewGameException("Number of players not supported");
     }
