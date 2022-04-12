@@ -1,9 +1,11 @@
 package it.polimi.ingsw.controller.services;
 
+import it.polimi.ingsw.action.MoveCloudAction;
 import it.polimi.ingsw.action.MoveMotherNatureAction;
 import it.polimi.ingsw.action.MoveStudentsAction;
 import it.polimi.ingsw.action.PlayCardAction;
 import it.polimi.ingsw.exceptions.InvalidAction;
+import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.GamePhase;
@@ -113,11 +115,32 @@ public class GameService {
                 }
             }
             else {
-                throw new InvalidAction("MoveMotherNature: invalid number of steps");
+                throw new InvalidAction("MoveMotherNatureAction: invalid number of steps");
             }
         }
         else {
-            throw new InvalidAction("MoveMotherNature: invalid phase");
+            throw new InvalidAction("MoveMotherNatureAction: invalid phase");
+        }
+        gameHandler.advance();
+        // TODO send changes to all players
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public static void moveCloud(MoveCloudAction action) throws InvalidAction {
+        GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
+
+        if (gameHandler.getGamePhase().equals(GamePhase.TURN) &&
+                gameHandler.getTurnPhase().equals(TurnPhase.MOVEFROMCLOUD)) {
+            Cloud cloud = action.getCloud();
+            List<Student> students = cloud.pickAllStudents();
+            for(Student student : students) {
+                gameHandler.getCurrentPlayer().getSchool().addEntrance(student);
+            }
+        }
+        else {
+            throw new InvalidAction("MoveCloudAction: invalid phase");
         }
         gameHandler.advance();
         // TODO send changes to all players
