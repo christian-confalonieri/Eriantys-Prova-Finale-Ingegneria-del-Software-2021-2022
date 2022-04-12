@@ -365,4 +365,8 @@ public class Game {
     public void setPowerCards(List<PowerCard> powerCards) {
         this.powerCards = powerCards;
     }
+
+    public GameRules getGameRules() {
+        return gameRules;
+    }
 }

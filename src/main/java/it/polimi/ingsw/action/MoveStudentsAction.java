@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.entity.Student;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Christian Confalonieri
+ */
 public class MoveStudentsAction extends PlayAction{
     private List<Student> toDiningRoom;
     private Map<Student, Island>  toIsland;

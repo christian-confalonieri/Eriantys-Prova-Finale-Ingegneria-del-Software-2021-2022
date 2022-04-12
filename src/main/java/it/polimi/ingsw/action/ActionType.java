@@ -4,5 +4,6 @@ public enum ActionType {
     LOGIN,
     PLAYCARD,
     LOGOUT,
-    MOVESTUDENTS
+    MOVESTUDENTS,
+    MOVEMOTHERNATURE
 }

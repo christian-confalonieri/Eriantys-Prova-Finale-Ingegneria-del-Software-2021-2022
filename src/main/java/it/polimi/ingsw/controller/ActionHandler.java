@@ -6,6 +6,7 @@ import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.services.GameService;
 import it.polimi.ingsw.controller.services.LoginService;
 import it.polimi.ingsw.exceptions.InvalidAction;
+import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
 
@@ -30,6 +31,7 @@ public class ActionHandler {
                 case LOGOUT -> gson.fromJson(json, LogoutAction.class);
                 case PLAYCARD -> gson.fromJson(json, PlayCardAction.class);
                 case MOVESTUDENTS -> gson.fromJson(json, MoveStudentsAction.class);
+                case MOVEMOTHERNATURE -> gson.fromJson(json, MoveMotherNatureAction.class);
             };
         } catch (com.google.gson.JsonSyntaxException e) {
             throw new InvalidAction("Bad formatted JSON");
@@ -46,7 +48,7 @@ public class ActionHandler {
      * @param action the action to execute
      * @param clientNet the ClientNetworkHandler from where the action was received
      */
-    public static void actionServiceInvoker(Action action, ClientNetworkHandler clientNet) {
+    public static void actionServiceInvoker(Action action, ClientNetworkHandler clientNet) throws InvalidAction {
         if (ignorePlayAction(action)) {
             System.out.println(ConsoleColor.YELLOW + clientNet.toString() + " PlayAction ignored" + ConsoleColor.RESET);
             return;
@@ -62,6 +64,7 @@ public class ActionHandler {
             case LOGOUT -> LoginService.clientLogout((LogoutAction) action, clientNet);
             case PLAYCARD -> GameService.playCard((PlayCardAction) action);
             case MOVESTUDENTS -> GameService.moveStudents((MoveStudentsAction) action);
+            case MOVEMOTHERNATURE -> GameService.moveMotherNature((MoveMotherNatureAction) action);
         }
     }
 
