@@ -54,6 +54,10 @@ public class School {
      */
     public void addDiningRoom(Student student) { diningRoom.get(student.getColor()).add(student); }
 
+    public Map<PawnColor, List<Student>> getDiningRoom () {
+        return  this.diningRoom;
+    }
+
     /**
      * Removes a student to the dining room of the school.
      *
