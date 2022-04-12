@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.action.Action;
 import it.polimi.ingsw.action.LoginAction;
+import it.polimi.ingsw.exceptions.InvalidAction;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ActionHandlerTest {
 
     @Test
-    void fromJson() throws IOException {
+    void fromJson() throws IOException, InvalidAction {
         String json = new String(Files.readAllBytes(Paths.get("src/main/resources/actions/LoginTestMessage.json")));
         Action action = ActionHandler.fromJson(json);
         assertInstanceOf(LoginAction.class, action);
