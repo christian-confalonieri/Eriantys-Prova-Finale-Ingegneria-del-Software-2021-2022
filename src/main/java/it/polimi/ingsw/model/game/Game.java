@@ -365,4 +365,25 @@ public class Game {
     public void setPowerCards(List<PowerCard> powerCards) {
         this.powerCards = powerCards;
     }
+
+    public GameRules getGameRules() {
+        return gameRules;
+    }
+
+    public void setEffectHandler(EffectHandler effectHandler) {
+        this.effectHandler = effectHandler;
+    }
+
+    public PowerCard getPowerCard(PowerType type) {
+        for(PowerCard powerCard : powerCards) {
+            if(powerCard.getType() == type) {
+                return powerCard;
+            }
+        }
+        return null;
+    }
+
+    public List<PowerCard> getPowerCards() {
+        return powerCards;
+    }
 }

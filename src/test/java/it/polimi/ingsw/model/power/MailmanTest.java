@@ -25,7 +25,7 @@ class MailmanTest {
      * @author Christian Confalonieri
      */
     @Test
-    void power() throws InvalidNewGameException, IOException, InvalidRulesException {
+    void power_endPower() throws InvalidNewGameException, IOException, InvalidRulesException {
         GameHandler gameHandler = createGame();
 
         Mailman mailman = new Mailman(gameHandler);
@@ -39,18 +39,11 @@ class MailmanTest {
 
         assertEquals(gameHandler.getGame().getIslands().get(0), gameHandler.getGame().getMotherNature().isOn());
 
-        gameHandler.getGame().getEffectHandler().setAdditionalMoves(0);
-        mailman.power();
-        assertEquals(gameHandler.getGame().getIslands().get(0), gameHandler.getGame().getMotherNature().isOn());
-
-
-        gameHandler.getGame().getEffectHandler().setAdditionalMoves(1);
-        mailman.power();
-        assertEquals(gameHandler.getGame().getIslands().get(1), gameHandler.getGame().getMotherNature().isOn());
-
         gameHandler.getGame().getEffectHandler().setAdditionalMoves(2);
         mailman.power();
-        assertEquals(gameHandler.getGame().getIslands().get(3), gameHandler.getGame().getMotherNature().isOn());
+        assertTrue(gameHandler.getGame().getEffectHandler().isActiveMailman());
+        mailman.endPower();
+        assertFalse(gameHandler.getGame().getEffectHandler().isActiveMailman());
 
     }
 

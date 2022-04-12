@@ -4,5 +4,9 @@ public enum ActionType {
     LOGIN,
     PLAYCARD,
     LOGOUT,
-    NEWGAME
+    NEWGAME,
+    MOVESTUDENTS,
+    MOVEMOTHERNATURE,
+    MOVECLOUD,
+    POWER
 }
