@@ -15,6 +15,7 @@ public abstract class PowerCard {
 
 
     private int cost;
+    private int baseCost;
     private PowerType type;
     private GameHandler gameHandler;
 
@@ -28,14 +29,18 @@ public abstract class PowerCard {
      * @author Christian Confalonieri
      */
     public void power() {
+        gameHandler.getGame().getEffectHandler().setEffectActive(true);
         gameHandler.getGame().getEffectHandler().setEffectPlayer(gameHandler.getCurrentPlayer());
-        cost++;
+        if(cost==baseCost) {
+            cost++;
+        }
     }
 
     /**
      * @author Christian Confalonieri
      */
     public void endPower() {
+        gameHandler.getGame().getEffectHandler().setEffectActive(false);
         gameHandler.getGame().getEffectHandler().setEffectPlayer(null);
     }
 
@@ -45,6 +50,7 @@ public abstract class PowerCard {
 
     public void setCost(int cost) {
         this.cost = cost;
+        this.baseCost = cost;
     }
 
     public PowerType getType() {

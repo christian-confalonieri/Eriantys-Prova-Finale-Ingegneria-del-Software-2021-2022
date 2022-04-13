@@ -98,7 +98,7 @@ public class GameService {
                 gameHandler.getTurnPhase().equals(TurnPhase.MOVEMOTHER)) {
 
             int maxMovements;
-            if(gameHandler.getGame().getEffectHandler().isActiveMailman()) {
+            if(gameHandler.getGame().getEffectHandler().isMailmanActive()) {
                 maxMovements = gameHandler.getCurrentPlayer().getLastPlayedCard().getMovements() + 2;
             }
             else {
@@ -158,6 +158,10 @@ public class GameService {
     public static void power(PowerAction action) throws InvalidAction {
         GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
         PowerCard powerCard = gameHandler.getGame().getPowerCard(action.getType());
+
+        if(gameHandler.getGame().getEffectHandler().isEffectActive()) {
+            throw new InvalidAction("Power: another power has already been activated");
+        }
 
         if(!gameHandler.getGame().getPowerCards().contains(powerCard)) {
             throw new InvalidAction("Power: invalid power");

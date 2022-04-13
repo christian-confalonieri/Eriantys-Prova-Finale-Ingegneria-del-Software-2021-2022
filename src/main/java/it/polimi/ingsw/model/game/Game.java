@@ -13,7 +13,6 @@ import it.polimi.ingsw.model.power.PowerCard;
 import it.polimi.ingsw.model.enumeration.PowerType;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * The game class represent the board of the game and contains all the objects

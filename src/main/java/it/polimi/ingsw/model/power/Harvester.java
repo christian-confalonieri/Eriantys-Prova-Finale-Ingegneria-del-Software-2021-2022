@@ -24,18 +24,6 @@ public class Harvester extends PowerCard {
     }
 
     /**
-     * This method does nothing besides increasing the cost of the card and set the value of activeHarvester to true
-     * since the control of the chosen color and the calculation of the influence is handled by the methods of the Island class.
-     *
-     * @author Christian Confalonieri
-     */
-    @Override
-    public void power() {
-        super.power();
-        getGameHandler().getGame().getEffectHandler().setActiveHarvester(true);
-    }
-
-    /**
      * Simply change the value of the harvesterColor to null and set the value of activeHarvester to false
      *
      * @author Christian Confalonieri
@@ -44,7 +32,6 @@ public class Harvester extends PowerCard {
     public void endPower() {
         super.endPower();
         getGameHandler().getGame().getEffectHandler().setHarvesterColor(null);
-        getGameHandler().getGame().getEffectHandler().setActiveHarvester(false);
     }
 
 }

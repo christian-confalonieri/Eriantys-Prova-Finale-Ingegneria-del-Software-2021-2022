@@ -90,6 +90,7 @@ public class Farmer extends PowerCard {
             }
             getGameHandler().getGame().getEffectHandler().setChosenProfessors(null);
         }
+        getGameHandler().getGame().getEffectHandler().setEffectActive(false);
         getGameHandler().getGame().getEffectHandler().setEffectPlayer(null);
     }
 

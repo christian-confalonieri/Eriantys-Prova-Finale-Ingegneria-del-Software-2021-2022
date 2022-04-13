@@ -14,8 +14,8 @@ import java.util.Map;
  */
 public class EffectHandler {
 
-    private boolean activeHarvester;
-    private boolean activeMailman;
+    private boolean effectActive;
+    private boolean mailmanActive;
     private PawnColor harvesterColor;
     private PawnColor thiefColor;
     private List<Student> chosenStudents1;
@@ -31,8 +31,8 @@ public class EffectHandler {
      */
     public EffectHandler() {
 
-        activeHarvester = false;
-        activeMailman = false;
+        effectActive = false;
+        mailmanActive = false;
         harvesterColor = null;
         thiefColor = null;
         // I have added two lists of students, basically you will use the first one, the second one is needed in case of exchanges
@@ -49,10 +49,10 @@ public class EffectHandler {
     /**
      * @author Christian Confalonieri
      */
-    public EffectHandler(boolean activeHarvester, boolean activeMailman, PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2, Map<Professor,Player> chosenProfessors,
+    public EffectHandler(boolean effectActive, boolean mailmanActive, PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2, Map<Professor,Player> chosenProfessors,
                          Island chosenIsland, int additionalInfluence, boolean skipTowers, Player effectPlayer) {
-        this.activeHarvester = activeHarvester;
-        this.activeMailman = activeMailman;
+        this.effectActive = effectActive;
+        this.mailmanActive = mailmanActive;
         this.harvesterColor = harvesterColor;
         this.thiefColor = thiefColor;
         this.chosenStudents1 = chosenStudents1;
@@ -64,20 +64,20 @@ public class EffectHandler {
         this.effectPlayer = effectPlayer;
     }
 
-    public boolean isActiveHarvester() {
-        return activeHarvester;
+    public boolean isEffectActive() {
+        return effectActive;
     }
 
-    public void setActiveHarvester(boolean activeHarvester) {
-        this.activeHarvester = activeHarvester;
+    public void setEffectActive(boolean effectActive) {
+        this.effectActive = effectActive;
     }
 
-    public boolean isActiveMailman() {
-        return activeMailman;
+    public boolean isMailmanActive() {
+        return mailmanActive;
     }
 
-    public void setActiveMailman(boolean activeMailman) {
-        this.activeMailman = activeMailman;
+    public void setMailmanActive(boolean mailmanActive) {
+        this.mailmanActive = mailmanActive;
     }
 
     public PawnColor getHarvesterColor() {

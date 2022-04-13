@@ -51,6 +51,9 @@ public class Princess extends PowerCard {
 
         students.remove(getGameHandler().getGame().getEffectHandler().getChosenStudents1().get(0));
         getGameHandler().getGame().getEffectHandler().getEffectPlayer().getSchool().addDiningRoom(getGameHandler().getGame().getEffectHandler().getChosenStudents1().get(0));
+
+        getGameHandler().getGame().professorRelocate();
+
         try {
             students.add(getGameHandler().getGame().getBag().pickStudent());
         } catch (EmptyBagException e) {}
