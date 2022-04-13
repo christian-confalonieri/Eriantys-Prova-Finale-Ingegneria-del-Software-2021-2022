@@ -61,6 +61,24 @@ public class GameLobby {
         return false;
     }
 
+    /** {
+     * Remove a player from the lobby if the player is present
+     *
+     * @param playerId the id of the player that exits the lobby
+     */
+    public void removePlayer(String playerId) {
+        playersWaiting.remove(playerId);
+        names.remove(playerId);
+        wizards.remove(playerId);
+    }
+
+    public boolean isPlayerWaiting(String playerId) {
+        return playersWaiting.contains(playerId);
+    }
+
+    public boolean isEmpty() {
+        return playersWaiting.isEmpty();
+    }
 
     public GameLobby(GameRules gameRules, int numberOfPlayers) {
         this.gameLobbyId = UUID.randomUUID().toString();

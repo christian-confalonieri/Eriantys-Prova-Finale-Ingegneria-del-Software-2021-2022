@@ -60,6 +60,16 @@ public class Server {
     public GameLobby getGameLobby(String lobbyId) {
         return lobbyGames.stream().filter(lb -> lb.getGameLobbyId().equals(lobbyId)).findAny().orElse(null);
     }
+    public void exitLobbys(String playerId) {
+        List<GameLobby> lobbyInGame = lobbyGames.stream().filter(l -> l.isPlayerWaiting(playerId)).toList();
+        for(GameLobby lb : lobbyInGame) {
+            lb.removePlayer(playerId);
+            if (lb.isEmpty()) { lobbyGames.remove(lb); } // Removes if the lobby has become empty
+        }
+    }
+    public boolean isWaitingInALobby(String playerId) {
+        return lobbyGames.stream().anyMatch(l -> l.isPlayerWaiting(playerId));
+    }
     public List<GameHandler> getAllHostedGames() {
         return hostedGames;
     }
