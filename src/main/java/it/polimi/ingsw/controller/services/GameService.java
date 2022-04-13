@@ -99,7 +99,7 @@ public class GameService {
 
             int maxMovements;
             if(gameHandler.getGame().getEffectHandler().isActiveMailman()) {
-                maxMovements = gameHandler.getCurrentPlayer().getLastPlayedCard().getMovements() + gameHandler.getGame().getEffectHandler().getAdditionalMoves();
+                maxMovements = gameHandler.getCurrentPlayer().getLastPlayedCard().getMovements() + 2;
             }
             else {
                 maxMovements = gameHandler.getCurrentPlayer().getLastPlayedCard().getMovements();

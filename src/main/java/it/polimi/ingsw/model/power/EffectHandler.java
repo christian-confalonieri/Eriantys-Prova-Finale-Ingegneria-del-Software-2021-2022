@@ -22,7 +22,6 @@ public class EffectHandler {
     private List<Student> chosenStudents2;
     private Map<Professor, Player> chosenProfessors;
     private Island chosenIsland;
-    private int additionalMoves;
     private int additionalInfluence;
     private boolean skipTowers;
     private Player effectPlayer;
@@ -41,7 +40,6 @@ public class EffectHandler {
         chosenStudents2 = null;
         chosenProfessors = null;
         chosenIsland = null;
-        additionalMoves = 0;
         additionalInfluence = 0;
         skipTowers = false;
         effectPlayer = null;
@@ -52,7 +50,7 @@ public class EffectHandler {
      * @author Christian Confalonieri
      */
     public EffectHandler(boolean activeHarvester, boolean activeMailman, PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2, Map<Professor,Player> chosenProfessors,
-                         Island chosenIsland, int additionalMoves, int additionalInfluence, boolean skipTowers, Player effectPlayer) {
+                         Island chosenIsland, int additionalInfluence, boolean skipTowers, Player effectPlayer) {
         this.activeHarvester = activeHarvester;
         this.activeMailman = activeMailman;
         this.harvesterColor = harvesterColor;
@@ -61,7 +59,6 @@ public class EffectHandler {
         this.chosenStudents2 = chosenStudents2;
         this.chosenProfessors = chosenProfessors;
         this.chosenIsland = chosenIsland;
-        this.additionalMoves = additionalMoves;
         this.additionalInfluence = additionalInfluence;
         this.skipTowers = skipTowers;
         this.effectPlayer = effectPlayer;
@@ -121,14 +118,6 @@ public class EffectHandler {
 
     public void setChosenIsland(Island chosenIsland) {
         this.chosenIsland = chosenIsland;
-    }
-
-    public int getAdditionalMoves() {
-        return additionalMoves;
-    }
-
-    public void setAdditionalMoves(int additionalMoves) {
-        this.additionalMoves = additionalMoves;
     }
 
     public int getAdditionalInfluence() {

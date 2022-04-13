@@ -40,6 +40,5 @@ public class Mailman extends PowerCard {
     public void endPower() {
         super.endPower();
         getGameHandler().getGame().getEffectHandler().setActiveMailman(false);
-        getGameHandler().getGame().getEffectHandler().setAdditionalMoves(0);
     }
 }
