@@ -203,6 +203,9 @@ public class Island {
                     max = currentInfluencePoints;
                     currentInfluencePlayer = player;
                 }
+                else if(currentInfluencePoints == max) {
+                    currentInfluencePlayer = prevInfluencePlayer;
+                }
             }
         }
 
