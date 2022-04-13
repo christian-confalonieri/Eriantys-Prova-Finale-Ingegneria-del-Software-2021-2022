@@ -1,13 +1,11 @@
 package it.polimi.ingsw.model.power;
 
 import it.polimi.ingsw.model.entity.Island;
-import it.polimi.ingsw.model.entity.Professor;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.entity.Student;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Christian Confalonieri
@@ -20,7 +18,6 @@ public class EffectHandler {
     private PawnColor thiefColor;
     private List<Student> chosenStudents1;
     private List<Student> chosenStudents2;
-    private Map<Professor, Player> chosenProfessors;
     private Island chosenIsland;
     private int additionalInfluence;
     private boolean skipTowers;
@@ -38,7 +35,6 @@ public class EffectHandler {
         // I have added two lists of students, basically you will use the first one, the second one is needed in case of exchanges
         chosenStudents1 = null;
         chosenStudents2 = null;
-        chosenProfessors = null;
         chosenIsland = null;
         additionalInfluence = 0;
         skipTowers = false;
@@ -49,7 +45,7 @@ public class EffectHandler {
     /**
      * @author Christian Confalonieri
      */
-    public EffectHandler(boolean effectActive, boolean mailmanActive, PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2, Map<Professor,Player> chosenProfessors,
+    public EffectHandler(boolean effectActive, boolean mailmanActive, PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2,
                          Island chosenIsland, int additionalInfluence, boolean skipTowers, Player effectPlayer) {
         this.effectActive = effectActive;
         this.mailmanActive = mailmanActive;
@@ -57,7 +53,6 @@ public class EffectHandler {
         this.thiefColor = thiefColor;
         this.chosenStudents1 = chosenStudents1;
         this.chosenStudents2 = chosenStudents2;
-        this.chosenProfessors = chosenProfessors;
         this.chosenIsland = chosenIsland;
         this.additionalInfluence = additionalInfluence;
         this.skipTowers = skipTowers;
@@ -142,13 +137,5 @@ public class EffectHandler {
 
     public void setEffectPlayer(Player effectPlayer) {
         this.effectPlayer = effectPlayer;
-    }
-
-    public Map<Professor, Player> getChosenProfessors() {
-        return chosenProfessors;
-    }
-
-    public void setChosenProfessors(Map<Professor, Player> chosenProfessors) {
-        this.chosenProfessors = chosenProfessors;
     }
 }
