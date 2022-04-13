@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller.services;
 import it.polimi.ingsw.action.LoginAction;
 import it.polimi.ingsw.action.LogoutAction;
 import it.polimi.ingsw.cli.ConsoleColor;
+import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
 
@@ -10,7 +11,7 @@ import java.util.UUID;
 
 public class LoginService {
 
-    public static void clientLogin(LoginAction action, ClientNetworkHandler netHandler) {
+    public static void clientLogin(LoginAction action, ClientNetworkHandler netHandler) throws InvalidAction {
 
         if(Server.getInstance().isAssigned(netHandler)) {
             System.out.println(ConsoleColor.YELLOW + netHandler.toString() + " already logged in" + ConsoleColor.RESET);
@@ -35,7 +36,7 @@ public class LoginService {
                 // TODO replace with InvalidLogin client message
                 netHandler.send("InvalidLogin");
 
-                System.out.println(ConsoleColor.PURPLE + netHandler.toString() + " requested a bad login" + ConsoleColor.RESET);
+                throw new InvalidAction("Login: requested a bad login");
 
             } else {
                 // Player is not logged in the server net connections
@@ -48,11 +49,15 @@ public class LoginService {
         }
     }
 
-    public static void clientLogout(LogoutAction action, ClientNetworkHandler networkHandler) {
+    public static void clientLogout(LogoutAction action, ClientNetworkHandler networkHandler) throws InvalidAction {
         if (Server.getInstance().isAssigned(action.getPlayerId())) {
             // If is in game??
             Server.getInstance().unassignConnection(action.getPlayerId());
+            Server.getInstance().exitLobbys(action.getPlayerId());
             System.out.println(ConsoleColor.CYAN + networkHandler.toString() + " logged out from: " + action.getPlayerId() + ConsoleColor.RESET);
+        }
+        else {
+            throw new InvalidAction("Logout: invalid id to log out");
         }
     }
 }

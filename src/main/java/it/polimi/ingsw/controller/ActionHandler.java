@@ -45,6 +45,11 @@ public class ActionHandler {
         }
     }
 
+    public static String toJson(Action action) {
+        Gson gson = new Gson();
+        return gson.toJson(action, action.getClass());
+    }
+
     /**
      * Calls the services that are associated to the action if the action is not ignorable
      * An action is ignorable if
@@ -55,13 +60,15 @@ public class ActionHandler {
      */
 
     public static void actionServiceInvoker(Action action, ClientNetworkHandler clientNet) throws InvalidAction {
+        if (action.getActionType() != ActionType.LOGIN && !Server.getInstance().isAssigned(action.getPlayerId())) { // The playerId sent is not online
+            throw new InvalidAction("Action is referencing a player not online");
+        }
+
         if (ignorePlayAction(action)) {
-            System.out.println(ConsoleColor.YELLOW + clientNet.toString() + " PlayAction ignored" + ConsoleColor.RESET);
-            return;
+            throw new InvalidAction("PlayAction ignored");
         }
         if (ignoreMenuAction(action)) {
-            System.out.println(ConsoleColor.YELLOW + clientNet.toString() + " MenuAction ignored" + ConsoleColor.RESET);
-            return;
+            throw new InvalidAction("MenuAction ignored");
         }
 
         System.out.println(ConsoleColor.BLUE + clientNet.toString() + " Action services invoked" + ConsoleColor.RESET);

@@ -5,10 +5,7 @@ import it.polimi.ingsw.server.Server;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 
 public class ClientNetworkHandler implements Runnable{
@@ -27,12 +24,13 @@ public class ClientNetworkHandler implements Runnable{
         shutdown = false;
     }
 
-    public static void clientNetworkHandlerFactory(Socket clientSocket) {
+    public static ClientNetworkHandler clientNetworkHandlerFactory(Socket clientSocket) {
         ClientNetworkHandler clientNetworkHandler = new ClientNetworkHandler(clientSocket);
         Server.getInstance().addClientConnection(clientNetworkHandler);
 
         clientNetworkHandler.listenerThread = new Thread(clientNetworkHandler);
         clientNetworkHandler.listenerThread.start();
+        return clientNetworkHandler;
     }
 
     public void shutdown() {
