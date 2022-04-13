@@ -56,6 +56,16 @@ public class Game {
             island1.addTower(t);
         }
 
+        if(island2.isNoEntry()) {
+            if(island1.isNoEntry()) {
+                Herbalist herbalist = (Herbalist) powerCards.stream().filter(p -> p.getType().equals(PowerType.HERBALIST)).findAny().get();
+                herbalist.setNoEntryCards(herbalist.getNoEntryCards() + 1);
+            }
+            else {
+                island1.setNoEntry(true);
+            }
+        }
+
         if(island1.getNextIsland().equals(island2)) {
             island1.setNextIsland(island2.getNextIsland());
             island2.getNextIsland().setPrevIsland(island1);
