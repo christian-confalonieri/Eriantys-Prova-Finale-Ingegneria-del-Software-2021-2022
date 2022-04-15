@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.entity.Tower;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.rules.GameRules;
+import it.polimi.ingsw.server.PlayerLobby;
 
 import java.util.*;
 
@@ -48,10 +49,10 @@ public class Game4P extends Game{
     /**
      * Construct and initialize a 4 player game
      *
-     * @param playersData A map containing the name of the player and the wizard of the player
-     * @param gameRules an instance of the gameRules class containing the parameters of the game
+     * @param playersData The list of PlayerLobby objects, containing the name of the player and the wizard of the player
+     * @param gameRules the class containing all the parameters for game creation
      */
-    protected Game4P(SortedMap<String, Wizard> playersData, GameRules gameRules) throws InvalidNewGameException {
+    protected Game4P(List<PlayerLobby> playersData, GameRules gameRules) throws InvalidNewGameException {
         super(gameRules);
 
         if(playersData.size() != gameRules.cloudsRules.numberOfClouds)
@@ -59,8 +60,8 @@ public class Game4P extends Game{
 
         // Creates the players
         players = new ArrayList<>();
-        for (String name : playersData.keySet()) {
-            players.add(new Player(name, playersData.get(name), new School(), gameRules.coinRules.startingCoinsPerPlayer));
+        for (PlayerLobby pData : playersData) {
+            players.add(new Player(pData.getPlayerId(), pData.getWizard(), new School(), gameRules.coinRules.startingCoinsPerPlayer));
         }
 
 

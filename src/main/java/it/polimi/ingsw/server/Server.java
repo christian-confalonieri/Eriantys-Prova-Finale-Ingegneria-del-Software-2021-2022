@@ -43,16 +43,12 @@ public class Server {
     public void startGame(GameLobby gameLobby) throws InvalidNewGameException {
         if(gameLobby.canStart()) {
             lobbyGames.remove(gameLobby);
-            SortedMap<String, Wizard> playerMap = new TreeMap<>();
-            for(String playerId : gameLobby.getPlayersWaiting()) {
-                playerMap.put(gameLobby.getInGameName(playerId), gameLobby.getWizard(playerId));
-            }
-            GameHandler newGame = GameCreator.createGame(playerMap, gameLobby.getGameRules());
+            GameHandler newGame = GameCreator.createGame(gameLobby.getPlayersWaiting(), gameLobby.getGameRules());
             addGame(newGame);
-            int i = 0;
-            for(String playerId : gameLobby.getPlayersWaiting()) {
-                addPlayerInGame(playerId, newGame, newGame.getGame().getPlayers().get(i));
-                i++;
+
+            for(PlayerLobby playerLobby : gameLobby.getPlayersWaiting()) {
+                addPlayerInGame(playerLobby.getPlayerId(), newGame,
+                        newGame.getGame().getPlayers().stream().filter(p -> p.getName().equals(playerLobby.getPlayerId())).findAny().get());
             }
         }
     }

@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.power.EffectHandler;
 import it.polimi.ingsw.model.power.Herbalist;
 import it.polimi.ingsw.model.power.PowerCard;
 import it.polimi.ingsw.model.enumeration.PowerType;
+import it.polimi.ingsw.server.PlayerLobby;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -306,9 +307,10 @@ public class Game {
     /**
      * Construct and initialize a player game with no team play
      *
-     * @param playersData A map containing the name of the player and the wizard of the player
+     * @param playersData The list of PlayerLobby objects, containing the name of the player and the wizard of the player
+     * @param gameRules the class containing all the parameters for game creation
      */
-    protected Game(SortedMap<String, Wizard> playersData, GameRules gameRules) throws InvalidNewGameException {
+    protected Game(List<PlayerLobby> playersData, GameRules gameRules) throws InvalidNewGameException {
         this(gameRules);
 
         if(playersData.size() != gameRules.cloudsRules.numberOfClouds)
@@ -316,8 +318,8 @@ public class Game {
 
         // Creates the players
         players = new ArrayList<>();
-        for (String name : playersData.keySet()) {
-            players.add(new Player(name, playersData.get(name), new School(), gameRules.coinRules.startingCoinsPerPlayer));
+        for (PlayerLobby pData : playersData) {
+            players.add(new Player(pData.getPlayerId(), pData.getWizard(), new School(), gameRules.coinRules.startingCoinsPerPlayer));
         }
 
         // Create the players with their school

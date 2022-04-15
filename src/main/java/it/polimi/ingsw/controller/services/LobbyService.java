@@ -15,7 +15,9 @@ public class LobbyService {
         GameLobby lobby = new GameLobby(action.getGameRules(), action.getNumberOfPlayers());
         Server.getInstance().addNewGameLobby(lobby);
         System.out.println(ConsoleColor.CYAN + "New " + lobby.getLobbySize() + "P" + " gamelobby created [" + lobby.getGameLobbyId() + "]" + ConsoleColor.RESET);
-        joinGame(new JoinGameAction(action.getPlayerId(), lobby.getGameLobbyId(), action.getPlayerName(), action.getWizard()));
+
+        Server.getInstance().getClientNetHandler(action.getPlayerId()).send(lobby.getGameLobbyId()); // Replied with the lobby id
+        joinGame(new JoinGameAction(action.getPlayerId(), lobby.getGameLobbyId(), action.getWizard()));
     }
 
     public static void joinGame(JoinGameAction action) throws InvalidAction {
@@ -25,7 +27,7 @@ public class LobbyService {
 
         if(lb == null) throw new InvalidAction("JoinGame: Invalid lobby ID");
 
-        boolean hasBeenAdded = lb.addPlayer(action.getPlayerId(), action.getPlayerName(), action.getWizard());
+        boolean hasBeenAdded = lb.addPlayer(action.getPlayerId(), action.getWizard());
         if(!hasBeenAdded) throw new InvalidAction("JoinGame: Name or Wizard Already Taken");
 
         System.out.println(ConsoleColor.CYAN + "Player [" + action.getPlayerId() + "] joined lobby [" + action.getGameLobbyId() + "]" + ConsoleColor.RESET);

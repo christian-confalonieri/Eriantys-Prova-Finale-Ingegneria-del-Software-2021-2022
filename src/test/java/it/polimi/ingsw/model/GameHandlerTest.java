@@ -11,11 +11,13 @@ import it.polimi.ingsw.model.enumeration.TurnPhase;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.*;
 import it.polimi.ingsw.model.game.rules.GameRules;
+import it.polimi.ingsw.server.PlayerLobby;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.PKCS12Attribute;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,9 +31,9 @@ class GameHandlerTest {
 
     @Test
     void twoPlayerMatchAdvance() throws InvalidRulesException, InvalidNewGameException {
-        SortedMap<String, Wizard> playerData = new TreeMap<>();
-        playerData.put("Pippo", Wizard.YELLOW);
-        playerData.put("Topolino",Wizard.GREEN);
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
 
         String rulesJson = null;
         try {
@@ -131,10 +133,10 @@ class GameHandlerTest {
 
     @Test
     void threePlayerMatchAdvance() throws InvalidRulesException, InvalidNewGameException {
-        SortedMap<String, Wizard> playerData = new TreeMap<>();
-        playerData.put("Abbate", Wizard.YELLOW);
-        playerData.put("Bertoldo",Wizard.GREEN);
-        playerData.put("Carnaroli", Wizard.PURPLE);
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Abbate", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Bertoldo", Wizard.GREEN));
+        playerData.add(new PlayerLobby("Carnaroli", Wizard.PURPLE));
 
         String rulesJson = null;
         try {
@@ -223,11 +225,11 @@ class GameHandlerTest {
 
     @Test
     void fourPlayerMatchAdvance() throws InvalidRulesException, InvalidNewGameException {
-        SortedMap<String, Wizard> playerData = new TreeMap<>();
-        playerData.put("Abbate", Wizard.YELLOW);
-        playerData.put("Bertoldo",Wizard.GREEN);
-        playerData.put("Carnaroli", Wizard.PURPLE);
-        playerData.put("Drondo", Wizard.BLUE);
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Abbate", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Bertoldo", Wizard.GREEN));
+        playerData.add(new PlayerLobby("Carnaroli", Wizard.PURPLE));
+        playerData.add(new PlayerLobby("Drondo", Wizard.BLUE));
 
         String rulesJson = null;
         try {
@@ -336,9 +338,9 @@ class GameHandlerTest {
 
     @Test
     void turnSimulation() throws IOException, InvalidNewGameException, InvalidRulesException {
-        SortedMap<String, Wizard> playerData = new TreeMap<>();
-        playerData.put("Pippo", Wizard.YELLOW);
-        playerData.put("Topolino",Wizard.GREEN);
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
 
         String rulesJson = null;
 

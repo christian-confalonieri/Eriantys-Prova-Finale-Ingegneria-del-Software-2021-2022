@@ -6,16 +6,11 @@ import it.polimi.ingsw.model.game.rules.GameRules;
 import java.util.*;
 
 public class GameLobby {
-    public List<String> getPlayersWaiting() {
-        return playersWaiting;
-    }
 
-    public String getInGameName(String playerId) {
-        return names.get(playerId);
-    }
+    public List<PlayerLobby> getPlayersWaiting() { return playersWaiting; }
 
     public Wizard getWizard(String playerId) {
-        return wizards.get(playerId);
+        return playersWaiting.stream().filter(p -> p.getPlayerId().equals(playerId)).findAny().get().getWizard();
     }
 
     public GameRules getGameRules() {
@@ -27,9 +22,8 @@ public class GameLobby {
     }
 
     private final String gameLobbyId;
-    private final List<String> playersWaiting;
-    private final Map<String, String> names;
-    private final Map<String, Wizard> wizards;
+
+    private final List<PlayerLobby> playersWaiting;
     private final GameRules gameRules;
     private final int numberOfPlayers;
 
@@ -51,14 +45,12 @@ public class GameLobby {
      * or the name is already taken and the wizard is already taken
      * @return true if the player was added.
      */
-    public boolean addPlayer(String playerId, String name, Wizard wizard) {
-        if (!playersWaiting.contains(playerId) && !names.containsValue(name) && !wizards.containsValue(wizard)) {
-            playersWaiting.add(playerId);
-            names.put(playerId, name);
-            wizards.put(playerId, wizard);
+    public boolean addPlayer(String playerId, Wizard wizard) {
+        if (playersWaiting.stream().noneMatch(p -> p.getPlayerId().equals(playerId)) && playersWaiting.stream().noneMatch(p -> p.getWizard().equals(wizard))) {
+            playersWaiting.add(new PlayerLobby(playerId, wizard));
             return true;
         }
-        return false;
+        else return false;
     }
 
     /** {
@@ -67,13 +59,11 @@ public class GameLobby {
      * @param playerId the id of the player that exits the lobby
      */
     public void removePlayer(String playerId) {
-        playersWaiting.remove(playerId);
-        names.remove(playerId);
-        wizards.remove(playerId);
+        playersWaiting.stream().filter(playerLobby -> playerLobby.getPlayerId().equals(playerId)).findAny().ifPresent(playersWaiting::remove);
     }
 
     public boolean isPlayerWaiting(String playerId) {
-        return playersWaiting.contains(playerId);
+        return playersWaiting.stream().anyMatch(pl -> pl.getPlayerId().equals(playerId));
     }
 
     public boolean isEmpty() {
@@ -85,7 +75,5 @@ public class GameLobby {
         this.gameRules = gameRules;
         this.numberOfPlayers = numberOfPlayers;
         this.playersWaiting = new ArrayList<>();
-        this.names = new HashMap<>();
-        this.wizards = new HashMap<>();
     }
 }

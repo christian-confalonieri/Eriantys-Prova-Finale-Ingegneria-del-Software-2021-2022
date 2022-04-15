@@ -27,17 +27,16 @@ class ActionHandlerTest {
 
     @Test
     void toJson() throws IOException, InvalidRulesException {
-        String playerId = "playerid-example-unique-identifier";
+        String playerId = "leonardoa00";
         String lobbyId = "lobbyid-example-unique-identifier";
-        String playerName = "leonardo";
         Wizard wizard = Wizard.BLUE;
         String rulesFile = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
         GameRules gameRules = GameRules.fromJson(rulesFile);
 
 
         LoginAction loginAction = new LoginAction(playerId);
-        JoinGameAction joinGameAction = new JoinGameAction(playerId, lobbyId, playerName, wizard);
-        NewGameAction newGameAction = new NewGameAction(playerId, 2, gameRules, playerName, wizard);
+        JoinGameAction joinGameAction = new JoinGameAction(playerId, lobbyId, wizard);
+        NewGameAction newGameAction = new NewGameAction(playerId, 2, gameRules, wizard);
         LogoutAction logoutAction = new LogoutAction(playerId);
 
         String json = ActionHandler.toJson(logoutAction);

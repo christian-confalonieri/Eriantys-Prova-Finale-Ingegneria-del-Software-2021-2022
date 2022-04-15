@@ -4,11 +4,13 @@ import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.rules.GameRules;
+import it.polimi.ingsw.server.PlayerLobby;
 
+import java.util.List;
 import java.util.SortedMap;
 
 public class GameCreator {
-    public static GameHandler createGame(SortedMap<String, Wizard> playersData, GameRules gameRules) throws InvalidNewGameException {
+    public static GameHandler createGame(List<PlayerLobby> playersData, GameRules gameRules) throws InvalidNewGameException {
         switch (playersData.size()) {
             case 2:
                 return GameHandler.gameHandlerBuilder(new Game(playersData, gameRules));

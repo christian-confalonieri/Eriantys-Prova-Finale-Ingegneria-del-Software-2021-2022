@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.GameCreator;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.game.rules.GameRules;
+import it.polimi.ingsw.server.PlayerLobby;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
@@ -21,9 +22,9 @@ class GameTest {
 
     @Test
     void unifyIslandInTheMiddle() throws InvalidRulesException, InvalidNewGameException {
-        SortedMap<String, Wizard> playerData = new TreeMap<>();
-        playerData.put("Pippo", Wizard.YELLOW);
-        playerData.put("Topolino",Wizard.GREEN);
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
 
         String rulesJson = null;
         try {
@@ -59,9 +60,9 @@ class GameTest {
 
     @Test
     void unifyIslandInBorder() throws InvalidRulesException, InvalidNewGameException {
-        SortedMap<String, Wizard> playerData = new TreeMap<>();
-        playerData.put("Pippo", Wizard.YELLOW);
-        playerData.put("Topolino",Wizard.GREEN);
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
 
         String rulesJson = null;
         try {
@@ -95,9 +96,9 @@ class GameTest {
 
     @Test
     void unifyIslandTriple() throws InvalidRulesException, InvalidNewGameException {
-        SortedMap<String, Wizard> playerData = new TreeMap<>();
-        playerData.put("Pippo", Wizard.YELLOW);
-        playerData.put("Topolino",Wizard.GREEN);
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
 
         String rulesJson = null;
         try {
@@ -133,9 +134,9 @@ class GameTest {
 
     @Test
     void professorRelocate() throws InvalidRulesException, InvalidNewGameException {
-        SortedMap<String, Wizard> playerData = new TreeMap<>();
-        playerData.put("Pippo", Wizard.YELLOW);
-        playerData.put("Topolino",Wizard.GREEN);
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
 
         String rulesJson = null;
         try {
@@ -193,9 +194,9 @@ class GameTest {
 
     @Test
     void getLeaderBoard() throws InvalidRulesException, InvalidNewGameException {
-        SortedMap<String, Wizard> playerData = new TreeMap<>();
-        playerData.put("Pippo", Wizard.YELLOW);
-        playerData.put("Topolino",Wizard.GREEN);
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
 
         String rulesJson = null;
         try {
@@ -225,9 +226,9 @@ class GameTest {
 
     @Test
     void getLeaderBoardEqualTowers() throws InvalidRulesException, InvalidNewGameException {
-        SortedMap<String, Wizard> playerData = new TreeMap<>();
-        playerData.put("Pippo", Wizard.YELLOW);
-        playerData.put("Topolino",Wizard.GREEN);
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
 
         String rulesJson = null;
         try {

@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.GameCreator;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.game.rules.GameRules;
+import it.polimi.ingsw.server.PlayerLobby;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -55,9 +56,9 @@ class FriarTest {
     }
 
     private GameHandler createGame() throws IOException, InvalidNewGameException, InvalidRulesException {
-        SortedMap<String, Wizard> playerData = new TreeMap<>();
-        playerData.put("Mario", Wizard.PURPLE);
-        playerData.put("Luigi",Wizard.GREEN);
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
         String rulesJson;
         rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
         GameRules gameRules = GameRules.fromJson(rulesJson);
