@@ -5,6 +5,11 @@ import it.polimi.ingsw.model.game.rules.GameRules;
 
 import java.util.*;
 
+/**
+ * GameLobby represent a waiting room for players waiting to start a game.
+ * It is created with an action specifying the gameRules of the game and the size of the lobby
+ * Players can join and leave the lobby and when a lobby is full the game is started by the sever
+ */
 public class GameLobby {
 
     public List<PlayerLobby> getPlayersWaiting() { return playersWaiting; }

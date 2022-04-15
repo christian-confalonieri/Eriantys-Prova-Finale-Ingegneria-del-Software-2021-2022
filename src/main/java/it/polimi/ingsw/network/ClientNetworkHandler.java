@@ -7,7 +7,12 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-
+/**
+ * A ClientNetworkHandler is an object used by the server to manage a network connection with a client.
+ * Every ClientNetworkHandler has a socket connected to client and a listener thread that listens for the messages
+ * coming from the socket and calls the controller that handle the messages
+ *
+ */
 public class ClientNetworkHandler implements Runnable{
     private Socket clientSocket;
     Thread listenerThread;
@@ -24,15 +29,22 @@ public class ClientNetworkHandler implements Runnable{
         shutdown = false;
     }
 
-    public static ClientNetworkHandler clientNetworkHandlerFactory(Socket clientSocket) {
+    /**
+     * Construct a ClientNetworkHandler starting the listener thread and store new netHandler in the server
+     * @param clientSocket The socket to associate with the ClientNetHanlder
+     */
+    public static void clientNetworkHandlerFactory(Socket clientSocket) {
         ClientNetworkHandler clientNetworkHandler = new ClientNetworkHandler(clientSocket);
         Server.getInstance().addClientConnection(clientNetworkHandler);
 
         clientNetworkHandler.listenerThread = new Thread(clientNetworkHandler);
         clientNetworkHandler.listenerThread.start();
-        return clientNetworkHandler;
     }
 
+    /**
+     * Close the socket connection associated with the handler, stops the listener thread and remove
+     * the object from the server
+     */
     public void shutdown() {
         try {
             clientSocket.close();
@@ -44,6 +56,9 @@ public class ClientNetworkHandler implements Runnable{
         shutdown = true;
     }
 
+    /**
+     * Listens for the messages via network and call the server controller that execute the actions recieved
+     */
     @Override
     public void run() {
         System.out.println(this.toString() + " listening...");

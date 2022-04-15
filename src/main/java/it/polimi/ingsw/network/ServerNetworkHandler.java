@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * ServerNetworkHandler handle a server port by accepting connections from clients, and associating a new ClientNetworkHandler
+ * to each new client connected
+ */
 public class ServerNetworkHandler implements Runnable {
 
     private final ServerSocket serverSocket;
