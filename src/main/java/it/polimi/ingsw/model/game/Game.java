@@ -14,7 +14,6 @@ import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.server.PlayerLobby;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * The game class represent the board of the game and contains all the objects
@@ -55,6 +54,16 @@ public class Game {
         }
         for(Tower t : island2.getTowers()) {
             island1.addTower(t);
+        }
+
+        if(island2.isNoEntry()) {
+            if(island1.isNoEntry()) {
+                Herbalist herbalist = (Herbalist) powerCards.stream().filter(p -> p.getType().equals(PowerType.HERBALIST)).findAny().get();
+                herbalist.setNoEntryCards(herbalist.getNoEntryCards() + 1);
+            }
+            else {
+                island1.setNoEntry(true);
+            }
         }
 
         if(island1.getNextIsland().equals(island2)) {

@@ -92,19 +92,25 @@ class FarmerTest {
 
         assertEquals(2,players.get(1).getSchool().getProfessorTable().size());
         assertEquals(1,players.get(0).getSchool().getProfessorTable().size());
-        assertEquals(redProfessor,players.get(0).getSchool().getProfessorTable().get(0));
+        assertTrue(players.get(1).getSchool().getProfessorTable().contains(greenProfessor));
+        assertTrue(players.get(1).getSchool().getProfessorTable().contains(yellowProfessor));
+        assertTrue(players.get(0).getSchool().getProfessorTable().contains(redProfessor));
 
         farmer.power();
 
         assertEquals(1,players.get(1).getSchool().getProfessorTable().size());
         assertEquals(2,players.get(0).getSchool().getProfessorTable().size());
-        assertEquals(yellowProfessor,players.get(1).getSchool().getProfessorTable().get(0));
+        assertTrue(players.get(1).getSchool().getProfessorTable().contains(yellowProfessor));
+        assertTrue(players.get(0).getSchool().getProfessorTable().contains(greenProfessor));
+        assertTrue(players.get(0).getSchool().getProfessorTable().contains(redProfessor));
 
         farmer.endPower();
 
-        assertEquals(2,players.get(1).getSchool().getProfessorTable().size());
-        assertEquals(1,players.get(0).getSchool().getProfessorTable().size());
-        assertEquals(redProfessor,players.get(0).getSchool().getProfessorTable().get(0));
+        assertEquals(1,players.get(1).getSchool().getProfessorTable().size());
+        assertEquals(2,players.get(0).getSchool().getProfessorTable().size());
+        assertTrue(players.get(1).getSchool().getProfessorTable().contains(yellowProfessor));
+        assertTrue(players.get(0).getSchool().getProfessorTable().contains(greenProfessor));
+        assertTrue(players.get(0).getSchool().getProfessorTable().contains(redProfessor));
     }
 
     private GameHandler createGame() throws IOException, InvalidNewGameException, InvalidRulesException {

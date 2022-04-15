@@ -1,26 +1,23 @@
 package it.polimi.ingsw.model.power;
 
 import it.polimi.ingsw.model.entity.Island;
-import it.polimi.ingsw.model.entity.Professor;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.entity.Student;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Christian Confalonieri
  */
 public class EffectHandler {
 
-    private boolean activeHarvester;
-    private boolean activeMailman;
+    private boolean effectActive;
+    private boolean mailmanActive;
     private PawnColor harvesterColor;
     private PawnColor thiefColor;
     private List<Student> chosenStudents1;
     private List<Student> chosenStudents2;
-    private Map<Professor, Player> chosenProfessors;
     private Island chosenIsland;
     private int additionalInfluence;
     private boolean skipTowers;
@@ -31,14 +28,13 @@ public class EffectHandler {
      */
     public EffectHandler() {
 
-        activeHarvester = false;
-        activeMailman = false;
+        effectActive = false;
+        mailmanActive = false;
         harvesterColor = null;
         thiefColor = null;
         // I have added two lists of students, basically you will use the first one, the second one is needed in case of exchanges
         chosenStudents1 = null;
         chosenStudents2 = null;
-        chosenProfessors = null;
         chosenIsland = null;
         additionalInfluence = 0;
         skipTowers = false;
@@ -49,35 +45,34 @@ public class EffectHandler {
     /**
      * @author Christian Confalonieri
      */
-    public EffectHandler(boolean activeHarvester, boolean activeMailman, PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2, Map<Professor,Player> chosenProfessors,
+    public EffectHandler(boolean effectActive, boolean mailmanActive, PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2,
                          Island chosenIsland, int additionalInfluence, boolean skipTowers, Player effectPlayer) {
-        this.activeHarvester = activeHarvester;
-        this.activeMailman = activeMailman;
+        this.effectActive = effectActive;
+        this.mailmanActive = mailmanActive;
         this.harvesterColor = harvesterColor;
         this.thiefColor = thiefColor;
         this.chosenStudents1 = chosenStudents1;
         this.chosenStudents2 = chosenStudents2;
-        this.chosenProfessors = chosenProfessors;
         this.chosenIsland = chosenIsland;
         this.additionalInfluence = additionalInfluence;
         this.skipTowers = skipTowers;
         this.effectPlayer = effectPlayer;
     }
 
-    public boolean isActiveHarvester() {
-        return activeHarvester;
+    public boolean isEffectActive() {
+        return effectActive;
     }
 
-    public void setActiveHarvester(boolean activeHarvester) {
-        this.activeHarvester = activeHarvester;
+    public void setEffectActive(boolean effectActive) {
+        this.effectActive = effectActive;
     }
 
-    public boolean isActiveMailman() {
-        return activeMailman;
+    public boolean isMailmanActive() {
+        return mailmanActive;
     }
 
-    public void setActiveMailman(boolean activeMailman) {
-        this.activeMailman = activeMailman;
+    public void setMailmanActive(boolean mailmanActive) {
+        this.mailmanActive = mailmanActive;
     }
 
     public PawnColor getHarvesterColor() {
@@ -142,13 +137,5 @@ public class EffectHandler {
 
     public void setEffectPlayer(Player effectPlayer) {
         this.effectPlayer = effectPlayer;
-    }
-
-    public Map<Professor, Player> getChosenProfessors() {
-        return chosenProfessors;
-    }
-
-    public void setChosenProfessors(Map<Professor, Player> chosenProfessors) {
-        this.chosenProfessors = chosenProfessors;
     }
 }

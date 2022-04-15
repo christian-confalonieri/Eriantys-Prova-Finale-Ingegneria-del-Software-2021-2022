@@ -8,9 +8,7 @@ import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.entity.Professor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * EFFECT: During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them.
@@ -52,8 +50,6 @@ public class Farmer extends PowerCard {
         School playerSchool;
         PawnColor color;
 
-        Map<Professor, Player> chosenProfessors = new HashMap<>();
-
         for(Player player : players) {
             playerSchool = player.getSchool();
             playerProfessors = playerSchool.getProfessorTable();
@@ -61,36 +57,11 @@ public class Farmer extends PowerCard {
             for(Professor professor : playerProfessors) {
                 color = professor.getColor();
                 if(effectPlayerSchool.getStudentsDiningRoom(color).size() == playerSchool.getStudentsDiningRoom(color).size()) {
-                    chosenProfessors.put(professor,player);
-
                     playerSchool.removeProfessor(professor);
                     effectPlayerSchool.addProfessor(professor);
                 }
             }
         }
-        getGameHandler().getGame().getEffectHandler().setChosenProfessors(chosenProfessors);
-    }
-
-    /**
-     * At the end of the turn it relocates the professors moved via this power to their respective owners.
-     *
-     * @author Christian Confalonieri
-     */
-    @Override
-    public void endPower() {
-        Map<Professor,Player> chosenProfessors = getGameHandler().getGame().getEffectHandler().getChosenProfessors();
-        if(chosenProfessors!=null) {
-            Player effectPlayer = getGameHandler().getGame().getEffectHandler().getEffectPlayer();
-            for(Professor professor : chosenProfessors.keySet()) {
-                if(effectPlayer.getSchool().getStudentsDiningRoom(professor.getColor()).size() ==
-                        chosenProfessors.get(professor).getSchool().getStudentsDiningRoom(professor.getColor()).size()) {
-                    effectPlayer.getSchool().removeProfessor(professor);
-                    chosenProfessors.get(professor).getSchool().addProfessor(professor);
-                }
-            }
-            getGameHandler().getGame().getEffectHandler().setChosenProfessors(null);
-        }
-        getGameHandler().getGame().getEffectHandler().setEffectPlayer(null);
     }
 
 }

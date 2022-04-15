@@ -44,9 +44,9 @@ class MailmanTest {
         assertEquals(gameHandler.getGame().getIslands().get(0), gameHandler.getGame().getMotherNature().isOn());
 
         mailman.power();
-        assertTrue(gameHandler.getGame().getEffectHandler().isActiveMailman());
+        assertTrue(gameHandler.getGame().getEffectHandler().isMailmanActive());
         mailman.endPower();
-        assertFalse(gameHandler.getGame().getEffectHandler().isActiveMailman());
+        assertFalse(gameHandler.getGame().getEffectHandler().isMailmanActive());
 
     }
 

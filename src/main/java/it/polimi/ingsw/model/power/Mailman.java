@@ -30,7 +30,7 @@ public class Mailman extends PowerCard {
     @Override
     public void power() {
         super.power();
-        getGameHandler().getGame().getEffectHandler().setActiveMailman(true);
+        getGameHandler().getGame().getEffectHandler().setMailmanActive(true);
     }
 
     /**
@@ -39,6 +39,6 @@ public class Mailman extends PowerCard {
     @Override
     public void endPower() {
         super.endPower();
-        getGameHandler().getGame().getEffectHandler().setActiveMailman(false);
+        getGameHandler().getGame().getEffectHandler().setMailmanActive(false);
     }
 }
