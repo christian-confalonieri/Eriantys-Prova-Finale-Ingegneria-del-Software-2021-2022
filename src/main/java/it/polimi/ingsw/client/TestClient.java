@@ -15,7 +15,7 @@ public class TestClient {
         socket = new Socket(serverIp, serverPort);
         try {
             output = new PrintWriter(socket.getOutputStream());
-            input = new Scanner(socket.getInputStream()).useDelimiter("\r\n");
+            input = new Scanner(socket.getInputStream()).useDelimiter("\r\n"); // TODO Check if correct
         } catch (IOException e) {
             e.printStackTrace();
         }
