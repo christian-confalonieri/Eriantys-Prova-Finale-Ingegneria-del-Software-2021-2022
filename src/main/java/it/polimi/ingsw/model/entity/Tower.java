@@ -2,12 +2,13 @@ package it.polimi.ingsw.model.entity;
 
 import it.polimi.ingsw.model.enumeration.TowerColor;
 
-public class Tower {
+public class Tower extends Entity {
 
     private TowerColor color;
     private Player owner;
 
     public Tower(TowerColor color, Player owner) {
+        super();
         this.color = color;
         this.owner = owner;
     }

@@ -16,7 +16,7 @@ import java.util.function.Predicate;
  *
  * @author Christian Confalonieri
  */
-public class Island {
+public class Island extends Entity {
 
     private final List<Student> students;
     private final List<Tower> towers;
@@ -28,6 +28,7 @@ public class Island {
      * @author Christian Confalonieri
      */
     public Island() {
+        super();
         prevIsland = null;
         nextIsland = null;
         students = new ArrayList<>();

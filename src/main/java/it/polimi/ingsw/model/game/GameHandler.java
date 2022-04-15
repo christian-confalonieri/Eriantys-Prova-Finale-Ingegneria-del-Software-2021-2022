@@ -82,7 +82,8 @@ public class GameHandler {
         List<Card> playedCard = new ArrayList<>();
         for (Player iplayer = firstTurnPlayer; iplayer.equals(currentPlayer);
              iplayer = orderedTurnPlayers.get((orderedTurnPlayers.indexOf(iplayer) + 1) % orderedTurnPlayers.size()) ) {
-            playedCard.add(iplayer.getLastPlayedCard());
+            Card card = iplayer.getLastPlayedCard();
+            if(card != null) playedCard.add(card);
         }
         return playedCard;
     }
