@@ -59,7 +59,7 @@ public class Player {
     }
 
     public Card getLastPlayedCard() {
-        return usedCards.get(usedCards.size() - 1);
+        return usedCards.size() != 0 ? usedCards.get(usedCards.size() - 1) : null;
     }
 
     public String getName() {

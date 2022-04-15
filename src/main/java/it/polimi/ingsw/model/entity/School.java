@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * @author Leonardo Airoldi, Christian Confalonieri, Alessandro Ettore
  */
-public class School {
+public class School extends Entity {
 
     private Map<PawnColor, List<Student>> diningRoom;
     private List<Student> entrance;
@@ -19,6 +19,7 @@ public class School {
 
 
     public School() {
+        super();
         diningRoom = new HashMap<>();
         for (PawnColor pawnColor: PawnColor.values()) {
             diningRoom.put(pawnColor, new ArrayList<>());

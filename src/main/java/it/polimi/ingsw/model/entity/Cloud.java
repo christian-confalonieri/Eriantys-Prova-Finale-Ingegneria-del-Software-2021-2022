@@ -6,12 +6,13 @@ import java.util.List;
 /**
  * @author Christian Confalonieri, Alessandro Ettore
  */
-public class Cloud {
+public class Cloud extends Entity {
 
-    private List<Student> students;
+    private final List<Student> students;
 
 
     public Cloud() {
+        super();
         this.students = new ArrayList<>();
     }
 

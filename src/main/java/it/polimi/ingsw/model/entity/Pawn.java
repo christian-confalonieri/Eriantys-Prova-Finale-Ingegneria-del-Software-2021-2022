@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.entity;
 
 import it.polimi.ingsw.model.enumeration.PawnColor;
 
-public abstract class Pawn {
+public abstract class Pawn extends Entity {
 
     private final PawnColor color;
 
@@ -11,6 +11,7 @@ public abstract class Pawn {
     }
 
     public Pawn(PawnColor color) {
+        super();
         this.color = color;
     }
 }
