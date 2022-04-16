@@ -399,4 +399,13 @@ public class Game {
     public List<PowerCard> getPowerCards() {
         return powerCards;
     }
+
+    public Island getIslandFromId(String uuid) {
+        for(Island island : islands) {
+            if(island.getUuid().equals(uuid)) {
+                return island;
+            }
+        }
+        return null;
+    }
 }

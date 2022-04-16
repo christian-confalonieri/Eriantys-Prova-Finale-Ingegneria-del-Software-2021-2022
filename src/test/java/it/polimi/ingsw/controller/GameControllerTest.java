@@ -233,31 +233,42 @@ class GameControllerTest {
 
         List<Student> toDiningRoom = new ArrayList<>();
         toDiningRoom.add(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().get(0));
-        Island island1 = Server.getInstance().getGameHandler(playerId2).getGame().getIslands().get(0);
-        Island island2 = Server.getInstance().getGameHandler(playerId2).getGame().getIslands().get(1);
-        Map<Student, Island> toIsland =  new HashMap<>();
-        toIsland.put(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().get(1),island1);
-        toIsland.put(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().get(2),island2);
+        String island1 = gameHandler.getGame().getIslands().get(0).getUuid();
+        String island2 = gameHandler.getGame().getIslands().get(1).getUuid();
+        Map<Student, String> toIslands =  new HashMap<>();
+        toIslands.put(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().get(1),island1);
+        toIslands.put(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().get(2),island2);
 
         assertTrue(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().containsAll(toDiningRoom));
-        assertTrue(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().containsAll(toIsland.keySet()));
+        assertTrue(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().containsAll(toIslands.keySet()));
 
         List<Student> tempStudentsDR = new ArrayList<>();
         for(PawnColor color : PawnColor.values())  {
             tempStudentsDR.addAll(Server.getInstance().getInGamePlayer(playerId2).getSchool().getStudentsDiningRoom(color));
         }
         List<Student> tempStudentsIS = new ArrayList<>();
-        tempStudentsIS.addAll(island1.getStudents());
-        tempStudentsIS.addAll(island2.getStudents());
+        tempStudentsIS.addAll(gameHandler.getGame().getIslandFromId(island1).getStudents());
+        tempStudentsIS.addAll(gameHandler.getGame().getIslandFromId(island2).getStudents());
 
         assertFalse(tempStudentsDR.containsAll(toDiningRoom));
-        assertFalse(tempStudentsIS.containsAll(toIsland.keySet()));
+        assertFalse(tempStudentsIS.containsAll(toIslands.keySet()));
 
-        MoveStudentsAction moveStudentsAction = new MoveStudentsAction(playerId2,toDiningRoom,toIsland);
-        String toJson = ActionHandler.toJson(moveStudentsAction);
-        client2.send(toJson); // player 2 moves the students from the entrance to the dining room and islands
+        client2.send(ActionHandler.toJson(new MoveStudentsAction(playerId2,toDiningRoom,toIslands))); // player 2 moves the students from the entrance to the dining room and islands
         Thread.sleep(1000);
 
+        assertFalse(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().containsAll(toDiningRoom));
+        assertFalse(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().containsAll(toIslands.keySet()));
+
+        tempStudentsDR.clear();
+        for(PawnColor color : PawnColor.values())  {
+            tempStudentsDR.addAll(Server.getInstance().getInGamePlayer(playerId2).getSchool().getStudentsDiningRoom(color));
+        }
+        tempStudentsIS.clear();
+        tempStudentsIS.addAll(gameHandler.getGame().getIslandFromId(island1).getStudents());
+        tempStudentsIS.addAll(gameHandler.getGame().getIslandFromId(island2).getStudents());
+
+        assertTrue(tempStudentsDR.containsAll(toDiningRoom));
+        assertTrue(tempStudentsIS.containsAll(toIslands.keySet()));
 
     }
 }

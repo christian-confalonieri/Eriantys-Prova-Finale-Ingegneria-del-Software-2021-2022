@@ -46,7 +46,7 @@ public class GameService {
         if (gameHandler.getGamePhase().equals(GamePhase.TURN) &&
                 gameHandler.getTurnPhase().equals(TurnPhase.MOVESTUDENTS)) {
             List<Student> studentsToDiningRoom = action.getToDiningRoom();
-            Map<Student,Island> studentsToIsland = action.getToIsland();
+            Map<Student,String> studentsToIsland = action.getToIsland();
 
             if(studentsToDiningRoom == null && studentsToIsland == null) {
                 throw new InvalidAction("MoveStudentsAction: invalid lists");
@@ -77,7 +77,7 @@ public class GameService {
 
             if(studentsToIsland != null) {
                 for(Student student : studentsToIsland.keySet()) {
-                    gameHandler.getCurrentPlayer().getSchool().entranceToIsland(student,studentsToIsland.get(student));
+                    gameHandler.getCurrentPlayer().getSchool().entranceToIsland(student,gameHandler.getGame().getIslandFromId(studentsToIsland.get(student)));
                 }
             }
         }
