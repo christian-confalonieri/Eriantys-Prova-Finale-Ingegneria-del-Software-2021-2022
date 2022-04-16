@@ -159,6 +159,10 @@ public class GameService {
         GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
         PowerCard powerCard = gameHandler.getGame().getPowerCard(action.getType());
 
+        if(gameHandler.getCurrentPlayer().getCoins() < powerCard.getCost()) {
+            throw new InvalidAction("Power: the player does not have enough coins to pay for the activation of this power");
+        }
+
         if(gameHandler.getGame().getEffectHandler().isEffectActive()) {
             throw new InvalidAction("Power: another power has already been activated");
         }

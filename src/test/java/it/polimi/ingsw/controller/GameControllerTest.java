@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.*;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.game.rules.GameRules;
+import it.polimi.ingsw.model.power.*;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
 import org.junit.jupiter.api.Test;
@@ -188,11 +189,11 @@ class GameControllerTest {
         }).start(); // Starts a thread with the server
 
         TestClient client1 = new TestClient("localhost", 23154);
-        String playerId1 = "LeonardoA00";
+        String playerId1 = "Mario";
         Scanner serverReplyClient1 = client1.getInputScanner();
 
         TestClient client2 = new TestClient("localhost", 23154);
-        String playerId2 = "CON+F4";
+        String playerId2 = "Luigi";
         Scanner serverReplyClient2 = client2.getInputScanner();
 
         client1.send(ActionHandler.toJson(new LoginAction(playerId1)));
@@ -220,6 +221,12 @@ class GameControllerTest {
 
         // TURN PHASE TESTING: --------------------------------------------------------------------------------------------------------------------
 
+        List<PowerCard> powerCards = new ArrayList<>();
+        powerCards.add(new Mailman(gameHandler));
+        powerCards.add(new Friar(gameHandler));
+        powerCards.add(new Herald(gameHandler));
+        gameHandler.getGame().setPowerCards(powerCards);
+
         client1.send(ActionHandler.toJson(new PlayCardAction(playerId1, Card.FOUR))); // player1 plays a card
         Thread.sleep(1000);
         assertEquals(gameHandler.getGame().getPlayers().get(0).getLastPlayedCard(), Card.FOUR);
@@ -231,6 +238,17 @@ class GameControllerTest {
         assertEquals(gameHandler.getCurrentPlayer(), Server.getInstance().getInGamePlayer(playerId2));
         assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
         assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+
+        //player2 turn test------------------------------------------------------------------------------------------------------------------------
+
+        assertEquals(1,gameHandler.getGame().getPowerCards().get(0).getCost()); // mailman cost = 1
+        assertEquals(1,Server.getInstance().getInGamePlayer(playerId2).getCoins());
+
+        client2.send(ActionHandler.toJson(new PowerAction(playerId2,PowerType.MAILMAN,gameHandler.getGame().getEffectHandler())));
+        Thread.sleep(1000);
+
+        assertEquals(2,gameHandler.getGame().getPowerCards().get(0).getCost()); // mailman cost = 2
+        assertEquals(0,Server.getInstance().getInGamePlayer(playerId2).getCoins());
 
         List<Student> toDiningRoom = new ArrayList<>();
         toDiningRoom.add(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().get(0));
@@ -278,10 +296,10 @@ class GameControllerTest {
         String islandUUID = String.copyValueOf(gameHandler.getGame().getMotherNature().isOn().getUuid().toCharArray());
         assertNotSame(islandUUID, gameHandler.getGame().getMotherNature().isOn().getUuid());
 
-        client2.send(ActionHandler.toJson(new MoveMotherNatureAction(playerId2, 1)));
+        client2.send(ActionHandler.toJson(new MoveMotherNatureAction(playerId2, 3))); //mailman allows you to accept up to 2 additional movements of mother nature
         Thread.sleep(1000);
 
-        assertEquals(gameHandler.getGame().getIslandFromId(islandUUID).getNextIsland(),gameHandler.getGame().getMotherNature().isOn());
+        assertEquals(gameHandler.getGame().getIslandFromId(islandUUID).getNextIsland().getNextIsland().getNextIsland(),gameHandler.getGame().getMotherNature().isOn());
 
         assertEquals(gameHandler.getCurrentPlayer(), Server.getInstance().getInGamePlayer(playerId2));
         assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
@@ -300,6 +318,18 @@ class GameControllerTest {
         assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
         assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
 
-        System.out.println("coin: " + Server.getInstance().getInGamePlayer(playerId1).getCoins());
+        //player1 power test------------------------------------------------------------------------------------------------------------------------
+
+        assertEquals(2,gameHandler.getGame().getPowerCards().get(0).getCost()); // mailman cost = 1
+        assertEquals(1,Server.getInstance().getInGamePlayer(playerId1).getCoins());
+        Server.getInstance().getInGamePlayer(playerId1).setCoins(2);
+
+        client1.send(ActionHandler.toJson(new PowerAction(playerId1,PowerType.MAILMAN,gameHandler.getGame().getEffectHandler())));
+        Thread.sleep(1000);
+
+        assertEquals(2,gameHandler.getGame().getPowerCards().get(0).getCost()); // mailman cost = 2
+        assertEquals(0,Server.getInstance().getInGamePlayer(playerId2).getCoins());
+
+        //The rest of the turn is tested in the same way
     }
 }

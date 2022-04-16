@@ -31,6 +31,7 @@ public abstract class PowerCard {
     public void power() {
         gameHandler.getGame().getEffectHandler().setEffectActive(true);
         gameHandler.getGame().getEffectHandler().setEffectPlayer(gameHandler.getCurrentPlayer());
+        gameHandler.getCurrentPlayer().setCoins(gameHandler.getCurrentPlayer().getCoins() - cost);
         if(cost==baseCost) {
             cost++;
         }
