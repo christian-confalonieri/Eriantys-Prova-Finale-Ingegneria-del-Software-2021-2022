@@ -7,9 +7,11 @@ import com.google.gson.JsonParser;
 import it.polimi.ingsw.action.*;
 import it.polimi.ingsw.client.TestClient;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
+import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.Card;
 import it.polimi.ingsw.model.enumeration.GamePhase;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.game.rules.GameRules;
@@ -21,9 +23,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -90,7 +90,7 @@ class GameControllerTest {
     }
 
     @Test
-    void MoveStudentsAction() throws IOException, InvalidRulesException, InterruptedException {
+    void PlayCardAction() throws IOException, InvalidRulesException, InterruptedException {
         String[] args = {};
         new Thread(new Runnable() {
             @Override
@@ -173,5 +173,91 @@ class GameControllerTest {
         // List<Student> entranceDeSerialized = gson.fromJson(entranceSerialized, )
 
         // client2.send(ActionHandler.toJson(new MoveStudentsAction(playerId2, )));
+    }
+
+    @Test
+    void TwoPlayerGameTurnPhase() throws IOException, InvalidRulesException, InterruptedException {
+        // Game Start (already tested) --------------------------------------------------------------------------------------------------------------
+
+        String[] args = {};
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Server.main(args);
+            }
+        }).start(); // Starts a thread with the server
+
+        TestClient client1 = new TestClient("localhost", 23154);
+        String playerId1 = "LeonardoA00";
+        Scanner serverReplyClient1 = client1.getInputScanner();
+
+        TestClient client2 = new TestClient("localhost", 23154);
+        String playerId2 = "CON+F4";
+        Scanner serverReplyClient2 = client2.getInputScanner();
+
+        client1.send(ActionHandler.toJson(new LoginAction(playerId1)));
+        Thread.sleep(1000);
+        String response1 = serverReplyClient1.next();
+
+        client2.send(ActionHandler.toJson(new LoginAction(playerId2)));
+        Thread.sleep(1000);
+        String response2 = serverReplyClient2.next();
+
+        String rulesFile = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
+        GameRules gameRules = GameRules.fromJson(rulesFile);
+
+        client1.send(ActionHandler.toJson(new NewGameAction(playerId1, 2, gameRules, Wizard.BLUE)));
+
+        Thread.sleep(1000);
+
+        String lobbyId = serverReplyClient1.next();
+        System.out.println(lobbyId);
+
+        client2.send(ActionHandler.toJson(new JoinGameAction(playerId2, lobbyId, Wizard.YELLOW)));
+        Thread.sleep(1000);
+
+        GameHandler gameHandler = Server.getInstance().getGameHandler(playerId1);
+
+        // TURN PHASE TESTING: --------------------------------------------------------------------------------------------------------------------
+
+        client1.send(ActionHandler.toJson(new PlayCardAction(playerId1, Card.FOUR))); // player1 plays a card
+        Thread.sleep(1000);
+        assertEquals(gameHandler.getGame().getPlayers().get(0).getLastPlayedCard(), Card.FOUR);
+
+        client2.send(ActionHandler.toJson(new PlayCardAction(playerId2, Card.ONE))); // player2 plays a card
+        Thread.sleep(1000);
+        assertEquals(gameHandler.getGame().getPlayers().get(1).getLastPlayedCard(), Card.ONE);
+
+        assertEquals(gameHandler.getCurrentPlayer(), Server.getInstance().getInGamePlayer(playerId2)); // player2 should be first to play the turn
+
+
+        List<Student> toDiningRoom = new ArrayList<>();
+        toDiningRoom.add(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().get(0));
+        Island island1 = Server.getInstance().getGameHandler(playerId2).getGame().getIslands().get(0);
+        Island island2 = Server.getInstance().getGameHandler(playerId2).getGame().getIslands().get(1);
+        Map<Student, Island> toIsland =  new HashMap<>();
+        toIsland.put(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().get(1),island1);
+        toIsland.put(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().get(2),island2);
+
+        assertTrue(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().containsAll(toDiningRoom));
+        assertTrue(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().containsAll(toIsland.keySet()));
+
+        List<Student> tempStudentsDR = new ArrayList<>();
+        for(PawnColor color : PawnColor.values())  {
+            tempStudentsDR.addAll(Server.getInstance().getInGamePlayer(playerId2).getSchool().getStudentsDiningRoom(color));
+        }
+        List<Student> tempStudentsIS = new ArrayList<>();
+        tempStudentsIS.addAll(island1.getStudents());
+        tempStudentsIS.addAll(island2.getStudents());
+
+        assertFalse(tempStudentsDR.containsAll(toDiningRoom));
+        assertFalse(tempStudentsIS.containsAll(toIsland.keySet()));
+
+        MoveStudentsAction moveStudentsAction = new MoveStudentsAction(playerId2,toDiningRoom,toIsland);
+        String toJson = ActionHandler.toJson(moveStudentsAction);
+        client2.send(toJson); // player 2 moves the students from the entrance to the dining room and islands
+        Thread.sleep(1000);
+
+
     }
 }
