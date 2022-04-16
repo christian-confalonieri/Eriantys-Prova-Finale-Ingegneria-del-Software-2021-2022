@@ -9,10 +9,7 @@ import it.polimi.ingsw.client.TestClient;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Student;
-import it.polimi.ingsw.model.enumeration.Card;
-import it.polimi.ingsw.model.enumeration.GamePhase;
-import it.polimi.ingsw.model.enumeration.PawnColor;
-import it.polimi.ingsw.model.enumeration.Wizard;
+import it.polimi.ingsw.model.enumeration.*;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.game.rules.GameRules;
 import it.polimi.ingsw.network.ClientNetworkHandler;
@@ -175,6 +172,9 @@ class GameControllerTest {
         // client2.send(ActionHandler.toJson(new MoveStudentsAction(playerId2, )));
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @Test
     void TwoPlayerGameTurnPhase() throws IOException, InvalidRulesException, InterruptedException {
         // Game Start (already tested) --------------------------------------------------------------------------------------------------------------
@@ -228,8 +228,9 @@ class GameControllerTest {
         Thread.sleep(1000);
         assertEquals(gameHandler.getGame().getPlayers().get(1).getLastPlayedCard(), Card.ONE);
 
-        assertEquals(gameHandler.getCurrentPlayer(), Server.getInstance().getInGamePlayer(playerId2)); // player2 should be first to play the turn
-
+        assertEquals(gameHandler.getCurrentPlayer(), Server.getInstance().getInGamePlayer(playerId2));
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
 
         List<Student> toDiningRoom = new ArrayList<>();
         toDiningRoom.add(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().get(0));
@@ -259,6 +260,10 @@ class GameControllerTest {
         assertFalse(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().containsAll(toDiningRoom));
         assertFalse(Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().containsAll(toIslands.keySet()));
 
+        assertEquals(gameHandler.getCurrentPlayer(), Server.getInstance().getInGamePlayer(playerId2));
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVEMOTHER);
+
         tempStudentsDR.clear();
         for(PawnColor color : PawnColor.values())  {
             tempStudentsDR.addAll(Server.getInstance().getInGamePlayer(playerId2).getSchool().getStudentsDiningRoom(color));
@@ -270,5 +275,31 @@ class GameControllerTest {
         assertTrue(tempStudentsDR.containsAll(toDiningRoom));
         assertTrue(tempStudentsIS.containsAll(toIslands.keySet()));
 
+        String islandUUID = String.copyValueOf(gameHandler.getGame().getMotherNature().isOn().getUuid().toCharArray());
+        assertNotSame(islandUUID, gameHandler.getGame().getMotherNature().isOn().getUuid());
+
+        client2.send(ActionHandler.toJson(new MoveMotherNatureAction(playerId2, 1)));
+        Thread.sleep(1000);
+
+        assertEquals(gameHandler.getGame().getIslandFromId(islandUUID).getNextIsland(),gameHandler.getGame().getMotherNature().isOn());
+
+        assertEquals(gameHandler.getCurrentPlayer(), Server.getInstance().getInGamePlayer(playerId2));
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVEFROMCLOUD);
+
+        assertEquals(3,gameHandler.getGame().getClouds().get(0).getStudents().size());
+        assertEquals(4,Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().size());
+
+        client2.send(ActionHandler.toJson((new MoveCloudAction(playerId2,gameHandler.getGame().getClouds().get(0).getUuid()))));
+        Thread.sleep(1000);
+
+        assertEquals(0,gameHandler.getGame().getClouds().get(0).getStudents().size());
+        assertEquals(7,Server.getInstance().getInGamePlayer(playerId2).getSchool().getEntrance().size());
+
+        assertEquals(gameHandler.getCurrentPlayer(), Server.getInstance().getInGamePlayer(playerId1));
+        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
+        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
+
+        System.out.println("coin: " + Server.getInstance().getInGamePlayer(playerId1).getCoins());
     }
 }

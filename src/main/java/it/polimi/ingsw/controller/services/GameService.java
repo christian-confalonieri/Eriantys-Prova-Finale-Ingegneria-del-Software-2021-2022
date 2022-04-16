@@ -139,7 +139,7 @@ public class GameService {
 
         if (gameHandler.getGamePhase().equals(GamePhase.TURN) &&
                 gameHandler.getTurnPhase().equals(TurnPhase.MOVEFROMCLOUD)) {
-            Cloud cloud = action.getCloud();
+            Cloud cloud = gameHandler.getGame().getCloudFromId(action.getCloudUUID());
             List<Student> students = cloud.pickAllStudents();
             for(Student student : students) {
                 gameHandler.getCurrentPlayer().getSchool().addEntrance(student);
