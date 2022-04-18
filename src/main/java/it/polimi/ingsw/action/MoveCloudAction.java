@@ -6,14 +6,14 @@ import it.polimi.ingsw.model.entity.Cloud;
  * @author Christian Confalonieri
  */
 public class MoveCloudAction extends PlayAction{
-    private final Cloud cloud;
+    private final String cloudUUID;
 
-    public MoveCloudAction(String playerId, Cloud cloud) {
+    public MoveCloudAction(String playerId, String cloudUUID) {
         super(ActionType.MOVECLOUD, playerId);
-        this.cloud = cloud;
+        this.cloudUUID = cloudUUID;
     }
 
-    public Cloud getCloud() {
-        return cloud;
+    public String getCloudUUID() {
+        return cloudUUID;
     }
 }

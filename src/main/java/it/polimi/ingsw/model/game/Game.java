@@ -399,4 +399,28 @@ public class Game {
     public List<PowerCard> getPowerCards() {
         return powerCards;
     }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public Island getIslandFromId(String uuid) {
+        for(Island island : islands) {
+            if(island.getUuid().equals(uuid)) {
+                return island;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public Cloud getCloudFromId(String uuid) {
+        for(Cloud cloud : clouds) {
+            if(cloud.getUuid().equals(uuid)) {
+                return cloud;
+            }
+        }
+        return null;
+    }
 }

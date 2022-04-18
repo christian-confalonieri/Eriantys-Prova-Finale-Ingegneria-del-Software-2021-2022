@@ -46,7 +46,7 @@ public class GameService {
         if (gameHandler.getGamePhase().equals(GamePhase.TURN) &&
                 gameHandler.getTurnPhase().equals(TurnPhase.MOVESTUDENTS)) {
             List<Student> studentsToDiningRoom = action.getToDiningRoom();
-            Map<Student,Island> studentsToIsland = action.getToIsland();
+            Map<Student,String> studentsToIsland = action.getToIsland();
 
             if(studentsToDiningRoom == null && studentsToIsland == null) {
                 throw new InvalidAction("MoveStudentsAction: invalid lists");
@@ -77,7 +77,7 @@ public class GameService {
 
             if(studentsToIsland != null) {
                 for(Student student : studentsToIsland.keySet()) {
-                    gameHandler.getCurrentPlayer().getSchool().entranceToIsland(student,studentsToIsland.get(student));
+                    gameHandler.getCurrentPlayer().getSchool().entranceToIsland(student,gameHandler.getGame().getIslandFromId(studentsToIsland.get(student)));
                 }
             }
         }
@@ -139,7 +139,7 @@ public class GameService {
 
         if (gameHandler.getGamePhase().equals(GamePhase.TURN) &&
                 gameHandler.getTurnPhase().equals(TurnPhase.MOVEFROMCLOUD)) {
-            Cloud cloud = action.getCloud();
+            Cloud cloud = gameHandler.getGame().getCloudFromId(action.getCloudUUID());
             List<Student> students = cloud.pickAllStudents();
             for(Student student : students) {
                 gameHandler.getCurrentPlayer().getSchool().addEntrance(student);
@@ -158,6 +158,10 @@ public class GameService {
     public static void power(PowerAction action) throws InvalidAction {
         GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
         PowerCard powerCard = gameHandler.getGame().getPowerCard(action.getType());
+
+        if(gameHandler.getCurrentPlayer().getCoins() < powerCard.getCost()) {
+            throw new InvalidAction("Power: the player does not have enough coins to pay for the activation of this power");
+        }
 
         if(gameHandler.getGame().getEffectHandler().isEffectActive()) {
             throw new InvalidAction("Power: another power has already been activated");

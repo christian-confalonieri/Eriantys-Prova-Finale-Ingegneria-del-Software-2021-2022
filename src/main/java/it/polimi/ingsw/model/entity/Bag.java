@@ -21,9 +21,13 @@ public class Bag{
      *
      * @param students the students to put in the bag
      */
-    private Bag(List<Student> students) {
+    public Bag(List<Student> students) {
         randomGenerator = new Random();
         this.students = new ArrayList<>(students);
+    }
+
+    public List<Student> getStudents () {
+        return this.students;
     }
 
     /**

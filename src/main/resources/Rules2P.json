@@ -12,8 +12,8 @@
     "numberOfTowers" : 8
   },
   "coinRules" : {
-    "startingCoinsPerPlayer" : 3,
-    "startingBoardCoins" : 14
+    "startingCoinsPerPlayer" : 1,
+    "startingBoardCoins" : 18
   },
   "playerRules" : {
     "startingPlayer":  0
