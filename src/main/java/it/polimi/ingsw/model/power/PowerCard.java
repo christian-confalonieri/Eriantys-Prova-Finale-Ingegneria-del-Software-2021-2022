@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.power;
 import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.game.GameHandler;
 
-import javax.swing.text.html.MinimalHTMLWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,7 +16,7 @@ public abstract class PowerCard {
     private int cost;
     private int baseCost;
     private PowerType type;
-    private GameHandler gameHandler;
+    private transient GameHandler gameHandler;
 
     public PowerCard(GameHandler gameHandler) {
         this.gameHandler = gameHandler;

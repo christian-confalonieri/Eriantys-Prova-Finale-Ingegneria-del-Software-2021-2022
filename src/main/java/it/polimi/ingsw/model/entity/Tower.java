@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.enumeration.TowerColor;
 public class Tower extends Entity {
 
     private TowerColor color;
-    private Player owner;
+    private transient Player owner;
 
     public Tower(TowerColor color, Player owner) {
         super();

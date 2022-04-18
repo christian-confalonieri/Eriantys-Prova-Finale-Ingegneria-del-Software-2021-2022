@@ -25,7 +25,7 @@ public class Game {
     protected List<Player> players;
     protected List<Cloud> clouds;
     protected List<Professor> boardProfessors;
-    protected MotherNature motherNature;
+    protected transient MotherNature motherNature;
     protected Bag bag;
 
     protected GameRules gameRules;

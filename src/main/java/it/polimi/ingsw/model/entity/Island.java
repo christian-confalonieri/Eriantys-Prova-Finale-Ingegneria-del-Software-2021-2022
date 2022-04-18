@@ -21,8 +21,8 @@ public class Island extends Entity {
     private final List<Student> students;
     private final List<Tower> towers;
     private boolean noEntry;
-    private Island prevIsland;
-    private Island nextIsland;
+    private transient Island prevIsland;
+    private transient Island nextIsland;
 
     /**
      * @author Christian Confalonieri

@@ -92,12 +92,7 @@ class GameControllerTest {
     @Test
     void MoveStudentsAction() throws IOException, InvalidRulesException, InterruptedException {
         String[] args = {};
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Server.main(args);
-            }
-        }).start(); // Starts a thread with the server
+        new Thread(() -> Server.main(args)).start(); // Starts a thread with the server
 
         TestClient client1 = new TestClient("localhost", 23154);
         String playerId1 = "leonardoa00";

@@ -41,7 +41,7 @@ public class Bag{
      * @return The picked student
      * @throws EmptyBagException if the bag is empty
      */
-    public Student pickStudent() throws EmptyBagException{
+    public Student pickStudent() throws EmptyBagException{ // TODO si potrebbe modificare in modo che la pick sia deterministica e si shuffle alla creazione
         if(students.size() == 0) throw new EmptyBagException();
         return students.remove(randomGenerator.nextInt(students.size()));
     }

@@ -10,6 +10,10 @@ public abstract class Entity {
         return this.getClass().equals(obj.getClass()) && this.uuid.equals(((Entity) obj).uuid);
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
     public Entity() {
         this.uuid = UUID.randomUUID().toString();
     }

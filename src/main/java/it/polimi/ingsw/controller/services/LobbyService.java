@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controller.services;
 
+import com.google.gson.Gson;
+import it.polimi.ingsw.action.GetGameAction;
 import it.polimi.ingsw.action.JoinGameAction;
 import it.polimi.ingsw.action.NewGameAction;
 import it.polimi.ingsw.cli.ConsoleColor;
@@ -9,6 +11,7 @@ import it.polimi.ingsw.exceptions.InvalidRulesException;
 import it.polimi.ingsw.model.game.GameCreator;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.game.rules.GameRules;
+import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.GameLobby;
 import it.polimi.ingsw.server.Server;
 
@@ -68,5 +71,15 @@ public class LobbyService {
                 throw new InvalidAction("JoinGame: Lobby was full but gameLaunch failed");
             }
         }
+    }
+
+    public static void getGame(GetGameAction action) throws InvalidAction {
+        Gson gson = new Gson();
+        GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
+        ClientNetworkHandler clientNetworkHandler = Server.getInstance().getClientNetHandler(action.getPlayerId());
+
+        clientNetworkHandler.send(gson.toJson(gameHandler));
+        clientNetworkHandler.send(gameHandler.getGame().getMotherNature().isOn().getUuid()); // returns MotherNature island position
+
     }
 }
