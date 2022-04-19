@@ -5,14 +5,11 @@ import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.game.rules.GameRules;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Bag{
     private static final int nOfTotalStudents = PawnColor.values().length * 26;
 
-    private final Random randomGenerator;
     private final List<Student> students;
 
     /**
@@ -22,8 +19,8 @@ public class Bag{
      * @param students the students to put in the bag
      */
     public Bag(List<Student> students) {
-        randomGenerator = new Random();
-        this.students = new ArrayList<>(students);
+        this.students = new LinkedList<>(students);
+        this.shuffle();
     }
 
     public List<Student> getStudents () {
@@ -47,7 +44,7 @@ public class Bag{
      */
     public Student pickStudent() throws EmptyBagException{ // TODO si potrebbe modificare in modo che la pick sia deterministica e si shuffle alla creazione
         if(students.size() == 0) throw new EmptyBagException();
-        return students.remove(randomGenerator.nextInt(students.size()));
+        return students.remove(0);
     }
 
     /**
@@ -55,6 +52,10 @@ public class Bag{
      */
     public boolean isEmpty() {
         return students.isEmpty();
+    }
+
+    private void shuffle() {
+        Collections.shuffle(students);
     }
 
     /**
@@ -72,6 +73,7 @@ public class Bag{
 
         if(nOfTotalStudents < roundedNOfStartingStudents) throw new InvalidNewGameException("Too few total students in the bag");
         startingBag.addAllStudents(Student.generateNStudentsPerColor((nOfTotalStudents - roundedNOfStartingStudents) / PawnColor.values().length));
+        startingBag.shuffle();
         return startingBag;
     }
 
