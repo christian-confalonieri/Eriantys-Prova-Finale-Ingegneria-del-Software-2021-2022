@@ -61,7 +61,7 @@ public class Game4P extends Game{
         // Creates the players
         players = new ArrayList<>();
         for (PlayerLobby pData : playersData) {
-            players.add(new Player(pData.getPlayerId(), pData.getWizard(), new School(), gameRules.coinRules.startingCoinsPerPlayer));
+            players.add(new Player(pData.getPlayerId(), pData.getWizard(), new School(), null, gameRules.coinRules.startingCoinsPerPlayer));
         }
 
 
@@ -78,10 +78,12 @@ public class Game4P extends Game{
 
         // Add the towers to the team leaders
         Player teamLeader = players.get(gameRules.teamRules.teamOne[0]);
+        teamLeader.setTowerColor(TowerColor.WHITE);
         for (int i = 0; i < gameRules.towersRules.numberOfTowers; i++) {
             teamLeader.getSchool().addTower(new Tower(TowerColor.WHITE, teamLeader));
         }
         teamLeader = players.get(gameRules.teamRules.teamTwo[0]);
+        teamLeader.setTowerColor(TowerColor.BLACK);
         for (int i = 0; i < gameRules.towersRules.numberOfTowers; i++) {
             teamLeader.getSchool().addTower(new Tower(TowerColor.BLACK, teamLeader));
         }

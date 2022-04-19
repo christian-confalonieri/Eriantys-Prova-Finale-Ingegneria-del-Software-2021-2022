@@ -326,14 +326,14 @@ public class Game {
             throw new InvalidNewGameException("Bad rules: number of players doesn't match number of clouds");
 
         // Creates the players
+        if(playersData.size() > TowerColor.values().length) throw new InvalidNewGameException("Not enough tower colors");
+        Iterator<TowerColor> playerTowerColorIterator = Arrays.stream(TowerColor.values()).iterator();
         players = new ArrayList<>();
         for (PlayerLobby pData : playersData) {
-            players.add(new Player(pData.getPlayerId(), pData.getWizard(), new School(), gameRules.coinRules.startingCoinsPerPlayer));
+            players.add(new Player(pData.getPlayerId(), pData.getWizard(), new School(), playerTowerColorIterator.next(), gameRules.coinRules.startingCoinsPerPlayer));
         }
 
-        // Create the players with their school
-        if(players.size() > TowerColor.values().length) throw new InvalidNewGameException("Not enough tower colors");
-        Iterator<TowerColor> playerTowerColorIterator = Arrays.stream(TowerColor.values()).iterator();
+        // Create the schools
         for (Player player : players) {
             for (int i = 0; i < gameRules.studentsRules.startingStudentsEntrance; i++) {
                 try {
@@ -342,7 +342,7 @@ public class Game {
                     e.printStackTrace();
                 }
             }
-            TowerColor towerColor = playerTowerColorIterator.next();
+            TowerColor towerColor = player.getTowerColor();
             for (int i = 0; i < gameRules.towersRules.numberOfTowers; i++) {
                 player.getSchool().addTower(new Tower(towerColor, player));
             }

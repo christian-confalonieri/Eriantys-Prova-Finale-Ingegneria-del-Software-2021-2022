@@ -25,10 +25,10 @@ class IslandTest {
     private final School mySchool3 = new School();
     private final School mySchool4 = new School();
 
-    private final Player myPlayer1 = new Player("Mario", Wizard.GREEN, mySchool1,0);
-    private final Player myPlayer2 = new Player("Luigi", Wizard.PURPLE, mySchool2,0);
-    private final Player myPlayer3 = new Player("Wario", Wizard.YELLOW, mySchool3,0);
-    private final Player myPlayer4 = new Player("Waluigi", Wizard.BLUE, mySchool4,0);
+    private final Player myPlayer1 = new Player("Mario", Wizard.GREEN, mySchool1, TowerColor.WHITE,0);
+    private final Player myPlayer2 = new Player("Luigi", Wizard.PURPLE, mySchool2, TowerColor.BLACK,0);
+    private final Player myPlayer3 = new Player("Wario", Wizard.YELLOW, mySchool3,null, 0);
+    private final Player myPlayer4 = new Player("Waluigi", Wizard.BLUE, mySchool4, null, 0);
 
     private final EffectHandler effectHandler = new EffectHandler();
 

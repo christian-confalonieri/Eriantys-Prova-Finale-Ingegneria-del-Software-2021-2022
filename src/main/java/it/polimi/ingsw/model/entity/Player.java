@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.entity;
 
 import it.polimi.ingsw.model.enumeration.Card;
+import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 
 import java.util.ArrayList;
@@ -16,14 +17,19 @@ public class Player {
     private int coins;
     private Wizard wizard;
 
+
+
+    private TowerColor towerColor;
+
     public Player() {
         usedCards = new ArrayList<>();
         handCards = new ArrayList<Card>(Arrays.asList(Card.values()));
         coins = 0;
     }
 
-    public Player(String name, Wizard wizard, School school, int coins) {
+    public Player(String name, Wizard wizard, School school, TowerColor towerColor, int coins) {
         this();
+        this.towerColor = towerColor;
         this.wizard = wizard;
         this.name = name;
         this.school = school;
@@ -64,6 +70,14 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public TowerColor getTowerColor() {
+        return towerColor;
+    }
+
+    public void setTowerColor(TowerColor color) {
+        this.towerColor = color;
     }
 
     public int getCoins() {

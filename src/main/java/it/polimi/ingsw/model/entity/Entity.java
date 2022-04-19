@@ -18,7 +18,4 @@ public abstract class Entity {
         this.uuid = UUID.randomUUID().toString();
     }
 
-    public String getUuid() {
-        return uuid;
-    }
 }
