@@ -23,6 +23,10 @@ public class Harvester extends PowerCard {
         setCost(3);
     }
 
+    public Harvester() {
+        super();
+    }
+
     /**
      * Simply change the value of the harvesterColor to null and set the value of activeHarvester to false
      *

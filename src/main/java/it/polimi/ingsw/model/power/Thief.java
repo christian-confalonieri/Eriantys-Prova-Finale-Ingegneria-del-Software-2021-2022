@@ -30,6 +30,10 @@ public class Thief extends PowerCard {
         setCost(3);
     }
 
+    public Thief() {
+        super();
+    }
+
     /**
      * This method moves 3 students of a chosen color from each player's dining room to the bag.
      * In case there are not enough students to move all of them are sent.

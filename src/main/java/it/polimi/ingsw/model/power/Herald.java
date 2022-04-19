@@ -23,6 +23,10 @@ public class Herald extends PowerCard {
         setCost(3);
     }
 
+    public Herald() {
+        super();
+    }
+
     /**
      * Invokes the conquerIsland method on the chosen island
      *

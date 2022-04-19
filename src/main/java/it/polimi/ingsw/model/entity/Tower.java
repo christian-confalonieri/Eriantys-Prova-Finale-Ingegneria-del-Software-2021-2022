@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.enumeration.TowerColor;
 public class Tower extends Entity {
 
     private TowerColor color;
+
+
+
     private transient Player owner;
 
     public Tower(TowerColor color, Player owner) {
@@ -19,5 +22,9 @@ public class Tower extends Entity {
 
     public Player getOwner() {
         return owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
     }
 }

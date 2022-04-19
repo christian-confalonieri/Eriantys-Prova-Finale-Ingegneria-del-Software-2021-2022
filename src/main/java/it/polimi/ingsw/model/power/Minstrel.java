@@ -22,6 +22,10 @@ public class Minstrel extends PowerCard {
         setCost(1);
     }
 
+    public Minstrel() {
+        super();
+    }
+
     /**
      * This method simply exchange up to 2 Students between your Entrance and your Dining Room.
      * The students to be moved belonging to the entrance are copied in the chosenStudents1 list, while those of the dining room in the chosenStudents2 list.

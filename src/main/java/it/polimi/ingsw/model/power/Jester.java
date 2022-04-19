@@ -38,6 +38,10 @@ public class Jester extends PowerCard {
         }
     }
 
+    public Jester() {
+        super();
+    }
+
     /**
      * This method exchanges up to 3 students on this card for equal numbers of students who are at the entrance of their school.
      * The students to be moved belonging to the card are copied in the chosenStudents1 list, while those of the entrance in the chosenStudents2 list.

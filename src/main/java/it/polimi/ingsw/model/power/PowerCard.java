@@ -10,8 +10,7 @@ import java.util.Random;
 /**
  * @author Christian Confalonieri
  */
-public abstract class PowerCard {
-
+public class PowerCard {
 
     private int cost;
     private int baseCost;
@@ -20,6 +19,13 @@ public abstract class PowerCard {
 
     public PowerCard(GameHandler gameHandler) {
         this.gameHandler = gameHandler;
+    }
+
+    public PowerCard() {
+        gameHandler = null;
+        type = null;
+        cost = 0;
+        baseCost = 0;
     }
 
     /**
@@ -103,6 +109,23 @@ public abstract class PowerCard {
             case MINSTREL -> new Minstrel(gameHandler);
             case PRINCESS -> new Princess(gameHandler);
             case THIEF -> new Thief(gameHandler);
+        };
+    }
+
+    public static PowerCard getClassFromType(PowerType type) {
+        return switch (type) {
+            case FRIAR -> new Friar();
+            case FARMER -> new Farmer();
+            case HERALD -> new Herald();
+            case MAILMAN -> new Mailman();
+            case HERBALIST -> new Herbalist();
+            case CENTAUR -> new Centaur();
+            case JESTER -> new Jester();
+            case KNIGHT -> new Knight();
+            case HARVESTER -> new Harvester();
+            case MINSTREL -> new Minstrel();
+            case PRINCESS -> new Princess();
+            case THIEF -> new Thief();
         };
     }
 }

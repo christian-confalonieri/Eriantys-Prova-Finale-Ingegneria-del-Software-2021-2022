@@ -108,7 +108,7 @@ class HeraldTest {
 
         assertEquals(0, island.getTowers().size());
 
-        gameHandler.getGame().getEffectHandler().setChosenIsland(island);
+        gameHandler.getGame().getEffectHandler().setChosenIslandUuid(island.getUuid());
         herald.power();
 
         assertEquals(1, island.getTowers().size());

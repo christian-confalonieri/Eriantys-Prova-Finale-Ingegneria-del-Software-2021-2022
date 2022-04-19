@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller.services;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import it.polimi.ingsw.action.GetGameAction;
@@ -13,6 +14,7 @@ import it.polimi.ingsw.exceptions.InvalidRulesException;
 import it.polimi.ingsw.model.game.GameCreator;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.game.rules.GameRules;
+import it.polimi.ingsw.model.power.PowerCard;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.GameLobby;
 import it.polimi.ingsw.server.Server;
@@ -84,8 +86,15 @@ public class LobbyService {
         JsonObject jObj = jElem.getAsJsonObject();
         jObj.addProperty("motherNatureIsOn", gameHandler.getGame().getMotherNature().isOn().getUuid());
 
+        JsonArray powerCardsArray = new JsonArray();
+        for(PowerCard powerCard : gameHandler.getGame().getPowerCards()) {
+            powerCardsArray.add(gson.toJsonTree(powerCard, powerCard.getClass()));
+        }
+        JsonObject gameJObj = jObj.getAsJsonObject("game");
+        gameJObj.add("powerCards", powerCardsArray);
+
         clientNetworkHandler.send(gson.toJson(jObj));
-        clientNetworkHandler.send(gameHandler.getGame().getMotherNature().isOn().getUuid()); // returns MotherNature island position
+        // returns MotherNature island position
 
     }
 }

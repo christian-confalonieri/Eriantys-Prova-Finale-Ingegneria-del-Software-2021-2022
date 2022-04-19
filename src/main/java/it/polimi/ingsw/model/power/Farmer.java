@@ -29,6 +29,10 @@ public class Farmer extends PowerCard {
         setCost(2);
     }
 
+    public Farmer() {
+        super();
+    }
+
     /**
      * This method checks the schools and relocates the professors even if the students of the same color are equal in number.
      *

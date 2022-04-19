@@ -30,6 +30,10 @@ public class Herbalist extends PowerCard {
         noEntryCards = 4;
     }
 
+    public Herbalist() {
+        super();
+    }
+
     /**
      * This method simply changes the noEntryCards boolean on the island to true,
      * checking the boolean and calculating the influence is handled by the methods on the island.

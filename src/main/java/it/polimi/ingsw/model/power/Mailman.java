@@ -24,6 +24,10 @@ public class Mailman extends PowerCard {
         setCost(1);
     }
 
+    public Mailman() {
+        super();
+    }
+
     /**
      * @author Christian Confalonieri
      */

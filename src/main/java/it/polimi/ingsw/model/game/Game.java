@@ -30,7 +30,7 @@ public class Game {
 
     protected GameRules gameRules;
 
-    protected List<PowerCard> powerCards;
+    protected transient List<PowerCard> powerCards;
     protected EffectHandler effectHandler;
     protected int boardCoins;
     protected int boardNoEntryCards;
@@ -422,5 +422,9 @@ public class Game {
             }
         }
         return null;
+    }
+
+    public void setMotherNature(MotherNature motherNature) {
+        this.motherNature = motherNature;
     }
 }

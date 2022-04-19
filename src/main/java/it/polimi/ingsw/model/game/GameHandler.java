@@ -16,6 +16,9 @@ public class GameHandler {
     private List<Player> orderedTurnPlayers;
     protected GamePhase gamePhase;
     protected TurnPhase turnPhase;
+
+
+
     protected Player firstTurnPlayer;
     protected boolean ended;
     protected Game game;
@@ -169,4 +172,21 @@ public class GameHandler {
     public List<Player> getOrderedTurnPlayers() {
         return orderedTurnPlayers;
     }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public void setOrderedTurnPlayers(List<Player> orderedTurnPlayers) {
+        this.orderedTurnPlayers = orderedTurnPlayers;
+    }
+
+    public Player getFirstTurnPlayer() {
+        return firstTurnPlayer;
+    }
+
+    public void setFirstTurnPlayer(Player firstTurnPlayer) {
+        this.firstTurnPlayer = firstTurnPlayer;
+    }
 }
+

@@ -133,7 +133,7 @@ class HerbalistTest {
             island1.addStudent(new Student(PawnColor.PINK));
         }
 
-        gameHandler.getGame().getEffectHandler().setChosenIsland(island1);
+        gameHandler.getGame().getEffectHandler().setChosenIslandUuid(island1.getUuid());
         herbalist.power();
         assertEquals(3,herbalist.getNoEntryCards());
 

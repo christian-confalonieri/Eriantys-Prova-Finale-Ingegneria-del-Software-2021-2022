@@ -39,6 +39,10 @@ public class Princess extends PowerCard {
         }
     }
 
+    public Princess() {
+        super();
+    }
+
     /**
      * This method moves a chosen student from this card to their dining room,
      * then draws a new student from the bag and places them on the card.

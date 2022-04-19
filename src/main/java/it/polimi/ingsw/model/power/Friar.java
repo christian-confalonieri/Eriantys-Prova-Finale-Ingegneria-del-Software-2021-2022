@@ -38,6 +38,10 @@ public class Friar extends PowerCard {
         }
     }
 
+    public Friar() {
+        super();
+    }
+
     /**
      * This method removes a student from this card, adds him to a chosen island,
      * and then draws a student from the bag again and adds him to the card.

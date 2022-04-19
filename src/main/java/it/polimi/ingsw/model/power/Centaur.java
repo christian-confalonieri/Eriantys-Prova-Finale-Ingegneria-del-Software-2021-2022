@@ -24,6 +24,10 @@ public class Centaur extends PowerCard {
 
     }
 
+    public Centaur() {
+        super();
+    }
+
     /**
      * Simply change the value of the boolean skipTowers to true,
      * checking that value and calculating the influence will be handled by the methods in the Island class.

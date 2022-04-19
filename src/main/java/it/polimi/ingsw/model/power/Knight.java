@@ -22,6 +22,10 @@ public class Knight extends PowerCard {
         setCost(2);
     }
 
+    public Knight() {
+        super();
+    }
+
     /**
      * This method only sets the value of additionInfluence to 2,
      * checking this value and calculating the influence is handled by the methods of the Island class.

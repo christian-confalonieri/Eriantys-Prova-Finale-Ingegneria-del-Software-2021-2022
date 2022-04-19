@@ -43,7 +43,7 @@ class FriarTest {
 
         List<Player> players = gameHandler.getOrderedTurnPlayers();
         // 0: Luigi, 1: Mario
-        gameHandler.getGame().getEffectHandler().setChosenIsland(island);
+        gameHandler.getGame().getEffectHandler().setChosenIslandUuid(island.getUuid());
         List<Student> students = new ArrayList<>();
         students.add(friar.getStudents().get(0));
         gameHandler.getGame().getEffectHandler().setChosenStudents1(students);
