@@ -41,7 +41,7 @@ public class Herbalist extends PowerCard {
     public void power() {
         super.power();
 
-        getGameHandler().getGame().getEffectHandler().getChosenIsland().setNoEntry(true);
+        getGameHandler().getGame().getIslandFromId(getGameHandler().getGame().getEffectHandler().getChosenIslandUuid()).setNoEntry(true);
         noEntryCards--;
 
     }

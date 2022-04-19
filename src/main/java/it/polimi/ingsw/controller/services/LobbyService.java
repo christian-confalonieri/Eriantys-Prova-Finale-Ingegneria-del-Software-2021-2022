@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller.services;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import it.polimi.ingsw.action.GetGameAction;
 import it.polimi.ingsw.action.JoinGameAction;
 import it.polimi.ingsw.action.NewGameAction;
@@ -78,7 +80,11 @@ public class LobbyService {
         GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
         ClientNetworkHandler clientNetworkHandler = Server.getInstance().getClientNetHandler(action.getPlayerId());
 
-        clientNetworkHandler.send(gson.toJson(gameHandler));
+        JsonElement jElem = gson.toJsonTree(gameHandler);
+        JsonObject jObj = jElem.getAsJsonObject();
+        jObj.addProperty("motherNatureIsOn", gameHandler.getGame().getMotherNature().isOn().getUuid());
+
+        clientNetworkHandler.send(gson.toJson(jObj));
         clientNetworkHandler.send(gameHandler.getGame().getMotherNature().isOn().getUuid()); // returns MotherNature island position
 
     }

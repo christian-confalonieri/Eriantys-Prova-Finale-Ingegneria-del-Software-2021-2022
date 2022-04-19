@@ -18,10 +18,10 @@ public class EffectHandler {
     private PawnColor thiefColor;
     private List<Student> chosenStudents1;
     private List<Student> chosenStudents2;
-    private Island chosenIsland;
+    private String chosenIslandUuid;
     private int additionalInfluence;
     private boolean skipTowers;
-    private Player effectPlayer;
+    private transient Player effectPlayer;
 
     /**
      * @author Christian Confalonieri
@@ -35,7 +35,7 @@ public class EffectHandler {
         // I have added two lists of students, basically you will use the first one, the second one is needed in case of exchanges
         chosenStudents1 = null;
         chosenStudents2 = null;
-        chosenIsland = null;
+        chosenIslandUuid = null;
         additionalInfluence = 0;
         skipTowers = false;
         effectPlayer = null;
@@ -53,7 +53,7 @@ public class EffectHandler {
         this.thiefColor = thiefColor;
         this.chosenStudents1 = chosenStudents1;
         this.chosenStudents2 = chosenStudents2;
-        this.chosenIsland = chosenIsland;
+        this.chosenIslandUuid = chosenIsland.getUuid();
         this.additionalInfluence = additionalInfluence;
         this.skipTowers = skipTowers;
         this.effectPlayer = effectPlayer;
@@ -107,12 +107,12 @@ public class EffectHandler {
         this.chosenStudents2 = chosenStudents2;
     }
 
-    public Island getChosenIsland() {
-        return chosenIsland;
+    public String getChosenIslandUuid() {
+        return chosenIslandUuid;
     }
 
-    public void setChosenIsland(Island chosenIsland) {
-        this.chosenIsland = chosenIsland;
+    public void setChosenIslandUuid(String chosenIslandUuid) {
+        this.chosenIslandUuid = chosenIslandUuid;
     }
 
     public int getAdditionalInfluence() {

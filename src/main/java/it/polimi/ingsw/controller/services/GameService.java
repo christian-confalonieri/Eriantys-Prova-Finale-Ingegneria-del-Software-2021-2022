@@ -181,6 +181,7 @@ public class GameService {
 
         if (gameHandler.getGamePhase().equals(GamePhase.TURN)) {
             gameHandler.getGame().setEffectHandler(action.getEffectHandler());
+            gameHandler.getGame().getEffectHandler().setEffectPlayer(gameHandler.getCurrentPlayer());
 
             powerCard.power();
             // TODO send changes to all players

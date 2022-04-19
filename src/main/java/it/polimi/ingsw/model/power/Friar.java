@@ -49,7 +49,7 @@ public class Friar extends PowerCard {
         super.power();
 
         students.remove(getGameHandler().getGame().getEffectHandler().getChosenStudents1().get(0));
-        getGameHandler().getGame().getEffectHandler().getChosenIsland().addStudent(getGameHandler().getGame().getEffectHandler().getChosenStudents1().get(0));
+        getGameHandler().getGame().getIslandFromId(getGameHandler().getGame().getEffectHandler().getChosenIslandUuid()).addStudent(getGameHandler().getGame().getEffectHandler().getChosenStudents1().get(0));
         try {
             students.add(getGameHandler().getGame().getBag().pickStudent());
         } catch (EmptyBagException e) { }

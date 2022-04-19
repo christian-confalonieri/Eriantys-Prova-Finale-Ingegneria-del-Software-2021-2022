@@ -31,7 +31,7 @@ public class Herald extends PowerCard {
     @Override
     public void power() {
         super.power();
-        getGameHandler().getGame().conquerIsland(getGameHandler().getGame().getEffectHandler().getChosenIsland());
+        getGameHandler().getGame().conquerIsland(getGameHandler().getGame().getIslandFromId(getGameHandler().getGame().getEffectHandler().getChosenIslandUuid()));
     }
 
 }
