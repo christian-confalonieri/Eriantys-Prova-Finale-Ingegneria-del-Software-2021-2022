@@ -7,7 +7,7 @@ import it.polimi.ingsw.model.game.rules.GameRules;
 
 import java.util.*;
 
-public class Bag{
+public class Bag {
     private static final int nOfTotalStudents = PawnColor.values().length * 26;
 
     private final List<Student> students;
@@ -42,7 +42,7 @@ public class Bag{
      * @return The picked student
      * @throws EmptyBagException if the bag is empty
      */
-    public Student pickStudent() throws EmptyBagException{ // TODO si potrebbe modificare in modo che la pick sia deterministica e si shuffle alla creazione
+    public Student pickStudent() throws EmptyBagException {
         if(students.size() == 0) throw new EmptyBagException();
         return students.remove(0);
     }
