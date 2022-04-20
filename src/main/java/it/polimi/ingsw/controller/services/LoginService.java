@@ -1,8 +1,11 @@
 package it.polimi.ingsw.controller.services;
 
+import it.polimi.ingsw.action.ACK;
+import it.polimi.ingsw.action.ActionType;
 import it.polimi.ingsw.action.LoginAction;
 import it.polimi.ingsw.action.LogoutAction;
 import it.polimi.ingsw.cli.ConsoleColor;
+import it.polimi.ingsw.controller.ActionHandler;
 import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
@@ -15,25 +18,24 @@ public class LoginService {
 
         if(Server.getInstance().isAssigned(netHandler)) {
             System.out.println(ConsoleColor.YELLOW + netHandler.toString() + " client already logged in" + ConsoleColor.RESET);
-            // Ignore double login
-            return;
+            netHandler.send(ActionHandler.toJson(new ACK("", ActionType.LOGIN, "Client already logged in", false)));
+            throw new InvalidAction("Login: client already logged in");
         }
 
         if (action.getPlayerId() == null || action.getPlayerId().isEmpty()) {
+            netHandler.send(ActionHandler.toJson(new ACK("", ActionType.LOGIN, "Invalid login id", false)));
             throw new InvalidAction("Login: Invalid login id");
         }
 
         if (Server.getInstance().isAssigned(action.getPlayerId())) {
             // Player already logged in to a connection
-            // TODO replace with InvalidLogin client message
-            netHandler.send("InvalidLogin");
-
+            netHandler.send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.LOGIN, "PlayerId already taken", false)));
             throw new InvalidAction("Login: playerId already taken");
         }
 
         // Player is not logged in the server net connections
         Server.getInstance().assignConnection(action.getPlayerId(), netHandler);
-        netHandler.send("Logged In");
+        netHandler.send(ActionHandler.toJson(new LoginAction(action.getPlayerId())));
 
         System.out.println(ConsoleColor.CYAN + netHandler.toString() + " logged in as: " + action.getPlayerId() + ConsoleColor.RESET);
         // For persistence check if the player is in game and if so replay the game

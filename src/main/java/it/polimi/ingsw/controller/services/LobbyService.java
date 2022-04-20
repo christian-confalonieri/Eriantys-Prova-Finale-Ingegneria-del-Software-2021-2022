@@ -8,6 +8,7 @@ import it.polimi.ingsw.action.GetGameAction;
 import it.polimi.ingsw.action.JoinGameAction;
 import it.polimi.ingsw.action.NewGameAction;
 import it.polimi.ingsw.cli.ConsoleColor;
+import it.polimi.ingsw.controller.ActionHandler;
 import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
@@ -93,7 +94,9 @@ public class LobbyService {
         JsonObject gameJObj = jObj.getAsJsonObject("game");
         gameJObj.add("powerCards", powerCardsArray);
 
-        clientNetworkHandler.send(gson.toJson(jObj));
+        String gameHandlerSerializedInfo = gson.toJson(jObj);
+
+        clientNetworkHandler.send(ActionHandler.toJson(new GetGameAction(action.getPlayerId(), gameHandlerSerializedInfo)));
         // returns MotherNature island position
 
     }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.action;
 
 public enum ActionType {
+    ACK,
     LOGIN,
     PLAYCARD,
     LOGOUT,

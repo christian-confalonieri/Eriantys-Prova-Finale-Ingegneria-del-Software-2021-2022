@@ -13,7 +13,7 @@ import java.util.Scanner;
  * coming from the socket and calls the controller that handle the messages
  *
  */
-public class ClientNetworkHandler implements Runnable{
+public class ClientNetworkHandler implements Runnable {
     private Socket clientSocket;
     Thread listenerThread;
     private boolean shutdown;
@@ -83,8 +83,8 @@ public class ClientNetworkHandler implements Runnable{
         System.out.println(ConsoleColor.RED + this.toString() + " listening thread closed" + ConsoleColor.RESET);
     }
 
-    public void send(Object obj) {
-        if (obj instanceof String) {
+    public void send(String obj) {
+        if (obj != null) {
             try {
                 PrintWriter pw = new PrintWriter(clientSocket.getOutputStream());
                 pw.println(obj);

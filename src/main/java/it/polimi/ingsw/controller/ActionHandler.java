@@ -38,6 +38,7 @@ public class ActionHandler {
                 case POWER -> gson.fromJson(json, PowerAction.class);
                 case JOINGAME -> gson.fromJson(json, JoinGameAction.class);
                 case GETGAME -> gson.fromJson(json, GetGameAction.class);
+                case ACK -> throw new InvalidAction("ACK Recieved by the server");
             };
         } catch (com.google.gson.JsonSyntaxException e) {
             throw new InvalidAction("Bad formatted JSON");

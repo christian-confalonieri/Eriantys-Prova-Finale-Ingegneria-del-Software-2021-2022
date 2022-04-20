@@ -1,13 +1,19 @@
 package it.polimi.ingsw.client;
 
 import com.google.gson.*;
+import it.polimi.ingsw.cli.ConsoleColor;
+import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.controller.NetworkController;
+import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.MotherNature;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.power.PowerCard;
+import it.polimi.ingsw.server.GameLobby;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -17,91 +23,91 @@ import java.util.Scanner;
 
 import static com.google.gson.JsonParser.parseString;
 
-public class Client {
-    GameHandler gameHandler;
+public class Client implements Runnable {
 
-    Socket socket;
-    PrintWriter output;
-    Scanner input;
+    public static Client getInstance() {
+        return singleton;
+    }
+    private static Client singleton;
+
+    private ClientState clientState;
+    private GameHandler gameHandler;
+
+    private final NetworkController networkController;
+    private final ClientController clientController;
+    private String playerId;
+
 
     public Client(String serverIp, int serverPort) throws IOException {
-        socket = new Socket(serverIp, serverPort);
+        Socket socket = new Socket(serverIp, serverPort);
+        clientState = ClientState.LOGIN;
+        gameHandler = null;
+        clientController = new ClientController();
+        networkController = NetworkController.networkControllerFactory(socket);
+    }
+
+    @Override
+    public void run() {
+        networkController.start();
         try {
-            output = new PrintWriter(socket.getOutputStream());
-            input = new Scanner(socket.getInputStream()).useDelimiter("\r\n"); // TODO Check if correct
-        } catch (IOException e) {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        LoginService.loginRequest("abcde");
     }
 
-    public Scanner getInputScanner() {
-        return input;
+    public static void main(String[] args) {
+        if(args.length == 0) {
+            try {
+                singleton = new Client("localhost", 23154);
+                singleton.run();
+            } catch (IOException e) {
+                System.out.println(ConsoleColor.RED + "Failed to connect to the server" + ConsoleColor.RESET);
+            }
+        } else if (args.length == 2) {
+            try {
+                singleton = new Client(args[0], Integer.parseInt(args[1]));
+                singleton.run();
+            } catch (IOException e) {
+                System.out.println(ConsoleColor.RED + "Failed to connect to the server on address " + args[0] + args[1] + ConsoleColor.RESET);
+            }
+        } else
+            System.out.println(ConsoleColor.RED + "Invalid number of args to start the client" + ConsoleColor.RESET);
     }
 
-    public void send(String message) {
-        output.println(message);
-        output.flush();
+
+    public NetworkController getNetworkController() {
+        return networkController;
     }
 
-    public void parseGameHandler(String serializedGameHandlerInfo) {
-        Gson gson = new Gson();
-
-        JsonElement jElem = JsonParser.parseString(serializedGameHandlerInfo);
-        JsonObject jObj = jElem.getAsJsonObject();
-        String motherNatureIsOnUUID = jObj.getAsJsonPrimitive("motherNatureIsOn").getAsString();
-        jObj.remove("motherNatureIsOn");
-        JsonArray powerCardsJsonArray = jObj.getAsJsonObject("game").getAsJsonArray("powerCards");
-
-        gameHandler = gson.fromJson(jObj, GameHandler.class);
-
-        // Retrieve gameHandler player references
-        gameHandler.setCurrentPlayer(gameHandler.getGame().getPlayers().stream().filter(
-                p -> p.getName().equals(gameHandler.getCurrentPlayer().getName())).findAny().get()
-        );
-        List<Player> orderedTurnPlayers = new ArrayList<>();
-        for (Player p : gameHandler.getOrderedTurnPlayers()) {
-            orderedTurnPlayers.add(gameHandler.getGame().getPlayers().stream().filter(
-                    pl -> pl.getName().equals(p.getName())).findAny().get()
-            );
-        }
-        gameHandler.setOrderedTurnPlayers(orderedTurnPlayers);
-        gameHandler.setFirstTurnPlayer(gameHandler.getGame().getPlayers().stream().filter(
-                p -> p.getName().equals(gameHandler.getFirstTurnPlayer().getName())).findAny().get()
-        );
-
-        // Retrieve islands neighbords references
-        for (Island island : gameHandler.getGame().getIslands()) {
-            island.setNextIsland(gameHandler.getGame().getNextIsland(island));
-            island.setPrevIsland(gameHandler.getGame().getPrevIsland(island));
-        }
-
-        // Retrieve power references
-        gameHandler.getGame().getEffectHandler().setEffectPlayer(
-                gameHandler.getGame().getEffectHandler().getEffectPlayer() == null ? null : gameHandler.getCurrentPlayer());
-        List<PowerCard> powerCards = new ArrayList<>();
-        for(JsonElement jsonElement : powerCardsJsonArray) {
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
-            PowerType type = PowerType.valueOf(jsonObject.getAsJsonPrimitive("type").getAsString());
-            PowerCard p = gson.fromJson(jsonElement, PowerCard.getClassFromType(type).getClass());
-            p.setGameHandler(gameHandler);
-            powerCards.add(p);
-        }
-        gameHandler.getGame().setPowerCards(powerCards);
-
-        // Retrieve tower owner references
-        gameHandler.getGame().getPlayers().forEach(p -> {
-            if (p.getSchool().getTowers() != null)
-                p.getSchool().getTowers().forEach(t -> t.setOwner(p));
-        });
-        gameHandler.getGame().getIslands().forEach(i -> i.getTowers().forEach(t -> {
-            t.setOwner(gameHandler.getGame().getPlayers().stream().filter(p -> p.getTowerColor().equals(t.getColor())).findAny().get());
-        }));
-
-        // Create motherNature
-        gameHandler.getGame().setMotherNature(new MotherNature(gameHandler.getGame().getIslandFromId(motherNatureIsOnUUID)));
-
+    public ClientController getClientController() {
+        return clientController;
     }
 
+    public ClientState getClientState() {
+        return clientState;
+    }
+
+    public void setClientState(ClientState clientState) {
+        this.clientState = clientState;
+    }
+
+    public void setGameHandler(GameHandler gameHandler) {
+        this.gameHandler = gameHandler;
+    }
+
+    public GameHandler getGameHandler() {
+        return gameHandler;
+    }
+
+    public String getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(String playerId) {
+        this.playerId = playerId;
+    }
 
 
 }
