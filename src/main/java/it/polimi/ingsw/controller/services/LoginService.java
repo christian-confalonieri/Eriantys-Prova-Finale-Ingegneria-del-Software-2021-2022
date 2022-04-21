@@ -15,7 +15,6 @@ import java.util.UUID;
 public class LoginService {
 
     public static void clientLogin(LoginAction action, ClientNetworkHandler netHandler) throws InvalidAction {
-
         if(Server.getInstance().isAssigned(netHandler)) {
             System.out.println(ConsoleColor.YELLOW + netHandler.toString() + " client already logged in" + ConsoleColor.RESET);
             netHandler.send(ActionHandler.toJson(new ACK("", ActionType.LOGIN, "Client already logged in", false)));

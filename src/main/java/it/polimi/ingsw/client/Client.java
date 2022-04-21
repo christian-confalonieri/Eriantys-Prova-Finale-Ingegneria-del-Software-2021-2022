@@ -70,7 +70,7 @@ public class Client implements Runnable {
                 singleton = new Client(args[0], Integer.parseInt(args[1]));
                 singleton.run();
             } catch (IOException e) {
-                System.out.println(ConsoleColor.RED + "Failed to connect to the server on address " + args[0] + args[1] + ConsoleColor.RESET);
+                System.out.println(ConsoleColor.RED + "Failed to connect to the server on address " + args[0] + " " + args[1] + ConsoleColor.RESET);
             }
         } else
             System.out.println(ConsoleColor.RED + "Invalid number of args to start the client" + ConsoleColor.RESET);
