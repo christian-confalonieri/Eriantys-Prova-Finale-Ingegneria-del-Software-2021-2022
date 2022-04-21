@@ -32,7 +32,7 @@ public class LoginService {
 
         // Player is not logged in the server net connections
         Server.getInstance().assignConnection(action.getPlayerId(), netHandler);
-        netHandler.send(ActionHandler.toJson(new LoginAction(action.getPlayerId())));
+        netHandler.send(ActionHandler.toJson(action));
 
         System.out.println(ConsoleColor.CYAN + netHandler.toString() + " logged in as: " + action.getPlayerId() + ConsoleColor.RESET);
         // For persistence check if the player is in game and if so replay the game
@@ -44,6 +44,8 @@ public class LoginService {
             Server.getInstance().unassignConnection(action.getPlayerId());
             Server.getInstance().exitLobbys(action.getPlayerId());
             System.out.println(ConsoleColor.CYAN + networkHandler.toString() + " logged out from: " + action.getPlayerId() + ConsoleColor.RESET);
+
+            networkHandler.send(ActionHandler.toJson(action));
         }
         else {
             throw new InvalidAction("Logout: invalid id to log out");

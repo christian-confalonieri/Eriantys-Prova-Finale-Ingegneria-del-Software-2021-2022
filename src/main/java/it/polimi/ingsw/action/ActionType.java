@@ -11,5 +11,6 @@ public enum ActionType {
     MOVECLOUD,
     POWER,
     JOINGAME,
-    GETGAME
+    GETGAME,
+    GETALLLOBBYS
 }

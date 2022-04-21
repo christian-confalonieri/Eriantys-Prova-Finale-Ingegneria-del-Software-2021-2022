@@ -24,6 +24,10 @@ public class ClientActionHandler {
             case MOVEMOTHERNATURE -> GameService.moveMotherNature((MoveMotherNatureAction) action);
             case MOVECLOUD -> GameService.moveCloud((MoveCloudAction) action);
             case POWER -> GameService.power((PowerAction) action);
+            case LOGOUT -> LoginService.logout((LogoutAction) action);
+            case GETALLLOBBYS -> LobbyService.getAllLobbys((GetAllLobbysAction) action);
+            // case NEWGAME -> // Client should recieve an ack
+            case JOINGAME -> LobbyService.joinGame((JoinGameAction) action);
         }
     }
 
@@ -45,7 +49,14 @@ public class ClientActionHandler {
                 if(!ack.isOk()) GameService.failedMoveCloud(ack);
             }
             case POWER -> {
-                if(!ack.isOk()) GameService.failedPower(ack);
+                if (!ack.isOk()) GameService.failedPower(ack);
+            }
+            case NEWGAME -> {
+                if(ack.isOk()) LobbyService.newGameOk(ack);
+                if(!ack.isOk()) LobbyService.newGameFailed(ack);
+            }
+            case JOINGAME -> {
+                if(!ack.isOk()) LobbyService.joinGameFailed();
             }
         }
     }
@@ -67,6 +78,7 @@ public class ClientActionHandler {
                 case JOINGAME -> gson.fromJson(json, JoinGameAction.class);
                 case GETGAME -> gson.fromJson(json, GetGameAction.class);
                 case ACK -> gson.fromJson(json, ACK.class);
+                case GETALLLOBBYS -> gson.fromJson(json, GetAllLobbysAction.class);
             };
         } catch (com.google.gson.JsonSyntaxException e) {
             throw new InvalidAction("Bad formatted JSON");

@@ -36,6 +36,7 @@ public class ActionHandler {
                 case JOINGAME -> gson.fromJson(json, JoinGameAction.class);
                 case GETGAME -> gson.fromJson(json, GetGameAction.class);
                 case ACK -> throw new InvalidAction("ACK Recieved by the server");
+                case GETALLLOBBYS -> gson.fromJson(json, GetAllLobbysAction.class);
             };
         } catch (com.google.gson.JsonSyntaxException e) {
             throw new InvalidAction("Bad formatted JSON");
@@ -82,6 +83,7 @@ public class ActionHandler {
             case POWER -> GameService.power((PowerAction) action);
             case JOINGAME -> LobbyService.joinGame((JoinGameAction) action);
             case GETGAME -> LobbyService.getGame((GetGameAction) action);
+            case GETALLLOBBYS -> LobbyService.getAllLobbys((GetAllLobbysAction) action);
         }
     }
 

@@ -18,6 +18,8 @@ public class Client implements Runnable {
 
     private ClientState clientState;
     private GameHandler gameHandler;
+    private List<GameLobby> allServerLobbys;
+    private GameLobby gameLobby;
 
     private final NetworkController networkController;
     private final ClientController clientController;
@@ -95,5 +97,19 @@ public class Client implements Runnable {
         this.playerId = playerId;
     }
 
+    public List<GameLobby> getAllServerLobbys() {
+        return allServerLobbys;
+    }
 
+    public void setAllServerLobbys(List<GameLobby> allServerLobbys) {
+        this.allServerLobbys = allServerLobbys;
+    }
+
+    public GameLobby getGameLobby() {
+        return gameLobby;
+    }
+
+    public void setGameLobby(GameLobby gameLobby) {
+        this.gameLobby = gameLobby;
+    }
 }

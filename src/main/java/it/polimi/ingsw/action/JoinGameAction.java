@@ -1,6 +1,7 @@
 package it.polimi.ingsw.action;
 
 import it.polimi.ingsw.model.enumeration.Wizard;
+import it.polimi.ingsw.server.GameLobby;
 
 public class JoinGameAction extends MenuAction{
     public String getGameLobbyId() {
@@ -9,6 +10,16 @@ public class JoinGameAction extends MenuAction{
 
     public Wizard getWizard() {
         return wizard;
+    }
+
+    private GameLobby newGameLobby;
+
+    public GameLobby getNewGameLobby() {
+        return newGameLobby;
+    }
+
+    public void setNewGameLobby(GameLobby newGameLobby) {
+        this.newGameLobby = newGameLobby;
     }
 
     private final String gameLobbyId;

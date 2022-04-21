@@ -1,15 +1,19 @@
 package it.polimi.ingsw.client.controller.services;
 
 import com.google.gson.*;
-import it.polimi.ingsw.action.GetGameAction;
+import it.polimi.ingsw.action.*;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.ClientState;
+import it.polimi.ingsw.client.controller.ClientActionHandler;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.MotherNature;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.enumeration.PowerType;
+import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.GameHandler;
+import it.polimi.ingsw.model.game.rules.GameRules;
 import it.polimi.ingsw.model.power.PowerCard;
+import it.polimi.ingsw.server.GameLobby;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +25,7 @@ public class LobbyService {
     }
 
     public static void getGameRequest() {
-        Gson gson = new Gson();
-        Client.getInstance().getNetworkController().send(gson.toJson(new GetGameAction(Client.getInstance().getPlayerId())));
+        Client.getInstance().getNetworkController().send(ClientActionHandler.toJson(new GetGameAction(Client.getInstance().getPlayerId())));
     }
 
     private static GameHandler parseGameHandler(String serializedGameHandlerInfo) {
@@ -85,4 +88,46 @@ public class LobbyService {
 
         return gameHandler;
     }
+
+
+    public static void getAllLobbys(GetAllLobbysAction action) {
+        Client.getInstance().setAllServerLobbys(action.getGameLobbyList());
+    }
+
+    public static void getAllLobbysRequest() {
+        Client.getInstance().getNetworkController().send(ClientActionHandler.toJson(new GetAllLobbysAction(Client.getInstance().getPlayerId())));
+    }
+
+
+    public static void newGameRequest(int numberOfPlayers, GameRules gameRules, Wizard wizard) {
+        Client.getInstance().getNetworkController().send(ClientActionHandler.toJson(
+                new NewGameAction(Client.getInstance().getPlayerId(), numberOfPlayers, gameRules, wizard)));
+    }
+
+    public static void newGameOk(ACK ack) {
+
+    }
+    public static void newGameFailed(ACK ack) {
+
+    }
+
+
+    public static void joinGame(JoinGameAction action) {
+        Client.getInstance().setGameLobby(action.getNewGameLobby());
+        Client.getInstance().setClientState(ClientState.WAITINGLOBBY);
+    }
+
+    public static void joinGameRequest(String lobbyId, Wizard wizard) {
+        Client.getInstance().getNetworkController().send(ClientActionHandler.toJson(
+                new JoinGameAction(Client.getInstance().getPlayerId(), lobbyId, wizard)
+        ));
+    }
+
+    public static void joinGameFailed() {
+
+    }
+
+
+
+
 }

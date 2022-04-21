@@ -2,10 +2,12 @@ package it.polimi.ingsw.action;
 
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.rules.GameRules;
+import it.polimi.ingsw.server.GameLobby;
 
 public class NewGameAction extends MenuAction {
     private int numberOfPlayers;
     private GameRules gameRules;
+
 
     public int getNumberOfPlayers() {
         return numberOfPlayers;
@@ -20,6 +22,8 @@ public class NewGameAction extends MenuAction {
     }
 
     private Wizard wizard;
+
+
 
     public NewGameAction(String playerId, int numberOfPlayers, GameRules gameRules, Wizard wizard) {
         super(ActionType.NEWGAME, playerId);
