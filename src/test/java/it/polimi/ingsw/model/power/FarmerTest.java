@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.power;
 
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
-import it.polimi.ingsw.model.entity.Pawn;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.entity.Professor;
 import it.polimi.ingsw.model.entity.Student;
@@ -20,10 +19,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Christian Confalonieri

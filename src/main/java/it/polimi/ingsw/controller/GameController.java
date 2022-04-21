@@ -5,11 +5,6 @@ import it.polimi.ingsw.action.Action;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.network.ClientNetworkHandler;
-import it.polimi.ingsw.server.Server;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class GameController {
     /**

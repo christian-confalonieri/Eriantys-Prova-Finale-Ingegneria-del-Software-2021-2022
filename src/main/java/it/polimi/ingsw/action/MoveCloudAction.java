@@ -1,7 +1,5 @@
 package it.polimi.ingsw.action;
 
-import it.polimi.ingsw.model.entity.Cloud;
-
 /**
  * @author Christian Confalonieri
  */

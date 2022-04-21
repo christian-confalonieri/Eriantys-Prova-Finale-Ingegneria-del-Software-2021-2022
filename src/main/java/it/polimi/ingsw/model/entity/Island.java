@@ -1,11 +1,10 @@
 package it.polimi.ingsw.model.entity;
 
-import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.power.EffectHandler;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 
 /**

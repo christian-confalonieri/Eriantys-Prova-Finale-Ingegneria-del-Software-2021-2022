@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model.power;
 
-import it.polimi.ingsw.model.entity.Island;
-import it.polimi.ingsw.model.entity.MotherNature;
 import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.game.GameHandler;
 

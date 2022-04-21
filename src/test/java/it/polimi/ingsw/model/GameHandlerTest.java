@@ -9,7 +9,9 @@ import it.polimi.ingsw.model.enumeration.Card;
 import it.polimi.ingsw.model.enumeration.GamePhase;
 import it.polimi.ingsw.model.enumeration.TurnPhase;
 import it.polimi.ingsw.model.enumeration.Wizard;
-import it.polimi.ingsw.model.game.*;
+import it.polimi.ingsw.model.game.Game;
+import it.polimi.ingsw.model.game.GameCreator;
+import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.game.rules.GameRules;
 import it.polimi.ingsw.server.PlayerLobby;
 import org.junit.jupiter.api.Test;
@@ -17,8 +19,8 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.PKCS12Attribute;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

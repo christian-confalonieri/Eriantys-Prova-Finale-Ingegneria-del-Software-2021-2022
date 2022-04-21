@@ -10,8 +10,6 @@ import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
 
-import java.util.UUID;
-
 public class LoginService {
 
     public static void clientLogin(LoginAction action, ClientNetworkHandler netHandler) throws InvalidAction {

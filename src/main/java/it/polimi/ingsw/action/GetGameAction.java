@@ -1,7 +1,5 @@
 package it.polimi.ingsw.action;
 
-import it.polimi.ingsw.model.game.GameHandler;
-
 public class GetGameAction extends Action {
     private String gameHandlerInfoJson;
 

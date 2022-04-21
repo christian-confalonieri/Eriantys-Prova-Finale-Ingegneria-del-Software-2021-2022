@@ -12,7 +12,6 @@ import it.polimi.ingsw.controller.ActionHandler;
 import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
-import it.polimi.ingsw.model.game.GameCreator;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.game.rules.GameRules;
 import it.polimi.ingsw.model.power.PowerCard;

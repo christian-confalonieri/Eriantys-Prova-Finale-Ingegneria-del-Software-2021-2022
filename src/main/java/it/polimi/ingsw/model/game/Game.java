@@ -4,16 +4,18 @@ import it.polimi.ingsw.exceptions.EmptyBagException;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.model.entity.*;
 import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.enumeration.TowerColor;
-import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.rules.GameRules;
 import it.polimi.ingsw.model.power.EffectHandler;
 import it.polimi.ingsw.model.power.Herbalist;
 import it.polimi.ingsw.model.power.PowerCard;
-import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.server.PlayerLobby;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * The game class represent the board of the game and contains all the objects

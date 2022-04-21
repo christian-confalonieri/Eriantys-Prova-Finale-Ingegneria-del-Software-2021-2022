@@ -7,11 +7,8 @@ import it.polimi.ingsw.controller.services.GameService;
 import it.polimi.ingsw.controller.services.LobbyService;
 import it.polimi.ingsw.controller.services.LoginService;
 import it.polimi.ingsw.exceptions.InvalidAction;
-import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
-
-import java.io.Console;
 
 public class ActionHandler {
 

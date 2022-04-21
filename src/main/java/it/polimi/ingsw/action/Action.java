@@ -1,10 +1,5 @@
 package it.polimi.ingsw.action;
 
-import com.google.gson.Gson;
-import it.polimi.ingsw.exceptions.InvalidAction;
-import it.polimi.ingsw.model.game.GameHandler;
-import it.polimi.ingsw.server.Server;
-
 public class Action {
 
     protected ActionType actionType;

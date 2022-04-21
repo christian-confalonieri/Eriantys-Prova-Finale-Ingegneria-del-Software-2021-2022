@@ -1,8 +1,6 @@
 package it.polimi.ingsw.action;
 
-import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Student;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

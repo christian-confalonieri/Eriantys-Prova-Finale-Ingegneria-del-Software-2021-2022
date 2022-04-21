@@ -1,27 +1,13 @@
 package it.polimi.ingsw.client;
 
-import com.google.gson.*;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.NetworkController;
 import it.polimi.ingsw.client.controller.services.LoginService;
-import it.polimi.ingsw.model.entity.Island;
-import it.polimi.ingsw.model.entity.MotherNature;
-import it.polimi.ingsw.model.entity.Player;
-import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.game.GameHandler;
-import it.polimi.ingsw.model.power.PowerCard;
-import it.polimi.ingsw.server.GameLobby;
 
-import java.io.Console;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-import static com.google.gson.JsonParser.parseString;
 
 public class Client implements Runnable {
 

@@ -7,12 +7,11 @@ import it.polimi.ingsw.model.entity.School;
 import it.polimi.ingsw.model.entity.Team;
 import it.polimi.ingsw.model.entity.Tower;
 import it.polimi.ingsw.model.enumeration.TowerColor;
-import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.rules.GameRules;
 import it.polimi.ingsw.server.PlayerLobby;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Game4P extends Game{

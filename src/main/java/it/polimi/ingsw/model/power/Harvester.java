@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.power;
 
 import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.game.GameHandler;
-import it.polimi.ingsw.model.enumeration.PawnColor;
 
 /**
  * EFFECT: Choose a color of Student: during the influence calculation this turn, that color adds no influence.

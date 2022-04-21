@@ -1,14 +1,10 @@
 package it.polimi.ingsw.model;
-import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.model.entity.*;
-import it.polimi.ingsw.model.enumeration.PawnColor;
-import it.polimi.ingsw.model.enumeration.TowerColor;
-import it.polimi.ingsw.model.enumeration.Wizard;
-import it.polimi.ingsw.model.power.EffectHandler;
+import it.polimi.ingsw.model.entity.Island;
+import it.polimi.ingsw.model.entity.MotherNature;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class MotherNatureTest {

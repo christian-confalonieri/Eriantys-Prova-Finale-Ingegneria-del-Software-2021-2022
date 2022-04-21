@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.cli.ConsoleColor;
-import it.polimi.ingsw.server.Server;
 
 import java.io.IOException;
 import java.net.ServerSocket;

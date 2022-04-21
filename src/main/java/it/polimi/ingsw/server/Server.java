@@ -4,16 +4,16 @@ import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.model.entity.Player;
-import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.GameCreator;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.network.ServerNetworkHandler;
 
-import java.io.Console;
 import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Server {
 

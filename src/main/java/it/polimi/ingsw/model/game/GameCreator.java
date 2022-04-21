@@ -1,13 +1,10 @@
 package it.polimi.ingsw.model.game;
 
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
-import it.polimi.ingsw.exceptions.InvalidRulesException;
-import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.rules.GameRules;
 import it.polimi.ingsw.server.PlayerLobby;
 
 import java.util.List;
-import java.util.SortedMap;
 
 public class GameCreator {
     public static GameHandler createGame(List<PlayerLobby> playersData, GameRules gameRules) throws InvalidNewGameException {

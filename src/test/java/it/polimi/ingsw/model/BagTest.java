@@ -1,16 +1,15 @@
 package it.polimi.ingsw.model;
-import static org.junit.jupiter.api.Assertions.*;
 
 import it.polimi.ingsw.exceptions.EmptyBagException;
-import it.polimi.ingsw.model.entity.*;
+import it.polimi.ingsw.model.entity.Bag;
+import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.PawnColor;
-import it.polimi.ingsw.model.enumeration.TowerColor;
-import it.polimi.ingsw.model.enumeration.Wizard;
-import it.polimi.ingsw.model.power.EffectHandler;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BagTest {
 

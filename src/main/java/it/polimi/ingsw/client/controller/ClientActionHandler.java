@@ -6,7 +6,6 @@ import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.client.controller.services.LobbyService;
 import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.exceptions.InvalidAction;
-import it.polimi.ingsw.model.game.Game;
 
 public class ClientActionHandler {
 

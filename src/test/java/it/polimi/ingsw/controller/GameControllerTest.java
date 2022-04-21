@@ -2,23 +2,22 @@ package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import it.polimi.ingsw.action.*;
 import it.polimi.ingsw.client.TestClient;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
-import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.*;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.game.rules.GameRules;
-import it.polimi.ingsw.model.power.*;
-import it.polimi.ingsw.network.ClientNetworkHandler;
+import it.polimi.ingsw.model.power.Friar;
+import it.polimi.ingsw.model.power.Herald;
+import it.polimi.ingsw.model.power.Mailman;
+import it.polimi.ingsw.model.power.PowerCard;
 import it.polimi.ingsw.server.Server;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
