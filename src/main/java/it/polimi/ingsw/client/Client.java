@@ -44,7 +44,6 @@ public class Client implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        LoginService.loginRequest("abcde");
     }
 
     public static void main(String[] args) {
