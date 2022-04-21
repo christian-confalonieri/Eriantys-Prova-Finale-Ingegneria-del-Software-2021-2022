@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.controller;
 import com.google.gson.Gson;
 import it.polimi.ingsw.action.*;
 import it.polimi.ingsw.client.controller.services.GameService;
+import it.polimi.ingsw.client.controller.services.LobbyService;
 import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.model.game.Game;
@@ -17,8 +18,13 @@ public class ClientActionHandler {
     public static void actionServiceInvoker(Action action) {
         switch (action.getActionType()) {
             case LOGIN -> LoginService.login((LoginAction) action);
-            case GETGAME -> GameService.getGame((GetGameAction) action);
+            case GETGAME -> LobbyService.getGame((GetGameAction) action);
             case ACK -> ackHandler((ACK) action);
+            case PLAYCARD -> GameService.playCard((PlayCardAction) action);
+            case MOVESTUDENTS -> GameService.moveStudents((MoveStudentsAction) action);
+            case MOVEMOTHERNATURE -> GameService.moveMotherNature((MoveMotherNatureAction) action);
+            case MOVECLOUD -> GameService.moveCloud((MoveCloudAction) action);
+            case POWER -> GameService.power((PowerAction) action);
         }
     }
 
@@ -26,6 +32,21 @@ public class ClientActionHandler {
         switch (ack.isAckOfAction()) {
             case LOGIN -> {
                 if(!ack.isOk()) LoginService.failedLogin(ack);
+            }
+            case PLAYCARD -> {
+                if(!ack.isOk()) GameService.failedPlayCard(ack);
+            }
+            case MOVESTUDENTS -> {
+                if(!ack.isOk()) GameService.failedMoveStudents(ack);
+            }
+            case MOVEMOTHERNATURE -> {
+                if(!ack.isOk()) GameService.failedMoveMotherNature(ack);
+            }
+            case MOVECLOUD -> {
+                if(!ack.isOk()) GameService.failedMoveCloud(ack);
+            }
+            case POWER -> {
+                if(!ack.isOk()) GameService.failedPower(ack);
             }
         }
     }
