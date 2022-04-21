@@ -5,9 +5,11 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.NetworkController;
 import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.model.game.GameHandler;
+import it.polimi.ingsw.server.GameLobby;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 
 public class Client implements Runnable {
 
