@@ -1,13 +1,24 @@
 package it.polimi.ingsw.cli;
 
+import it.polimi.ingsw.model.entity.Island;
+import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.game.GameHandler;
+
+import java.util.List;
 
 public class CLI {
 
     private GameHandler gameHandler;
+    private String players;
+    private String islandData;
 
     public CLI (GameHandler gameHandler) {
         this.gameHandler = gameHandler;
+    }
+
+    public void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     public void printGameName () {
@@ -23,20 +34,39 @@ public class CLI {
                 " `-----'");
     }
 
-    public String cliPlayers () {
-        String res =  "";
+    public void cliPlayers () {
+        players =  "";
         for (int i = 0; i < gameHandler.getOrderedTurnPlayers().size(); i++) {
             if ( i != gameHandler.getOrderedTurnPlayers().size() - 1 ) {
-                res += gameHandler.getOrderedTurnPlayers().get(i) + " Vs. ";
+                players += gameHandler.getOrderedTurnPlayers().get(i) + " Vs. ";
             } else {
-                res += gameHandler.getOrderedTurnPlayers().get(i);
+                players += gameHandler.getOrderedTurnPlayers().get(i);
             }
         }
-        return res;
     }
 
-    public void printPlayers (String playersString) {
-        System.out.println(cliPlayers());
+    public void printPlayers () {
+        System.out.println(players);
+    }
+
+    public void cliIslands () {
+        String islandData = "";
+        List<Student> students;
+        List<Island> islands = gameHandler.getGame().getIslands();
+        for ( int i = 0; i < islands.size(); i++ ) {
+            islandData += "ISOLA " + ( i + 1 ) + "\n-----------------------\n";
+            islandData += "Dimensione Isola: " + islands.get(i).getIslandSize() + "\n";
+            islandData += "Colore Torre/i: " + islands.get(i).getTowerColor() + "\n";
+            islandData += "Studenti: ";
+            students = islands.get(i).getStudents();
+            for ( int j = 0; j < students.size(); j++ ) {
+                islandData += students.get(j).getColor() + " ";
+            }
+        }
+    }
+
+    public void printIslands () {
+        System.out.println(islandData);
     }
 
 }
