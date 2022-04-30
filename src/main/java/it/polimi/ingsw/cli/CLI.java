@@ -1,7 +1,10 @@
 package it.polimi.ingsw.cli;
 
+import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
+import it.polimi.ingsw.model.entity.School;
 import it.polimi.ingsw.model.entity.Student;
+import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.GameHandler;
 
 import java.util.List;
@@ -11,6 +14,8 @@ public class CLI {
     private GameHandler gameHandler;
     private String players;
     private String islandData;
+    private String cloudsData;
+    private String schoolData;
 
     public CLI (GameHandler gameHandler) {
         this.gameHandler = gameHandler;
@@ -50,7 +55,7 @@ public class CLI {
     }
 
     public void cliIslands () {
-        String islandData = "";
+        islandData = "";
         List<Student> students;
         List<Island> islands = gameHandler.getGame().getIslands();
         for ( int i = 0; i < islands.size(); i++ ) {
@@ -67,6 +72,31 @@ public class CLI {
 
     public void printIslands () {
         System.out.println(islandData);
+    }
+
+    public void cliClouds () {
+        List<Cloud> clouds = gameHandler.getGame().getClouds();
+        List<Student> students;
+        for ( int i = 0; i < clouds.size(); i++ ) {
+            cloudsData += "NUVOLA " + ( i + 1 ) + "\n-----------------------\n";
+            cloudsData += "Studenti: ";
+            students = clouds.get(i).pickAllStudents();
+            for ( int j = 0; j < students.size(); j++ ) {
+                cloudsData += students.get(j).getColor() + " ";
+            }
+        }
+    }
+
+    public void printClouds () {
+        System.out.println(cloudsData);
+    }
+
+    public void cliSchool () {
+        List<School> schools;
+    }
+
+    public void printSchool () {
+        System.out.println(schoolData);
     }
 
 }
