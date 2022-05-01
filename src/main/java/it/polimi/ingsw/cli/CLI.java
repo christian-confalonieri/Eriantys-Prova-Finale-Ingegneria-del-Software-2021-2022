@@ -1,9 +1,7 @@
 package it.polimi.ingsw.cli;
 
-import it.polimi.ingsw.model.entity.Cloud;
-import it.polimi.ingsw.model.entity.Island;
-import it.polimi.ingsw.model.entity.School;
-import it.polimi.ingsw.model.entity.Student;
+import it.polimi.ingsw.model.entity.*;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.GameHandler;
 
@@ -92,7 +90,51 @@ public class CLI {
     }
 
     public void cliSchool () {
-        List<School> schools;
+        List<Player> players = gameHandler.getGame().getPlayers();
+        School school;
+        List<Student> fila;
+        for ( int i = 0; i < players.size(); i++ ) {
+            school = players.get(i).getSchool();
+            schoolData += "SCUOLA DI " + players.get(i).getName() + "\n-----------------------\n";
+            schoolData += "INGRESSO:\n";
+            for ( int j = 0; j < school.getEntrance().size(); j++ ) {
+                schoolData += school.getEntrance().get(i).getColor() + " ";
+            }
+            schoolData += "\nPROFESSOR TABLE:\n";
+            for ( int j = 0; j < school.getProfessorTable().size(); j++ ) {
+                schoolData += school.getProfessorTable().get(i).getColor() + " ";
+            }
+            schoolData += "\nTORRI:\n";
+            for ( int j = 0; j < school.getTowers().size(); j++ ) {
+                schoolData += school.getTowers().get(i).getColor() + " ";
+            }
+            schoolData += "\nDINING ROOM:";
+            schoolData += "\nGIALLO: ";
+            fila = school.getStudentsDiningRoom(PawnColor.YELLOW);
+            for ( int j = 0; j < fila.size(); j++ ) {
+                schoolData += "O ";
+            }
+            schoolData += "\nROSSO: ";
+            fila = school.getStudentsDiningRoom(PawnColor.RED);
+            for ( int j = 0; j < fila.size(); j++ ) {
+                schoolData += "O ";
+            }
+            schoolData += "\nVERDE: ";
+            fila = school.getStudentsDiningRoom(PawnColor.GREEN);
+            for ( int j = 0; j < fila.size(); j++ ) {
+                schoolData += "O ";
+            }
+            schoolData += "\nBLU: ";
+            fila = school.getStudentsDiningRoom(PawnColor.BLUE);
+            for ( int j = 0; j < fila.size(); j++ ) {
+                schoolData += "O ";
+            }
+            schoolData += "\nROSA: ";
+            fila = school.getStudentsDiningRoom(PawnColor.PINK);
+            for ( int j = 0; j < fila.size(); j++ ) {
+                schoolData += "O ";
+            }
+        }
     }
 
     public void printSchool () {
