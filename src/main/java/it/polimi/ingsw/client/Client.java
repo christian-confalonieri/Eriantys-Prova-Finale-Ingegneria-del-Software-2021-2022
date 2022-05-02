@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.cli.CLI;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.NetworkController;
@@ -18,6 +19,7 @@ public class Client implements Runnable {
     }
     private static Client singleton;
 
+    private CLI cli;
     private ClientState clientState;
     private GameHandler gameHandler;
     private List<GameLobby> allServerLobbys;
@@ -39,6 +41,8 @@ public class Client implements Runnable {
     @Override
     public void run() {
         networkController.start();
+        cli = new CLI(this);
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

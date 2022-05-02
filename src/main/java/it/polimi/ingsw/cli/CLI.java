@@ -1,22 +1,29 @@
 package it.polimi.ingsw.cli;
 
+import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.model.entity.*;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.GameHandler;
 
+import java.io.InputStream;
 import java.util.List;
+import java.util.Scanner;
 
 public class CLI {
+    private Client client;
 
-    private GameHandler gameHandler;
+    private Scanner inputScanner;
     private String players;
     private String islandData;
     private String cloudsData;
     private String schoolData;
 
-    public CLI (GameHandler gameHandler) {
-        this.gameHandler = gameHandler;
+    public CLI (Client client) {
+        this.client = client;
+        this.inputScanner = new Scanner(System.in).useDelimiter("\n");
+        new Thread(this::inputHandler).start();
     }
 
     public void clearScreen() {
@@ -39,11 +46,11 @@ public class CLI {
 
     public void cliPlayers () {
         players =  "";
-        for (int i = 0; i < gameHandler.getOrderedTurnPlayers().size(); i++) {
-            if ( i != gameHandler.getOrderedTurnPlayers().size() - 1 ) {
-                players += gameHandler.getOrderedTurnPlayers().get(i) + " Vs. ";
+        for (int i = 0; i < client.getGameHandler().getOrderedTurnPlayers().size(); i++) {
+            if ( i != client.getGameHandler().getOrderedTurnPlayers().size() - 1 ) {
+                players += client.getGameHandler().getOrderedTurnPlayers().get(i) + " Vs. ";
             } else {
-                players += gameHandler.getOrderedTurnPlayers().get(i);
+                players += client.getGameHandler().getOrderedTurnPlayers().get(i);
             }
         }
     }
@@ -55,7 +62,7 @@ public class CLI {
     public void cliIslands () {
         islandData = "";
         List<Student> students;
-        List<Island> islands = gameHandler.getGame().getIslands();
+        List<Island> islands = client.getGameHandler().getGame().getIslands();
         for ( int i = 0; i < islands.size(); i++ ) {
             islandData += "ISOLA " + ( i + 1 ) + "\n-----------------------\n";
             islandData += "Dimensione Isola: " + islands.get(i).getIslandSize() + "\n";
@@ -73,7 +80,7 @@ public class CLI {
     }
 
     public void cliClouds () {
-        List<Cloud> clouds = gameHandler.getGame().getClouds();
+        List<Cloud> clouds = client.getGameHandler().getGame().getClouds();
         List<Student> students;
         for ( int i = 0; i < clouds.size(); i++ ) {
             cloudsData += "NUVOLA " + ( i + 1 ) + "\n-----------------------\n";
@@ -90,7 +97,7 @@ public class CLI {
     }
 
     public void cliSchool () {
-        List<Player> players = gameHandler.getGame().getPlayers();
+        List<Player> players = client.getGameHandler().getGame().getPlayers();
         School school;
         List<Student> fila;
         for ( int i = 0; i < players.size(); i++ ) {
@@ -139,6 +146,25 @@ public class CLI {
 
     public void printSchool () {
         System.out.println(schoolData);
+    }
+
+    public void inputHandler() {
+        while(true) {
+            if (inputScanner.hasNext()) {
+                String[] command = inputScanner.next().split(" ");
+                switch(command[0]) {
+                    case "LOGIN":
+                        if(command.length < 2) {
+                            System.out.println(ConsoleColor.RED + "Invalid login command" + ConsoleColor.RESET);
+                            break;
+                        }
+                        LoginService.loginRequest(command[1]);
+                        break;
+                    default:
+                        System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
+                }
+            }
+        }
     }
 
 }
