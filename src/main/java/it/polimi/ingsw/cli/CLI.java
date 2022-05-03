@@ -160,6 +160,10 @@ public class CLI {
                         }
                         LoginService.loginRequest(command[1]);
                         break;
+                    case "LOGOUT":
+                    case "LOGOUT\r": //TODO CHECK \r ERRORS
+                        LoginService.logoutRequest();
+                        break;
                     default:
                         System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
                 }
