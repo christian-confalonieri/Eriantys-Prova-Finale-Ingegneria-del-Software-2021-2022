@@ -53,8 +53,10 @@ public class NetworkController implements Runnable {
 
         while(!shutdown) {
             // TODO Define a close connection message and a ack system to close broken connections
-            if(s.hasNext()) // Blocking:waits for input (But if server disconnects deadlock)
+            if(s.hasNext()) { // Blocking:waits for input (But if server disconnects deadlock)
                 Client.getInstance().getClientController().actionExecutor(s.next());
+                Client.getInstance().getCli().render();
+            }
         }
     }
 

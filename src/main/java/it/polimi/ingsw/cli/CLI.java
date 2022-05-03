@@ -1,14 +1,17 @@
 package it.polimi.ingsw.cli;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.controller.services.LobbyService;
 import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.model.entity.*;
 import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.GameHandler;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class CLI {
@@ -24,18 +27,36 @@ public class CLI {
         this.client = client;
         this.inputScanner = new Scanner(System.in).useDelimiter("\n");
         new Thread(this::inputHandler).start();
+
+        this.clearScreen();
+        this.render();
     }
 
-    public void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+    private void clearScreen()
+    {
+        try
+        {
+            final String os = System.getProperty("os.name");
+            if (os.contains("Windows"))
+            {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            }
+            else
+            {
+                Runtime.getRuntime().exec("clear");
+            }
+        }
+        catch (final Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    public void printGameName () {
+    private void printGameName () {
         System.out.println("ERYANTIS\n-----------------------");
     }
 
-    public void printBag () {
+    private void printBag () {
         System.out.println("   ___\n" +
                 "  /   \\\n" +
                 " |__%__|\n" +
@@ -44,7 +65,7 @@ public class CLI {
                 " `-----'");
     }
 
-    public void cliPlayers () {
+    private void cliPlayers () {
         players =  "";
         for (int i = 0; i < client.getGameHandler().getOrderedTurnPlayers().size(); i++) {
             if ( i != client.getGameHandler().getOrderedTurnPlayers().size() - 1 ) {
@@ -55,31 +76,32 @@ public class CLI {
         }
     }
 
-    public void printPlayers () {
+    private void printPlayers () {
         System.out.println(players);
     }
 
-    public void cliIslands () {
+    private void cliIslands () {
         islandData = "";
         List<Student> students;
         List<Island> islands = client.getGameHandler().getGame().getIslands();
         for ( int i = 0; i < islands.size(); i++ ) {
-            islandData += "ISOLA " + ( i + 1 ) + "\n-----------------------\n";
+            islandData += "\n\nISOLA " + ( i + 1 ) + "\n-----------------------\n";
             islandData += "Dimensione Isola: " + islands.get(i).getIslandSize() + "\n";
-            islandData += "Colore Torre/i: " + islands.get(i).getTowerColor() + "\n";
+            if(islands.get(i).getTowerColor() != null)
+                islandData += "Colore Torre/i: " + islands.get(i).getTowerColor() + "\n";
             islandData += "Studenti: ";
             students = islands.get(i).getStudents();
             for ( int j = 0; j < students.size(); j++ ) {
-                islandData += students.get(j).getColor() + " ";
+                islandData += ConsoleColor.PawnColorString(students.get(j).getColor()) + "o" + ConsoleColor.RESET;
             }
         }
     }
 
-    public void printIslands () {
+    private void printIslands () {
         System.out.println(islandData);
     }
 
-    public void cliClouds () {
+    private void cliClouds () {
         List<Cloud> clouds = client.getGameHandler().getGame().getClouds();
         List<Student> students;
         for ( int i = 0; i < clouds.size(); i++ ) {
@@ -92,12 +114,12 @@ public class CLI {
         }
     }
 
-    public void printClouds () {
+    private void printClouds () {
         System.out.println(cloudsData);
     }
 
-    public void cliSchool () {
-        List<Player> players = client.getGameHandler().getGame().getPlayers();
+    private void cliSchool () {
+        List<Player> players = client.getGameHandler().getOrderedTurnPlayers();
         School school;
         List<Student> fila;
         for ( int i = 0; i < players.size(); i++ ) {
@@ -105,15 +127,15 @@ public class CLI {
             schoolData += "SCUOLA DI " + players.get(i).getName() + "\n-----------------------\n";
             schoolData += "INGRESSO:\n";
             for ( int j = 0; j < school.getEntrance().size(); j++ ) {
-                schoolData += school.getEntrance().get(i).getColor() + " ";
+                schoolData += school.getEntrance().get(j).getColor() + " ";
             }
             schoolData += "\nPROFESSOR TABLE:\n";
             for ( int j = 0; j < school.getProfessorTable().size(); j++ ) {
-                schoolData += school.getProfessorTable().get(i).getColor() + " ";
+                schoolData += school.getProfessorTable().get(j).getColor() + " ";
             }
             schoolData += "\nTORRI:\n";
             for ( int j = 0; j < school.getTowers().size(); j++ ) {
-                schoolData += school.getTowers().get(i).getColor() + " ";
+                schoolData += school.getTowers().get(j).getColor() + " ";
             }
             schoolData += "\nDINING ROOM:";
             schoolData += "\nGIALLO: ";
@@ -144,32 +166,83 @@ public class CLI {
         }
     }
 
-    public void printSchool () {
+    private void printSchool () {
         System.out.println(schoolData);
     }
 
     public void inputHandler() {
         while(true) {
             if (inputScanner.hasNext()) {
-                String[] command = inputScanner.next().split(" ");
+                String inputString = inputScanner.next();
+                inputString = inputString.trim();
+
+                String[] command = inputString.split(" ");
+
                 switch(command[0]) {
                     case "LOGIN":
-                        if(command.length < 2) {
+                        if(command.length != 2) {
                             System.out.println(ConsoleColor.RED + "Invalid login command" + ConsoleColor.RESET);
                             break;
                         }
                         LoginService.loginRequest(command[1]);
                         break;
+
                     case "LOGOUT":
-                    case "LOGOUT\r": //TODO CHECK \r ERRORS
+                    // case "LOGOUT\r": //TODO CHECK \r ERRORS
                         LoginService.logoutRequest();
                         break;
+
+                    case "NEWGAME":
+                        if(command.length != 3) {
+                            System.out.println(ConsoleColor.RED + "Invalid new game command" + ConsoleColor.RESET);
+                            break;
+                        }
+                        LobbyService.newGameRequest(Integer.parseInt(command[1]), null, Wizard.valueOf(command[2]));
+                        break;
+
+                    case "JOINGAME":
+                        if(command.length != 3) {
+                            System.out.println(ConsoleColor.RED + "Invalid join game command" + ConsoleColor.RESET);
+                            break;
+                        }
+                        LobbyService.joinGameRequest(command[1], Wizard.valueOf(command[2]));
+                        break;
+
                     default:
                         System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
                 }
             }
         }
 
+    }
+
+    public void render() {
+        clearScreen();
+        switch (client.getClientState()) {
+            case LOGIN -> {
+                printGameName();
+                System.out.println("LOGIN");
+                System.out.println("Enter your username: ");
+            }
+            case INGAME -> {
+                cliIslands();
+                cliClouds();
+                cliSchool();
+                cliPlayers();
+
+                printGameName();
+                // printPlayers();
+                printIslands();
+                printClouds();
+                printSchool();
+            }
+            case MAINMENU -> {
+                System.out.println("MAINMENU");
+            }
+            case WAITINGLOBBY -> {
+                System.out.println("WAITINGLOBBY");
+            }
+        }
     }
 
 }

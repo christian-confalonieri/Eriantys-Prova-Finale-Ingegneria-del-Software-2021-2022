@@ -117,4 +117,8 @@ public class Client implements Runnable {
     public void setGameLobby(GameLobby gameLobby) {
         this.gameLobby = gameLobby;
     }
+
+    public CLI getCli() {
+        return cli;
+    }
 }

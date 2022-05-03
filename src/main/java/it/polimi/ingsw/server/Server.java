@@ -130,8 +130,6 @@ public class Server {
         this.gameController = new GameController();
         this.serverPort = serverPort;
 
-
-
         System.out.println(ConsoleColor.PURPLE_BOLD_BRIGHT + "ERYANTIS SERVER" + ConsoleColor.RESET);
     }
 
