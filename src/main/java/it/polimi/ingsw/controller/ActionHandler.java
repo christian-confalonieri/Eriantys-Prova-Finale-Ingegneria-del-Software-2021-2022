@@ -6,6 +6,7 @@ import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.services.GameService;
 import it.polimi.ingsw.controller.services.LobbyService;
 import it.polimi.ingsw.controller.services.LoginService;
+import it.polimi.ingsw.controller.services.NetworkService;
 import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
@@ -37,6 +38,8 @@ public class ActionHandler {
                 case GETGAME -> gson.fromJson(json, GetGameAction.class);
                 case ACK -> throw new InvalidAction("ACK Recieved by the server");
                 case GETALLLOBBYS -> gson.fromJson(json, GetAllLobbysAction.class);
+                case PING -> gson.fromJson(json, PING.class);
+                case PONG -> gson.fromJson(json, PONG.class);
             };
         } catch (com.google.gson.JsonSyntaxException e) {
             throw new InvalidAction("Bad formatted JSON");
@@ -60,7 +63,8 @@ public class ActionHandler {
      */
 
     public static void actionServiceInvoker(Action action, ClientNetworkHandler clientNet) throws InvalidAction {
-        if (action.getActionType() != ActionType.LOGIN && !Server.getInstance().isAssigned(action.getPlayerId())) { // The playerId sent is not online
+        if (!(action.getActionType() == ActionType.LOGIN || action.getActionType() == ActionType.PING || action.getActionType() == ActionType.PONG)
+                && !Server.getInstance().isAssigned(action.getPlayerId())) { // The playerId sent is not online
             throw new InvalidAction("Action is referencing a player not online");
         }
 
@@ -84,6 +88,8 @@ public class ActionHandler {
             case JOINGAME -> LobbyService.joinGame((JoinGameAction) action);
             case GETGAME -> LobbyService.getGame((GetGameAction) action);
             case GETALLLOBBYS -> LobbyService.getAllLobbys((GetAllLobbysAction) action);
+            case PING -> NetworkService.recvPing((PING) action, clientNet);
+            case PONG -> NetworkService.recvPong((PONG) action, clientNet);
         }
     }
 
