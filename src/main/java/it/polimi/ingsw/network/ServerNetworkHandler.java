@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.cli.ConsoleColor;
+import it.polimi.ingsw.server.Server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -14,6 +15,7 @@ public class ServerNetworkHandler implements Runnable {
 
     private final ServerSocket serverSocket;
     private boolean shutdown;
+    private Thread pollingPingThread;
 
     public ServerNetworkHandler(int port) throws IOException {
         serverSocket = new ServerSocket(port);
@@ -27,10 +29,14 @@ public class ServerNetworkHandler implements Runnable {
     public void run() {
         System.out.println(ConsoleColor.GREEN + "ServerNetworkHandler started on port " + serverSocket.getLocalPort() + ConsoleColor.RESET);
 
+        // Sets up the polling ping thread
+        pollingPingThread = new Thread(this::pollingPing);
+        pollingPingThread.start();
+
         while(!shutdown) {
             try {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println(ConsoleColor.GREEN + "@" + clientSocket.getInetAddress().toString() + ":" + clientSocket.getPort() + " connected..." + ConsoleColor.RESET);
+                System.out.println(ConsoleColor.GREEN_BRIGHT + "@" + clientSocket.getInetAddress().toString() + ":" + clientSocket.getPort() + " connected..." + ConsoleColor.RESET);
 
                 ClientNetworkHandler.clientNetworkHandlerFactory(clientSocket); // Launch a thread starting the listening
 
@@ -41,6 +47,20 @@ public class ServerNetworkHandler implements Runnable {
         }
 
         System.out.println(ConsoleColor.RED + "ServerNetworkHandler stopped: Not accepting new connections" + ConsoleColor.RESET);
+    }
+
+    private void pollingPing() {
+        while(!shutdown) {
+            System.out.println(ConsoleColor.PURPLE + "Pinging all [" + Server.getInstance().getAllClientConnections().size()
+                    + "] client connections. Expecting some pongs..." + ConsoleColor.RESET);
+            Server.getInstance().getAllClientConnections().forEach(ClientNetworkHandler::startTimerPongResponse);
+
+            try {
+                Thread.sleep(20000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

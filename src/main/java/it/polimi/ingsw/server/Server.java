@@ -87,6 +87,10 @@ public class Server {
     public void unassignConnection(String playerId) { assignedConnections.remove(playerId); }
     public boolean isAssigned(String playerId) { return assignedConnections.containsKey(playerId); }
     public boolean isAssigned(ClientNetworkHandler clientNetworkHandler) { return assignedConnections.containsValue(clientNetworkHandler); }
+    public String getAssignedPlayerId(ClientNetworkHandler clientNetworkHandler) {
+        return assignedConnections.keySet().stream().filter(id -> assignedConnections.get(id).equals(clientNetworkHandler)).findAny().orElse(null);
+    }
+    public List<ClientNetworkHandler> getAllClientConnections() { return clientConnections; }
 
     public void addPlayerInGame(String playerId, GameHandler game, Player player) {
         loggedPlayersInGame.put(playerId, game);

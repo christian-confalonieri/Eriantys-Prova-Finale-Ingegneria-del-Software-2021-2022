@@ -1,6 +1,9 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.action.LogoutAction;
+import it.polimi.ingsw.action.PING;
 import it.polimi.ingsw.cli.ConsoleColor;
+import it.polimi.ingsw.controller.ActionHandler;
 import it.polimi.ingsw.server.Server;
 
 import java.io.*;
@@ -17,6 +20,9 @@ public class ClientNetworkHandler implements Runnable {
     private Socket clientSocket;
     Thread listenerThread;
     private boolean shutdown;
+
+    Thread timerThread;
+    private boolean ponged;
 
     private ClientNetworkHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -49,10 +55,10 @@ public class ClientNetworkHandler implements Runnable {
         try {
             clientSocket.close();
         } catch (IOException e) {
-            System.out.println(this.toString() + " lost connection");
+            System.out.println(this.toString() + " couldn't close the socket safely");
         }
         Server.getInstance().removeClientConnection(this);
-        listenerThread.interrupt();
+        //listenerThread.interrupt(); Non serve, esce per lo shutdown
         shutdown = true;
     }
 
@@ -95,6 +101,48 @@ public class ClientNetworkHandler implements Runnable {
         }
     }
 
+    /**
+     * Send a PING message to the handled socket.
+     * Then starts a thread that keeps a timer that waits n seconds for a pong response.
+     * If the response has not arrived at the end of the timer, the client is set as offline and disconnected
+     */
+    public void startTimerPongResponse() {
+        ponged = false;
+        this.send(ActionHandler.toJson(new PING()));
+        timerThread = new Thread(this::pongTimer);
+        timerThread.start();
+    }
+
+    private void pongTimer() {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            // Thread interrupted by a pong recieve
+            ponged = true;
+            return;
+        }
+        if(!ponged) {
+            System.out.println(ConsoleColor.RED + this + " did not ponged back in 10s" + ConsoleColor.RESET);
+            if (Server.getInstance().isAssigned(this)) {
+                Server.getInstance().getGameController().actionExecutor(ActionHandler.toJson(
+                        new LogoutAction(Server.getInstance().getAssignedPlayerId(this))), this);
+            }
+            this.shutdown();
+            return;
+        }
+        else {
+            return;
+        }
+    }
+
+    public void stopPongTimerThread() {
+        timerThread.interrupt();
+        timerThread = null;
+    }
+
+    public void setPonged(boolean ponged) {
+        this.ponged = ponged;
+    }
 
     @Override
     public String toString() {
