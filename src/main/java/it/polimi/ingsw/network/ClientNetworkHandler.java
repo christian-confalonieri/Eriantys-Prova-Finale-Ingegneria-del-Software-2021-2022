@@ -137,7 +137,6 @@ public class ClientNetworkHandler implements Runnable {
 
     public void stopPongTimerThread() {
         timerThread.interrupt();
-        timerThread = null;
     }
 
     public void setPonged(boolean ponged) {
