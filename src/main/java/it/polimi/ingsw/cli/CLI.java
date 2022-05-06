@@ -106,6 +106,7 @@ public class CLI {
     }
 
     private void cliClouds () {
+        cloudsData = "";
         List<Cloud> clouds = client.getGameHandler().getGame().getClouds();
         List<Student> students;
         for ( int i = 0; i < clouds.size(); i++ ) {
@@ -123,6 +124,7 @@ public class CLI {
     }
 
     private void cliSchool () {
+        schoolData = "";
         List<Player> players = client.getGameHandler().getOrderedTurnPlayers();
         School school;
         List<Student> fila;
@@ -176,6 +178,7 @@ public class CLI {
 
     private void cliMyCards () {
         // DA SISTEMARE QUESTA COSA
+        myCardsData = "";
         Player player = client.getGameHandler().getOrderedTurnPlayers().get(0);
         List<Card> cards = player.getHandCards();
         myCardsData += "\n\nYOUR CARDS:\n-----------------------\n";
@@ -349,7 +352,7 @@ public class CLI {
             case LOGIN -> {
                 printGameName();
                 System.out.println("LOGIN");
-                System.out.println("Enter your username: ");
+                System.out.print("Enter your username: ");
             }
             case INGAME -> {
                 cliIslands();
@@ -366,20 +369,20 @@ public class CLI {
                 if(Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(Client.getInstance().getPlayerId())) {
                     switch(Client.getInstance().getGameHandler().getGamePhase()) {
                         case PREPARATION:
-                            System.out.println("Play a card: ");
+                            System.out.print("Play a card: ");
                             break;
                         case TURN:
                             switch (Client.getInstance().getGameHandler().getTurnPhase()) {
                                 case MOVESTUDENTS:
                                     System.out.println("Type in the students to be moved:\n" +
-                                            "For example, \"D: YELLOW D: BLUE 9: GREEN\"\n" +
-                                            "in which with \"D:\" we indicate the students to move to the dining room and with \"9:\" those to move to island 9");
+                                            "For example, \"D: YELLOW D: BLUE 7: GREEN\"\n" +
+                                            "in which with \"D:\" we indicate the students to move to the dining room and with \"7:\" those to move to island 7");
                                     break;
                                 case MOVEMOTHER:
-                                    System.out.println("Enter the number of movements that mother nature has to make: ");
+                                    System.out.print("Enter the number of movements that mother nature has to make: ");
                                     break;
                                 case MOVEFROMCLOUD:
-                                    System.out.println("Enter the number of the cloud through which you want to pick up students: ");
+                                    System.out.print("Enter the number of the cloud through which you want to pick up students: ");
                                     break;
                             }
                             break;
@@ -392,8 +395,8 @@ public class CLI {
             case MAINMENU -> {
                 System.out.println("MAINMENU");
                 System.out.println("To disconnect, type: \"LOGOUT\".");
-                System.out.println("Type: \"NEWGAME x color\" or \"JOINGAME x color\"\n" +
-                        "where \"x\" is the number of players and \"color\" is the color of the wizard \n");
+                System.out.println("Type: \"NEWGAME X COLOR\" or \"JOINGAME X COLOR\"\n" +
+                        "where \"X\" is the number of players and \"COLOR\" is the color of the wizard \n");
             }
             case WAITINGLOBBY -> {
                 System.out.println("WAITINGLOBBY");
