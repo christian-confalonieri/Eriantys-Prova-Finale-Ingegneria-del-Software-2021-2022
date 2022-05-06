@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.client.controller.services.LobbyService;
 import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.model.entity.*;
+import it.polimi.ingsw.model.enumeration.Card;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.Game;
@@ -24,6 +25,7 @@ public class CLI {
     private String islandData;
     private String cloudsData;
     private String schoolData;
+    private String myCardsData;
 
     public CLI (Client client) {
         this.client = client;
@@ -126,7 +128,7 @@ public class CLI {
         List<Student> fila;
         for ( int i = 0; i < players.size(); i++ ) {
             school = players.get(i).getSchool();
-            schoolData += "SCUOLA DI " + players.get(i).getName() + "\n-----------------------\n";
+            schoolData += "\n\nSCUOLA DI " + players.get(i).getName() + "\n-----------------------\n";
             schoolData += "INGRESSO:\n";
             for ( int j = 0; j < school.getEntrance().size(); j++ ) {
                 schoolData += school.getEntrance().get(j).getColor() + " ";
@@ -170,6 +172,21 @@ public class CLI {
 
     private void printSchool () {
         System.out.println(schoolData);
+    }
+
+    private void cliMyCards () {
+        // DA SISTEMARE QUESTA COSA
+        Player player = client.getGameHandler().getOrderedTurnPlayers().get(0);
+        List<Card> cards = player.getHandCards();
+        myCardsData += "\n\nYOUR CARDS:\n-----------------------\n";
+        for ( int i = 0; i < cards.size(); i++ ) {
+            myCardsData += "Card Number: " + cards.get(i).getNumber() + "\n";
+            myCardsData += "Number Of Movements: " + cards.get(i).getMovements() + "\n\n";
+        }
+    }
+
+    private void printMyCards () {
+        System.out.println(myCardsData);
     }
 
     /**
