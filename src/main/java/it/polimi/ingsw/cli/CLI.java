@@ -13,6 +13,7 @@ import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.server.GameLobby;
 import it.polimi.ingsw.server.Server;
 
+import java.io.Console;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.*;
@@ -26,6 +27,8 @@ public class CLI {
     private String cloudsData;
     private String schoolData;
     private String myCardsData;
+    private String cardsData;
+    private String gameEnded;
 
     public CLI (Client client) {
         this.client = client;
@@ -89,14 +92,14 @@ public class CLI {
         List<Student> students;
         List<Island> islands = client.getGameHandler().getGame().getIslands();
         for ( int i = 0; i < islands.size(); i++ ) {
-            islandData += "\n\nISOLA " + ( i + 1 ) + "\n-----------------------\n";
-            islandData += "Dimensione Isola: " + islands.get(i).getIslandSize() + "\n";
+            islandData += "\n\nISLAND " + ( i + 1 ) + "\n-----------------------\n";
+            islandData += "Island Size: " + islands.get(i).getIslandSize() + "\n";
             if(islands.get(i).getTowerColor() != null)
-                islandData += "Colore Torre/i: " + islands.get(i).getTowerColor() + "\n";
-            islandData += "Studenti: ";
+                islandData += "Tower(s) Color: " + islands.get(i).getTowerColor() + "\n";
+            islandData += "Students: ";
             students = islands.get(i).getStudents();
             for ( int j = 0; j < students.size(); j++ ) {
-                islandData += ConsoleColor.PawnColorString(students.get(j).getColor()) + "o" + ConsoleColor.RESET;
+                islandData += ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET;
             }
         }
     }
@@ -110,11 +113,11 @@ public class CLI {
         List<Cloud> clouds = client.getGameHandler().getGame().getClouds();
         List<Student> students;
         for ( int i = 0; i < clouds.size(); i++ ) {
-            cloudsData += "NUVOLA " + ( i + 1 ) + "\n-----------------------\n";
-            cloudsData += "Studenti: ";
+            cloudsData += "\n\nCLOUD " + ( i + 1 ) + "\n-----------------------\n";
+            cloudsData += "Students: ";
             students = clouds.get(i).pickAllStudents();
             for ( int j = 0; j < students.size(); j++ ) {
-                cloudsData += students.get(j).getColor() + " ";
+                cloudsData += ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET;
             }
         }
     }
@@ -130,44 +133,44 @@ public class CLI {
         List<Student> fila;
         for ( int i = 0; i < players.size(); i++ ) {
             school = players.get(i).getSchool();
-            schoolData += "\n\nSCUOLA DI " + players.get(i).getName() + "\n-----------------------\n";
-            schoolData += "INGRESSO:\n";
+            schoolData += "\n\n" + players.get(i).getName() + "' SCHOOL\n-----------------------\n";
+            schoolData += "ENTRANCE: ";
             for ( int j = 0; j < school.getEntrance().size(); j++ ) {
-                schoolData += school.getEntrance().get(j).getColor() + " ";
+                schoolData += ConsoleColor.PawnColorString(school.getEntrance().get(j).getColor()) + "o " + ConsoleColor.RESET;
             }
-            schoolData += "\nPROFESSOR TABLE:\n";
+            schoolData += "\nPROFESSOR TABLE: ";
             for ( int j = 0; j < school.getProfessorTable().size(); j++ ) {
-                schoolData += school.getProfessorTable().get(j).getColor() + " ";
+                schoolData += ConsoleColor.PawnColorString(school.getProfessorTable().get(j).getColor()) + "o " + ConsoleColor.RESET;
             }
-            schoolData += "\nTORRI:\n";
+            schoolData += "\nTOWERS: ";
             for ( int j = 0; j < school.getTowers().size(); j++ ) {
-                schoolData += school.getTowers().get(j).getColor() + " ";
+                schoolData += ConsoleColor.TowerColorString(school.getTowers().get(j).getColor()) + "o " + ConsoleColor.RESET;
             }
             schoolData += "\nDINING ROOM:";
-            schoolData += "\nGIALLO: ";
+            schoolData += "\nYELLOW: ";
             fila = school.getStudentsDiningRoom(PawnColor.YELLOW);
             for ( int j = 0; j < fila.size(); j++ ) {
-                schoolData += "O ";
+                schoolData += ConsoleColor.PawnColorString(PawnColor.YELLOW) + "o " + ConsoleColor.RESET;
             }
-            schoolData += "\nROSSO: ";
+            schoolData += "\nRED: ";
             fila = school.getStudentsDiningRoom(PawnColor.RED);
             for ( int j = 0; j < fila.size(); j++ ) {
-                schoolData += "O ";
+                schoolData += ConsoleColor.PawnColorString(PawnColor.RED) + "o " + ConsoleColor.RESET;
             }
-            schoolData += "\nVERDE: ";
+            schoolData += "\nGREEN: ";
             fila = school.getStudentsDiningRoom(PawnColor.GREEN);
             for ( int j = 0; j < fila.size(); j++ ) {
-                schoolData += "O ";
+                schoolData += ConsoleColor.PawnColorString(PawnColor.GREEN) + "o " + ConsoleColor.RESET;
             }
-            schoolData += "\nBLU: ";
+            schoolData += "\nBLUE: ";
             fila = school.getStudentsDiningRoom(PawnColor.BLUE);
             for ( int j = 0; j < fila.size(); j++ ) {
-                schoolData += "O ";
+                schoolData += ConsoleColor.PawnColorString(PawnColor.BLUE) + "o " + ConsoleColor.RESET;
             }
-            schoolData += "\nROSA: ";
+            schoolData += "\nPINK: ";
             fila = school.getStudentsDiningRoom(PawnColor.PINK);
             for ( int j = 0; j < fila.size(); j++ ) {
-                schoolData += "O ";
+                schoolData += ConsoleColor.PawnColorString(PawnColor.PINK) + "o " + ConsoleColor.RESET;
             }
         }
     }
@@ -176,8 +179,8 @@ public class CLI {
         System.out.println(schoolData);
     }
 
+    // CAPIRE CHI E' IL GIOCATORE CORRENTE
     private void cliMyCards () {
-        // DA SISTEMARE QUESTA COSA
         myCardsData = "";
         Player player = client.getGameHandler().getOrderedTurnPlayers().get(0);
         List<Card> cards = player.getHandCards();
@@ -192,6 +195,27 @@ public class CLI {
         System.out.println(myCardsData);
     }
 
+    private void cliCards () {
+        cardsData = "";
+        List<Player> players = client.getGameHandler().getOrderedTurnPlayers();
+        for (int i = 0; i < players.size(); i++) {
+            cardsData += "\n\n" + players.get(i).getName() + "' last played card:\n-----------------------\n";
+            cardsData += "Card Number: " + players.get(i).getLastPlayedCard().getNumber();
+            cardsData += "Number Of Movements: " + players.get(i).getLastPlayedCard().getMovements();
+        }
+    }
+
+    private void printCards () {
+        System.out.println(cardsData);
+    }
+
+    private void cliGameEnded () {
+        gameEnded = "\n\n-----------------------\nMATCH IS OVER!\n-----------------------\n";
+    }
+
+    private void printGameEnded () {
+        System.out.println(gameEnded);
+    }
     /**
      * @author Christian Confalonieri
      */

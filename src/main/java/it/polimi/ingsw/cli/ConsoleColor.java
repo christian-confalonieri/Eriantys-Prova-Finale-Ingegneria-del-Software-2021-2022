@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cli;
 
 import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.TowerColor;
 
 public class ConsoleColor {
     // Reset
@@ -83,6 +84,14 @@ public class ConsoleColor {
             case YELLOW -> YELLOW;
             case PINK -> PURPLE;
             case BLUE -> BLUE;
+        };
+    }
+
+    public static String TowerColorString(TowerColor color) {
+        return switch (color) {
+            case WHITE -> WHITE;
+            case BLACK -> BLACK;
+            case GREY -> PURPLE;
         };
     }
 }
