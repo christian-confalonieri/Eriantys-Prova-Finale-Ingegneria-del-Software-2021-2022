@@ -95,11 +95,11 @@ class ClientTest {
             Thread.sleep(100);
         } while(Client.getInstance().getAllServerLobbys() == null || Client.getInstance().getAllServerLobbys().isEmpty());
 
-        LobbyService.joinGameRequest(Client.getInstance().getAllServerLobbys().get(0).getGameLobbyId(), Wizard.BLUE);
+        // LobbyService.joinGameRequest(Client.getInstance().getAllServerLobbys().get(0).getGameLobbyId(), Wizard.BLUE); TODO
         Thread.sleep(1000);
         assertEquals(Client.getInstance().getClientState(), ClientState.MAINMENU);
 
-        LobbyService.joinGameRequest(Client.getInstance().getAllServerLobbys().get(0).getGameLobbyId(), Wizard.GREEN);
+        // LobbyService.joinGameRequest(Client.getInstance().getAllServerLobbys().get(0).getGameLobbyId(), Wizard.GREEN); TODO
         Thread.sleep(1000);
 
 
@@ -227,7 +227,7 @@ class ClientTest {
             Thread.sleep(100);
         } while(Client.getInstance().getAllServerLobbys() == null || Client.getInstance().getAllServerLobbys().isEmpty());
 
-        LobbyService.joinGameRequest(Client.getInstance().getAllServerLobbys().get(0).getGameLobbyId(), Wizard.GREEN);
+        // LobbyService.joinGameRequest(Client.getInstance().getAllServerLobbys().get(0).getGameLobbyId(), Wizard.GREEN); TODO
         Thread.sleep(1000);
 
         /* PlayCardRequest Testing ----------------------------------------------------------------------------------------*/

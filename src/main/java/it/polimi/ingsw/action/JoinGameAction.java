@@ -4,9 +4,6 @@ import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.server.GameLobby;
 
 public class JoinGameAction extends MenuAction{
-    public String getGameLobbyId() {
-        return gameLobbyId;
-    }
 
     public Wizard getWizard() {
         return wizard;
@@ -22,12 +19,16 @@ public class JoinGameAction extends MenuAction{
         this.newGameLobby = newGameLobby;
     }
 
-    private final String gameLobbyId;
+    private final int numberOfPlayers;
     private final Wizard wizard;
 
-    public JoinGameAction(String playerId, String gameLobbyId, Wizard wizard) {
+    public JoinGameAction(String playerId, int numberOfPlayers, Wizard wizard) {
         super(ActionType.JOINGAME, playerId);
         this.wizard = wizard;
-        this.gameLobbyId = gameLobbyId;
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 }

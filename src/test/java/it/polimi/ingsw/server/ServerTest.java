@@ -69,7 +69,7 @@ class ServerTest {
         String lobbyId = serverReplyClient1.next();
         System.out.println(lobbyId);
 
-        client2.send(ActionHandler.toJson(new JoinGameAction(playerId2, lobbyId, Wizard.YELLOW)));
+        // client2.send(ActionHandler.toJson(new JoinGameAction(playerId2, lobbyId, Wizard.YELLOW))); TODO
         Thread.sleep(1000);
         // Game should be started
         assertEquals(Server.getInstance().getAllGameLobbys().size(), 0);
@@ -125,7 +125,7 @@ class ServerTest {
         String lobbyId = serverReplyClient1.next();
         System.out.println(lobbyId);
 
-        client2.send(ActionHandler.toJson(new JoinGameAction(playerId2, lobbyId, Wizard.YELLOW)));
+        // client2.send(ActionHandler.toJson(new JoinGameAction(playerId2, lobbyId, Wizard.YELLOW))); TODO
         Thread.sleep(1000);
         // Game should be started
         assertEquals(Server.getInstance().getAllGameLobbys().size(), 0);
@@ -204,7 +204,7 @@ class ServerTest {
         String lobbyId = serverReplyClient1.next();
         System.out.println(lobbyId);
 
-        client2.send(ActionHandler.toJson(new JoinGameAction(playerId2, lobbyId, Wizard.YELLOW)));
+        // client2.send(ActionHandler.toJson(new JoinGameAction(playerId2, lobbyId, Wizard.YELLOW))); TODO
         Thread.sleep(1000);
 
         GameHandler gameHandler = Server.getInstance().getGameHandler(playerId1);

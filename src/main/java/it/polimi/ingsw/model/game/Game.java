@@ -426,6 +426,18 @@ public class Game {
         return null;
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
+    public Player getPlayerFromId(String uuid) {
+        for(Player player : players) {
+            if(player.getName().equals(uuid)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
     public void setMotherNature(MotherNature motherNature) {
         this.motherNature = motherNature;
     }

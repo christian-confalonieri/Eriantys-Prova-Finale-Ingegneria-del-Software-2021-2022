@@ -11,6 +11,7 @@ import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.GameCreator;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.game.rules.GameRules;
@@ -53,7 +54,7 @@ public class LobbyService {
         System.out.println(ConsoleColor.CYAN + "New " + lobby.getLobbySize() + "P" + " gamelobby created [" + lobby.getGameLobbyId() + "]" + ConsoleColor.RESET);
         Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.NEWGAME, "NewGame: succesfully created", true)));
 
-        joinGame(new JoinGameAction(action.getPlayerId(), lobby.getGameLobbyId(), action.getWizard()));
+        joinGame(new JoinGameAction(action.getPlayerId(), lobby.getGameRules().cloudsRules.numberOfClouds , action.getWizard()));
     }
 
     public static void joinGame(JoinGameAction action) throws InvalidAction {
@@ -63,7 +64,14 @@ public class LobbyService {
             throw new InvalidAction("JoinGame : player already waiting in a lobby");
         }
 
-        GameLobby lb = Server.getInstance().getGameLobby(action.getGameLobbyId());
+
+        GameLobby lb = null;
+        for(GameLobby gameLobby : Server.getInstance().getAllGameLobbys()) {
+            if(gameLobby.getGameRules().cloudsRules.numberOfClouds == action.getNumberOfPlayers()) {
+                lb = gameLobby;
+                break;
+            }
+        }
 
         if(lb == null) {
             Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(
@@ -83,7 +91,7 @@ public class LobbyService {
             throw new InvalidAction("JoinGame: Name or Wizard Already Taken");
         }
 
-        System.out.println(ConsoleColor.CYAN + "Player [" + action.getPlayerId() + "] joined lobby [" + action.getGameLobbyId() + "]" + ConsoleColor.RESET);
+        System.out.println(ConsoleColor.CYAN + "Player [" + action.getPlayerId() + "] joined lobby [" + lb + "]" + ConsoleColor.RESET);
 
         action.setNewGameLobby(lb);
         Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(action));

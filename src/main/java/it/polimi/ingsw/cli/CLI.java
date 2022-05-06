@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cli;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.client.controller.services.LobbyService;
 import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.model.entity.*;
@@ -8,11 +9,12 @@ import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.GameHandler;
+import it.polimi.ingsw.server.GameLobby;
+import it.polimi.ingsw.server.Server;
 
 import java.io.InputStream;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class CLI {
     private Client client;
@@ -170,6 +172,9 @@ public class CLI {
         System.out.println(schoolData);
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     public void inputHandler() {
         while(true) {
             if (inputScanner.hasNext()) {
@@ -178,36 +183,138 @@ public class CLI {
 
                 String[] command = inputString.split(" ");
 
-                switch(command[0]) {
-                    case "LOGIN":
-                        if(command.length != 2) {
+                switch(Client.getInstance().getClientState()) {
+                    case LOGIN:
+                        if(command.length != 1) {
                             System.out.println(ConsoleColor.RED + "Invalid login command" + ConsoleColor.RESET);
                             break;
                         }
-                        LoginService.loginRequest(command[1]);
+                        LoginService.loginRequest(command[0]);
                         break;
+                    case MAINMENU:
+                        switch(command[0].toUpperCase()) {
+                            case "LOGOUT":
+                                LoginService.logoutRequest();
+                                break;
 
-                    case "LOGOUT":
-                    // case "LOGOUT\r": //TODO CHECK \r ERRORS
-                        LoginService.logoutRequest();
+                            case "NEWGAME":
+                                if(command.length != 3) {
+                                    System.out.println(ConsoleColor.RED + "Invalid new game command" + ConsoleColor.RESET);
+                                    break;
+                                }
+                                LobbyService.newGameRequest(Integer.parseInt(command[1]), null, Wizard.valueOf(command[2].toUpperCase()));
+                                break;
+
+                            case "JOINGAME":
+                                if(command.length != 3) {
+                                    System.out.println(ConsoleColor.RED + "Invalid join game command" + ConsoleColor.RESET);
+                                    break;
+                                }
+                                LobbyService.joinGameRequest(Integer.parseInt(command[1]), Wizard.valueOf(command[2].toUpperCase()));
+                                break;
+
+                            default:
+                                System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
+                        }
+                    break;
+                    case WAITINGLOBBY:
+                            switch (command[0].toUpperCase()) {
+                                case "LOGOUT":
+                                    if (command.length != 1) {
+                                        System.out.println(ConsoleColor.RED + "Invalid logout command" + ConsoleColor.RESET);
+                                        break;
+                                    }
+                                    LoginService.logoutRequest();
+                                    break;
+                                default:
+                                    System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
+                            }
                         break;
+                    case INGAME:
+                        switch(Client.getInstance().getGameHandler().getGamePhase()) {
+                            case PREPARATION:
+                                if(command.length != 1) {
+                                    System.out.println(ConsoleColor.RED + "Invalid play card command" + ConsoleColor.RESET);
+                                    break;
+                                }
+                                else {
+                                    if (command[0].equalsIgnoreCase("LOGOUT")) {
+                                        LoginService.logoutRequest();
+                                        break;
+                                    }
+                                }
+                                GameService.playCardRequest
+                                        (Client.getInstance().getGameHandler().getGame().getPlayerFromId
+                                                (Client.getInstance().getPlayerId()).getHandCards().get(Integer.parseInt(command[0])-1));
+                            break;
+                            case TURN:
+                                switch(Client.getInstance().getGameHandler().getTurnPhase()) {
+                                    case MOVESTUDENTS:
+                                        if(command.length != 6 && command.length != 1) {
+                                            System.out.println(ConsoleColor.RED + "Invalid move students command" + ConsoleColor.RESET);
+                                            break;
+                                        }
+                                        else {
+                                            if (command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
+                                                LoginService.logoutRequest();
+                                                break;
+                                            }
+                                        }
+                                        List<Student> toDiningRoom = new ArrayList<>();
+                                        Map<Student,String> toIslands = new HashMap<>();
 
-                    case "NEWGAME":
-                        if(command.length != 3) {
-                            System.out.println(ConsoleColor.RED + "Invalid new game command" + ConsoleColor.RESET);
+                                        for(int i=0; i<6; i+=2) {
+                                            if(command[i].equalsIgnoreCase("D:")) {
+                                                for(Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
+                                                    if(student.getColor().toString().equalsIgnoreCase(command[i+1]) && !toDiningRoom.contains(student) && !toIslands.keySet().contains(student)) {
+                                                        toDiningRoom.add(student);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            else {
+                                                for(Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
+                                                    if(student.getColor().toString().equalsIgnoreCase(command[i+1]) && !toDiningRoom.contains(student) && !toIslands.keySet().contains(student)) {
+                                                        toIslands.put(student,Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(command[i].substring(0, command[i].length()-1))-1).getUuid());
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+
+                                        GameService.moveStudentsRequest(toDiningRoom,toIslands);
+                                        break;
+                                    case MOVEMOTHER:
+                                        if(command.length != 1) {
+                                            System.out.println(ConsoleColor.RED + "Invalid move mother nature command" + ConsoleColor.RESET);
+                                            break;
+                                        }
+                                            if(command[0].equalsIgnoreCase("LOGOUT")) {
+                                                LoginService.logoutRequest();
+                                            }
+                                            else {
+                                                GameService.moveMotherNatureRequest(Integer.parseInt(command[0]));
+                                            }
+                                        break;
+                                    case MOVEFROMCLOUD:
+                                        if(command.length != 1) {
+                                            System.out.println(ConsoleColor.RED + "Invalid move from cloud command" + ConsoleColor.RESET);
+                                            break;
+                                        }
+                                        if (command[0].equalsIgnoreCase("LOGOUT")) {
+                                            LoginService.logoutRequest();
+                                        }
+                                        else {
+                                            GameService.moveCloudRequest(Client.getInstance().getGameHandler().getGame().getClouds().get(Integer.parseInt(command[0])-1));
+                                        }
+                                        break;
+                                    default:
+                                        System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
+                                }
                             break;
                         }
-                        LobbyService.newGameRequest(Integer.parseInt(command[1]), null, Wizard.valueOf(command[2]));
                         break;
-
-                    case "JOINGAME":
-                        if(command.length != 3) {
-                            System.out.println(ConsoleColor.RED + "Invalid join game command" + ConsoleColor.RESET);
-                            break;
-                        }
-                        LobbyService.joinGameRequest(command[1], Wizard.valueOf(command[2]));
-                        break;
-
                     default:
                         System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
                 }
@@ -216,6 +323,9 @@ public class CLI {
 
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     public void render() {
         clearScreen();
         switch (client.getClientState()) {
@@ -235,12 +345,42 @@ public class CLI {
                 printIslands();
                 printClouds();
                 printSchool();
+                System.out.println("To disconnect, type: \"LOGOUT\".");
+                if(Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(Client.getInstance().getPlayerId())) {
+                    switch(Client.getInstance().getGameHandler().getGamePhase()) {
+                        case PREPARATION:
+                            System.out.println("Play a card: ");
+                            break;
+                        case TURN:
+                            switch (Client.getInstance().getGameHandler().getTurnPhase()) {
+                                case MOVESTUDENTS:
+                                    System.out.println("Type in the students to be moved:\n" +
+                                            "For example, \"D: YELLOW D: BLUE 9: GREEN\"\n" +
+                                            "in which with \"D:\" we indicate the students to move to the dining room and with \"9:\" those to move to island 9");
+                                    break;
+                                case MOVEMOTHER:
+                                    System.out.println("Enter the number of movements that mother nature has to make: ");
+                                    break;
+                                case MOVEFROMCLOUD:
+                                    System.out.println("Enter the number of the cloud through which you want to pick up students: ");
+                                    break;
+                            }
+                            break;
+                    }
+                }
+                else {
+                    System.out.println("Waits for the other players to finish playing his turn");
+                }
             }
             case MAINMENU -> {
                 System.out.println("MAINMENU");
+                System.out.println("To disconnect, type: \"LOGOUT\".");
+                System.out.println("Type: \"NEWGAME x color\" or \"JOINGAME x color\"\n" +
+                        "where \"x\" is the number of players and \"color\" is the color of the wizard \n");
             }
             case WAITINGLOBBY -> {
                 System.out.println("WAITINGLOBBY");
+                System.out.println("To disconnect, type: \"LOGOUT\".");
             }
         }
     }
