@@ -103,7 +103,7 @@ public class LobbyService {
             throw new InvalidAction("JoinGame: Name or Wizard Already Taken");
         }
 
-        System.out.println(ConsoleColor.CYAN + "Player [" + action.getPlayerId() + "] joined lobby [" + lb + "]" + ConsoleColor.RESET);
+        System.out.println(ConsoleColor.CYAN + "Player [" + action.getPlayerId() + "] joined lobby [" + lb.getGameLobbyId() + "]" + ConsoleColor.RESET);
 
         action.setNewGameLobby(lb);
         Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(action));
