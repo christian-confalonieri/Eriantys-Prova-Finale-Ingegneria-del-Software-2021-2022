@@ -21,6 +21,7 @@ import it.polimi.ingsw.server.GameLobby;
 import it.polimi.ingsw.server.PlayerLobby;
 import it.polimi.ingsw.server.Server;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -28,12 +29,23 @@ import java.nio.file.Paths;
 public class LobbyService {
     public static void newGame(NewGameAction action) throws InvalidAction {
         GameRules gameRules = action.getGameRules();
+        ClassLoader classLoader = LobbyService.class.getClassLoader();
+        String[] absolutePath;
         if(gameRules == null) {
             try {
+                absolutePath = switch (action.getNumberOfPlayers()) {
+                    case 2 -> (new File(classLoader.getResource("Rules2P.json").getFile())).getAbsolutePath().split("ingsw2022-AM03")[0].split(":");
+                    case 3 -> (new File(classLoader.getResource("Rules3P.json").getFile())).getAbsolutePath().split("ingsw2022-AM03")[0].split(":");
+                    case 4 -> (new File(classLoader.getResource("Rules4P.json").getFile())).getAbsolutePath().split("ingsw2022-AM03")[0].split(":");
+                    default -> {
+                        Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.NEWGAME, "NewGame: Invalid NumberOfPlayers without rules", false)));
+                        throw new InvalidAction("NewGame: Invalid NumberOfPlayers without rules");
+                    }
+                };
                 gameRules = switch (action.getNumberOfPlayers()) {
-                    case 2 -> GameRules.fromJson(new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json"))));
-                    case 3 -> GameRules.fromJson(new String(Files.readAllBytes(Paths.get("src/main/resources/Rules3P.json"))));
-                    case 4 -> GameRules.fromJson(new String(Files.readAllBytes(Paths.get("src/main/resources/Rules4P.json"))));
+                    case 2 -> GameRules.fromJson(new String(Files.readAllBytes(Paths.get(absolutePath[absolutePath.length-1] + "ingsw2022-AM03/src/main/resources/Rules2P.json"))));
+                    case 3 -> GameRules.fromJson(new String(Files.readAllBytes(Paths.get(absolutePath[absolutePath.length-1] + "ingsw2022-AM03/src/main/resources/Rules3P.json"))));
+                    case 4 -> GameRules.fromJson(new String(Files.readAllBytes(Paths.get(absolutePath[absolutePath.length-1] + "ingsw2022-AM03/src/main/resources/Rules4P.json"))));
                     default -> {
                         Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.NEWGAME, "NewGame: Invalid NumberOfPlayers without rules", false)));
                         throw new InvalidAction("NewGame: Invalid NumberOfPlayers without rules");
