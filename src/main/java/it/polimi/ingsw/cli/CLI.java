@@ -178,11 +178,10 @@ public class CLI {
     private void printSchool () {
         System.out.println(schoolData);
     }
-
-    // CAPIRE CHI E' IL GIOCATORE CORRENTE
+    
     private void cliMyCards () {
         myCardsData = "";
-        Player player = client.getGameHandler().getOrderedTurnPlayers().get(0);
+        Player player = client.getGameHandler().getOrderedTurnPlayers().stream().filter(p -> p.getName().equals(client.getPlayerId())).findAny().get();
         List<Card> cards = player.getHandCards();
         myCardsData += "\n\nYOUR CARDS:\n-----------------------\n";
         for ( int i = 0; i < cards.size(); i++ ) {
@@ -246,7 +245,14 @@ public class CLI {
                                     System.out.println(ConsoleColor.RED + "Invalid new game command" + ConsoleColor.RESET);
                                     break;
                                 }
-                                LobbyService.newGameRequest(Integer.parseInt(command[1]), null, Wizard.valueOf(command[2].toUpperCase()));
+                                try {
+                                    if(Integer.parseInt(command[1]) < 2 || Integer.parseInt(command[1]) > 4) throw new NumberFormatException();
+                                    LobbyService.newGameRequest(Integer.parseInt(command[1]), null, Wizard.valueOf(command[2].toUpperCase()));
+                                } catch(NumberFormatException castingException) {
+                                    System.out.println("Invalid number of player");
+                                } catch (IllegalArgumentException wizardException) {
+                                    System.out.println("Invalid wizard selected");
+                                }
                                 break;
 
                             case "JOINGAME":
@@ -254,7 +260,14 @@ public class CLI {
                                     System.out.println(ConsoleColor.RED + "Invalid join game command" + ConsoleColor.RESET);
                                     break;
                                 }
-                                LobbyService.joinGameRequest(Integer.parseInt(command[1]), Wizard.valueOf(command[2].toUpperCase()));
+                                try {
+                                    if(Integer.parseInt(command[1]) < 2 || Integer.parseInt(command[1]) > 4) throw new NumberFormatException();
+                                    LobbyService.joinGameRequest(Integer.parseInt(command[1]), Wizard.valueOf(command[2].toUpperCase()));
+                                } catch(NumberFormatException castingException) {
+                                    System.out.println("Invalid number of player");
+                                } catch (IllegalArgumentException wizardException) {
+                                    System.out.println("Invalid wizard selected");
+                                }
                                 break;
 
                             default:
