@@ -115,7 +115,7 @@ public class CLI {
         for ( int i = 0; i < clouds.size(); i++ ) {
             cloudsData += "\n\nCLOUD " + ( i + 1 ) + "\n-----------------------\n";
             cloudsData += "Students: ";
-            students = clouds.get(i).pickAllStudents();
+            students = clouds.get(i).getStudents();
             for ( int j = 0; j < students.size(); j++ ) {
                 cloudsData += ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET;
             }
