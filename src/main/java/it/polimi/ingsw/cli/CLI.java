@@ -433,7 +433,7 @@ public class CLI {
                 System.out.println("MAINMENU");
                 System.out.println("To disconnect, type: \"LOGOUT\".");
                 System.out.println("Type: \"NEWGAME X COLOR\" or \"JOINGAME X COLOR\"\n" +
-                        "where \"X\" is the number of players and \"COLOR\" is the color of the wizard \n");
+                        "where \"X\" is the number of players and \"COLOR\" is the color of the wizard");
             }
             case WAITINGLOBBY -> {
                 System.out.println("WAITINGLOBBY");
