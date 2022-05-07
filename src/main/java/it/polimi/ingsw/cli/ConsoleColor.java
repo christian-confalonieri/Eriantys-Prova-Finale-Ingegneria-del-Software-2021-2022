@@ -90,7 +90,7 @@ public class ConsoleColor {
     public static String TowerColorString(TowerColor color) {
         return switch (color) {
             case WHITE -> WHITE;
-            case BLACK -> BLACK;
+            case BLACK -> BLUE;
             case GREY -> PURPLE;
         };
     }

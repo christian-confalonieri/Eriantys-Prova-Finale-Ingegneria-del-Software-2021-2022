@@ -114,10 +114,13 @@ public class ClientNetworkHandler implements Runnable {
     }
 
     private void pongTimer() {
+        if(ponged) return; // PONG received before starting of the timer, check if pong already arrived
+        // In case the timer did not start before but is set as false this old timer will perform the same action
+        // As the new timer (Wait for 10s and check so no prob)
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
-            // Thread interrupted by a pong recieve
+            // Thread interrupted by a pong receive
             ponged = true;
             return;
         }
@@ -136,7 +139,12 @@ public class ClientNetworkHandler implements Runnable {
     }
 
     public void stopPongTimerThread() {
-        timerThread.interrupt();
+        try {
+            timerThread.interrupt();
+        } catch (NullPointerException exception) {
+            // TODO Pong recieved before starting the new timer thread.
+            // If ignored the system should continue without problems (The thread will not interrupt but will see)
+        }
     }
 
     public void setPonged(boolean ponged) {
