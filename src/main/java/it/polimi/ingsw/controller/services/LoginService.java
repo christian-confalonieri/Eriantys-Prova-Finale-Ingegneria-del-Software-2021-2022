@@ -7,6 +7,7 @@ import it.polimi.ingsw.action.LogoutAction;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.ActionHandler;
 import it.polimi.ingsw.exceptions.InvalidAction;
+import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
 
@@ -40,7 +41,16 @@ public class LoginService {
 
     public static void clientLogout(LogoutAction action, ClientNetworkHandler networkHandler) throws InvalidAction {
         if (Server.getInstance().isAssigned(action.getPlayerId())) {
-            // If is in game??
+            if(Server.getInstance().isInGame(action.getPlayerId())) {
+
+                Server.getInstance().removePlayerFromGame(action.getPlayerId());
+                // TODO NOTIFY GAME END
+                if (Server.getInstance().getGameHandler(action.getPlayerId())
+                        .getOrderedTurnPlayers().stream().map(Player::getName).noneMatch(id -> Server.getInstance().isAssigned(id)))
+                {   // All players disconnected
+                    Server.getInstance().removeGame(Server.getInstance().getGameHandler(action.getPlayerId()));
+                }
+            }
             Server.getInstance().unassignConnection(action.getPlayerId());
             Server.getInstance().exitLobbys(action.getPlayerId());
             System.out.println(ConsoleColor.CYAN + networkHandler.toString() + " logged out from: " + action.getPlayerId() + ConsoleColor.RESET);

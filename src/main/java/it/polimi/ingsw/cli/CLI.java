@@ -178,7 +178,7 @@ public class CLI {
     private void printSchool () {
         System.out.println(schoolData);
     }
-    
+
     private void cliMyCards () {
         myCardsData = "";
         Player player = client.getGameHandler().getOrderedTurnPlayers().stream().filter(p -> p.getName().equals(client.getPlayerId())).findAny().get();
