@@ -209,7 +209,12 @@ public class CLI {
     }
 
     private void cliGameEnded () {
+        gameEnded = "";
+        List<Player> leaderBoard = client.getGameHandler().getGame().getLeaderBoard();
         gameEnded = "\n\n-----------------------\nMATCH IS OVER!\n-----------------------\n";
+        for ( int i = 0; i < leaderBoard.size(); i++ ) {
+            gameEnded += ( i + 1 ) + "° " + leaderBoard.get(i).getName() + "\n";
+        }
     }
 
     private void printGameEnded () {
