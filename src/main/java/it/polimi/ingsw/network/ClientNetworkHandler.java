@@ -52,6 +52,7 @@ public class ClientNetworkHandler implements Runnable {
      * the object from the server
      */
     public void shutdown() {
+        shutdown = true;
         try {
             clientSocket.close();
         } catch (IOException e) {
@@ -59,7 +60,7 @@ public class ClientNetworkHandler implements Runnable {
         }
         Server.getInstance().removeClientConnection(this);
         //listenerThread.interrupt(); Non serve, esce per lo shutdown
-        shutdown = true;
+
     }
 
     /**

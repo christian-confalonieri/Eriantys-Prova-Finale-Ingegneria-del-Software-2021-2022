@@ -8,6 +8,7 @@ import it.polimi.ingsw.network.ClientNetworkHandler;
 
 public class NetworkService {
     public static void recvPing(PING action, ClientNetworkHandler clientNet) {
+        System.out.println(ConsoleColor.BLUE + clientNet + " server responded to ping" + ConsoleColor.RESET);
         clientNet.send(ActionHandler.toJson(new PONG()));
     }
 

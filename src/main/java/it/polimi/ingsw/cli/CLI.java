@@ -14,12 +14,16 @@ import it.polimi.ingsw.server.GameLobby;
 import it.polimi.ingsw.server.Server;
 
 import java.io.Console;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.util.*;
 
 public class CLI {
     private Client client;
+    private Thread inputHandlerThread;
+    private boolean shutdown;
 
     private Scanner inputScanner;
     private String players;
@@ -33,7 +37,11 @@ public class CLI {
     public CLI (Client client) {
         this.client = client;
         this.inputScanner = new Scanner(System.in).useDelimiter("\n");
-        new Thread(this::inputHandler).start();
+
+        shutdown = false;
+        inputHandlerThread = new Thread(this::inputHandler);
+        inputHandlerThread.start();
+
 
         this.clearScreen();
         this.render();
@@ -57,6 +65,14 @@ public class CLI {
         {
             e.printStackTrace();
         }
+    }
+
+    public Thread getInputHandlerThread() {
+        return inputHandlerThread;
+    }
+
+    public void shutdown() {
+        shutdown = true; // TODO no
     }
 
     private void printGameName () {
@@ -224,7 +240,7 @@ public class CLI {
      * @author Christian Confalonieri
      */
     public void inputHandler() {
-        while(true) {
+        while(!shutdown) {
             if (inputScanner.hasNext()) {
                 String inputString = inputScanner.next();
                 inputString = inputString.trim();
@@ -382,7 +398,7 @@ public class CLI {
                 }
             }
         }
-
+        System.out.println(ConsoleColor.RED + "CLI InputHandler Closed" + ConsoleColor.RESET);
     }
 
     /**
