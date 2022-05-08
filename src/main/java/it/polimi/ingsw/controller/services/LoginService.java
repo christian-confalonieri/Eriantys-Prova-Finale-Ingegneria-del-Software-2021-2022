@@ -64,6 +64,7 @@ public class LoginService {
             networkHandler.send(ActionHandler.toJson(action));
         }
         else {
+            networkHandler.send(ActionHandler.toJson(new LogoutAction(action.getPlayerId())));
             throw new InvalidAction("Logout: invalid id to log out");
         }
     }

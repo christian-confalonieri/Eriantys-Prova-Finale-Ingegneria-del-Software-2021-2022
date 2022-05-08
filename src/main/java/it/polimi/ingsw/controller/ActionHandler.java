@@ -65,6 +65,8 @@ public class ActionHandler {
     public static void actionServiceInvoker(Action action, ClientNetworkHandler clientNet) throws InvalidAction {
         if (!(action.getActionType() == ActionType.LOGIN || action.getActionType() == ActionType.PING || action.getActionType() == ActionType.PONG)
                 && !Server.getInstance().isAssigned(action.getPlayerId())) { // The playerId sent is not online
+            clientNet.send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.LOGIN,
+                    "You are logged in with an ID not online. Try logging out and logging back in", false)));
             throw new InvalidAction("Action is referencing a player not online");
         }
 
