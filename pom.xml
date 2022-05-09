@@ -101,6 +101,8 @@
         <version>0.8.7</version>
         <configuration>
           <excludes>
+            <exclude>**/ClientTest.java</exclude>
+            <exclude>**/ServerTest.java</exclude>
           </excludes>
         </configuration>
         <executions>
