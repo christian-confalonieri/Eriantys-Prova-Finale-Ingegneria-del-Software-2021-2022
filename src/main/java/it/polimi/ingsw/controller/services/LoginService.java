@@ -7,6 +7,8 @@ import it.polimi.ingsw.action.LogoutAction;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.ActionHandler;
 import it.polimi.ingsw.exceptions.InvalidAction;
+import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
 
@@ -40,14 +42,29 @@ public class LoginService {
 
     public static void clientLogout(LogoutAction action, ClientNetworkHandler networkHandler) throws InvalidAction {
         if (Server.getInstance().isAssigned(action.getPlayerId())) {
-            // If is in game??
             Server.getInstance().unassignConnection(action.getPlayerId());
+
+            if(Server.getInstance().isInGame(action.getPlayerId())) {
+
+                GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
+                Server.getInstance().removePlayerFromGame(action.getPlayerId());
+
+                // TODO NOTIFY GAME END
+                if (gameHandler
+                        .getOrderedTurnPlayers().stream().map(Player::getName).noneMatch(id -> Server.getInstance().isAssigned(id)))
+                {   // All players disconnected
+                    System.out.println(ConsoleColor.YELLOW + "All player disconnected from " + gameHandler + ". Game deleted.");
+                    Server.getInstance().removeGame(gameHandler);
+                }
+            }
+
             Server.getInstance().exitLobbys(action.getPlayerId());
             System.out.println(ConsoleColor.CYAN + networkHandler.toString() + " logged out from: " + action.getPlayerId() + ConsoleColor.RESET);
 
             networkHandler.send(ActionHandler.toJson(action));
         }
         else {
+            networkHandler.send(ActionHandler.toJson(new LogoutAction(action.getPlayerId())));
             throw new InvalidAction("Logout: invalid id to log out");
         }
     }

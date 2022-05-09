@@ -77,9 +77,16 @@ public class Server {
     public ClientNetworkHandler getClientNetHandler(String playerId) { return assignedConnections.get(playerId); }
 
     public void addClientConnection(ClientNetworkHandler clientConnection) {
-        clientConnections.add(clientConnection);
+        synchronized (clientConnections) {
+            clientConnections.add(clientConnection);
+        }
     }
-    public void removeClientConnection(ClientNetworkHandler clientConnection) { clientConnections.remove(clientConnection); }
+    public void removeClientConnection(ClientNetworkHandler clientConnection) {
+        synchronized (clientConnections)
+        {
+            clientConnections.remove(clientConnection);
+        }
+    }
 
     public void assignConnection(String playerId, ClientNetworkHandler networkHandler) {
         assignedConnections.put(playerId, networkHandler);
@@ -87,23 +94,33 @@ public class Server {
     public void unassignConnection(String playerId) { assignedConnections.remove(playerId); }
     public boolean isAssigned(String playerId) { return assignedConnections.containsKey(playerId); }
     public boolean isAssigned(ClientNetworkHandler clientNetworkHandler) { return assignedConnections.containsValue(clientNetworkHandler); }
+    public String getAssignedPlayerId(ClientNetworkHandler clientNetworkHandler) {
+        return assignedConnections.keySet().stream().filter(id -> assignedConnections.get(id).equals(clientNetworkHandler)).findAny().orElse(null);
+    }
+    public List<ClientNetworkHandler> getAllClientConnections() { return clientConnections; }
 
     public void addPlayerInGame(String playerId, GameHandler game, Player player) {
-        loggedPlayersInGame.put(playerId, game);
-        playersInGameReference.put(playerId, player);
+        synchronized (loggedPlayersInGame) {
+            loggedPlayersInGame.put(playerId, game);
+            playersInGameReference.put(playerId, player);
+        }
     }
     public void removePlayerFromGame(String playerId) {
-        loggedPlayersInGame.remove(playerId);
-        playersInGameReference.remove(playerId);
+        synchronized (loggedPlayersInGame) {
+            loggedPlayersInGame.remove(playerId);
+            playersInGameReference.remove(playerId);
+        }
     }
     public boolean isInGame(String playerId) {
         return loggedPlayersInGame.containsKey(playerId);
     }
 
     public List<ClientNetworkHandler> getConnectionsForGameBroadcast(GameHandler gameHandler) {
-        List<String> playerIds = loggedPlayersInGame.keySet().stream().filter(id -> loggedPlayersInGame.get(id).equals(gameHandler)).toList();
-        List<ClientNetworkHandler> netConnections = playerIds.stream().map(this::getClientNetHandler).toList();
-        return netConnections;
+        synchronized (clientConnections) {
+            List<String> playerIds = loggedPlayersInGame.keySet().stream().filter(id -> loggedPlayersInGame.get(id).equals(gameHandler)).toList();
+            List<ClientNetworkHandler> netConnections = playerIds.stream().map(this::getClientNetHandler).toList();
+            return netConnections;
+        }
     }
 
     public void addGame(GameHandler gameHandler) { hostedGames.add(gameHandler); }
@@ -129,8 +146,6 @@ public class Server {
 
         this.gameController = new GameController();
         this.serverPort = serverPort;
-
-
 
         System.out.println(ConsoleColor.PURPLE_BOLD_BRIGHT + "ERYANTIS SERVER" + ConsoleColor.RESET);
     }

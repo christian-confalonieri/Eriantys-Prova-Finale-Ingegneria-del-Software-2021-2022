@@ -98,14 +98,14 @@ public class GameService {
                     gameHandler.getCurrentPlayer().getSchool().entranceToDiningRoom(student);
                 }
                 gameHandler.getGame().professorRelocate();
-                System.out.println("moved students to dining room\nrelocated professors");
+                System.out.println("Students moved to dining room and professors relocated");
             }
 
             if(studentsToIsland != null) {
                 for(Student student : studentsToIsland.keySet()) {
                     gameHandler.getCurrentPlayer().getSchool().entranceToIsland(student,gameHandler.getGame().getIslandFromId(studentsToIsland.get(student)));
                 }
-                System.out.println("moved students to islands");
+                System.out.println("Students moved to islands");
             }
         }
         else {
@@ -144,16 +144,16 @@ public class GameService {
                 gameHandler.getGame().getMotherNature().move(action.getSteps());
                 Island currentIsland = gameHandler.getGame().getMotherNature().isOn();
                 gameHandler.getGame().conquerIsland(currentIsland);
-                System.out.println("island conquered");
+                System.out.println("mother nature has been moved");
 
                 if(currentIsland.checkUnifyNext()) {
                     gameHandler.getGame().unifyIsland(currentIsland,currentIsland.getNextIsland());
-                    System.out.println("next island unified");
+                    System.out.println("The next island has been unified");
                 }
 
                 if(currentIsland.checkUnifyPrev()) {
                     gameHandler.getGame().unifyIsland(currentIsland,currentIsland.getPrevIsland());
-                    System.out.println("prev island unified");
+                    System.out.println("The prev island has been unified");
                 }
             }
             else {
@@ -188,7 +188,7 @@ public class GameService {
             for(Student student : students) {
                 gameHandler.getCurrentPlayer().getSchool().addEntrance(student);
             }
-            System.out.println("students moved to entrance");
+            System.out.println("students moved from the cloud to the entrance");
         }
         else {
             Server.getInstance().getClientNetHandler(action.getPlayerId())
@@ -242,7 +242,6 @@ public class GameService {
 
         if (gameHandler.getGamePhase().equals(GamePhase.TURN)) {
             gameHandler.getGame().setEffectHandler(action.getEffectHandler());
-            gameHandler.getGame().getEffectHandler().setEffectPlayer(gameHandler.getCurrentPlayer());
 
             powerCard.power();
             System.out.println(powerCard.getType().toString().toLowerCase() + " power activated");

@@ -5,6 +5,7 @@ import it.polimi.ingsw.action.*;
 import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.client.controller.services.LobbyService;
 import it.polimi.ingsw.client.controller.services.LoginService;
+import it.polimi.ingsw.client.controller.services.NetworkService;
 import it.polimi.ingsw.exceptions.InvalidAction;
 
 public class ClientActionHandler {
@@ -28,6 +29,8 @@ public class ClientActionHandler {
             case GETALLLOBBYS -> LobbyService.getAllLobbys((GetAllLobbysAction) action);
             // case NEWGAME -> // Client should recieve an ack
             case JOINGAME -> LobbyService.joinGame((JoinGameAction) action);
+            case PING -> NetworkService.recvPing((PING) action);
+            case PONG -> NetworkService.recvPong((PONG) action);
         }
     }
 
@@ -79,6 +82,8 @@ public class ClientActionHandler {
                 case GETGAME -> gson.fromJson(json, GetGameAction.class);
                 case ACK -> gson.fromJson(json, ACK.class);
                 case GETALLLOBBYS -> gson.fromJson(json, GetAllLobbysAction.class);
+                case PING -> gson.fromJson(json, PING.class);
+                case PONG -> gson.fromJson(json, PONG.class);
             };
         } catch (com.google.gson.JsonSyntaxException e) {
             throw new InvalidAction("Bad formatted JSON");

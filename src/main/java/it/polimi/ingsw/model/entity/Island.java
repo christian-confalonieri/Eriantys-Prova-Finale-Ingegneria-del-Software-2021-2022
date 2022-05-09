@@ -35,9 +35,6 @@ public class Island extends Entity {
         noEntry = false;
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
     public Island(Island prevIsland, Island nextIsland) {
         this.prevIsland = prevIsland;
         this.nextIsland = nextIsland;

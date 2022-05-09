@@ -12,5 +12,7 @@ public enum ActionType {
     POWER,
     JOINGAME,
     GETGAME,
-    GETALLLOBBYS
+    GETALLLOBBYS,
+    PING,
+    PONG,
 }

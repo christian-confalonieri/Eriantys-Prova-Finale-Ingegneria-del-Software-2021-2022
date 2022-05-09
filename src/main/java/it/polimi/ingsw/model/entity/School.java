@@ -112,7 +112,6 @@ public class School extends Entity {
      *
      * @param color the color of which we want to know the number of pawns
      * @return the total number of students of a specific color that are sitting in the dining room
-     * @author Christian Confalonieri
      */
     public int getStudentsNumber(PawnColor color) {
         List<Student> value = diningRoom.get(color);
@@ -129,7 +128,6 @@ public class School extends Entity {
      * Adds a professor to the school.
      *
      * @param professor the professor to be added
-     * @author Christian Confalonieri
      */
     public void addProfessor(Professor professor) { professorTable.add(professor); }
 

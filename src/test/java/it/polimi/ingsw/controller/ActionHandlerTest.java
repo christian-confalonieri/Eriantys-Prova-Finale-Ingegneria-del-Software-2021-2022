@@ -35,7 +35,7 @@ class ActionHandlerTest {
 
 
         LoginAction loginAction = new LoginAction(playerId);
-        JoinGameAction joinGameAction = new JoinGameAction(playerId, lobbyId, wizard);
+        // JoinGameAction joinGameAction = new JoinGameAction(playerId, lobbyId, wizard); TODO
         NewGameAction newGameAction = new NewGameAction(playerId, 2, gameRules, wizard);
         LogoutAction logoutAction = new LogoutAction(playerId);
 

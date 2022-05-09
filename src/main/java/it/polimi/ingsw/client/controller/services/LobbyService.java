@@ -117,9 +117,9 @@ public class LobbyService {
         Client.getInstance().setClientState(ClientState.WAITINGLOBBY);
     }
 
-    public static void joinGameRequest(String lobbyId, Wizard wizard) {
+    public static void joinGameRequest(int numberOfPlayers, Wizard wizard) {
         Client.getInstance().getNetworkController().send(ClientActionHandler.toJson(
-                new JoinGameAction(Client.getInstance().getPlayerId(), lobbyId, wizard)
+                new JoinGameAction(Client.getInstance().getPlayerId(), numberOfPlayers, wizard)
         ));
     }
 

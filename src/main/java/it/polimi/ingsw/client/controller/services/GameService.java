@@ -153,7 +153,6 @@ public class GameService {
         PowerCard powerCard = gameHandler.getGame().getPowerCard(action.getType());
 
         gameHandler.getGame().setEffectHandler(action.getEffectHandler());
-        gameHandler.getGame().getEffectHandler().setEffectPlayer(gameHandler.getCurrentPlayer());
 
         powerCard.power();
     }

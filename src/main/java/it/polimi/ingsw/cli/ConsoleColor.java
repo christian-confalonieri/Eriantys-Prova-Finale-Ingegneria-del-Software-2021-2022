@@ -1,5 +1,8 @@
 package it.polimi.ingsw.cli;
 
+import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.TowerColor;
+
 public class ConsoleColor {
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
@@ -73,4 +76,22 @@ public class ConsoleColor {
     public static final String PURPLE_BACKGROUND_BRIGHT = "\033[0;105m"; // PURPLE
     public static final String CYAN_BACKGROUND_BRIGHT = "\033[0;106m";  // CYAN
     public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";   // WHITE
+
+    public static String PawnColorString(PawnColor color) {
+        return switch (color) {
+            case RED -> RED;
+            case GREEN -> GREEN;
+            case YELLOW -> YELLOW;
+            case PINK -> PURPLE;
+            case BLUE -> BLUE;
+        };
+    }
+
+    public static String TowerColorString(TowerColor color) {
+        return switch (color) {
+            case WHITE -> WHITE;
+            case BLACK -> BLUE;
+            case GREY -> PURPLE;
+        };
+    }
 }

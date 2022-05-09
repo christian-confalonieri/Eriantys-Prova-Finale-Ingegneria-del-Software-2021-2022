@@ -11,6 +11,7 @@ import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.GameCreator;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.game.rules.GameRules;
@@ -20,24 +21,48 @@ import it.polimi.ingsw.server.GameLobby;
 import it.polimi.ingsw.server.PlayerLobby;
 import it.polimi.ingsw.server.Server;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class LobbyService {
+    /**
+     * @author Leonardo Airoldi, Christian Confalonieri
+     */
     public static void newGame(NewGameAction action) throws InvalidAction {
         GameRules gameRules = action.getGameRules();
+        ClassLoader classLoader = LobbyService.class.getClassLoader();
         if(gameRules == null) {
+            /*
+             * The loading of the rules depends on 3 factors:
+             * 1) The server .jar file must be in the repo (in this case it is in the "out" folder).
+             * 2) The .json file of the rules must be in "src/main/resources/"
+             * 3) The name of the repo must be "ingsw2022-AM03"
+             * */
+            String[] absolutePath;
+            String disk,path,ruleJson,repoName = "ingsw2022-AM03";
             try {
-                gameRules = switch (action.getNumberOfPlayers()) {
-                    case 2 -> GameRules.fromJson(new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json"))));
-                    case 3 -> GameRules.fromJson(new String(Files.readAllBytes(Paths.get("src/main/resources/Rules3P.json"))));
-                    case 4 -> GameRules.fromJson(new String(Files.readAllBytes(Paths.get("src/main/resources/Rules4P.json"))));
+                ruleJson = switch (action.getNumberOfPlayers()) {
+                    case 2 -> "Rules2P.json";
+                    case 3 -> "Rules3P.json";
+                    case 4 -> "Rules4P.json";
                     default -> {
                         Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.NEWGAME, "NewGame: Invalid NumberOfPlayers without rules", false)));
                         throw new InvalidAction("NewGame: Invalid NumberOfPlayers without rules");
                     }
                 };
+                if(!(new File(classLoader.getResource(ruleJson).getFile())).getPath().split(":")[1].contains("\\target\\classes")) {
+                    // Case of starting the server from .jar file
+                    absolutePath = (new File(classLoader.getResource(ruleJson).getFile())).getPath().split(repoName)[0].split(":");
+                    disk = absolutePath[absolutePath.length-2].split("\\\\")[1] + ":";
+                    path = disk + absolutePath[absolutePath.length-1] + repoName + "/src/main/resources/" + ruleJson;
+                }
+                else {
+                    // Case of starting the server from intellij
+                    path = (new File(classLoader.getResource(ruleJson).getFile())).getPath();
+                }
+                gameRules = GameRules.fromJson(new String(Files.readAllBytes(Paths.get(path))));
             } catch (InvalidRulesException e) {
                 Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.NEWGAME, "NewGame: Server standard rules are corrupted", false)));
                 throw new InvalidAction("NewGame: Server standard rules are corrupted");
@@ -53,7 +78,7 @@ public class LobbyService {
         System.out.println(ConsoleColor.CYAN + "New " + lobby.getLobbySize() + "P" + " gamelobby created [" + lobby.getGameLobbyId() + "]" + ConsoleColor.RESET);
         Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.NEWGAME, "NewGame: succesfully created", true)));
 
-        joinGame(new JoinGameAction(action.getPlayerId(), lobby.getGameLobbyId(), action.getWizard()));
+        joinGame(new JoinGameAction(action.getPlayerId(), lobby.getGameRules().cloudsRules.numberOfClouds , action.getWizard()));
     }
 
     public static void joinGame(JoinGameAction action) throws InvalidAction {
@@ -63,7 +88,14 @@ public class LobbyService {
             throw new InvalidAction("JoinGame : player already waiting in a lobby");
         }
 
-        GameLobby lb = Server.getInstance().getGameLobby(action.getGameLobbyId());
+
+        GameLobby lb = null;
+        for(GameLobby gameLobby : Server.getInstance().getAllGameLobbys()) {
+            if(gameLobby.getGameRules().cloudsRules.numberOfClouds == action.getNumberOfPlayers()) {
+                lb = gameLobby;
+                break;
+            }
+        }
 
         if(lb == null) {
             Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(
@@ -83,7 +115,7 @@ public class LobbyService {
             throw new InvalidAction("JoinGame: Name or Wizard Already Taken");
         }
 
-        System.out.println(ConsoleColor.CYAN + "Player [" + action.getPlayerId() + "] joined lobby [" + action.getGameLobbyId() + "]" + ConsoleColor.RESET);
+        System.out.println(ConsoleColor.CYAN + "Player [" + action.getPlayerId() + "] joined lobby [" + lb.getGameLobbyId() + "]" + ConsoleColor.RESET);
 
         action.setNewGameLobby(lb);
         Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(action));
