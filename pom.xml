@@ -59,6 +59,12 @@
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
+          <configuration>
+            <excludes>
+              <exclude>**/ClientTest.java</exclude>
+              <exclude>**/ServerTest.java</exclude>
+            </excludes>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
