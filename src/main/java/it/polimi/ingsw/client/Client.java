@@ -8,8 +8,11 @@ import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.server.GameLobby;
 
+import java.io.Console;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.List;
 
 public class Client implements Runnable {
@@ -28,66 +31,79 @@ public class Client implements Runnable {
     private List<GameLobby> allServerLobbys;
     private GameLobby gameLobby;
 
-    private final NetworkController networkController;
+    private NetworkController networkController;
     private final ClientController clientController;
     private String playerId;
 
-    public static void restart(String serverIp, int serverPort) {
-        if(Client.getInstance() != null) {
-            if(Client.getInstance().getCli() !=  null) Client.getInstance().getCli().shutdown();
-            if(Client.getInstance().getNetworkController() != null) Client.getInstance().getNetworkController().shutdown();
-        }
 
-        main(new String[]{serverIp, String.valueOf(serverPort)});
+    public void restartNetwork(String serverIp, int serverPort) {
+        if(Client.getInstance().getNetworkController() != null) Client.getInstance().getNetworkController().shutdown();
+        attachNetwork();
+        networkController.start();
     }
 
-    public Client(String serverIp, int serverPort) throws IOException {
+    public Client(String serverIp, int serverPort) {
         this.serverIp = serverIp;
         this.serverPort = serverPort;
-        Socket socket = new Socket(serverIp, serverPort);
+
         clientState = ClientState.LOGIN;
         gameHandler = null;
         clientController = new ClientController();
-        networkController = NetworkController.networkControllerFactory(socket);
+    }
+
+    public void attachCLI(CLI cli) {
+        this.cli = cli;
+    }
+
+    public void attachNetwork() {
+        boolean connected = false;
+        while (!connected){
+            try {
+                Socket socket = new Socket(serverIp, serverPort);
+                networkController = NetworkController.networkControllerFactory(socket);
+                connected = true;
+            } catch (UnknownHostException e) {
+                System.out.println(ConsoleColor.RED + "Unknown server address" + ConsoleColor.RESET);
+                return;
+            } catch (IOException e) {
+                System.out.println(ConsoleColor.RED + "Failed to connect to the server. Retrying in 10s" + ConsoleColor.RESET);
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException ex) {
+                    //
+                }
+            }
+        }
     }
 
     @Override
     public void run() {
+        cli.start();
         networkController.start();
-        cli = new CLI(this);
+    }
 
+    private static String parseArg(String[] args, String option, String optionVerbose) {
+        for (int i = 0; i < args.length - 1; i++) {
+            String arg = args[i];
+            if (arg.equalsIgnoreCase(option) || arg.equalsIgnoreCase(optionVerbose)) return args[i+1];
+        }
+        return null;
     }
 
     public static void main(String[] args) {
+        String hostname = parseArg(args, "-a", "--address");
+        String port = parseArg(args, "-p", "--port");
 
-        if(args.length == 0) {
-            try {
-                singleton = new Client("localhost", 23154);
-                singleton.run();
-            } catch (IOException e) {
-                System.out.println(ConsoleColor.RED + "Failed to connect to the server" + ConsoleColor.RESET);
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-                restart("localhost", 23154);
-            }
-        } else if (args.length == 2) {
-            try {
-                singleton = new Client(args[0], Integer.parseInt(args[1]));
-                singleton.run();
-            } catch (IOException e) {
-                System.out.println(ConsoleColor.RED + "Failed to connect to the server on address " + args[0] + " " + args[1] + ConsoleColor.RESET);
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-                restart(args[0], Integer.parseInt(args[1]));
-            }
-        } else
-            System.out.println(ConsoleColor.RED + "Invalid number of args to start the client" + ConsoleColor.RESET);
+        try {
+            singleton = new Client(hostname == null ? "localhost" : hostname, Integer.parseInt(port == null ? "23154" : port));
+        } catch (NumberFormatException e) {
+            System.out.println(ConsoleColor.RED + "Invalid port number" + ConsoleColor.RESET);
+        }
+        CLI mainCLI = CLI.getInstance();
+        mainCLI.attach(singleton);
+        singleton.attachCLI(mainCLI);
+        singleton.attachNetwork();
+        singleton.run();
     }
 
 

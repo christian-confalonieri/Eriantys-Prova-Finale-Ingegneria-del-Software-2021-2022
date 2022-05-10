@@ -21,11 +21,19 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class CLI {
+    public static CLI getInstance() {
+        if(singleton == null)
+            singleton = CLIFactory();
+        return singleton;
+    }
+    private static CLI singleton;
+
     private Client client;
+
     private Thread inputHandlerThread;
+    private Scanner inputScanner;
     private boolean shutdown;
 
-    private Scanner inputScanner;
     private String players;
     private String islandData;
     private String cloudsData;
@@ -34,18 +42,33 @@ public class CLI {
     private String cardsData;
     private String gameEnded;
 
-    public CLI (Client client) {
-        this.client = client;
+    private CLI() {
         this.inputScanner = new Scanner(System.in).useDelimiter("\n");
 
         shutdown = false;
-        inputHandlerThread = new Thread(this::inputHandler);
-        inputHandlerThread.start();
-
-
-        this.clearScreen();
-        this.render();
     }
+
+    private static CLI CLIFactory() {
+        CLI newCli = new CLI();
+        newCli.inputHandlerThread = new Thread(newCli::inputHandler);
+        return newCli;
+    }
+
+    public void attach(Client client) {
+        this.client = client;
+    }
+
+    public void start() {
+        inputHandlerThread.start();
+        render();
+    }
+
+    public void shutdown() {
+        shutdown = true; // TODO no
+    }
+
+
+
 
     private void clearScreen()
     {
@@ -67,13 +90,6 @@ public class CLI {
         }
     }
 
-    public Thread getInputHandlerThread() {
-        return inputHandlerThread;
-    }
-
-    public void shutdown() {
-        shutdown = true; // TODO no
-    }
 
     private void printGameName () {
         System.out.println("ERYANTIS\n-----------------------");
@@ -405,6 +421,7 @@ public class CLI {
      * @author Christian Confalonieri
      */
     public void render() {
+        //TODO try catch null client
         clearScreen();
         switch (client.getClientState()) {
             case LOGIN -> {

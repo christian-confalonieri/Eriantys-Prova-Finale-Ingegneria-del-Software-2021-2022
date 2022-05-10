@@ -30,6 +30,7 @@ public class NetworkController implements Runnable {
 
     public static NetworkController networkControllerFactory(Socket socket) {
         NetworkController networkController = new NetworkController(socket);
+
         networkController.listenerThread = new Thread(networkController);
         networkController.pollingPingThread = new Thread(networkController::pollingPing);
         return networkController;
@@ -45,7 +46,7 @@ public class NetworkController implements Runnable {
         try {
             socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Couldn't close the socket safely");
         }
     }
 
@@ -95,7 +96,7 @@ public class NetworkController implements Runnable {
             System.out.println(ConsoleColor.RED + "Server did not ponged back in 10s. Logging out and resetting" + ConsoleColor.RESET);
             LoginService.logout(new LogoutAction(Client.getInstance().getPlayerId())); // Logout te client without contacting the server (as its not respoding)
 
-            Client.restart(Client.getInstance().serverIp, Client.getInstance().serverPort);
+            Client.getInstance().restartNetwork(Client.getInstance().serverIp, Client.getInstance().serverPort);
         }
 
         return;
