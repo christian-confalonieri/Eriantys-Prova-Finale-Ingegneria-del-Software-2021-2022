@@ -371,9 +371,9 @@ public class CLI {
                                         break;
                                     }
                                 }
-                                GameService.playCardRequest
-                                        (Client.getInstance().getGameHandler().getGame().getPlayerFromId
-                                                (Client.getInstance().getPlayerId()).getHandCards().get(Integer.parseInt(command[0])-1));
+                                GameService.playCardRequest(Card.valueOf(command[0].toUpperCase()));
+                                        //(Client.getInstance().getGameHandler().getGame().getPlayerFromId
+                                        //        (Client.getInstance().getPlayerId()).getHandCards().get(Integer.parseInt(command[0])-1));
                             break;
                             case TURN:
                                 switch(Client.getInstance().getGameHandler().getTurnPhase()) {
@@ -472,12 +472,16 @@ public class CLI {
                 cliClouds();
                 cliSchool();
                 cliPlayers();
+                cliCards();
+                cliMyCards();
 
                 printGameName();
                 // printPlayers();
                 printIslands();
                 printClouds();
                 printSchool();
+                printCards();
+                printMyCards();
                 System.out.println("To disconnect, type: \"LOGOUT\".");
                 if(Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(Client.getInstance().getPlayerId())) {
                     switch(Client.getInstance().getGameHandler().getGamePhase()) {

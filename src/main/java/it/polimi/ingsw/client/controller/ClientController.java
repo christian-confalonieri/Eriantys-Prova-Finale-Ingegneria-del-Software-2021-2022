@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.controller;
 
 
+import it.polimi.ingsw.action.ACK;
 import it.polimi.ingsw.action.Action;
 import it.polimi.ingsw.action.ActionType;
 import it.polimi.ingsw.cli.ConsoleColor;
@@ -13,7 +14,7 @@ public class ClientController {
             Action action = ClientActionHandler.fromJson(json);
             ClientActionHandler.actionServiceInvoker(action);
 
-            if(action.getActionType() != ActionType.PING && action.getActionType() != ActionType.PONG)
+            if(action.getActionType() != ActionType.PING && action.getActionType() != ActionType.PONG) // action.getActionType() != ActionType.ACK && !((ACK)action).isOk()
                 Client.getInstance().getCli().render();
 
         } catch (InvalidAction e) {

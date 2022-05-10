@@ -60,7 +60,10 @@ public class Server {
         List<GameLobby> lobbyInGame = lobbyGames.stream().filter(l -> l.isPlayerWaiting(playerId)).toList();
         for(GameLobby lb : lobbyInGame) {
             lb.removePlayer(playerId);
-            if (lb.isEmpty()) { lobbyGames.remove(lb); } // Removes if the lobby has become empty
+            if (lb.isEmpty()) {
+                lobbyGames.remove(lb);
+                System.out.println(ConsoleColor.YELLOW + "[" + lb.getGameLobbyId() + "] was empty. Lobby deleted" + ConsoleColor.RESET);
+            } // Removes if the lobby has become empty
         }
     }
     public boolean isWaitingInALobby(String playerId) {
