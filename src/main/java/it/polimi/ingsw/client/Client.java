@@ -37,16 +37,22 @@ public class Client implements Runnable {
 
 
     public void restartNetwork(String serverIp, int serverPort) {
+        clientState = ClientState.LOADING;
+        cli.render();
+
         if(Client.getInstance().getNetworkController() != null) Client.getInstance().getNetworkController().shutdown();
         attachNetwork();
         networkController.start();
+
+        clientState = ClientState.LOGIN;
+        cli.render();
     }
 
     public Client(String serverIp, int serverPort) {
         this.serverIp = serverIp;
         this.serverPort = serverPort;
 
-        clientState = ClientState.LOGIN;
+        clientState = ClientState.LOADING;
         gameHandler = null;
         clientController = new ClientController();
     }
@@ -79,7 +85,16 @@ public class Client implements Runnable {
     @Override
     public void run() {
         cli.start();
+        System.out.println(ConsoleColor.GREEN_BRIGHT + "Command line interface started..." + ConsoleColor.RESET);
         networkController.start();
+        System.out.println(ConsoleColor.GREEN_BRIGHT + "NetworkController connected..." + ConsoleColor.RESET);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            //
+        }
+        clientState = ClientState.LOGIN;
+        cli.render();
     }
 
     private static String parseArg(String[] args, String option, String optionVerbose) {
@@ -98,10 +113,12 @@ public class Client implements Runnable {
             singleton = new Client(hostname == null ? "localhost" : hostname, Integer.parseInt(port == null ? "23154" : port));
         } catch (NumberFormatException e) {
             System.out.println(ConsoleColor.RED + "Invalid port number" + ConsoleColor.RESET);
+            return;
         }
         CLI mainCLI = CLI.getInstance();
         mainCLI.attach(singleton);
         singleton.attachCLI(mainCLI);
+        mainCLI.render();
         singleton.attachNetwork();
         singleton.run();
     }

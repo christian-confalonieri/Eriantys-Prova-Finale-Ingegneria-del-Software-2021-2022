@@ -95,6 +95,40 @@ public class CLI {
         System.out.println("ERYANTIS\n-----------------------");
     }
 
+    private void printLoadingScreen() {
+        System.out.println(cliLoadingScreen());
+    }
+
+    private String cliLoadingScreen() {
+        int STYLE = 0;
+        switch (STYLE) {
+            case 0:
+                return ConsoleColor.PURPLE_BOLD_BRIGHT + "   ___" + ConsoleColor.RESET + "  ____   __ __   ____  ____   ______  ____ _____\n" +
+                       ConsoleColor.PURPLE_BOLD_BRIGHT + "  /  _]" + ConsoleColor.RESET + "|    \\ |  |  | /    ||    \\ |      ||    / ___/\n" +
+                       ConsoleColor.PURPLE_BOLD_BRIGHT + " /  [_ " + ConsoleColor.RESET + "|  D  )|  |  ||  o  ||  _  ||      | |  (   \\_ \n" +
+                       ConsoleColor.PURPLE_BOLD_BRIGHT + "|    _]" + ConsoleColor.RESET + "|    / |  ~  ||     ||  |  ||_|  |_| |  |\\__  |\n" +
+                       ConsoleColor.PURPLE_BOLD_BRIGHT + "|   [_ " + ConsoleColor.RESET + "|    \\ |___, ||  _  ||  |  |  |  |   |  |/  \\ |\n" +
+                       ConsoleColor.PURPLE_BOLD_BRIGHT + "|     |" + ConsoleColor.RESET + "|  .  \\|     ||  |  ||  |  |  |  |   |  |\\    |\n" +
+                       ConsoleColor.PURPLE_BOLD_BRIGHT + "|_____|" + ConsoleColor.RESET + "|__|\\_||____/ |__|__||__|__|  |__|  |____|\\___|";
+            case 1:
+                return """
+                                                                                                         \s
+                                                                                                         \s
+                              __.....__                                    _..._            .--.         \s
+                          .-''         '.         .-.          .-        .'     '.          |__|         \s
+                         /     .-''"'-.  `. .-,.--.\\ \\        / /       .   .-.   .     .|  .--.         \s
+                        /     /________\\   \\|  .-. |\\ \\      / /  __    |  '   '  |   .' |_ |  |         \s
+                        |                  || |  | | \\ \\    / /.:--.'.  |  |   |  | .'     ||  |     _   \s
+                        \\    .-------------'| |  | |  \\ \\  / // |   \\ | |  |   |  |'--.  .-'|  |   .' |  \s
+                         \\    '-.____...---.| |  '-    \\ `  / `" __ | | |  |   |  |   |  |  |  |  .   | /\s
+                          `.             .' | |         \\  /   .'.''| | |  |   |  |   |  |  |__|.'.'| |//\s
+                            `''-...... -'   | |         / /   / /   | |_|  |   |  |   |  '.'  .'.'.-'  / \s
+                                            |_|     |`-' /    \\ \\._,\\ '/|  |   |  |   |   /   .'   \\_.'  \s
+                                                     '..'      `--'  `" '--'   '--'   `'-'               \s""".indent(1);
+        }
+        return "";
+    }
+
     private void printBag () {
         System.out.println("   ___\n" +
                 "  /   \\\n" +
@@ -424,6 +458,10 @@ public class CLI {
         //TODO try catch null client
         clearScreen();
         switch (client.getClientState()) {
+            case LOADING -> {
+                printLoadingScreen();
+                System.out.println();
+            }
             case LOGIN -> {
                 printGameName();
                 System.out.println("LOGIN");
