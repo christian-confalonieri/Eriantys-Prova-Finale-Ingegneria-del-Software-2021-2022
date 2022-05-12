@@ -52,6 +52,7 @@ public class LoginService {
                             ActionHandler.toJson(new GameInterruptedAction(action.getPlayerId(),
                                     gameHandler.getGame().getLeaderBoard().stream().map(Player::getName).filter(id -> !id.equals(action.getPlayerId())).toList()))
                     ));
+                    gameHandler.getOrderedTurnPlayers().stream().map(Player::getName).forEach(id -> Server.getInstance().removePlayerFromGame(id));
                 }
 
                 if (gameHandler

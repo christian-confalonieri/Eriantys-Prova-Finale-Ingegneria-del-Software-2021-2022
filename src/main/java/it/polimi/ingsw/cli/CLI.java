@@ -266,8 +266,10 @@ public class CLI {
         List<Player> players = client.getGameHandler().getOrderedTurnPlayers();
         for (int i = 0; i < players.size(); i++) {
             cardsData += "\n\n" + players.get(i).getName() + "' last played card:\n-----------------------\n";
-            cardsData += "Card Number: " + players.get(i).getLastPlayedCard().getNumber();
-            cardsData += "Number Of Movements: " + players.get(i).getLastPlayedCard().getMovements();
+            if(players.get(i).getLastPlayedCard() != null) {
+                cardsData += "Card Number: " + players.get(i).getLastPlayedCard().getNumber();
+                cardsData += "Number Of Movements: " + players.get(i).getLastPlayedCard().getMovements();
+            }
         }
     }
 

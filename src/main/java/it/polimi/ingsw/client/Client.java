@@ -69,6 +69,7 @@ public class Client implements Runnable {
                 Socket socket = new Socket(serverIp, serverPort);
                 networkController = NetworkController.networkControllerFactory(socket);
                 connected = true;
+
             } catch (UnknownHostException e) {
                 System.out.println(ConsoleColor.RED + "Unknown server address" + ConsoleColor.RESET);
                 return;
