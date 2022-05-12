@@ -23,8 +23,10 @@ import it.polimi.ingsw.server.Server;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class LobbyService {
     /**
@@ -52,24 +54,29 @@ public class LobbyService {
                         throw new InvalidAction("NewGame: Invalid NumberOfPlayers without rules");
                     }
                 };
-                if(!(new File(classLoader.getResource(ruleJson).getFile())).getPath().split(":")[1].contains("\\target\\classes")) {
-                    // Case of starting the server from .jar file
-                    absolutePath = (new File(classLoader.getResource(ruleJson).getFile())).getPath().split(repoName)[0].split(":");
-                    disk = absolutePath[absolutePath.length-2].split("\\\\")[1] + ":";
-                    path = disk + absolutePath[absolutePath.length-1] + repoName + "/src/main/resources/" + ruleJson;
-                }
-                else {
+//                if(!(new File(classLoader.getResource(ruleJson).getFile())).getPath().split(":")[1].contains("\\target\\classes")) {
+//                    // Case of starting the server from .jar file
+//                    absolutePath = (new File(classLoader.getResource(ruleJson).getFile())).getPath().split(repoName)[0].split(":");
+//                    disk = absolutePath[absolutePath.length-2].split("\\\\")[1] + ":";
+//                    path = disk + absolutePath[absolutePath.length-1] + repoName + "/src/main/resources/" + ruleJson;
+//                }
+//                else {
                     // Case of starting the server from intellij
-                    path = (new File(classLoader.getResource(ruleJson).getFile())).getPath();
-                }
-                gameRules = GameRules.fromJson(new String(Files.readAllBytes(Paths.get(path))));
+                    //path = (new File(classLoader.getResource(ruleJson).getFile())).getPath();
+//                }
+//                String json = new String(Files.readAllBytes(Paths.get(path)));
+
+                InputStream inputStream = classLoader.getResourceAsStream(ruleJson);
+                String json =  new Scanner(inputStream).useDelimiter("\\A").next();
+                gameRules = GameRules.fromJson(json);
             } catch (InvalidRulesException e) {
                 Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.NEWGAME, "NewGame: Server standard rules are corrupted", false)));
                 throw new InvalidAction("NewGame: Server standard rules are corrupted");
-            } catch (IOException e) {
-                Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.NEWGAME, "NewGame: Server failed to load standard rules", false)));
-                throw new InvalidAction("NewGame: Server failed to load standard rules");
             }
+//            } catch (IOException e) {
+//                Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.NEWGAME, "NewGame: Server failed to load standard rules", false)));
+//                throw new InvalidAction("NewGame: Server failed to load standard rules");
+//            }
 
         }
 
