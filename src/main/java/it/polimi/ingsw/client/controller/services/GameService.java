@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.action.*;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Student;
@@ -170,5 +171,10 @@ public class GameService {
      */
     public static void failedPower(ACK failedAck) {
         System.out.println(ConsoleColor.YELLOW + failedAck.getMessage() + ConsoleColor.RESET);
+    }
+
+    public static void gameInterrupted(GameInterruptedAction action) {
+        Client.getInstance().setFinalLeaderBoard(action.getLeaderBoard());
+        Client.getInstance().setClientState(ClientState.ENDGAME);
     }
 }

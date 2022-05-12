@@ -31,6 +31,7 @@ public class ClientActionHandler {
             case JOINGAME -> LobbyService.joinGame((JoinGameAction) action);
             case PING -> NetworkService.recvPing((PING) action);
             case PONG -> NetworkService.recvPong((PONG) action);
+            case GAMEINTERRUPTED -> GameService.gameInterrupted((GameInterruptedAction) action);
         }
     }
 
@@ -84,6 +85,7 @@ public class ClientActionHandler {
                 case GETALLLOBBYS -> gson.fromJson(json, GetAllLobbysAction.class);
                 case PING -> gson.fromJson(json, PING.class);
                 case PONG -> gson.fromJson(json, PONG.class);
+                case GAMEINTERRUPTED -> gson.fromJson(json, GameInterruptedAction.class);
             };
         } catch (com.google.gson.JsonSyntaxException e) {
             throw new InvalidAction("Bad formatted JSON");

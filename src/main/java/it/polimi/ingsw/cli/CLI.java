@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cli;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.client.controller.services.LobbyService;
 import it.polimi.ingsw.client.controller.services.LoginService;
@@ -274,12 +275,14 @@ public class CLI {
         System.out.println(cardsData);
     }
 
-    private void cliGameEnded () {
+    private void cliGameEnded() {
         gameEnded = "";
-        List<Player> leaderBoard = client.getGameHandler().getGame().getLeaderBoard();
+        List<String> leaderBoard = client.getFinalLeaderBoard() ==
+                null ? client.getGameHandler().getGame().getLeaderBoard().stream().map(Player::getName).toList() : client.getFinalLeaderBoard();
+
         gameEnded = "\n\n-----------------------\nMATCH IS OVER!\n-----------------------\n";
         for ( int i = 0; i < leaderBoard.size(); i++ ) {
-            gameEnded += ( i + 1 ) + "° " + leaderBoard.get(i).getName() + "\n";
+            gameEnded += ( i + 1 ) + "° " + leaderBoard.get(i) + "\n";
         }
     }
 
@@ -443,6 +446,8 @@ public class CLI {
                             break;
                         }
                         break;
+                    case ENDGAME:
+                        Client.getInstance().setClientState(ClientState.MAINMENU);
                     default:
                         System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
                 }
@@ -518,6 +523,10 @@ public class CLI {
             case WAITINGLOBBY -> {
                 System.out.println("WAITINGLOBBY");
                 System.out.println("To disconnect, type: \"LOGOUT\".");
+            }
+            case ENDGAME -> {
+                cliGameEnded();
+                printGameEnded();
             }
         }
     }

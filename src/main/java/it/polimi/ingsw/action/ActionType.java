@@ -15,4 +15,5 @@ public enum ActionType {
     GETALLLOBBYS,
     PING,
     PONG,
+    GAMEINTERRUPTED
 }

@@ -1,9 +1,6 @@
 package it.polimi.ingsw.controller.services;
 
-import it.polimi.ingsw.action.ACK;
-import it.polimi.ingsw.action.ActionType;
-import it.polimi.ingsw.action.LoginAction;
-import it.polimi.ingsw.action.LogoutAction;
+import it.polimi.ingsw.action.*;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.ActionHandler;
 import it.polimi.ingsw.exceptions.InvalidAction;
@@ -49,9 +46,16 @@ public class LoginService {
                 GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
                 Server.getInstance().removePlayerFromGame(action.getPlayerId());
 
-                // TODO NOTIFY GAME END
+                if(gameHandler.getOrderedTurnPlayers().stream().map(Player::getName).filter(id -> !id.equals(action.getPlayerId()))
+                        .allMatch(id -> Server.getInstance().isInGame(id))) { // If you disconnected and all other players are in game (You are the first to disconnect)
+                    Server.getInstance().getConnectionsForGameBroadcast(gameHandler).forEach(net -> net.send(
+                            ActionHandler.toJson(new GameInterruptedAction(action.getPlayerId(),
+                                    gameHandler.getGame().getLeaderBoard().stream().map(Player::getName).filter(id -> !id.equals(action.getPlayerId())).toList()))
+                    ));
+                }
+
                 if (gameHandler
-                        .getOrderedTurnPlayers().stream().map(Player::getName).noneMatch(id -> Server.getInstance().isAssigned(id)))
+                        .getOrderedTurnPlayers().stream().map(Player::getName).noneMatch(id -> Server.getInstance().isInGame(id)))
                 {   // All players disconnected
                     System.out.println(ConsoleColor.YELLOW + "All player disconnected from " + gameHandler + ". Game deleted.");
                     Server.getInstance().removeGame(gameHandler);

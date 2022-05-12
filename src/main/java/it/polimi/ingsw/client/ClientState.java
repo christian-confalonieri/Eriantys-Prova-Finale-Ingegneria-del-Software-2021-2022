@@ -5,5 +5,6 @@ public enum ClientState {
     LOGIN,
     MAINMENU,
     WAITINGLOBBY,
-    INGAME
+    INGAME,
+    ENDGAME
 }

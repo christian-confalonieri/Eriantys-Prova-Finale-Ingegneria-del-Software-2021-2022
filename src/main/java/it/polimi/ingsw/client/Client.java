@@ -28,6 +28,7 @@ public class Client implements Runnable {
     private CLI cli;
     private ClientState clientState;
     private GameHandler gameHandler;
+    private List<String> finalLeaderBoard;
     private List<GameLobby> allServerLobbys;
     private GameLobby gameLobby;
 
@@ -138,6 +139,7 @@ public class Client implements Runnable {
 
     public void setClientState(ClientState clientState) {
         this.clientState = clientState;
+        cli.render();
     }
 
     public void setGameHandler(GameHandler gameHandler) {
@@ -174,5 +176,13 @@ public class Client implements Runnable {
 
     public CLI getCli() {
         return cli;
+    }
+
+    public List<String> getFinalLeaderBoard() {
+        return finalLeaderBoard;
+    }
+
+    public void setFinalLeaderBoard(List<String> finalLeaderBoard) {
+        this.finalLeaderBoard = finalLeaderBoard;
     }
 }

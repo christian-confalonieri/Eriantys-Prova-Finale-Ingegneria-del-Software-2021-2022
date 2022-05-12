@@ -40,6 +40,7 @@ public class ActionHandler {
                 case GETALLLOBBYS -> gson.fromJson(json, GetAllLobbysAction.class);
                 case PING -> gson.fromJson(json, PING.class);
                 case PONG -> gson.fromJson(json, PONG.class);
+                case GAMEINTERRUPTED -> gson.fromJson(json, GameInterruptedAction.class);
             };
         } catch (com.google.gson.JsonSyntaxException e) {
             throw new InvalidAction("Bad formatted JSON");
