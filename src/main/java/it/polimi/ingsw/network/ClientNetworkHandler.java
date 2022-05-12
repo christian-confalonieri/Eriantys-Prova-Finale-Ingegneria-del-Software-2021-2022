@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.Server;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Scanner;
 
 /**
@@ -97,7 +98,7 @@ public class ClientNetworkHandler implements Runnable {
                 pw.println(obj);
                 pw.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(this + e.getMessage());
             }
         }
     }

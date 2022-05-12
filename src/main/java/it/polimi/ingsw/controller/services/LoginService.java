@@ -44,20 +44,22 @@ public class LoginService {
             if(Server.getInstance().isInGame(action.getPlayerId())) {
 
                 GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
-                Server.getInstance().removePlayerFromGame(action.getPlayerId());
 
-                if(gameHandler.getOrderedTurnPlayers().stream().map(Player::getName).filter(id -> !id.equals(action.getPlayerId()))
-                        .allMatch(id -> Server.getInstance().isInGame(id))) { // If you disconnected and all other players are in game (You are the first to disconnect)
-                    Server.getInstance().getConnectionsForGameBroadcast(gameHandler).forEach(net -> net.send(
-                            ActionHandler.toJson(new GameInterruptedAction(action.getPlayerId(),
-                                    gameHandler.getGame().getLeaderBoard().stream().map(Player::getName).filter(id -> !id.equals(action.getPlayerId())).toList()))
-                    ));
-                    gameHandler.getOrderedTurnPlayers().stream().map(Player::getName).forEach(id -> Server.getInstance().removePlayerFromGame(id));
+                Server.getInstance().getConnectionsForGameBroadcast(gameHandler).forEach(net -> {
+                    if(net != null){
+                        net.send(
+                                ActionHandler.toJson(new GameInterruptedAction(action.getPlayerId(),
+                                        gameHandler.getGame().getLeaderBoard().stream().map(Player::getName).filter(id -> !id.equals(action.getPlayerId())).toList()))
+                        );
+                        System.out.println(net + " has been notified GameInterruptedAction");
+                    }
                 }
+                );
+                gameHandler.getOrderedTurnPlayers().stream().map(Player::getName).forEach(id -> Server.getInstance().removePlayerFromGame(id));
 
                 if (gameHandler
-                        .getOrderedTurnPlayers().stream().map(Player::getName).noneMatch(id -> Server.getInstance().isInGame(id)))
-                {   // All players disconnected
+                        .getOrderedTurnPlayers().stream().map(Player::getName).noneMatch(id -> Server.getInstance().getGameHandler(id) == gameHandler))
+                {   // All players disconnected from the game
                     System.out.println(ConsoleColor.YELLOW + "All player disconnected from " + gameHandler + ". Game deleted.");
                     Server.getInstance().removeGame(gameHandler);
                 }
