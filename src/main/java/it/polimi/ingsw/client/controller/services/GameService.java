@@ -176,5 +176,6 @@ public class GameService {
     public static void gameInterrupted(GameInterruptedAction action) {
         Client.getInstance().setFinalLeaderBoard(action.getLeaderBoard());
         Client.getInstance().setClientState(ClientState.ENDGAME);
+        Client.getInstance().getCli().render();
     }
 }

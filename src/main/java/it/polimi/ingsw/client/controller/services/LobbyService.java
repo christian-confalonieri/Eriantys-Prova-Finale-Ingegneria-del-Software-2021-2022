@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.controller.services;
 
 import com.google.gson.*;
 import it.polimi.ingsw.action.*;
+import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.controller.ClientActionHandler;
@@ -108,7 +109,7 @@ public class LobbyService {
 
     }
     public static void newGameFailed(ACK ack) {
-
+        System.out.println(ConsoleColor.RED + ack.getMessage() + ConsoleColor.RESET);
     }
 
 
@@ -123,8 +124,8 @@ public class LobbyService {
         ));
     }
 
-    public static void joinGameFailed() {
-
+    public static void joinGameFailed(ACK ack) {
+        System.out.println(ConsoleColor.RED + ack.getMessage() + ConsoleColor.RESET);
     }
 
 

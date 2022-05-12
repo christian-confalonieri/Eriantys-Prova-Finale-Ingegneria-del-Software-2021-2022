@@ -14,7 +14,7 @@ public class ClientController {
             Action action = ClientActionHandler.fromJson(json);
             ClientActionHandler.actionServiceInvoker(action);
 
-            if(action.getActionType() != ActionType.PING && action.getActionType() != ActionType.PONG) // action.getActionType() != ActionType.ACK && !((ACK)action).isOk()
+            if(action.getActionType() != ActionType.PING && action.getActionType() != ActionType.PONG && !(action.getActionType() == ActionType.ACK && !((ACK)action).isOk()))
                 Client.getInstance().getCli().render();
 
         } catch (InvalidAction e) {

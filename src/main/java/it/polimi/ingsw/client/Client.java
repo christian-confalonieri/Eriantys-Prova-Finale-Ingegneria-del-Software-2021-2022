@@ -140,7 +140,6 @@ public class Client implements Runnable {
 
     public void setClientState(ClientState clientState) {
         this.clientState = clientState;
-        cli.render();
     }
 
     public void setGameHandler(GameHandler gameHandler) {

@@ -60,7 +60,7 @@ public class ClientActionHandler {
                 if(!ack.isOk()) LobbyService.newGameFailed(ack);
             }
             case JOINGAME -> {
-                if(!ack.isOk()) LobbyService.joinGameFailed();
+                if(!ack.isOk()) LobbyService.joinGameFailed(ack);
             }
         }
     }
