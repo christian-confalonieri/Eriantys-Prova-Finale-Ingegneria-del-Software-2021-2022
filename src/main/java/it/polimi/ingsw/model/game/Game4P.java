@@ -16,10 +16,14 @@ import java.util.stream.Collectors;
 
 public class Game4P extends Game{
 
-    private List<Team> teams;
+    private transient List<Team> teams;
 
     public List<Team> getTeams() {
         return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
     /**

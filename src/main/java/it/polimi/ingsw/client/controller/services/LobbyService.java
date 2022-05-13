@@ -9,9 +9,12 @@ import it.polimi.ingsw.client.controller.ClientActionHandler;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.MotherNature;
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.entity.Team;
 import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.enumeration.Wizard;
+import it.polimi.ingsw.model.game.Game4P;
 import it.polimi.ingsw.model.game.GameHandler;
+import it.polimi.ingsw.model.game.GameHandler4P;
 import it.polimi.ingsw.model.game.rules.GameRules;
 import it.polimi.ingsw.model.power.PowerCard;
 import it.polimi.ingsw.server.GameLobby;
@@ -39,7 +42,23 @@ public class LobbyService {
         jObj.remove("motherNatureIsOn");
         JsonArray powerCardsJsonArray = jObj.getAsJsonObject("game").getAsJsonArray("powerCards");
 
-        gameHandler = gson.fromJson(jObj, GameHandler.class);
+        boolean teams = !jObj.getAsJsonPrimitive("teams").isJsonNull();
+        List<String> team0 = null;
+        List<String> team1 = null;
+        if (teams) {
+            gameHandler = gson.fromJson(jObj, GameHandler4P.class);
+            team0 = new ArrayList<>();
+            for(JsonElement j : jObj.getAsJsonArray("team0Players")) {
+                team0.add(j.getAsJsonPrimitive().getAsString());
+            }
+            team1 = new ArrayList<>();
+            for(JsonElement j : jObj.getAsJsonArray("team1Players")) {
+                team1.add(j.getAsJsonPrimitive().getAsString());
+            }
+        }
+        else {
+            gameHandler = gson.fromJson(jObj, GameHandler.class);
+        }
 
         // Retrieve gameHandler player references
         gameHandler.setCurrentPlayer(gameHandler.getGame().getPlayers().stream().filter(
@@ -86,6 +105,22 @@ public class LobbyService {
 
         // Create motherNature
         gameHandler.getGame().setMotherNature(new MotherNature(gameHandler.getGame().getIslandFromId(motherNatureIsOnUUID)));
+
+        // Build teams (if 4P)
+        if (teams) {
+            Game4P game4P = (Game4P) gameHandler.getGame();
+            List<Player> team0P = team0.stream().map(game4P::getPlayerFromId).toList();
+            List<Player> team1P = team1.stream().map(game4P::getPlayerFromId).toList();
+
+            Team team0T = new Team(team0P);
+            Team team1T = new Team(team1P);
+            List<Team> teamsArray = new ArrayList<>();
+            teamsArray.add(team0T);
+            teamsArray.add(team1T);
+
+            game4P.setTeams(teamsArray);
+        }
+
 
         return gameHandler;
     }

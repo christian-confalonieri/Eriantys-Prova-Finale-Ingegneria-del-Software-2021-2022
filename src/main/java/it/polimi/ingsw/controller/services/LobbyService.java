@@ -11,9 +11,12 @@ import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.entity.Team;
 import it.polimi.ingsw.model.enumeration.Wizard;
+import it.polimi.ingsw.model.game.Game4P;
 import it.polimi.ingsw.model.game.GameCreator;
 import it.polimi.ingsw.model.game.GameHandler;
+import it.polimi.ingsw.model.game.GameHandler4P;
 import it.polimi.ingsw.model.game.rules.GameRules;
 import it.polimi.ingsw.model.power.PowerCard;
 import it.polimi.ingsw.network.ClientNetworkHandler;
@@ -26,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 
 public class LobbyService {
@@ -159,6 +163,28 @@ public class LobbyService {
         }
         JsonObject gameJObj = jObj.getAsJsonObject("game");
         gameJObj.add("powerCards", powerCardsArray);
+
+        if (gameHandler instanceof GameHandler4P) {
+            // 4P game
+            Game4P game4P = (Game4P) gameHandler.getGame();
+            List<Team> teams = game4P.getTeams();
+
+            JsonArray team0Array = new JsonArray();
+            JsonArray team1Array = new JsonArray();
+
+            for(Player p : teams.get(0).getPlayers()) {
+                team0Array.add(p.getName());
+            }
+            for(Player p : teams.get(1).getPlayers()) {
+                team1Array.add(p.getName());
+            }
+
+            gameJObj.addProperty("teams", true);
+            // gameJObj.addProperty("team0TowerPlayer", teams.get(0).getTowerPlayer().getName());
+            gameJObj.add("team0Players", team0Array);
+            // gameJObj.addProperty("team1TowerPlayer", teams.get(1).getTowerPlayer().getName());
+            gameJObj.add("team1Players", team1Array);
+        }
 
         String gameHandlerSerializedInfo = gson.toJson(jObj);
 
