@@ -178,9 +178,13 @@ public class InputCLI {
             case "8" -> "EIGHT";
             case "9" -> "NINE";
             case "10" -> "TEN";
-            default -> "ERROR";
+            default -> command[0];
         };
-        GameService.playCardRequest(Card.valueOf(color));
+        try {
+            GameService.playCardRequest(Card.valueOf(color));
+        } catch (IllegalArgumentException e) {
+            System.out.println(ConsoleColor.RED + "Invalid card selected" + ConsoleColor.RESET);
+        }
         return true;
     }
 

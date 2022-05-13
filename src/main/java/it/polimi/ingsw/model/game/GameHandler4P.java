@@ -36,4 +36,8 @@ public class GameHandler4P extends GameHandler{
                                 firstTurnPlayer == getNextPlayer()
                 ;
     }
+
+    public void set4PGame(Game4P game4P) {
+        super.game = game4P;
+    }
 }

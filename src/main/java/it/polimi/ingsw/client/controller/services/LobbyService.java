@@ -42,17 +42,20 @@ public class LobbyService {
         jObj.remove("motherNatureIsOn");
         JsonArray powerCardsJsonArray = jObj.getAsJsonObject("game").getAsJsonArray("powerCards");
 
-        boolean teams = !jObj.getAsJsonPrimitive("teams").isJsonNull();
+        boolean teams = jObj.getAsJsonObject("game").getAsJsonPrimitive("teams") != null;
         List<String> team0 = null;
         List<String> team1 = null;
         if (teams) {
+            Game4P game4P = gson.fromJson(jObj.getAsJsonObject("game"), Game4P.class);
             gameHandler = gson.fromJson(jObj, GameHandler4P.class);
+            ((GameHandler4P) gameHandler).set4PGame(game4P);
+
             team0 = new ArrayList<>();
-            for(JsonElement j : jObj.getAsJsonArray("team0Players")) {
+            for(JsonElement j : jObj.getAsJsonObject("game").getAsJsonArray("team0Players")) {
                 team0.add(j.getAsJsonPrimitive().getAsString());
             }
             team1 = new ArrayList<>();
-            for(JsonElement j : jObj.getAsJsonArray("team1Players")) {
+            for(JsonElement j : jObj.getAsJsonObject("game").getAsJsonArray("team1Players")) {
                 team1.add(j.getAsJsonPrimitive().getAsString());
             }
         }
