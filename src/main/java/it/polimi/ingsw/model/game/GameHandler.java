@@ -80,17 +80,22 @@ public class GameHandler {
      * Returns a list of the cards played from the players before the current player
      *
      * @return the list of cards
-     * @author Leonardo Airoldi, Christian Confalonieri
+     * @author Christian Confalonieri
      */
     public List<Card> previousPlayedCards() {
         List<Card> playedCard = new ArrayList<>();
         for(Player player : orderedTurnPlayers) {
-            Card card = player.getLastPlayedCard();
-            if(card != null) {
-                playedCard.add(card);
+            if(player != currentPlayer) {
+                Card card = player.getLastPlayedCard();
+                if(card != null) {
+                    playedCard.add(card);
+                }
+            }
+            else  {
+                return playedCard;
             }
         }
-        return playedCard;
+        return null;
     }
 
     /**
