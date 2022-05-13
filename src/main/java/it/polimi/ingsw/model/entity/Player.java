@@ -17,6 +17,8 @@ public class Player {
     private int coins;
     private Wizard wizard;
 
+    private boolean playedPowerThisTurn = false;
+
 
 
     private TowerColor towerColor;
@@ -86,5 +88,13 @@ public class Player {
 
     public void setCoins(int coins) {
         this.coins = coins;
+    }
+
+    public boolean isPlayedPowerThisTurn() {
+        return playedPowerThisTurn;
+    }
+
+    public void setPlayedPowerThisTurn(boolean playedPowerThisTurn) {
+        this.playedPowerThisTurn = playedPowerThisTurn;
     }
 }

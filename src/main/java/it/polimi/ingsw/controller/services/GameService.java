@@ -240,6 +240,12 @@ public class GameService {
             throw new InvalidAction("Power: invalid effectHandler");
         }
 
+        if(gameHandler.getCurrentPlayer().isPlayedPowerThisTurn()) {
+            Server.getInstance().getClientNetHandler(action.getPlayerId())
+                    .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "power already played in this turn",false)));
+            throw new InvalidAction("Power: power already played in this turn");
+        }
+
         if (gameHandler.getGamePhase().equals(GamePhase.TURN)) {
             gameHandler.getGame().setEffectHandler(action.getEffectHandler());
 

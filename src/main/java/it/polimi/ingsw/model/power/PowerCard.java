@@ -35,6 +35,7 @@ public class PowerCard {
      */
     public void power() {
         gameHandler.getGame().getEffectHandler().setEffectActive(true);
+        gameHandler.getCurrentPlayer().setPlayedPowerThisTurn(true);
         gameHandler.getGame().getEffectHandler().setEffectPlayer(gameHandler.getCurrentPlayer());
         gameHandler.getCurrentPlayer().setCoins(gameHandler.getCurrentPlayer().getCoins() - cost);
         if(cost==baseCost) {
@@ -46,6 +47,7 @@ public class PowerCard {
      * @author Christian Confalonieri
      */
     public void endPower() {
+        gameHandler.getCurrentPlayer().setPlayedPowerThisTurn(false);
         gameHandler.getGame().getEffectHandler().setEffectActive(false);
         gameHandler.getGame().getEffectHandler().setEffectPlayer(null);
     }
