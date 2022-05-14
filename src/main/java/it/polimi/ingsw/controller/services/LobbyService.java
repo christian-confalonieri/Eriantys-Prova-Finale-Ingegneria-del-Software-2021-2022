@@ -89,22 +89,26 @@ public class LobbyService {
         System.out.println(ConsoleColor.CYAN + "New " + lobby.getLobbySize() + "P" + " gamelobby created [" + lobby.getGameLobbyId() + "]" + ConsoleColor.RESET);
         Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.NEWGAME, "NewGame: succesfully created", true)));
 
-        joinGame(new JoinGameAction(action.getPlayerId(), lobby.getGameRules().cloudsRules.numberOfClouds , action.getWizard()));
+        joinGame(new JoinGameAction(action.getPlayerId(), lobby.getGameRules().cloudsRules.numberOfClouds , action.getWizard()),lobby);
     }
 
-    public static void joinGame(JoinGameAction action) throws InvalidAction {
+    public static void joinGame(JoinGameAction action,GameLobby newGameLobby) throws InvalidAction {
         if(Server.getInstance().isWaitingInALobby(action.getPlayerId())) {
             Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(
                     new ACK(action.getPlayerId(), ActionType.JOINGAME, "JoinGame : player already waiting in a lobby", false)));
             throw new InvalidAction("JoinGame : player already waiting in a lobby");
         }
 
-
         GameLobby lb = null;
-        for(GameLobby gameLobby : Server.getInstance().getAllGameLobbys()) {
-            if(gameLobby.getGameRules().cloudsRules.numberOfClouds == action.getNumberOfPlayers()) {
-                lb = gameLobby;
-                break;
+        if(newGameLobby != null) {
+            lb = newGameLobby;
+        }
+        else {
+            for(GameLobby gameLobby : Server.getInstance().getAllGameLobbys()) {
+                if(gameLobby.getGameRules().cloudsRules.numberOfClouds == action.getNumberOfPlayers()) {
+                    lb = gameLobby;
+                    break;
+                }
             }
         }
 

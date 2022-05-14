@@ -88,7 +88,7 @@ public class ActionHandler {
             case MOVEMOTHERNATURE -> GameService.moveMotherNature((MoveMotherNatureAction) action);
             case MOVECLOUD -> GameService.moveCloud((MoveCloudAction) action);
             case POWER -> GameService.power((PowerAction) action);
-            case JOINGAME -> LobbyService.joinGame((JoinGameAction) action);
+            case JOINGAME -> LobbyService.joinGame((JoinGameAction) action, null);
             case GETGAME -> LobbyService.getGame((GetGameAction) action);
             case GETALLLOBBYS -> LobbyService.getAllLobbys((GetAllLobbysAction) action);
             case PING -> NetworkService.recvPing((PING) action, clientNet);
