@@ -7,7 +7,10 @@ import it.polimi.ingsw.client.controller.services.LobbyService;
 import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.Card;
+import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.enumeration.Wizard;
+import it.polimi.ingsw.model.power.*;
 
 import java.util.*;
 
@@ -192,14 +195,21 @@ public class InputCLI {
      * @author Christian Confalonieri
      */
     private static boolean cliMoveStudentsRequest(String[] command) {
-        if(command.length != 6 && command.length != 1) {
-            System.out.println(ConsoleColor.RED + "Invalid move students command" + ConsoleColor.RESET);
+        if(command.length <1 || command.length > 14) {
+            System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
             return true;
         }
         else {
             if (command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
                 LoginService.logoutRequest();
                 return true;
+            }
+            else {
+                if (command[0].equalsIgnoreCase("CHARACTER")) {
+                    if(cliPowersRequest(command)){
+                        return true;
+                    }
+                }
             }
         }
         List<Student> toDiningRoom = new ArrayList<>();
@@ -233,15 +243,22 @@ public class InputCLI {
      * @author Christian Confalonieri
      */
     private static boolean cliMoveMotherNatureRequest(String[] command) {
-        if(command.length != 1) {
-            System.out.println(ConsoleColor.RED + "Invalid move mother nature command" + ConsoleColor.RESET);
+        if(command.length <1 || command.length > 14) {
+            System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
             return true;
         }
         if(command[0].equalsIgnoreCase("LOGOUT")) {
             LoginService.logoutRequest();
         }
         else {
-            GameService.moveMotherNatureRequest(Integer.parseInt(command[0]));
+            if (command[0].equalsIgnoreCase("CHARACTER")) {
+                if(cliPowersRequest(command)){
+                    return true;
+                }
+            }
+            else {
+                GameService.moveMotherNatureRequest(Integer.parseInt(command[0]));
+            }
         }
         return true;
     }
@@ -250,15 +267,185 @@ public class InputCLI {
      * @author Christian Confalonieri
      */
     private static boolean cliMoveCloudRequest(String[] command) {
-        if(command.length != 1) {
-            System.out.println(ConsoleColor.RED + "Invalid move from cloud command" + ConsoleColor.RESET);
+        if(command.length <1 || command.length > 14) {
+            System.out.println(ConsoleColor.RED + "Invalid move command" + ConsoleColor.RESET);
             return true;
         }
         if (command[0].equalsIgnoreCase("LOGOUT")) {
             LoginService.logoutRequest();
         }
         else {
-            GameService.moveCloudRequest(Client.getInstance().getGameHandler().getGame().getClouds().get(Integer.parseInt(command[0])-1));
+            if (command[0].equalsIgnoreCase("CHARACTER")) {
+                if(cliPowersRequest(command)){
+                    return true;
+                }
+            }
+            else {
+                GameService.moveCloudRequest(Client.getInstance().getGameHandler().getGame().getClouds().get(Integer.parseInt(command[0]) - 1));
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private static boolean cliPowersRequest(String[] command) {
+        if(command.length <= 2) {
+            System.out.println(ConsoleColor.RED + "Invalid power command" + ConsoleColor.RESET);
+            return true;
+        }
+        else {
+            PowerType currentPower = null;
+            PawnColor color;
+            EffectHandler effectHandler = new EffectHandler();
+            List<PowerCard> powerCards = Client.getInstance().getGameHandler().getGame().getPowerCards();
+            List<PowerType> powerTypes = new ArrayList<>();
+            for(int i=0; i<3; i++) {
+                powerTypes.add(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType());
+            }
+            switch(command[1].toUpperCase()) {
+                case "FRIAR":
+                    currentPower = PowerType.FRIAR;
+                    List<Student> studentsF = new ArrayList<>();
+                    if(powerTypes.contains(currentPower)) {
+                        Friar currentFriar = (Friar)powerCards.get(powerTypes.indexOf(currentPower));
+                        for(Student student : currentFriar.getStudents()) {
+                            if (student.getColor().toString().equalsIgnoreCase(command[2])) {
+                                studentsF.add(student);
+                                break;
+                            }
+                        }
+                    }
+                    effectHandler.setChosenStudents1(studentsF);
+                    effectHandler.setChosenIslandUuid(Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(command[3])-1).getUuid());
+                    break;
+                case "FARMER":
+                    currentPower = PowerType.FARMER;
+                    break;
+                case "HERALD":
+                    currentPower = PowerType.HERALD;
+                    effectHandler.setChosenIslandUuid(Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(command[2])-1).getUuid());
+                    break;
+                case "MAILMAN":
+                    currentPower = PowerType.MAILMAN;
+                    break;
+                case "HERBALIST":
+                    currentPower = PowerType.HERBALIST;
+                    effectHandler.setChosenIslandUuid(Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(command[2])-1).getUuid());
+                    break;
+                case "CENTAUR":
+                    currentPower = PowerType.CENTAUR;
+                    break;
+                case "JESTER":
+                    currentPower = PowerType.JESTER;
+                    Jester currentJester = (Jester)powerCards.get(powerTypes.indexOf(currentPower));
+                    List<Student> toJester = new ArrayList<>();
+                    List<Student> toEntranceJ = new ArrayList<>();
+
+                    for(int i=2; i< command.length; i+=2) {
+                        if(command[i].equalsIgnoreCase("E:")) {
+                            for(Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
+                                if(student.getColor().toString().equalsIgnoreCase(command[i+1]) && !toJester.contains(student)) {
+                                    toJester.add(student);
+                                    break;
+                                }
+                            }
+                        }
+                        else {
+                            for(Student student : currentJester.getStudents()) {
+                                if(student.getColor().toString().equalsIgnoreCase(command[i+1]) && !toEntranceJ.contains(student)) {
+                                    toEntranceJ.add(student);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    effectHandler.setChosenStudents1(toEntranceJ);
+                    effectHandler.setChosenStudents2(toJester);
+                    break;
+                case "KNIGHT":
+                    currentPower = PowerType.KNIGHT;
+                    break;
+                case "HARVESTER":
+                    currentPower = PowerType.HARVESTER;
+                    color = switch(command[2].toUpperCase()) {
+                        case "RED" -> PawnColor.RED;
+                        case "YELLOW" -> PawnColor.YELLOW;
+                        case "GREEN" -> PawnColor.GREEN;
+                        case "BLUE" -> PawnColor.BLUE;
+                        case "PINK" -> PawnColor.PINK;
+                        default -> null;
+                    };
+                    effectHandler.setHarvesterColor(color);
+                    break;
+                case "MINSTREL":
+                    currentPower = PowerType.MINSTREL;
+                    List<Student> toDiningRoom = new ArrayList<>();
+                    List<Student> toEntranceM = new ArrayList<>();
+
+                    for(int i=2; i< command.length; i+=2) {
+                        if(command[i].equalsIgnoreCase("E:")) {
+                            for(Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
+                                if(student.getColor().toString().equalsIgnoreCase(command[i+1]) && !toDiningRoom.contains(student)) {
+                                    toDiningRoom.add(student);
+                                    break;
+                                }
+                            }
+                        }
+                        else {
+                            color = switch(command[i+1].toUpperCase()) {
+                                case "RED" -> PawnColor.RED;
+                                case "YELLOW" -> PawnColor.YELLOW;
+                                case "GREEN" -> PawnColor.GREEN;
+                                case "BLUE" -> PawnColor.BLUE;
+                                case "PINK" -> PawnColor.PINK;
+                                default -> null;
+                            };
+                            for(Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getStudentsDiningRoom(color)) {
+                                if(!toEntranceM.contains(student)) {
+                                    toEntranceM.add(student);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    effectHandler.setChosenStudents1(toDiningRoom);
+                    effectHandler.setChosenStudents2(toEntranceM);
+                    break;
+                case "PRINCESS":
+                    currentPower = PowerType.PRINCESS;
+                    List<Student> studentsP = new ArrayList<>();
+                    if(powerTypes.contains(currentPower)) {
+                        Princess currentPrincess = (Princess) powerCards.get(powerTypes.indexOf(currentPower));
+                        for (Student student : currentPrincess.getStudents()) {
+                            if (student.getColor().toString().equalsIgnoreCase(command[2])) {
+                                studentsP.add(student);
+                                break;
+                            }
+                        }
+                    }
+                    effectHandler.setChosenStudents1(studentsP);
+                    break;
+                case "THIEF":
+                    currentPower = PowerType.THIEF;
+                    color = switch(command[2].toUpperCase()) {
+                        case "RED" -> PawnColor.RED;
+                        case "YELLOW" -> PawnColor.YELLOW;
+                        case "GREEN" -> PawnColor.GREEN;
+                        case "BLUE" -> PawnColor.BLUE;
+                        case "PINK" -> PawnColor.PINK;
+                        default -> null;
+                    };
+                    effectHandler.setThiefColor(color);
+                    break;
+            }
+            try {
+                GameService.powerRequest(currentPower,effectHandler);
+            } catch (IllegalArgumentException e) {
+                System.out.println(ConsoleColor.RED + "Invalid character selected" + ConsoleColor.RESET);
+            }
         }
         return true;
     }

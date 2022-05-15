@@ -8,9 +8,14 @@ import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.model.entity.*;
 import it.polimi.ingsw.model.enumeration.Card;
 import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.GameHandler;
+import it.polimi.ingsw.model.power.Friar;
+import it.polimi.ingsw.model.power.Herbalist;
+import it.polimi.ingsw.model.power.Jester;
+import it.polimi.ingsw.model.power.Princess;
 import it.polimi.ingsw.server.GameLobby;
 import it.polimi.ingsw.server.Server;
 
@@ -138,6 +143,93 @@ public class CLI {
                 " / : : \\\n" +
                 "(       )\n" +
                 " `-----'");
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private void printPowers() {
+        List<Student> students;
+        System.out.println("CHARACTERS: ");
+        System.out.println();
+        for(int i=0; i<3; i++) {
+            switch(client.getGameHandler().getGame().getPowerCards().get(i).getType()) {
+                case FRIAR:
+                    students = ((Friar)client.getGameHandler().getGame().getPowerCards().get(i)).getStudents();
+                    System.out.print(client.getGameHandler().getGame().getPowerCards().get(i).getType() + ": ");
+                    for (int j = 0; j < students.size(); j++ ) {
+                        System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
+                    }
+                    System.out.println();
+                    break;
+                case JESTER:
+                    students = ((Jester)client.getGameHandler().getGame().getPowerCards().get(i)).getStudents();
+                    System.out.print(client.getGameHandler().getGame().getPowerCards().get(i).getType() + ": ");
+                    for (int j = 0; j < students.size(); j++ ) {
+                        System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
+                    }
+                    System.out.println();
+                    break;
+                case PRINCESS:
+                    students = ((Princess)client.getGameHandler().getGame().getPowerCards().get(i)).getStudents();
+                    System.out.print(client.getGameHandler().getGame().getPowerCards().get(i).getType() + ": ");
+                    for (int j = 0; j < students.size(); j++ ) {
+                        System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
+                    }
+                    System.out.println();
+                    break;
+                case HERBALIST:
+                    System.out.print(client.getGameHandler().getGame().getPowerCards().get(i).getType() + ": " +
+                            ((Herbalist)client.getGameHandler().getGame().getPowerCards().get(i)).getNoEntryCards() + "No Entry tiles");
+                    System.out.println();
+                    break;
+                default:
+                    System.out.println(client.getGameHandler().getGame().getPowerCards().get(i).getType());
+            }
+        }
+    }
+
+    /**
+     * Provisionally these tips will be printed all the time,
+     * shortly I will implement the "TIPS CHARACTER" command for example, to display them only if necessary
+     *
+     * @author Christian Confalonieri
+     */
+    private void printPowersTips() {
+        String tips = "";
+        for(int i=0; i<3; i++) {
+            tips += switch(client.getGameHandler().getGame().getPowerCards().get(i).getType()) {
+                case FRIAR -> "\nTo activate the power of \"FRIAR\" type the command:\n" +
+                        "\"CHARACTER FRIAR RED 7\", where \"RED\" is the color of a FRIAR student and \"7\" is the number of an island of your choice.";
+                case FARMER -> "\nTo activate the power of \"FARMER\" type the command:\n" +
+                        "\"CHARACTER FARMER\"";
+                case HERALD -> "\nTo activate the power of \"HERALD\" type the command:\n" +
+                        "\"CHARACTER HERALD 7\", where \"7\" is the number of an island of your choice.";
+                case MAILMAN -> "\nTo activate the power of \"MAILMAN\" type the command:\n" +
+                        "\"CHARACTER MAILMAN\"";
+                case HERBALIST -> "\nTo activate the power of \"HERBALIST\" type the command:\n" +
+                        "\"CHARACTER HERBALIST 7\", where \"7\" is the number of an island of your choice.";
+                case CENTAUR -> "\nTo activate the power of \"CENTAUR\" type the command:\n" +
+                        "\"CHARACTER CENTAUR\"";
+                case JESTER -> "\nTo activate the power of \"JESTER\" type the command:\n" +
+                        "\"CHARACTER JESTER E: RED E: BLUE E: GREEN J: RED J: BLUE J: GREEN\",\n where \"E: RED\" is, " +
+                        "for example, the color of a student in your entry\n and \"J: BLUE\" is the color of a student placed " +
+                        "on the jester (you can type students in your preferred order).";
+                case KNIGHT -> "\nTo activate the power of \"KNIGHT\" type the command:\n" +
+                        "\"CHARACTER KNIGHT\"";
+                case HARVESTER -> "\nTo activate the power of \"HARVESTER\" type the command:\n" +
+                        "\"CHARACTER HARVESTER RED\", where \"RED\" is the color of a student of your choice.";
+                case MINSTREL -> "\nTo activate the power of \"JESTER\" type the command:\n" +
+                        "\"CHARACTER JESTER E: RED E: BLUE E: GREEN D: RED D: BLUE D: GREEN\",\n where \"E: RED\" is, " +
+                        "for example, the color of a student in your entry\n and \"D: BLUE\" is he color of a student in your dining room " +
+                        "(you can type students in your preferred order).";
+                case PRINCESS -> "\nTo activate the power of \"PRINCESS\" type the command:\n" +
+                        "\"CHARACTER PRINCESS RED\", where \"RED\" is the color of a student of your choice.";
+                case THIEF -> "\nTo activate the power of \"THIEF\" type the command:\n" +
+                        "\"CHARACTER THIEF RED\", where \"RED\" is the color of a student of your choice.";
+            };
+        }
+        System.out.println(tips);
     }
 
     private void cliPlayers () {
@@ -338,6 +430,8 @@ public class CLI {
 
                 printGameName();
                 // printPlayers();
+                printPowers();
+                printPowersTips();
                 printIslands();
                 printClouds();
                 printSchool();
