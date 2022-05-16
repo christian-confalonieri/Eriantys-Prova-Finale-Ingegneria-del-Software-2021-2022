@@ -163,7 +163,12 @@ public class LobbyService {
     }
 
     public static void joinGameFailed(ACK ack) {
-        System.out.println(ConsoleColor.RED + ack.getMessage() + ConsoleColor.RESET);
+        if(ack.getMessage().contains("Invalid lobby ID")) {
+            System.out.println(ConsoleColor.YELLOW + "No lobby available. Try creating a new one with \"newgame\""+ ConsoleColor.RESET);
+        }
+        else {
+            System.out.println(ConsoleColor.RED + ack.getMessage() + ConsoleColor.RESET);
+        }
     }
 
 

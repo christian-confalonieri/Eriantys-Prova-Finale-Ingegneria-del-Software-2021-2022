@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.rules.GameRules;
 
@@ -80,5 +81,29 @@ public class GameLobby {
         this.gameRules = gameRules;
         this.numberOfPlayers = numberOfPlayers;
         this.playersWaiting = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return numberOfPlayers + "\t" + waitingPlayersToString() + "\t[" + gameLobbyId + "]";
+    }
+
+    private String waitingPlayersToString() {
+        String r = "";
+        for (PlayerLobby p:
+             playersWaiting) {
+            r += getPlayerColorToString(p);
+        }
+        r += "\t";
+        return r;
+    }
+
+    private String getPlayerColorToString(PlayerLobby p) {
+        return switch(p.getWizard()) {
+            case GREEN -> ConsoleColor.GREEN + "G" + ConsoleColor.RESET;
+            case YELLOW -> ConsoleColor.YELLOW + "Y" + ConsoleColor.RESET;
+            case PURPLE -> ConsoleColor.PURPLE + "P" + ConsoleColor.RESET;
+            case BLUE -> ConsoleColor.BLUE + "B" + ConsoleColor.RESET;
+        };
     }
 }
