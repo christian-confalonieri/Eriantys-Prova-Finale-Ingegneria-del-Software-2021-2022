@@ -88,6 +88,7 @@ public class CLIRenderHelper {
                         ConsoleColor.PURPLE_BOLD_BRIGHT + "|   [_ " + ConsoleColor.RESET + "|    \\ |___, ||  _  ||  |  |  |  |   |  |/  \\ |\n" +
                         ConsoleColor.PURPLE_BOLD_BRIGHT + "|     |" + ConsoleColor.RESET + "|  .  \\|     ||  |  ||  |  |  |  |   |  |\\    |\n" +
                         ConsoleColor.PURPLE_BOLD_BRIGHT + "|_____|" + ConsoleColor.RESET + "|__|\\_||____/ |__|__||__|__|  |__|  |____|\\___|";
+                return;
             case 1:
                 loadingScreen =  """
                                                                                                          \s
@@ -103,6 +104,7 @@ public class CLIRenderHelper {
                             `''-...... -'   | |         / /   / /   | |_|  |   |  |   |  '.'  .'.'.-'  / \s
                                             |_|     |`-' /    \\ \\._,\\ '/|  |   |  |   |   /   .'   \\_.'  \s
                                                      '..'      `--'  `" '--'   '--'   `'-'               \s""".indent(1);
+                return;
         }
     }
 
@@ -143,8 +145,10 @@ public class CLIRenderHelper {
                                                           
                 WAITING LOBBIES:
                 """;
-        for (GameLobby lb : Client.getInstance().getAllServerLobbys()) {
-            mainMenuScreen += " - " + lb.toString() + "\n";
+        if(Client.getInstance().getAllServerLobbys() != null) {
+            for (GameLobby lb : Client.getInstance().getAllServerLobbys()) {
+                mainMenuScreen += " - " + lb.toString() + "\n";
+            }
         }
     }
 

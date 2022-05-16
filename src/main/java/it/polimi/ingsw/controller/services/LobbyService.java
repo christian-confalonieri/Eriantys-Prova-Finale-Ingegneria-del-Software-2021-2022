@@ -92,7 +92,7 @@ public class LobbyService {
         joinGame(new JoinGameAction(action.getPlayerId(), lobby.getGameRules().cloudsRules.numberOfClouds , action.getWizard()),lobby);
     }
 
-    public static void joinGame(JoinGameAction action,GameLobby newGameLobby) throws InvalidAction {
+    public static void joinGame(JoinGameAction action, GameLobby newGameLobby) throws InvalidAction {
         if(Server.getInstance().isWaitingInALobby(action.getPlayerId())) {
             Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(
                     new ACK(action.getPlayerId(), ActionType.JOINGAME, "JoinGame : player already waiting in a lobby", false)));
@@ -197,9 +197,10 @@ public class LobbyService {
 
     }
 
-    public static void getAllLobbys(GetAllLobbysAction action) {
+    public static void getAllLobbys(GetAllLobbysAction action, ClientNetworkHandler clientNet) {
         action.setGameLobbyList(Server.getInstance().getAllGameLobbys());
-        Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(action));
+        clientNet.send(ActionHandler.toJson(action));
+        System.out.println(clientNet + " requested lobbies list");
     }
 
 }

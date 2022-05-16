@@ -95,6 +95,7 @@ public class InputCLI {
                     break;
                 case ENDGAME:
                     Client.getInstance().setClientState(ClientState.MAINMENU);
+                    Client.getInstance().setPollAllLobbies(true);
                     Client.getInstance().getCli().render();
                 default:
                     System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);

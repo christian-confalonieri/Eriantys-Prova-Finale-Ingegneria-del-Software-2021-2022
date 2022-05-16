@@ -26,6 +26,7 @@ public class LobbyService {
     public static void getGame(GetGameAction action) {
         Client.getInstance().setGameHandler(parseGameHandler(action.getGameHandlerInfoJson()));
         Client.getInstance().setClientState(ClientState.INGAME);
+        Client.getInstance().setPollAllLobbies(false);
     }
 
     public static void getGameRequest() {

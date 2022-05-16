@@ -31,6 +31,7 @@ public class Client implements Runnable {
     private List<String> finalLeaderBoard;
     private List<GameLobby> allServerLobbys;
     private GameLobby gameLobby;
+    private boolean pollAllLobbies;
 
     private NetworkController networkController;
     private final ClientController clientController;
@@ -52,6 +53,7 @@ public class Client implements Runnable {
     public Client(String serverIp, int serverPort) {
         this.serverIp = serverIp;
         this.serverPort = serverPort;
+        this.pollAllLobbies = true;
 
         clientState = ClientState.LOADING;
         gameHandler = null;
@@ -184,5 +186,13 @@ public class Client implements Runnable {
 
     public void setFinalLeaderBoard(List<String> finalLeaderBoard) {
         this.finalLeaderBoard = finalLeaderBoard;
+    }
+
+    public boolean isPollAllLobbies() {
+        return pollAllLobbies;
+    }
+
+    public void setPollAllLobbies(boolean pollAllLobbies) {
+        this.pollAllLobbies = pollAllLobbies;
     }
 }

@@ -256,7 +256,6 @@ public class CLI {
             }
         }
         System.out.print(": ");
-        System.out.print(ConsoleColor.WHITE_BRIGHT);
-        System.out.print(ConsoleColor.WHITE_UNDERLINED);
+        System.out.print(ConsoleColor.WHITE_BOLD_BRIGHT);
     }
 }

@@ -6,6 +6,7 @@ import it.polimi.ingsw.action.Action;
 import it.polimi.ingsw.action.ActionType;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.exceptions.InvalidAction;
 
 import java.io.Console;
@@ -18,7 +19,10 @@ public class ClientController {
 
 
 
-            if(action.getActionType() != ActionType.PING && action.getActionType() != ActionType.PONG && !(action.getActionType() == ActionType.ACK && !((ACK)action).isOk())) {
+            if(action.getActionType() != ActionType.PING && action.getActionType() != ActionType.PONG
+                    && !(action.getActionType() == ActionType.ACK && !((ACK)action).isOk())
+                    && !(action.getActionType() == ActionType.GETALLLOBBYS && Client.getInstance().getClientState() != ClientState.MAINMENU)
+            ) {
                 Client.getInstance().getCli().render();
             }
 

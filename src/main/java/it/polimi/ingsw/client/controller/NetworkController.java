@@ -4,6 +4,7 @@ import it.polimi.ingsw.action.LogoutAction;
 import it.polimi.ingsw.action.PING;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.controller.services.LobbyService;
 import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.controller.ActionHandler;
 import it.polimi.ingsw.network.ClientNetworkHandler;
@@ -118,6 +119,7 @@ public class NetworkController implements Runnable {
     private void pollingPing() {
         while(!shutdown) {
             Client.getInstance().getNetworkController().startTimerPongResponse();
+            if(Client.getInstance().isPollAllLobbies()) LobbyService.getAllLobbysRequest();
             try {
                 Thread.sleep(20000);
             } catch (InterruptedException e) {

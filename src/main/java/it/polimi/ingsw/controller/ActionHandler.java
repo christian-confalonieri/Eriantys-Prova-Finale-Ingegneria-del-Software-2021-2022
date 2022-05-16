@@ -64,8 +64,9 @@ public class ActionHandler {
      */
 
     public static void actionServiceInvoker(Action action, ClientNetworkHandler clientNet) throws InvalidAction {
-        if (!(action.getActionType() == ActionType.LOGIN || action.getActionType() == ActionType.PING || action.getActionType() == ActionType.PONG)
-                && !Server.getInstance().isAssigned(action.getPlayerId())) { // The playerId sent is not online
+        if (!(action.getActionType() == ActionType.LOGIN || action.getActionType() == ActionType.PING
+                || action.getActionType() == ActionType.PONG || action.getActionType() == ActionType.GETALLLOBBYS
+                ) && !Server.getInstance().isAssigned(action.getPlayerId())) { // The playerId sent is not online (invalid)
             clientNet.send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.LOGIN,
                     "You are logged in with an ID not online. Try logging out and logging back in", false)));
             throw new InvalidAction("Action is referencing a player not online");
@@ -90,7 +91,7 @@ public class ActionHandler {
             case POWER -> GameService.power((PowerAction) action);
             case JOINGAME -> LobbyService.joinGame((JoinGameAction) action, null);
             case GETGAME -> LobbyService.getGame((GetGameAction) action);
-            case GETALLLOBBYS -> LobbyService.getAllLobbys((GetAllLobbysAction) action);
+            case GETALLLOBBYS -> LobbyService.getAllLobbys((GetAllLobbysAction) action, clientNet);
             case PING -> NetworkService.recvPing((PING) action, clientNet);
             case PONG -> NetworkService.recvPong((PONG) action, clientNet);
         }
