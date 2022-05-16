@@ -134,7 +134,7 @@ public class CLI {
      */
     private void printPowers() {
         List<Student> students;
-        System.out.println("\n\n-----------------------\n" + "CHARACTERS: " + "\n-----------------------");
+        System.out.println("\n" + ConsoleColor.RED + "+---------------------+\n" + ConsoleColor.RESET + "CHARACTERS: " + "\n-----------------------");
         for(int i=0; i<3; i++) {
             switch(client.getGameHandler().getGame().getPowerCards().get(i).getType()) {
                 case FRIAR:
@@ -171,14 +171,14 @@ public class CLI {
                     break;
             }
         }
-        System.out.println("-----------------------");
+        System.out.println(ConsoleColor.RED + "+---------------------+\n" + ConsoleColor.RESET);
     }
 
     /**
      * @author Christian Confalonieri
      */
-    private void printPowersTips() {
-        String tips = "";
+    private void printPowersHelp() {
+        String help = "";
         String friar = "\nTo activate the power of \"FRIAR\" type the command:\n" +
                 "\"CHARACTER FRIAR RED 7\", where \"RED\" is the color of a FRIAR student and \"7\" is the number of an island of your choice.";
         String farmer = "\nTo activate the power of \"FARMER\" type the command:\n" +
@@ -209,7 +209,7 @@ public class CLI {
                 "\"CHARACTER THIEF RED\", where \"RED\" is the color of a student of your choice.";
         if(client.getGameHandler() != null) {
             for(int i=0; i<3; i++) {
-                tips += switch(client.getGameHandler().getGame().getPowerCards().get(i).getType()) {
+                help += switch(client.getGameHandler().getGame().getPowerCards().get(i).getType()) {
                     case FRIAR -> friar;
                     case FARMER -> farmer;
                     case HERALD -> herald;
@@ -226,17 +226,17 @@ public class CLI {
             }
         }
         else {
-            tips = friar + farmer + herald + mailman + herbalist + centaur + jester + knight + harvester + minstrel + princess + thief +
+            help = friar + farmer + herald + mailman + herbalist + centaur + jester + knight + harvester + minstrel + princess + thief +
                     "\nHowever, you cannot type the command to activate a character since you are not in the correct phase of the game.";
         }
-        System.out.println(tips + "\n");
+        System.out.println(help + "\n");
         System.out.print("Enter the command: ");
     }
 
     /**
      * @author Christian Confalonieri
      */
-    private void printMainMenuTips() {
+    private void printMainMenuHelp() {
         System.out.println("\nTo disconnect, type the command: \"LOGOUT\".");
         System.out.println("Type the command: \"NEWGAME X COLOR\" or \"JOINGAME X COLOR\"\n" +
                 "where \"X\" is the number of players and \"COLOR\" is the color of the wizard\n");
@@ -249,7 +249,7 @@ public class CLI {
     /**
      * @author Christian Confalonieri
      */
-    private void printWaitingLobbyTips() {
+    private void printWaitingLobbyHelp() {
         System.out.println("\nTo disconnect, type: \"LOGOUT\".\n");
         System.out.print("Enter the command: ");
     }
@@ -257,45 +257,45 @@ public class CLI {
     /**
      * @author Christian Confalonieri
      */
-    private void printMoveStudentsTips() {
+    private void printMoveStudentsHelp() {
         System.out.println("\nType the command: \"D: YELLOW D: BLUE 7: GREEN\"\n" +
-                "in which with \"D:\" we indicate the students to move to the dining room and with \"7:\" those to move to island 7\n");
+                "in which with \"D:\" we indicate the students to move to the dining room and with \"7:\" those to move to island 7");
         if(!(Client.getInstance().getClientState() == ClientState.INGAME && Client.getInstance().getGameHandler().getGamePhase() == GamePhase.TURN && Client.getInstance().getGameHandler().getTurnPhase() == TurnPhase.MOVESTUDENTS)) {
-            System.out.println("However, you cannot type the command to move students since you are not in the correct phase of the game.\n");
+            System.out.println("However, you cannot type the command to move students since you are not in the correct phase of the game.");
         }
-        System.out.print("Enter the command: ");
+        System.out.print("\nEnter the command: ");
     }
 
     /**
      * @author Christian Confalonieri
      */
-    public boolean printTips(String[] command) {
+    public boolean printHelp(String[] command) {
         if(command.length != 2) {
-            System.out.println(ConsoleColor.RED + "Invalid tips command" + ConsoleColor.RESET);
+            System.out.println(ConsoleColor.RED + "Invalid help command" + ConsoleColor.RESET);
             return true;
         }
         switch(command[1].toUpperCase()) {
-            case "TIPS":
-                System.out.println("\n\"TIPS CHARACTERS\"\n"+
-                        "\n\"TIPS MAINMENU\"\n" +
-                        "\n\"TIPS WAITINGLOBBY\"\n" +
-                        "\n\"TIPS MOVESTUDENTS\"\n");
+            case "HELP":
+                System.out.println("\n\"HELP CHARACTERS\"\n"+
+                        "\n\"HELP MAINMENU\"\n" +
+                        "\n\"HELP WAITINGLOBBY\"\n" +
+                        "\n\"HELP MOVESTUDENTS\"\n");
                 System.out.print("Enter the command: ");
                 break;
             case "CHARACTERS":
-                printPowersTips();
+                printPowersHelp();
                 break;
             case "MAINMENU":
-                printMainMenuTips();
+                printMainMenuHelp();
                 break;
             case "WAITINGLOBBY":
-                printWaitingLobbyTips();
+                printWaitingLobbyHelp();
                 break;
             case "MOVESTUDENTS":
-                printMoveStudentsTips();
+                printMoveStudentsHelp();
                 break;
             default:
-                System.out.println(ConsoleColor.RED + "Invalid tips command" + ConsoleColor.RESET);
+                System.out.println(ConsoleColor.RED + "Invalid help command" + ConsoleColor.RESET);
                 break;
         }
         return true;
@@ -324,9 +324,9 @@ public class CLI {
         Island islandMotherNature = motherNature.isOn();
         for ( int i = 0; i < islands.size(); i++ ) {
             if (islandMotherNature == islands.get(i)) {
-                islandData += "\n\n--" + ConsoleColor.PawnColorString(PawnColor.RED) + "M" + ConsoleColor.RESET + "---------------------\nISLAND " + ( i + 1 ) + "\n-----------------------\n";
+                islandData += ConsoleColor.GREEN + "\n+-----------------<" + ConsoleColor.RESET + ConsoleColor.YELLOW + "M" + ConsoleColor.RESET + ConsoleColor.GREEN + ">-+" + ConsoleColor.RESET + "\nISLAND " + ( i + 1 ) + "\n-----------------------\n";
             } else {
-                islandData += "\n\n-----------------------\nISLAND " + ( i + 1 ) + "\n-----------------------\n";
+                islandData += ConsoleColor.GREEN + "\n\n+---------------------+\n"+ ConsoleColor.RESET + "ISLAND " + ( i + 1 ) + "\n-----------------------\n";
             }
             //islandData += "Island Size: " + islands.get(i).getIslandSize() + "\n";
             if(islands.get(i).getTowerColor() != null) {
@@ -338,8 +338,11 @@ public class CLI {
             students = islands.get(i).getStudents();
             for ( int j = 0; j < students.size(); j++ ) {
                 islandData += ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET;
+                if((j+1)%12 == 0) {
+                    islandData += "\n";
+                }
             }
-            islandData += "\n-----------------------\n";
+            islandData += ConsoleColor.GREEN + "\n+---------------------+\n" + ConsoleColor.RESET;
         }
     }
 
@@ -352,12 +355,15 @@ public class CLI {
         List<Cloud> clouds = client.getGameHandler().getGame().getClouds();
         List<Student> students;
         for ( int i = 0; i < clouds.size(); i++ ) {
-            cloudsData += "\n\n-----------------------\nCLOUD " + ( i + 1 ) + "\n-----------------------\n";
+            cloudsData += ConsoleColor.BLUE_BRIGHT + "\n+---------------------+\n" + ConsoleColor.RESET + "CLOUD " + ( i + 1 ) + "\n-----------------------\n";
             students = clouds.get(i).getStudents();
             for ( int j = 0; j < students.size(); j++ ) {
                 cloudsData += ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET;
             }
-            cloudsData += "\n-----------------------\n";
+            cloudsData += ConsoleColor.BLUE_BRIGHT + "\n+---------------------+\n" + ConsoleColor.RESET;
+            if(i+1!= clouds.size()) {
+                cloudsData += "\n";
+            }
         }
     }
 
@@ -372,7 +378,7 @@ public class CLI {
         List<Student> fila;
         for ( int i = 0; i < players.size(); i++ ) {
             school = players.get(i).getSchool();
-            schoolData += "\n\n-----------------------\n" + players.get(i).getName() + "' SCHOOL\n-------ENTRANCE--------\n";
+            schoolData += ConsoleColor.RED_BRIGHT + "\n+---------------<" + ConsoleColor.RESET + ConsoleColor.YELLOW + "©" + ":" + players.get(i).getCoins() + ConsoleColor.RESET + ConsoleColor.RED_BRIGHT + ">-+\n" + ConsoleColor.RESET + players.get(i).getName() + "' SCHOOL\n-------ENTRANCE--------\n";
             //schoolData += "ENTRANCE: ";
             for ( int j = 0; j < school.getEntrance().size(); j++ ) {
                 schoolData += ConsoleColor.PawnColorString(school.getEntrance().get(j).getColor()) + "o " + ConsoleColor.RESET;
@@ -413,6 +419,10 @@ public class CLI {
             for ( int j = 0; j < fila.size(); j++ ) {
                 schoolData += ConsoleColor.PawnColorString(PawnColor.PINK) + "o " + ConsoleColor.RESET;
             }
+            schoolData += ConsoleColor.RED_BRIGHT +"\n+---------------------+\n" + ConsoleColor.RESET;
+            if(i+1!= players.size()) {
+                schoolData += "\n";
+            }
         }
     }
 
@@ -424,13 +434,16 @@ public class CLI {
         myCardsData = "";
         Player player = client.getGameHandler().getOrderedTurnPlayers().stream().filter(p -> p.getName().equals(client.getPlayerId())).findAny().get();
         List<Card> cards = player.getHandCards();
-        myCardsData += "\n\n-----------------------\nYOUR CARDS:\n-----------------------\n";
+        myCardsData += ConsoleColor.YELLOW + "\n+---------------------+\n" + ConsoleColor.RESET + "YOUR CARDS:\n-----------------------\n";
         for ( int i = 0; i < cards.size(); i++ ) {
             //myCardsData += "Card Number: " + cards.get(i).getNumber() + "\n";
             //myCardsData += "Number Of Movements: " + cards.get(i).getMovements() + "\n\n";
             myCardsData += "(" + cards.get(i).getNumber() + ", " + cards.get(i).getMovements() + ") ";
+            if((i+1)%3 == 0) {
+                myCardsData += "\n";
+            }
         }
-        myCardsData += "\n-----------------------\n";
+        myCardsData += ConsoleColor.YELLOW + "\n+---------------------+\n" + ConsoleColor.RESET;
     }
 
     private void printMyCards () {
@@ -441,13 +454,16 @@ public class CLI {
         cardsData = "";
         List<Player> players = client.getGameHandler().getOrderedTurnPlayers();
         for (int i = 0; i < players.size(); i++) {
-            cardsData += "\n\n-----------------------\n" + players.get(i).getName() + "' last played card:\n-----------------------\n";
+            cardsData += ConsoleColor.YELLOW + "\n+---------------------+\n" + ConsoleColor.RESET + players.get(i).getName() + "' last played card:\n-----------------------\n";
             if(players.get(i).getLastPlayedCard() != null) {
                 //cardsData += "Card Number: " + players.get(i).getLastPlayedCard().getNumber();
                 //cardsData += "Number Of Movements: " + players.get(i).getLastPlayedCard().getMovements();
                 cardsData += "(" + players.get(i).getLastPlayedCard().getNumber() + ", " + players.get(i).getLastPlayedCard().getMovements() + ") ";
             }
-            cardsData += "\n-----------------------\n";
+            cardsData += ConsoleColor.YELLOW + "\n+---------------------+\n" + ConsoleColor.RESET;
+            if(i+1!= players.size()) {
+                cardsData += "\n";
+            }
         }
     }
 
@@ -460,10 +476,11 @@ public class CLI {
         List<String> leaderBoard = client.getFinalLeaderBoard() ==
                 null ? client.getGameHandler().getGame().getLeaderBoard().stream().map(Player::getName).toList() : client.getFinalLeaderBoard();
 
-        gameEnded = "\n\n-----------------------\nMATCH IS OVER!\n-----------------------\n";
+        gameEnded += ConsoleColor.YELLOW + "\n+---------------------+\n" + ConsoleColor.RESET + "MATCH IS OVER!\n-----------------------\n";
         for ( int i = 0; i < leaderBoard.size(); i++ ) {
             gameEnded += ( i + 1 ) + "° " + leaderBoard.get(i) + "\n";
         }
+        gameEnded += ConsoleColor.YELLOW + "+---------------------+\n" + ConsoleColor.RESET;
     }
 
     private void printGameEnded () {

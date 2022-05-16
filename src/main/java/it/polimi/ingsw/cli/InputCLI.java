@@ -45,8 +45,8 @@ public class InputCLI {
                             if(cliJoinGameRequest(command)) {
                                 break;
                             }
-                        case "TIPS":
-                            if(CLI.getInstance().printTips(command)) {
+                        case "HELP":
+                            if(CLI.getInstance().printHelp(command)) {
                                 break;
                             }
                         default:
@@ -59,8 +59,8 @@ public class InputCLI {
                             if(cliLogoutRequest(command)) {
                                 break;
                             }
-                        case "TIPS":
-                            if(CLI.getInstance().printTips(command)) {
+                        case "HELP":
+                            if(CLI.getInstance().printHelp(command)) {
                                 break;
                             }
                         default:
@@ -172,12 +172,12 @@ public class InputCLI {
             System.out.println(ConsoleColor.RED + "Invalid play card command" + ConsoleColor.RESET);
             return true;
         }
-        /*--------------------LOGOUT AND TIPS SECTION--------------------*/
+        /*--------------------LOGOUT AND HELP SECTION--------------------*/
         if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
             LoginService.logoutRequest();
         }
         else {
-            if (command[0].equalsIgnoreCase("TIPS") && CLI.getInstance().printTips(command)) {
+            if (command[0].equalsIgnoreCase("HELP") && CLI.getInstance().printHelp(command)) {
                 return true;
             }
         }
@@ -211,7 +211,7 @@ public class InputCLI {
             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
             return true;
         }
-        /*----------LOGOUT, CHARACTER ACTIVATION AND TIPS SECTION----------*/
+        /*----------LOGOUT, CHARACTER ACTIVATION AND HELP SECTION----------*/
         if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
             LoginService.logoutRequest();
         }
@@ -220,7 +220,7 @@ public class InputCLI {
                 return true;
             }
             else {
-                if (command[0].equalsIgnoreCase("TIPS") && CLI.getInstance().printTips(command)) {
+                if (command[0].equalsIgnoreCase("HELP") && CLI.getInstance().printHelp(command)) {
                     return true;
                 }
             }
@@ -261,7 +261,7 @@ public class InputCLI {
             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
             return true;
         }
-        /*----------LOGOUT, CHARACTER ACTIVATION AND TIPS SECTION----------*/
+        /*----------LOGOUT, CHARACTER ACTIVATION AND HELP SECTION----------*/
         if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
             LoginService.logoutRequest();
         }
@@ -270,7 +270,7 @@ public class InputCLI {
                     return true;
             }
             else {
-                if (command[0].equalsIgnoreCase("TIPS") && CLI.getInstance().printTips(command)) {
+                if (command[0].equalsIgnoreCase("HELP") && CLI.getInstance().printHelp(command)) {
                     return true;
                 }
             }
@@ -288,7 +288,7 @@ public class InputCLI {
             System.out.println(ConsoleColor.RED + "Invalid move command" + ConsoleColor.RESET);
             return true;
         }
-        /*----------LOGOUT, CHARACTER ACTIVATION AND TIPS SECTION----------*/
+        /*----------LOGOUT, CHARACTER ACTIVATION AND HELP SECTION----------*/
         if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
             LoginService.logoutRequest();
         }
@@ -297,7 +297,7 @@ public class InputCLI {
                 return true;
             }
             else {
-                if (command[0].equalsIgnoreCase("TIPS") && CLI.getInstance().printTips(command)) {
+                if (command[0].equalsIgnoreCase("HELP") && CLI.getInstance().printHelp(command)) {
                     return true;
                 }
             }
