@@ -100,8 +100,12 @@ public class LobbyService {
         }
 
         GameLobby lb = null;
+
         if(newGameLobby != null) {
             lb = newGameLobby;
+        }
+        else if (action.getLobbyId() != null) {
+            lb = Server.getInstance().getGameLobby(action.getLobbyId());
         }
         else {
             for(GameLobby gameLobby : Server.getInstance().getAllGameLobbys()) {

@@ -163,6 +163,12 @@ public class LobbyService {
         ));
     }
 
+    public static void joinGameIdRequest(String id, Wizard wizard) {
+        Client.getInstance().getNetworkController().send(ClientActionHandler.toJson(
+                new JoinGameAction(Client.getInstance().getPlayerId(), id, wizard)
+        ));
+    }
+
     public static void joinGameFailed(ACK ack) {
         if(ack.getMessage().contains("Invalid lobby ID")) {
             System.out.println(ConsoleColor.YELLOW + "No lobby available. Try creating a new one with \"newgame\""+ ConsoleColor.RESET);

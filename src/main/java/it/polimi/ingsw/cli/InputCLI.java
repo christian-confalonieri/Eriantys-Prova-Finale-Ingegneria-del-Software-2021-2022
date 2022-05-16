@@ -25,6 +25,11 @@ public class InputCLI {
 
             String[] command = inputString.split(" ");
 
+            if(command[0].equalsIgnoreCase("refresh")) {
+                Client.getInstance().getCli().render();
+                return;
+            }
+
             switch(Client.getInstance().getClientState()) {
                 case LOGIN:
                     if(cliLoginRequest(command)) {
@@ -40,7 +45,9 @@ public class InputCLI {
                             if(cliNewGameRequest(command)) {
                                 break;
                             }
-
+                        case "JOINGAMEID":
+                            cliJoinGameIdRequest(command);
+                            break;
                         case "JOINGAME":
                             if(cliJoinGameRequest(command)) {
                                 break;
@@ -163,6 +170,22 @@ public class InputCLI {
             System.out.println("Invalid wizard selected");
         }
         return true;
+    }
+
+    /**
+     * Request joining the lobby ID.
+     * @param command [joingameid wizard id]
+     */
+    private static void cliJoinGameIdRequest(String[] command) {
+        if(command.length != 3) {
+            System.out.println(ConsoleColor.RED + "Invalid join game command" + ConsoleColor.RESET);
+            return;
+        }
+        try {
+            LobbyService.joinGameIdRequest(command[2], Wizard.valueOf(command[1].toUpperCase()));
+        } catch (IllegalArgumentException wizardException) {
+            System.out.println("Invalid wizard selected");
+        }
     }
 
     /**

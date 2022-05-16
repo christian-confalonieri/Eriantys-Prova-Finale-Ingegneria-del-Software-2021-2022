@@ -77,7 +77,7 @@ public class NetworkController implements Runnable {
 
     public void startTimerPongResponse() {
         ponged = false;
-        this.send(ActionHandler.toJson(new PING()));
+        this.send(ClientActionHandler.toJson(new PING()));
         timerThread = new Thread(this::pongTimer);
         timerThread.start();
     }
