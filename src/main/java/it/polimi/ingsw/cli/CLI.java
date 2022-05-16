@@ -320,8 +320,14 @@ public class CLI {
         islandData = "";
         List<Student> students;
         List<Island> islands = client.getGameHandler().getGame().getIslands();
+        MotherNature motherNature = client.getGameHandler().getGame().getMotherNature();
+        Island islandMotherNature = motherNature.isOn();
         for ( int i = 0; i < islands.size(); i++ ) {
-            islandData += "\n\n-----------------------\nISLAND " + ( i + 1 ) + "\n-----------------------\n";
+            if (islandMotherNature == islands.get(i)) {
+                islandData += "\n\n--" + ConsoleColor.PawnColorString(PawnColor.RED) + "M" + ConsoleColor.RESET + "---------------------\nISLAND " + ( i + 1 ) + "\n-----------------------\n";
+            } else {
+                islandData += "\n\n-----------------------\nISLAND " + ( i + 1 ) + "\n-----------------------\n";
+            }
             //islandData += "Island Size: " + islands.get(i).getIslandSize() + "\n";
             if(islands.get(i).getTowerColor() != null) {
                 for ( int j = 0; j < islands.get(i).getIslandSize(); j++ ) {
