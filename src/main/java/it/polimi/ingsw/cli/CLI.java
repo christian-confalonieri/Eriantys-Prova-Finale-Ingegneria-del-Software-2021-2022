@@ -2,28 +2,12 @@ package it.polimi.ingsw.cli;
 
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.ClientState;
-import it.polimi.ingsw.client.controller.services.GameService;
-import it.polimi.ingsw.client.controller.services.LobbyService;
-import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.model.entity.*;
 import it.polimi.ingsw.model.enumeration.Card;
+import it.polimi.ingsw.model.enumeration.GamePhase;
 import it.polimi.ingsw.model.enumeration.PawnColor;
-import it.polimi.ingsw.model.enumeration.PowerType;
-import it.polimi.ingsw.model.enumeration.Wizard;
-import it.polimi.ingsw.model.game.Game;
-import it.polimi.ingsw.model.game.GameHandler;
-import it.polimi.ingsw.model.power.Friar;
-import it.polimi.ingsw.model.power.Herbalist;
-import it.polimi.ingsw.model.power.Jester;
-import it.polimi.ingsw.model.power.Princess;
-import it.polimi.ingsw.server.GameLobby;
-import it.polimi.ingsw.server.Server;
-
-import java.io.Console;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.lang.reflect.Array;
+import it.polimi.ingsw.model.enumeration.TurnPhase;
+import it.polimi.ingsw.model.power.*;
 import java.util.*;
 
 public class CLI {
@@ -150,13 +134,12 @@ public class CLI {
      */
     private void printPowers() {
         List<Student> students;
-        System.out.println("CHARACTERS: ");
-        System.out.println();
+        System.out.println("\n\n-----------------------\n" + "CHARACTERS: " + "\n-----------------------");
         for(int i=0; i<3; i++) {
             switch(client.getGameHandler().getGame().getPowerCards().get(i).getType()) {
                 case FRIAR:
                     students = ((Friar)client.getGameHandler().getGame().getPowerCards().get(i)).getStudents();
-                    System.out.print(client.getGameHandler().getGame().getPowerCards().get(i).getType() + ": ");
+                    System.out.print(client.getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + client.getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": ");
                     for (int j = 0; j < students.size(); j++ ) {
                         System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
                     }
@@ -164,7 +147,7 @@ public class CLI {
                     break;
                 case JESTER:
                     students = ((Jester)client.getGameHandler().getGame().getPowerCards().get(i)).getStudents();
-                    System.out.print(client.getGameHandler().getGame().getPowerCards().get(i).getType() + ": ");
+                    System.out.print(client.getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + client.getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": ");
                     for (int j = 0; j < students.size(); j++ ) {
                         System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
                     }
@@ -172,64 +155,150 @@ public class CLI {
                     break;
                 case PRINCESS:
                     students = ((Princess)client.getGameHandler().getGame().getPowerCards().get(i)).getStudents();
-                    System.out.print(client.getGameHandler().getGame().getPowerCards().get(i).getType() + ": ");
+                    System.out.print(client.getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + client.getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": ");
                     for (int j = 0; j < students.size(); j++ ) {
                         System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
                     }
                     System.out.println();
                     break;
                 case HERBALIST:
-                    System.out.print(client.getGameHandler().getGame().getPowerCards().get(i).getType() + ": " +
-                            ((Herbalist)client.getGameHandler().getGame().getPowerCards().get(i)).getNoEntryCards() + "No Entry tiles");
+                    System.out.print(client.getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + client.getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": " +
+                            ((Herbalist)client.getGameHandler().getGame().getPowerCards().get(i)).getNoEntryCards() + " No Entry tiles");
                     System.out.println();
                     break;
                 default:
-                    System.out.println(client.getGameHandler().getGame().getPowerCards().get(i).getType());
+                    System.out.println(client.getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + client.getGameHandler().getGame().getPowerCards().get(i).getCost() + ")");
+                    break;
             }
         }
+        System.out.println("-----------------------");
     }
 
     /**
-     * Provisionally these tips will be printed all the time,
-     * shortly I will implement the "TIPS CHARACTER" command for example, to display them only if necessary
-     *
      * @author Christian Confalonieri
      */
     private void printPowersTips() {
         String tips = "";
-        for(int i=0; i<3; i++) {
-            tips += switch(client.getGameHandler().getGame().getPowerCards().get(i).getType()) {
-                case FRIAR -> "\nTo activate the power of \"FRIAR\" type the command:\n" +
-                        "\"CHARACTER FRIAR RED 7\", where \"RED\" is the color of a FRIAR student and \"7\" is the number of an island of your choice.";
-                case FARMER -> "\nTo activate the power of \"FARMER\" type the command:\n" +
-                        "\"CHARACTER FARMER\"";
-                case HERALD -> "\nTo activate the power of \"HERALD\" type the command:\n" +
-                        "\"CHARACTER HERALD 7\", where \"7\" is the number of an island of your choice.";
-                case MAILMAN -> "\nTo activate the power of \"MAILMAN\" type the command:\n" +
-                        "\"CHARACTER MAILMAN\"";
-                case HERBALIST -> "\nTo activate the power of \"HERBALIST\" type the command:\n" +
-                        "\"CHARACTER HERBALIST 7\", where \"7\" is the number of an island of your choice.";
-                case CENTAUR -> "\nTo activate the power of \"CENTAUR\" type the command:\n" +
-                        "\"CHARACTER CENTAUR\"";
-                case JESTER -> "\nTo activate the power of \"JESTER\" type the command:\n" +
-                        "\"CHARACTER JESTER E: RED E: BLUE E: GREEN J: RED J: BLUE J: GREEN\",\n where \"E: RED\" is, " +
-                        "for example, the color of a student in your entry\n and \"J: BLUE\" is the color of a student placed " +
-                        "on the jester (you can type students in your preferred order).";
-                case KNIGHT -> "\nTo activate the power of \"KNIGHT\" type the command:\n" +
-                        "\"CHARACTER KNIGHT\"";
-                case HARVESTER -> "\nTo activate the power of \"HARVESTER\" type the command:\n" +
-                        "\"CHARACTER HARVESTER RED\", where \"RED\" is the color of a student of your choice.";
-                case MINSTREL -> "\nTo activate the power of \"JESTER\" type the command:\n" +
-                        "\"CHARACTER JESTER E: RED E: BLUE E: GREEN D: RED D: BLUE D: GREEN\",\n where \"E: RED\" is, " +
-                        "for example, the color of a student in your entry\n and \"D: BLUE\" is he color of a student in your dining room " +
-                        "(you can type students in your preferred order).";
-                case PRINCESS -> "\nTo activate the power of \"PRINCESS\" type the command:\n" +
-                        "\"CHARACTER PRINCESS RED\", where \"RED\" is the color of a student of your choice.";
-                case THIEF -> "\nTo activate the power of \"THIEF\" type the command:\n" +
-                        "\"CHARACTER THIEF RED\", where \"RED\" is the color of a student of your choice.";
-            };
+        String friar = "\nTo activate the power of \"FRIAR\" type the command:\n" +
+                "\"CHARACTER FRIAR RED 7\", where \"RED\" is the color of a FRIAR student and \"7\" is the number of an island of your choice.";
+        String farmer = "\nTo activate the power of \"FARMER\" type the command:\n" +
+                "\"CHARACTER FARMER\"";
+        String herald = "\nTo activate the power of \"HERALD\" type the command:\n" +
+                "\"CHARACTER HERALD 7\", where \"7\" is the number of an island of your choice.";
+        String mailman = "\nTo activate the power of \"MAILMAN\" type the command:\n" +
+                "\"CHARACTER MAILMAN\"";
+        String herbalist = "\nTo activate the power of \"HERBALIST\" type the command:\n" +
+                "\"CHARACTER HERBALIST 7\", where \"7\" is the number of an island of your choice.";
+        String centaur = "\nTo activate the power of \"CENTAUR\" type the command:\n" +
+                "\"CHARACTER CENTAUR\"";
+        String jester = "\nTo activate the power of \"JESTER\" type the command:\n" +
+                "\"CHARACTER JESTER E: RED E: BLUE E: GREEN J: RED J: BLUE J: GREEN\",\n where \"E: RED\" is, " +
+                "for example, the color of a student in your entry\n and \"J: BLUE\" is the color of a student placed " +
+                "on the jester (you can type students in your preferred order).";
+        String knight = "\nTo activate the power of \"KNIGHT\" type the command:\n" +
+                "\"CHARACTER KNIGHT\"";
+        String harvester = "\nTo activate the power of \"HARVESTER\" type the command:\n" +
+                "\"CHARACTER HARVESTER RED\", where \"RED\" is the color of a student of your choice.";
+        String minstrel = "\nTo activate the power of \"MINSTREL\" type the command:\n" +
+                "\"CHARACTER MINSTREL E: RED E: BLUE E: GREEN D: RED D: BLUE D: GREEN\",\n where \"E: RED\" is, " +
+                "for example, the color of a student in your entry\n and \"D: BLUE\" is he color of a student in your dining room " +
+                "(you can type students in your preferred order).";
+        String princess = "\nTo activate the power of \"PRINCESS\" type the command:\n" +
+                "\"CHARACTER PRINCESS RED\", where \"RED\" is the color of a student of your choice.";
+        String thief = "\nTo activate the power of \"THIEF\" type the command:\n" +
+                "\"CHARACTER THIEF RED\", where \"RED\" is the color of a student of your choice.";
+        if(client.getGameHandler() != null) {
+            for(int i=0; i<3; i++) {
+                tips += switch(client.getGameHandler().getGame().getPowerCards().get(i).getType()) {
+                    case FRIAR -> friar;
+                    case FARMER -> farmer;
+                    case HERALD -> herald;
+                    case MAILMAN -> mailman;
+                    case HERBALIST -> herbalist;
+                    case CENTAUR -> centaur;
+                    case JESTER -> jester;
+                    case KNIGHT -> knight;
+                    case HARVESTER -> harvester;
+                    case MINSTREL -> minstrel;
+                    case PRINCESS -> princess;
+                    case THIEF -> thief;
+                };
+            }
         }
-        System.out.println(tips);
+        else {
+            tips = friar + farmer + herald + mailman + herbalist + centaur + jester + knight + harvester + minstrel + princess + thief +
+                    "\nHowever, you cannot type the command to activate a character since you are not in the correct phase of the game.";
+        }
+        System.out.println(tips + "\n");
+        System.out.print("Enter the command: ");
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private void printMainMenuTips() {
+        System.out.println("\nTo disconnect, type the command: \"LOGOUT\".");
+        System.out.println("Type the command: \"NEWGAME X COLOR\" or \"JOINGAME X COLOR\"\n" +
+                "where \"X\" is the number of players and \"COLOR\" is the color of the wizard\n");
+        if(Client.getInstance().getClientState() != ClientState.MAINMENU) {
+            System.out.println("However, you cannot type the main menu command since you are not in the correct phase of the game.\n");
+        }
+        System.out.print("Enter the command: ");
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private void printWaitingLobbyTips() {
+        System.out.println("\nTo disconnect, type: \"LOGOUT\".\n");
+        System.out.print("Enter the command: ");
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private void printMoveStudentsTips() {
+        System.out.println("\nType the command: \"D: YELLOW D: BLUE 7: GREEN\"\n" +
+                "in which with \"D:\" we indicate the students to move to the dining room and with \"7:\" those to move to island 7\n");
+        if(!(Client.getInstance().getClientState() == ClientState.INGAME && Client.getInstance().getGameHandler().getGamePhase() == GamePhase.TURN && Client.getInstance().getGameHandler().getTurnPhase() == TurnPhase.MOVESTUDENTS)) {
+            System.out.println("However, you cannot type the command to move students since you are not in the correct phase of the game.\n");
+        }
+        System.out.print("Enter the command: ");
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public boolean printTips(String[] command) {
+        if(command.length != 2) {
+            System.out.println(ConsoleColor.RED + "Invalid tips command" + ConsoleColor.RESET);
+            return true;
+        }
+        switch(command[1].toUpperCase()) {
+            case "TIPS":
+                System.out.println("\n\"TIPS CHARACTERS\"\n"+
+                        "\n\"TIPS MAINMENU\"\n" +
+                        "\n\"TIPS WAITINGLOBBY\"\n" +
+                        "\n\"TIPS MOVESTUDENTS\"\n");
+                System.out.print("Enter the command: ");
+                break;
+            case "CHARACTERS":
+                printPowersTips();
+                break;
+            case "MAINMENU":
+                printMainMenuTips();
+                break;
+            case "WAITINGLOBBY":
+                printWaitingLobbyTips();
+                break;
+            case "MOVESTUDENTS":
+                printMoveStudentsTips();
+                break;
+            default:
+                System.out.println(ConsoleColor.RED + "Invalid tips command" + ConsoleColor.RESET);
+                break;
+        }
+        return true;
     }
 
     private void cliPlayers () {
@@ -429,15 +498,12 @@ public class CLI {
                 cliMyCards();
 
                 printGameName();
-                // printPlayers();
                 printPowers();
-                printPowersTips();
                 printIslands();
                 printClouds();
                 printSchool();
                 printCards();
                 printMyCards();
-                System.out.println("To disconnect, type: \"LOGOUT\".");
                 if(Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(Client.getInstance().getPlayerId())) {
                     switch(Client.getInstance().getGameHandler().getGamePhase()) {
                         case PREPARATION:
@@ -446,9 +512,7 @@ public class CLI {
                         case TURN:
                             switch (Client.getInstance().getGameHandler().getTurnPhase()) {
                                 case MOVESTUDENTS:
-                                    System.out.println("Type in the students to be moved:\n" +
-                                            "For example, \"D: YELLOW D: BLUE 7: GREEN\"\n" +
-                                            "in which with \"D:\" we indicate the students to move to the dining room and with \"7:\" those to move to island 7");
+                                    System.out.print("Type in the students to be moved: ");
                                     break;
                                 case MOVEMOTHER:
                                     System.out.print("Enter the number of movements that mother nature has to make: ");
@@ -462,17 +526,16 @@ public class CLI {
                 }
                 else {
                     System.out.println("Waits for the other players to finish playing his turn");
+                    System.out.print("Enter the command: ");
                 }
             }
             case MAINMENU -> {
                 System.out.println("MAINMENU");
-                System.out.println("To disconnect, type: \"LOGOUT\".");
-                System.out.println("Type: \"NEWGAME X COLOR\" or \"JOINGAME X COLOR\"\n" +
-                        "where \"X\" is the number of players and \"COLOR\" is the color of the wizard");
+                System.out.print("Enter the command: ");
             }
             case WAITINGLOBBY -> {
                 System.out.println("WAITINGLOBBY");
-                System.out.println("To disconnect, type: \"LOGOUT\".");
+                System.out.print("Enter the command: ");
             }
             case ENDGAME -> {
                 cliGameEnded();
@@ -480,5 +543,4 @@ public class CLI {
             }
         }
     }
-
 }

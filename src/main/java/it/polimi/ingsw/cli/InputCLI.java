@@ -45,6 +45,10 @@ public class InputCLI {
                             if(cliJoinGameRequest(command)) {
                                 break;
                             }
+                        case "TIPS":
+                            if(CLI.getInstance().printTips(command)) {
+                                break;
+                            }
                         default:
                             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
                     }
@@ -53,6 +57,10 @@ public class InputCLI {
                     switch (command[0].toUpperCase()) {
                         case "LOGOUT":
                             if(cliLogoutRequest(command)) {
+                                break;
+                            }
+                        case "TIPS":
+                            if(CLI.getInstance().printTips(command)) {
                                 break;
                             }
                         default:
@@ -160,16 +168,20 @@ public class InputCLI {
      * @author Christian Confalonieri
      */
     private static boolean cliPlayCardRequest(String[] command) {
-        if(command.length != 1) {
+        if(command.length < 1 || command.length > 2) {
             System.out.println(ConsoleColor.RED + "Invalid play card command" + ConsoleColor.RESET);
             return true;
         }
+        /*--------------------LOGOUT AND TIPS SECTION--------------------*/
+        if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
+            LoginService.logoutRequest();
+        }
         else {
-            if (command[0].equalsIgnoreCase("LOGOUT")) {
-                LoginService.logoutRequest();
+            if (command[0].equalsIgnoreCase("TIPS") && CLI.getInstance().printTips(command)) {
                 return true;
             }
         }
+        /*----------------------------------------------------------------*/
         String color = switch (command[0]) {
             case "1" -> "ONE";
             case "2" -> "TWO";
@@ -199,19 +211,21 @@ public class InputCLI {
             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
             return true;
         }
+        /*----------LOGOUT, CHARACTER ACTIVATION AND TIPS SECTION----------*/
+        if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
+            LoginService.logoutRequest();
+        }
         else {
-            if (command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
-                LoginService.logoutRequest();
+            if (command[0].equalsIgnoreCase("CHARACTER") && cliPowersRequest(command)) {
                 return true;
             }
             else {
-                if (command[0].equalsIgnoreCase("CHARACTER")) {
-                    if(cliPowersRequest(command)){
-                        return true;
-                    }
+                if (command[0].equalsIgnoreCase("TIPS") && CLI.getInstance().printTips(command)) {
+                    return true;
                 }
             }
         }
+        /*----------------------------------------------------------------*/
         List<Student> toDiningRoom = new ArrayList<>();
         Map<Student,String> toIslands = new HashMap<>();
 
@@ -247,19 +261,22 @@ public class InputCLI {
             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
             return true;
         }
-        if(command[0].equalsIgnoreCase("LOGOUT")) {
+        /*----------LOGOUT, CHARACTER ACTIVATION AND TIPS SECTION----------*/
+        if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
             LoginService.logoutRequest();
         }
         else {
-            if (command[0].equalsIgnoreCase("CHARACTER")) {
-                if(cliPowersRequest(command)){
+            if (command[0].equalsIgnoreCase("CHARACTER") && cliPowersRequest(command)) {
+                    return true;
+            }
+            else {
+                if (command[0].equalsIgnoreCase("TIPS") && CLI.getInstance().printTips(command)) {
                     return true;
                 }
             }
-            else {
-                GameService.moveMotherNatureRequest(Integer.parseInt(command[0]));
-            }
         }
+        /*----------------------------------------------------------------*/
+        GameService.moveMotherNatureRequest(Integer.parseInt(command[0]));
         return true;
     }
 
@@ -271,19 +288,22 @@ public class InputCLI {
             System.out.println(ConsoleColor.RED + "Invalid move command" + ConsoleColor.RESET);
             return true;
         }
-        if (command[0].equalsIgnoreCase("LOGOUT")) {
+        /*----------LOGOUT, CHARACTER ACTIVATION AND TIPS SECTION----------*/
+        if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
             LoginService.logoutRequest();
         }
         else {
-            if (command[0].equalsIgnoreCase("CHARACTER")) {
-                if(cliPowersRequest(command)){
+            if (command[0].equalsIgnoreCase("CHARACTER") && cliPowersRequest(command)) {
+                return true;
+            }
+            else {
+                if (command[0].equalsIgnoreCase("TIPS") && CLI.getInstance().printTips(command)) {
                     return true;
                 }
             }
-            else {
-                GameService.moveCloudRequest(Client.getInstance().getGameHandler().getGame().getClouds().get(Integer.parseInt(command[0]) - 1));
-            }
         }
+        /*----------------------------------------------------------------*/
+        GameService.moveCloudRequest(Client.getInstance().getGameHandler().getGame().getClouds().get(Integer.parseInt(command[0]) - 1));
         return true;
     }
 
