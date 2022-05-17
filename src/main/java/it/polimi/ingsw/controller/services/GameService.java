@@ -210,16 +210,10 @@ public class GameService {
         GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
         PowerCard powerCard = gameHandler.getGame().getPowerCard(action.getType());
 
-        if(gameHandler.getCurrentPlayer().getCoins() < powerCard.getCost()) {
+        if(action.getType() == null) {
             Server.getInstance().getClientNetHandler(action.getPlayerId())
-                    .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "the player does not have enough coins to pay for the activation of this power",false)));
-            throw new InvalidAction("Power: the player does not have enough coins to pay for the activation of this power");
-        }
-
-        if(gameHandler.getGame().getEffectHandler().isEffectActive()) {
-            Server.getInstance().getClientNetHandler(action.getPlayerId())
-                    .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "another power has already been activated",false)));
-            throw new InvalidAction("Power: another power has already been activated");
+                    .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "invalid power type",false)));
+            throw new InvalidAction("Power: invalid power type");
         }
 
         if(!gameHandler.getGame().getPowerCards().contains(powerCard)) {
@@ -228,10 +222,16 @@ public class GameService {
             throw new InvalidAction("Power: invalid power");
         }
 
-        if(action.getType() == null) {
+        if(gameHandler.getGame().getEffectHandler().isEffectActive()) {
             Server.getInstance().getClientNetHandler(action.getPlayerId())
-                    .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "invalid power type",false)));
-            throw new InvalidAction("Power: invalid power type");
+                    .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "another power has already been activated",false)));
+            throw new InvalidAction("Power: another power has already been activated");
+        }
+
+        if(gameHandler.getCurrentPlayer().isPlayedPowerThisTurn()) {
+            Server.getInstance().getClientNetHandler(action.getPlayerId())
+                    .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "power already played in this turn",false)));
+            throw new InvalidAction("Power: power already played in this turn");
         }
 
         if(action.getEffectHandler() == null) {
@@ -240,10 +240,10 @@ public class GameService {
             throw new InvalidAction("Power: invalid effectHandler");
         }
 
-        if(gameHandler.getCurrentPlayer().isPlayedPowerThisTurn()) {
+        if(gameHandler.getCurrentPlayer().getCoins() < powerCard.getCost()) {
             Server.getInstance().getClientNetHandler(action.getPlayerId())
-                    .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "power already played in this turn",false)));
-            throw new InvalidAction("Power: power already played in this turn");
+                    .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "the player does not have enough coins to pay for the activation of this power", false)));
+            throw new InvalidAction("Power: the player does not have enough coins to pay for the activation of this power");
         }
 
         if (gameHandler.getGamePhase().equals(GamePhase.TURN)) {
