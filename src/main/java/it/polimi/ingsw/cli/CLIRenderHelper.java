@@ -197,54 +197,6 @@ public class CLIRenderHelper {
         }
     }
 
-
-    /**
-     * Print the powers in the game
-     * @author Christian Confalonieri
-     */
-    public void printPowers() {
-        List<Student> students;
-        System.out.println("\n" + ConsoleColor.RED + "+---------------------+\n" + ConsoleColor.RESET + "CHARACTERS: " + "\n-----------------------");
-        for(int i=0; i<3; i++) {
-            switch(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType()) {
-                case FRIAR:
-                    students = ((Friar)Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getStudents();
-                    System.out.print(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": ");
-                    for (int j = 0; j < students.size(); j++ ) {
-                        System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
-                    }
-                    System.out.println();
-                    break;
-                case JESTER:
-                    students = ((Jester)Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getStudents();
-                    System.out.print(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": ");
-                    for (int j = 0; j < students.size(); j++ ) {
-                        System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
-                    }
-                    System.out.println();
-                    break;
-                case PRINCESS:
-                    students = ((Princess)Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getStudents();
-                    System.out.print(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": ");
-                    for (int j = 0; j < students.size(); j++ ) {
-                        System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
-                    }
-                    System.out.println();
-                    break;
-                case HERBALIST:
-                    System.out.print(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": " +
-                            ((Herbalist)Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getNoEntryCards() + " No Entry tiles");
-                    System.out.println();
-                    break;
-                default:
-                    System.out.println(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")");
-                    break;
-            }
-        }
-        System.out.println(ConsoleColor.RED + "+---------------------+\n" + ConsoleColor.RESET);
-    }
-
-
     /**
      * Print players informations
      */
@@ -465,6 +417,51 @@ public class CLIRenderHelper {
         gameEnded += ConsoleColor.YELLOW + "+---------------------+\n" + ConsoleColor.RESET;
     }
 
+    /**
+     * Print the powers in the game
+     * @author Christian Confalonieri
+     */
+    public void printPowers() {
+        List<Student> students;
+        System.out.println("\n" + ConsoleColor.RED + "+---------------------+\n" + ConsoleColor.RESET + "CHARACTERS: " + "\n-----------------------");
+        for(int i=0; i<3; i++) {
+            switch(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType()) {
+                case FRIAR:
+                    students = ((Friar)Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getStudents();
+                    System.out.print(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": ");
+                    for (int j = 0; j < students.size(); j++ ) {
+                        System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
+                    }
+                    System.out.println();
+                    break;
+                case JESTER:
+                    students = ((Jester)Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getStudents();
+                    System.out.print(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": ");
+                    for (int j = 0; j < students.size(); j++ ) {
+                        System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
+                    }
+                    System.out.println();
+                    break;
+                case PRINCESS:
+                    students = ((Princess)Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getStudents();
+                    System.out.print(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": ");
+                    for (int j = 0; j < students.size(); j++ ) {
+                        System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
+                    }
+                    System.out.println();
+                    break;
+                case HERBALIST:
+                    System.out.print(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": " +
+                            ((Herbalist)Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getNoEntryCards() + " No Entry tiles");
+                    System.out.println();
+                    break;
+                default:
+                    System.out.println(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")");
+                    break;
+            }
+        }
+        System.out.println(ConsoleColor.RED + "+---------------------+\n" + ConsoleColor.RESET);
+    }
 
     /******************
      * HELP RENDERING *
@@ -597,5 +594,4 @@ public class CLIRenderHelper {
         }
         return true;
     }
-
 }
