@@ -5,8 +5,10 @@ import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.NetworkController;
 import it.polimi.ingsw.client.controller.services.LoginService;
+import it.polimi.ingsw.gui.GUI;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.server.GameLobby;
+import javafx.application.Platform;
 
 import java.io.Console;
 import java.io.IOException;
@@ -26,12 +28,16 @@ public class Client implements Runnable {
     public final int serverPort;
 
     private CLI cli;
+    public GUI gui;
+
     private ClientState clientState;
     private GameHandler gameHandler;
     private List<String> finalLeaderBoard;
     private List<GameLobby> allServerLobbys;
     private GameLobby gameLobby;
     private boolean pollAllLobbies;
+
+
 
     private NetworkController networkController;
     private final ClientController clientController;
@@ -58,6 +64,12 @@ public class Client implements Runnable {
         clientState = ClientState.LOADING;
         gameHandler = null;
         clientController = new ClientController();
+    }
+
+    public void attachGUI() {
+        gui = new GUI();
+        new Thread(() -> GUI.launch(GUI.class)).start();
+        // Platform.runLater();
     }
 
     public void attachCLI(CLI cli) {
@@ -109,9 +121,18 @@ public class Client implements Runnable {
         return null;
     }
 
+    private static boolean parseIsCLI(String[] args) {
+        for(String s : args) {
+            if(s.contains("cli")) return true;
+            if(s.contains("gui")) return false;
+        }
+        return false; // Standard is CLI
+    }
+
     public static void main(String[] args) {
         String hostname = parseArg(args, "-a", "--address");
         String port = parseArg(args, "-p", "--port");
+        boolean isGui = !parseIsCLI(args);
 
         try {
             singleton = new Client(hostname == null ? "localhost" : hostname, Integer.parseInt(port == null ? "23154" : port));
@@ -123,6 +144,7 @@ public class Client implements Runnable {
         mainCLI.attach(singleton);
         singleton.attachCLI(mainCLI);
         mainCLI.render();
+        if(isGui) singleton.attachGUI();
         singleton.attachNetwork();
         singleton.run();
     }
