@@ -29,10 +29,12 @@ public class LoginService {
     public static void logout(LogoutAction logoutAction) {
         Client.getInstance().setPlayerId(null);
         Client.getInstance().setClientState(ClientState.LOGIN);
+        Client.getInstance().setPollAllLobbies(true);
     }
 
     public static void logoutRequest() {
         Client.getInstance().getNetworkController().send(ClientActionHandler.toJson(new LogoutAction(Client.getInstance().getPlayerId())));
+
     }
 
 }
