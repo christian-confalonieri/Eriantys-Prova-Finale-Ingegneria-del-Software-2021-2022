@@ -1,5 +1,6 @@
 package it.polimi.ingsw.action;
 
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.server.GameLobby;
 

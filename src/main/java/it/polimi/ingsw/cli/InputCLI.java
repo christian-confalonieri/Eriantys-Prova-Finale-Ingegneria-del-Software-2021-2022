@@ -164,7 +164,7 @@ public class InputCLI {
 
     /**
      * Request joining the lobby ID.
-     * @param command [joingameid wizard id]
+     * @author Leonardo Airoldi, Christian Confalonieri
      */
     private static void cliJoinGameIdRequest(String[] command) {
         if(command.length != 3) {
@@ -172,7 +172,7 @@ public class InputCLI {
             return;
         }
         try {
-            LobbyService.joinGameIdRequest(command[2], Wizard.valueOf(command[1].toUpperCase()));
+            LobbyService.joinGameIdRequest(Client.getInstance().getAllServerLobbys().get(Integer.parseInt(command[1])-1).getGameLobbyId(), Wizard.valueOf(command[2].toUpperCase()));
         } catch (IllegalArgumentException wizardException) {
             System.out.println("Invalid wizard selected");
         }

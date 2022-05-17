@@ -134,6 +134,7 @@ public class CLIRenderHelper {
         System.out.println(mainMenuScreen);
     }
     private void cliMainMenu() {
+        int count;
         mainMenuScreen = """
                  __ __  ___  _  _ _   __ __  ___  _ _  _ _\s
                 |  \\  \\| . || || \\ | |  \\  \\| __>| \\ || | |
@@ -144,8 +145,10 @@ public class CLIRenderHelper {
                 WAITING LOBBIES:
                 """;
         if(Client.getInstance().getAllServerLobbys() != null) {
+            count = 1;
             for (GameLobby lb : Client.getInstance().getAllServerLobbys()) {
-                mainMenuScreen += " - " + lb.toString() + "\n";
+                mainMenuScreen += " - " + lb.toString() + "[Lobby" + count + "]" + "\n";
+                count++;
             }
         }
     }
@@ -521,7 +524,7 @@ public class CLIRenderHelper {
         }
         else {
             help = friar + farmer + herald + mailman + herbalist + centaur + jester + knight + harvester + minstrel + princess + thief +
-                    "\nHowever, you cannot type the command to activate a character since you are not in the correct phase of the game.";
+                    "\n\nHowever, you cannot type the command to activate a character since you are not in the correct phase of the game.";
         }
         System.out.println(help + "\n");
         System.out.print("Enter the command: ");
@@ -532,8 +535,8 @@ public class CLIRenderHelper {
      */
     private void printMainMenuHelp() {
         System.out.println("\nTo disconnect, type the command: \"LOGOUT\".");
-        System.out.println("Type the command: \"NEWGAME X COLOR\" or \"JOINGAME X COLOR\" or\"JOINGAMEID COLOR ID\"\n" +
-                "where \"X\" is the number of players and \"COLOR\" is the color of the wizard\n");
+        System.out.println("Type the command: \"NEWGAME X COLOR\" or \"JOINGAME X COLOR\" or\"JOINGAMEID Y COLOR\"\n" +
+                "where \"X\" is the number of players, Y is the number of the chosen lobby and \"COLOR\" is the color of the wizard\n");
         if(Client.getInstance().getClientState() != ClientState.MAINMENU) {
             System.out.println("However, you cannot type the main menu command since you are not in the correct phase of the game.\n");
         }

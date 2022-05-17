@@ -85,7 +85,7 @@ public class GameLobby {
 
     @Override
     public String toString() {
-        return numberOfPlayers + "P\t" + waitingPlayersToString() + "\t[" + gameLobbyId + "]";
+        return numberOfPlayers + "P\t" + waitingPlayersToString() + "\t";
     }
 
     private String waitingPlayersToString() {
