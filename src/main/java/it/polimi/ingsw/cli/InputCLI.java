@@ -5,11 +5,10 @@ import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.client.controller.services.LobbyService;
 import it.polimi.ingsw.client.controller.services.LoginService;
+import it.polimi.ingsw.exceptions.InvalidColor;
+import it.polimi.ingsw.model.entity.Pawn;
 import it.polimi.ingsw.model.entity.Student;
-import it.polimi.ingsw.model.enumeration.Card;
-import it.polimi.ingsw.model.enumeration.PawnColor;
-import it.polimi.ingsw.model.enumeration.PowerType;
-import it.polimi.ingsw.model.enumeration.Wizard;
+import it.polimi.ingsw.model.enumeration.*;
 import it.polimi.ingsw.model.power.*;
 
 import java.util.*;
@@ -30,75 +29,24 @@ public class InputCLI {
                 return;
             }
 
+            globalCommand(command);
+
             switch(Client.getInstance().getClientState()) {
                 case LOGIN:
                     cliLoginRequest(command);
                     break;
                 case MAINMENU:
-                    switch(command[0].toUpperCase()) {
-                        case "LOGOUT":
-                            cliLogoutRequest(command);
-                            break;
-                        case "NEWGAME":
-                            cliNewGameRequest(command);
-                            break;
-                        case "JOINGAMEID":
-                            cliJoinGameIdRequest(command);
-                            break;
-                        case "JOINGAME":
-                            cliJoinGameRequest(command);
-                            break;
-                        case "HELP":
-                            CLI.getInstance().printHelp(command);
-                            break;
-                        default:
-                            System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
-                            break;
-                    }
+                    mainMenu(command);
                     break;
                 case WAITINGLOBBY:
-                    switch (command[0].toUpperCase()) {
-                        case "LOGOUT":
-                            cliLogoutRequest(command);
-                            break;
-                        case "HELP":
-                            CLI.getInstance().printHelp(command);
-                            break;
-                        default:
-                            System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
-                            break;
-                    }
                     break;
                 case INGAME:
-                    switch(Client.getInstance().getGameHandler().getGamePhase()) {
-                        case PREPARATION:
-                            cliPlayCardRequest(command);
-                            break;
-                        case TURN:
-                            switch(Client.getInstance().getGameHandler().getTurnPhase()) {
-                                case MOVESTUDENTS:
-                                    cliMoveStudentsRequest(command);
-                                        break;
-                                case MOVEMOTHER:
-                                    cliMoveMotherNatureRequest(command);
-                                        break;
-                                case MOVEFROMCLOUD:
-                                    cliMoveCloudRequest(command);
-                                        break;
-                                default:
-                                    System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
-                                    break;
-                            }
-                            break;
-                    }
+                    inGame(command);
                     break;
                 case ENDGAME:
                     Client.getInstance().setClientState(ClientState.MAINMENU);
                     Client.getInstance().setPollAllLobbies(true);
                     Client.getInstance().getCli().render();
-                    break;
-                default:
-                    System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
                     break;
             }
         }
@@ -136,11 +84,13 @@ public class InputCLI {
         }
         try {
             if(Integer.parseInt(command[1]) < 2 || Integer.parseInt(command[1]) > 4) throw new NumberFormatException();
-            LobbyService.newGameRequest(Integer.parseInt(command[1]), null, Wizard.valueOf(command[2].toUpperCase()));
+            LobbyService.newGameRequest(Integer.parseInt(command[1]), null, Wizard.parseColor(command[2].toUpperCase()));
         } catch(NumberFormatException castingException) {
-            System.out.println("Invalid number of player");
+            System.out.println(ConsoleColor.RED + "Invalid number of player" + ConsoleColor.RESET);
         } catch (IllegalArgumentException wizardException) {
-            System.out.println("Invalid wizard selected");
+            System.out.println(ConsoleColor.RED + "Invalid wizard selected" + ConsoleColor.RESET);
+        } catch (InvalidColor e) {
+            System.out.println(ConsoleColor.RED + "Invalid color" + ConsoleColor.RESET);
         }
     }
 
@@ -154,11 +104,13 @@ public class InputCLI {
         }
         try {
             if(Integer.parseInt(command[1]) < 2 || Integer.parseInt(command[1]) > 4) throw new NumberFormatException();
-            LobbyService.joinGameRequest(Integer.parseInt(command[1]), Wizard.valueOf(command[2].toUpperCase()));
+            LobbyService.joinGameRequest(Integer.parseInt(command[1]), Wizard.parseColor(command[2].toUpperCase()));
         } catch(NumberFormatException castingException) {
-            System.out.println("Invalid number of player");
+            System.out.println(ConsoleColor.RED + "Invalid number of player" + ConsoleColor.RESET);
         } catch (IllegalArgumentException wizardException) {
-            System.out.println("Invalid wizard selected");
+            System.out.println(ConsoleColor.RED + "Invalid wizard selected" + ConsoleColor.RESET);
+        } catch (InvalidColor e) {
+            System.out.println(ConsoleColor.RED + "Invalid color" + ConsoleColor.RESET);
         }
     }
 
@@ -172,9 +124,11 @@ public class InputCLI {
             return;
         }
         try {
-            LobbyService.joinGameIdRequest(Client.getInstance().getAllServerLobbys().get(Integer.parseInt(command[1])-1).getGameLobbyId(), Wizard.valueOf(command[2].toUpperCase()));
-        } catch (IllegalArgumentException wizardException) {
-            System.out.println("Invalid wizard selected");
+            LobbyService.joinGameIdRequest(Client.getInstance().getAllServerLobbys().get(Integer.parseInt(command[1])-1).getGameLobbyId(), Wizard.parseColor(command[2].toUpperCase()));
+        } catch (InvalidColor e) {
+            System.out.println(ConsoleColor.RED + "Invalid color" + ConsoleColor.RESET);
+        } catch (NumberFormatException e) {
+            System.out.println(ConsoleColor.RED + "Invalid lobby number" + ConsoleColor.RESET);
         }
     }
 
@@ -186,17 +140,6 @@ public class InputCLI {
             System.out.println(ConsoleColor.RED + "Invalid play card command" + ConsoleColor.RESET);
             return;
         }
-        /*--------------------LOGOUT AND HELP SECTION--------------------*/
-        if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
-            LoginService.logoutRequest();
-            return;
-        }
-        else {
-            if (command[0].equalsIgnoreCase("HELP") && CLI.getInstance().printHelp(command)) {
-                return;
-            }
-        }
-        /*----------------------------------------------------------------*/
         String color = switch (command[0]) {
             case "1" -> "ONE";
             case "2" -> "TWO";
@@ -225,47 +168,31 @@ public class InputCLI {
             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
             return;
         }
-        /*----------LOGOUT, CHARACTER ACTIVATION AND HELP SECTION----------*/
-        if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
-            LoginService.logoutRequest();
-            return;
-        }
-        else {
-            if (command[0].equalsIgnoreCase("CHARACTER")) {
-                cliPowersRequest(command);
-                return;
-            }
-            else {
-                if (command[0].equalsIgnoreCase("HELP") && CLI.getInstance().printHelp(command)) {
-                    return;
-                }
-            }
-        }
-        /*----------------------------------------------------------------*/
         List<Student> toDiningRoom = new ArrayList<>();
         Map<Student,String> toIslands = new HashMap<>();
 
-        for(int i=0; i<6; i+=2) {
-            if(command[i].equalsIgnoreCase("D:")) {
-                for(Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
-                    if(student.getColor().toString().equalsIgnoreCase(command[i+1]) && !toDiningRoom.contains(student) && !toIslands.keySet().contains(student)) {
-                        toDiningRoom.add(student);
-                        break;
+        try {
+            for (int i = 0; i < 6; i += 2) {
+                if (command[i].equalsIgnoreCase("D")) {
+                    for (Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
+                        if (student.getColor() == Pawn.parseColor(command[i + 1]) && !toDiningRoom.contains(student) && !toIslands.keySet().contains(student)) {
+                            toDiningRoom.add(student);
+                            break;
+                        }
+                    }
+                } else {
+                    for (Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
+                        if (student.getColor() == Pawn.parseColor(command[i + 1]) && !toDiningRoom.contains(student) && !toIslands.keySet().contains(student)) {
+                            toIslands.put(student, Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(command[i].substring(0, command[i].length() - 1)) - 1).getUuid());
+                            break;
+                        }
                     }
                 }
             }
-            else {
-                for(Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
-                    if(student.getColor().toString().equalsIgnoreCase(command[i+1]) && !toDiningRoom.contains(student) && !toIslands.keySet().contains(student)) {
-                        toIslands.put(student,Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(command[i].substring(0, command[i].length()-1))-1).getUuid());
-                        break;
-                    }
-                }
-            }
+            GameService.moveStudentsRequest(toDiningRoom, toIslands);
+        } catch (InvalidColor e) {
+            System.out.println(ConsoleColor.RED + "Invalid color" + ConsoleColor.RESET);
         }
-
-
-        GameService.moveStudentsRequest(toDiningRoom,toIslands);
     }
 
     /**
@@ -276,23 +203,6 @@ public class InputCLI {
             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
             return;
         }
-        /*----------LOGOUT, CHARACTER ACTIVATION AND HELP SECTION----------*/
-        if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
-            LoginService.logoutRequest();
-            return;
-        }
-        else {
-            if (command[0].equalsIgnoreCase("CHARACTER")) {
-                cliPowersRequest(command);
-                return;
-            }
-            else {
-                if (command[0].equalsIgnoreCase("HELP") && CLI.getInstance().printHelp(command)) {
-                    return;
-                }
-            }
-        }
-        /*----------------------------------------------------------------*/
         GameService.moveMotherNatureRequest(Integer.parseInt(command[0]));
     }
 
@@ -304,23 +214,6 @@ public class InputCLI {
             System.out.println(ConsoleColor.RED + "Invalid move command" + ConsoleColor.RESET);
             return;
         }
-        /*----------LOGOUT, CHARACTER ACTIVATION AND HELP SECTION----------*/
-        if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
-            LoginService.logoutRequest();
-            return;
-        }
-        else {
-            if (command[0].equalsIgnoreCase("CHARACTER")) {
-                cliPowersRequest(command);
-                return;
-            }
-            else {
-                if (command[0].equalsIgnoreCase("HELP") && CLI.getInstance().printHelp(command)) {
-                    return;
-                }
-            }
-        }
-        /*----------------------------------------------------------------*/
         GameService.moveCloudRequest(Client.getInstance().getGameHandler().getGame().getClouds().get(Integer.parseInt(command[0]) - 1));
     }
 
@@ -341,6 +234,7 @@ public class InputCLI {
             for(int i=0; i<3; i++) {
                 powerTypes.add(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType());
             }
+            try{
             switch(command[1].toUpperCase()) {
                 case "FRIAR":
                     currentPower = PowerType.FRIAR;
@@ -348,7 +242,7 @@ public class InputCLI {
                     if(powerTypes.contains(currentPower)) {
                         Friar currentFriar = (Friar)powerCards.get(powerTypes.indexOf(currentPower));
                         for(Student student : currentFriar.getStudents()) {
-                            if (student.getColor().toString().equalsIgnoreCase(command[2])) {
+                            if (student.getColor() == Pawn.parseColor(command[2])) {
                                 studentsF.add(student);
                                 break;
                             }
@@ -383,7 +277,7 @@ public class InputCLI {
                     for(int i=2; i< command.length; i+=2) {
                         if(command[i].equalsIgnoreCase("E:")) {
                             for(Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
-                                if(student.getColor().toString().equalsIgnoreCase(command[i+1]) && !toJester.contains(student)) {
+                                if(student.getColor() == Pawn.parseColor(command[i+1]) && !toJester.contains(student)) {
                                     toJester.add(student);
                                     break;
                                 }
@@ -391,7 +285,7 @@ public class InputCLI {
                         }
                         else {
                             for(Student student : currentJester.getStudents()) {
-                                if(student.getColor().toString().equalsIgnoreCase(command[i+1]) && !toEntranceJ.contains(student)) {
+                                if(student.getColor() == Pawn.parseColor(command[i+1]) && !toEntranceJ.contains(student)) {
                                     toEntranceJ.add(student);
                                     break;
                                 }
@@ -407,14 +301,7 @@ public class InputCLI {
                     break;
                 case "HARVESTER":
                     currentPower = PowerType.HARVESTER;
-                    color = switch(command[2].toUpperCase()) {
-                        case "RED" -> PawnColor.RED;
-                        case "YELLOW" -> PawnColor.YELLOW;
-                        case "GREEN" -> PawnColor.GREEN;
-                        case "BLUE" -> PawnColor.BLUE;
-                        case "PINK" -> PawnColor.PINK;
-                        default -> null;
-                    };
+                    color = Pawn.parseColor(command[2]);
                     effectHandler.setHarvesterColor(color);
                     break;
                 case "MINSTREL":
@@ -423,23 +310,16 @@ public class InputCLI {
                     List<Student> toEntranceM = new ArrayList<>();
 
                     for(int i=2; i< command.length; i+=2) {
-                        if(command[i].equalsIgnoreCase("E:")) {
+                        if(command[i].equalsIgnoreCase("E")) {
                             for(Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
-                                if(student.getColor().toString().equalsIgnoreCase(command[i+1]) && !toDiningRoom.contains(student)) {
+                                if(student.getColor() == Pawn.parseColor(command[i+1]) && !toDiningRoom.contains(student)) {
                                     toDiningRoom.add(student);
                                     break;
                                 }
                             }
                         }
                         else {
-                            color = switch(command[i+1].toUpperCase()) {
-                                case "RED" -> PawnColor.RED;
-                                case "YELLOW" -> PawnColor.YELLOW;
-                                case "GREEN" -> PawnColor.GREEN;
-                                case "BLUE" -> PawnColor.BLUE;
-                                case "PINK" -> PawnColor.PINK;
-                                default -> null;
-                            };
+                            color = Pawn.parseColor(command[i+1]);
                             for(Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getStudentsDiningRoom(color)) {
                                 if(!toEntranceM.contains(student)) {
                                     toEntranceM.add(student);
@@ -457,7 +337,7 @@ public class InputCLI {
                     if(powerTypes.contains(currentPower)) {
                         Princess currentPrincess = (Princess) powerCards.get(powerTypes.indexOf(currentPower));
                         for (Student student : currentPrincess.getStudents()) {
-                            if (student.getColor().toString().equalsIgnoreCase(command[2])) {
+                            if (student.getColor() == Pawn.parseColor(command[2])) {
                                 studentsP.add(student);
                                 break;
                             }
@@ -467,22 +347,80 @@ public class InputCLI {
                     break;
                 case "THIEF":
                     currentPower = PowerType.THIEF;
-                    color = switch(command[2].toUpperCase()) {
-                        case "RED" -> PawnColor.RED;
-                        case "YELLOW" -> PawnColor.YELLOW;
-                        case "GREEN" -> PawnColor.GREEN;
-                        case "BLUE" -> PawnColor.BLUE;
-                        case "PINK" -> PawnColor.PINK;
-                        default -> null;
-                    };
+                    color = Pawn.parseColor(command[2]);
                     effectHandler.setThiefColor(color);
                     break;
             }
-            try {
                 GameService.powerRequest(currentPower,effectHandler);
             } catch (IllegalArgumentException e) {
                 System.out.println(ConsoleColor.RED + "Invalid character selected" + ConsoleColor.RESET);
+            } catch (InvalidColor e) {
+                System.out.println(ConsoleColor.RED + "Invalid color" + ConsoleColor.RESET);
             }
+        }
+    }
+
+    /**
+     * @author Leonardo Airoldi, Christian Confalonieri
+     */
+    private static void globalCommand(String[] command) {
+        // GLOBAL COMMAND
+        switch(command[0].toUpperCase()) {
+            case "LOGOUT":
+                if (Client.getInstance().getClientState() == ClientState.LOGIN) {
+                    System.out.println(ConsoleColor.RED + "invalid client state" + ConsoleColor.RESET);
+                    return;
+                }
+                cliLogoutRequest(command);
+                return;
+            case "HELP":
+                if (Client.getInstance().getClientState() == ClientState.LOGIN) {
+                    System.out.println(ConsoleColor.RED + "invalid client state" + ConsoleColor.RESET);
+                    return;
+                }
+                CLI.getInstance().printHelp(command);
+                return;
+            case "CHARACTER":
+                if(Client.getInstance().getClientState() == ClientState.INGAME && Client.getInstance().getGameHandler().getGamePhase() != GamePhase.PREPARATION) {
+                    if(command.length > 14) {
+                        System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
+                        return;
+                    }
+                    cliPowersRequest(command);
+                }
+                else {
+                    System.out.println(ConsoleColor.RED + "invalid phase" + ConsoleColor.RESET);
+                }
+                return;
+        }
+    }
+
+    /**
+     * @autho Christian Confalonieri
+     */
+    private static void mainMenu(String[] command) {
+        switch (command[0].toUpperCase()) {
+            case "NEWGAME", "N" -> cliNewGameRequest(command);
+            case "JOINGAMEID", "JID" -> cliJoinGameIdRequest(command);
+            case "JOINGAME", "J" -> cliJoinGameRequest(command);
+        }
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private static void inGame(String[] command) {
+        switch(Client.getInstance().getGameHandler().getGamePhase()) {
+            case PREPARATION:
+                cliPlayCardRequest(command);
+                break;
+            case TURN:
+                switch (Client.getInstance().getGameHandler().getTurnPhase()) {
+                    case MOVESTUDENTS -> cliMoveStudentsRequest(command);
+                    case MOVEMOTHER -> cliMoveMotherNatureRequest(command);
+                    case MOVEFROMCLOUD -> cliMoveCloudRequest(command);
+                }
+                break;
         }
     }
 }
