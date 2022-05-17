@@ -32,70 +32,62 @@ public class InputCLI {
 
             switch(Client.getInstance().getClientState()) {
                 case LOGIN:
-                    if(cliLoginRequest(command)) {
-                        break;
-                    }
+                    cliLoginRequest(command);
+                    break;
                 case MAINMENU:
                     switch(command[0].toUpperCase()) {
                         case "LOGOUT":
-                            if(cliLogoutRequest(command)) {
-                                break;
-                            }
+                            cliLogoutRequest(command);
+                            break;
                         case "NEWGAME":
-                            if(cliNewGameRequest(command)) {
-                                break;
-                            }
+                            cliNewGameRequest(command);
+                            break;
                         case "JOINGAMEID":
                             cliJoinGameIdRequest(command);
                             break;
                         case "JOINGAME":
-                            if(cliJoinGameRequest(command)) {
-                                break;
-                            }
+                            cliJoinGameRequest(command);
+                            break;
                         case "HELP":
-                            if(CLI.getInstance().printHelp(command)) {
-                                break;
-                            }
+                            CLI.getInstance().printHelp(command);
+                            break;
                         default:
                             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
+                            break;
                     }
                     break;
                 case WAITINGLOBBY:
                     switch (command[0].toUpperCase()) {
                         case "LOGOUT":
-                            if(cliLogoutRequest(command)) {
-                                break;
-                            }
+                            cliLogoutRequest(command);
+                            break;
                         case "HELP":
-                            if(CLI.getInstance().printHelp(command)) {
-                                break;
-                            }
+                            CLI.getInstance().printHelp(command);
+                            break;
                         default:
                             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
+                            break;
                     }
                     break;
                 case INGAME:
                     switch(Client.getInstance().getGameHandler().getGamePhase()) {
                         case PREPARATION:
-                            if(cliPlayCardRequest(command)) {
-                                break;
-                            }
+                            cliPlayCardRequest(command);
+                            break;
                         case TURN:
                             switch(Client.getInstance().getGameHandler().getTurnPhase()) {
                                 case MOVESTUDENTS:
-                                    if(cliMoveStudentsRequest(command)) {
+                                    cliMoveStudentsRequest(command);
                                         break;
-                                    }
                                 case MOVEMOTHER:
-                                    if(cliMoveMotherNatureRequest(command)) {
+                                    cliMoveMotherNatureRequest(command);
                                         break;
-                                    }
                                 case MOVEFROMCLOUD:
-                                    if(cliMoveCloudRequest(command)) {
+                                    cliMoveCloudRequest(command);
                                         break;
-                                    }
                                 default:
                                     System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
+                                    break;
                             }
                             break;
                     }
@@ -104,8 +96,10 @@ public class InputCLI {
                     Client.getInstance().setClientState(ClientState.MAINMENU);
                     Client.getInstance().setPollAllLobbies(true);
                     Client.getInstance().getCli().render();
+                    break;
                 default:
                     System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
+                    break;
             }
         }
     }
@@ -113,34 +107,32 @@ public class InputCLI {
     /**
      * @author Christian Confalonieri
      */
-    private static boolean cliLoginRequest(String[] command) {
+    private static void cliLoginRequest(String[] command) {
         if(command.length != 1) {
             System.out.println(ConsoleColor.RED + "Invalid login command" + ConsoleColor.RESET);
-            return true;
+            return;
         }
         LoginService.loginRequest(command[0]);
-        return true;
     }
 
     /**
      * @author Christian Confalonieri
      */
-    private static boolean cliLogoutRequest(String[] command) {
+    private static void cliLogoutRequest(String[] command) {
         if (command.length != 1) {
             System.out.println(ConsoleColor.RED + "Invalid logout command" + ConsoleColor.RESET);
-            return true;
+            return;
         }
         LoginService.logoutRequest();
-        return true;
     }
 
     /**
      * @author Christian Confalonieri
      */
-    private static boolean cliNewGameRequest(String[] command) {
+    private static void cliNewGameRequest(String[] command) {
         if(command.length != 3) {
             System.out.println(ConsoleColor.RED + "Invalid new game command" + ConsoleColor.RESET);
-            return true;
+            return;
         }
         try {
             if(Integer.parseInt(command[1]) < 2 || Integer.parseInt(command[1]) > 4) throw new NumberFormatException();
@@ -150,16 +142,15 @@ public class InputCLI {
         } catch (IllegalArgumentException wizardException) {
             System.out.println("Invalid wizard selected");
         }
-        return true;
     }
 
     /**
      * @author Christian Confalonieri
      */
-    private static boolean cliJoinGameRequest(String[] command) {
+    private static void cliJoinGameRequest(String[] command) {
         if(command.length != 3) {
             System.out.println(ConsoleColor.RED + "Invalid join game command" + ConsoleColor.RESET);
-            return true;
+            return;
         }
         try {
             if(Integer.parseInt(command[1]) < 2 || Integer.parseInt(command[1]) > 4) throw new NumberFormatException();
@@ -169,7 +160,6 @@ public class InputCLI {
         } catch (IllegalArgumentException wizardException) {
             System.out.println("Invalid wizard selected");
         }
-        return true;
     }
 
     /**
@@ -191,18 +181,19 @@ public class InputCLI {
     /**
      * @author Christian Confalonieri
      */
-    private static boolean cliPlayCardRequest(String[] command) {
+    private static void cliPlayCardRequest(String[] command) {
         if(command.length < 1 || command.length > 2) {
             System.out.println(ConsoleColor.RED + "Invalid play card command" + ConsoleColor.RESET);
-            return true;
+            return;
         }
         /*--------------------LOGOUT AND HELP SECTION--------------------*/
         if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
             LoginService.logoutRequest();
+            return;
         }
         else {
             if (command[0].equalsIgnoreCase("HELP") && CLI.getInstance().printHelp(command)) {
-                return true;
+                return;
             }
         }
         /*----------------------------------------------------------------*/
@@ -224,28 +215,29 @@ public class InputCLI {
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleColor.RED + "Invalid card selected" + ConsoleColor.RESET);
         }
-        return true;
     }
 
     /**
      * @author Christian Confalonieri
      */
-    private static boolean cliMoveStudentsRequest(String[] command) {
+    private static void cliMoveStudentsRequest(String[] command) {
         if(command.length <1 || command.length > 14) {
             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
-            return true;
+            return;
         }
         /*----------LOGOUT, CHARACTER ACTIVATION AND HELP SECTION----------*/
         if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
             LoginService.logoutRequest();
+            return;
         }
         else {
-            if (command[0].equalsIgnoreCase("CHARACTER") && cliPowersRequest(command)) {
-                return true;
+            if (command[0].equalsIgnoreCase("CHARACTER")) {
+                cliPowersRequest(command);
+                return;
             }
             else {
                 if (command[0].equalsIgnoreCase("HELP") && CLI.getInstance().printHelp(command)) {
-                    return true;
+                    return;
                 }
             }
         }
@@ -274,70 +266,71 @@ public class InputCLI {
 
 
         GameService.moveStudentsRequest(toDiningRoom,toIslands);
-        return true;
     }
 
     /**
      * @author Christian Confalonieri
      */
-    private static boolean cliMoveMotherNatureRequest(String[] command) {
+    private static void cliMoveMotherNatureRequest(String[] command) {
         if(command.length <1 || command.length > 14) {
             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
-            return true;
+            return;
         }
         /*----------LOGOUT, CHARACTER ACTIVATION AND HELP SECTION----------*/
         if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
             LoginService.logoutRequest();
+            return;
         }
         else {
-            if (command[0].equalsIgnoreCase("CHARACTER") && cliPowersRequest(command)) {
-                    return true;
+            if (command[0].equalsIgnoreCase("CHARACTER")) {
+                cliPowersRequest(command);
+                return;
             }
             else {
                 if (command[0].equalsIgnoreCase("HELP") && CLI.getInstance().printHelp(command)) {
-                    return true;
+                    return;
                 }
             }
         }
         /*----------------------------------------------------------------*/
         GameService.moveMotherNatureRequest(Integer.parseInt(command[0]));
-        return true;
     }
 
     /**
      * @author Christian Confalonieri
      */
-    private static boolean cliMoveCloudRequest(String[] command) {
+    private static void cliMoveCloudRequest(String[] command) {
         if(command.length <1 || command.length > 14) {
             System.out.println(ConsoleColor.RED + "Invalid move command" + ConsoleColor.RESET);
-            return true;
+            return;
         }
         /*----------LOGOUT, CHARACTER ACTIVATION AND HELP SECTION----------*/
         if(command.length == 1 && command[0].equalsIgnoreCase("LOGOUT")) {
             LoginService.logoutRequest();
+            return;
         }
         else {
-            if (command[0].equalsIgnoreCase("CHARACTER") && cliPowersRequest(command)) {
-                return true;
+            if (command[0].equalsIgnoreCase("CHARACTER")) {
+                cliPowersRequest(command);
+                return;
             }
             else {
                 if (command[0].equalsIgnoreCase("HELP") && CLI.getInstance().printHelp(command)) {
-                    return true;
+                    return;
                 }
             }
         }
         /*----------------------------------------------------------------*/
         GameService.moveCloudRequest(Client.getInstance().getGameHandler().getGame().getClouds().get(Integer.parseInt(command[0]) - 1));
-        return true;
     }
 
     /**
      * @author Christian Confalonieri
      */
-    private static boolean cliPowersRequest(String[] command) {
+    private static void cliPowersRequest(String[] command) {
         if(command.length <= 2) {
             System.out.println(ConsoleColor.RED + "Invalid power command" + ConsoleColor.RESET);
-            return true;
+            return;
         }
         else {
             PowerType currentPower = null;
@@ -491,6 +484,5 @@ public class InputCLI {
                 System.out.println(ConsoleColor.RED + "Invalid character selected" + ConsoleColor.RESET);
             }
         }
-        return true;
     }
 }

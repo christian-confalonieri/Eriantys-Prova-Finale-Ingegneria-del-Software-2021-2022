@@ -1,13 +1,6 @@
 package it.polimi.ingsw.cli;
 
 import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.client.ClientState;
-import it.polimi.ingsw.model.entity.*;
-import it.polimi.ingsw.model.enumeration.Card;
-import it.polimi.ingsw.model.enumeration.GamePhase;
-import it.polimi.ingsw.model.enumeration.PawnColor;
-import it.polimi.ingsw.model.enumeration.TurnPhase;
-import it.polimi.ingsw.model.power.*;
 import java.util.*;
 
 public class CLI {

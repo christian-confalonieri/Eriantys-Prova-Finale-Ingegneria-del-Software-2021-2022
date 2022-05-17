@@ -553,7 +553,7 @@ public class CLIRenderHelper {
      */
     private void printMoveStudentsHelp() {
         System.out.println("\nType the command: \"D: YELLOW D: BLUE 7: GREEN\"\n" +
-                "in which with \"D:\" we indicate the students to move to the dining room and with \"7:\" those to move to island 7");
+                "in which with \"D:\" we indicate the students to move to the dining room and with \"7:\" those to move to island 7\n");
         if(!(Client.getInstance().getClientState() == ClientState.INGAME && Client.getInstance().getGameHandler().getGamePhase() == GamePhase.TURN && Client.getInstance().getGameHandler().getTurnPhase() == TurnPhase.MOVESTUDENTS)) {
             System.out.println("However, you cannot type the command to move students since you are not in the correct phase of the game.");
         }
