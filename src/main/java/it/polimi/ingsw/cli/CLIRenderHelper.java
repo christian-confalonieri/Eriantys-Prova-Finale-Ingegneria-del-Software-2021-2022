@@ -491,16 +491,16 @@ public class CLIRenderHelper {
         String centaur = "\nTo activate the power of \"CENTAUR\" type the command:\n" +
                 "\"CHARACTER CENTAUR\"\n";
         String jester = "\nTo activate the power of \"JESTER\" type the command:\n" +
-                "\"CHARACTER JESTER E: RED E: BLUE E: GREEN J: RED J: BLUE J: GREEN\",\n where \"E: RED\" is, " +
-                "for example, the color of a student in your entry\n and \"J: BLUE\" is the color of a student placed " +
+                "\"CHARACTER JESTER E RED E BLUE E GREEN J RED J BLUE J GREEN\",\n where \"E RED\" is, " +
+                "for example, the color of a student in your entry\n and \"J BLUE\" is the color of a student placed " +
                 "on the jester (you can type students in your preferred order).\n";
         String knight = "\nTo activate the power of \"KNIGHT\" type the command:\n" +
                 "\"CHARACTER KNIGHT\"\n";
         String harvester = "\nTo activate the power of \"HARVESTER\" type the command:\n" +
                 "\"CHARACTER HARVESTER RED\", where \"RED\" is the color of a student of your choice.\n";
         String minstrel = "\nTo activate the power of \"MINSTREL\" type the command:\n" +
-                "\"CHARACTER MINSTREL E: RED E: BLUE E: GREEN D: RED D: BLUE D: GREEN\",\n where \"E: RED\" is, " +
-                "for example, the color of a student in your entry\n and \"D: BLUE\" is he color of a student in your dining room " +
+                "\"CHARACTER MINSTREL E RED E BLUE E GREEN D RED D BLUE D GREEN\",\n where \"E RED\" is, " +
+                "for example, the color of a student in your entry\n and \"D BLUE\" is he color of a student in your dining room " +
                 "(you can type students in your preferred order).\n";
         String princess = "\nTo activate the power of \"PRINCESS\" type the command:\n" +
                 "\"CHARACTER PRINCESS RED\", where \"RED\" is the color of a student of your choice.\n";
@@ -562,8 +562,8 @@ public class CLIRenderHelper {
      * @author Christian Confalonieri
      */
     private void printMoveStudentsHelp() {
-        System.out.println("\nType the command: \"D: YELLOW D: BLUE 7: GREEN\"\n" +
-                "in which with \"D:\" we indicate the students to move to the dining room and with \"7:\" those to move to island 7\n");
+        System.out.println("\nType the command: \"D YELLOW D BLUE 7 GREEN\"\n" +
+                "in which with \"D\" we indicate the students to move to the dining room and with \"7\" those to move to island 7\n");
         if(!(Client.getInstance().getClientState() == ClientState.INGAME && Client.getInstance().getGameHandler().getGamePhase() == GamePhase.TURN && Client.getInstance().getGameHandler().getTurnPhase() == TurnPhase.MOVESTUDENTS)) {
             System.out.println("However, you cannot type the command to move students since you are not in the correct phase of the game.");
         }

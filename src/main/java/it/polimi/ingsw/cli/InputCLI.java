@@ -177,7 +177,7 @@ public class InputCLI {
                 } else {
                     for (Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
                         if (student.getColor() == Pawn.parseColor(command[i + 1]) && !toDiningRoom.contains(student) && !toIslands.keySet().contains(student)) {
-                            toIslands.put(student, Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(command[i].substring(0, command[i].length() - 1)) - 1).getUuid());
+                            toIslands.put(student, Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(command[i]) - 1).getUuid());
                             break;
                         }
                     }
