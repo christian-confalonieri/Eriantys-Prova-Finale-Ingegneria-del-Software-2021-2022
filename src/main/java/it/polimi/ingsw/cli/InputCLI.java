@@ -17,6 +17,10 @@ import java.util.*;
  * @author Christian Confalonieri
  */
 public class InputCLI {
+    private static boolean globalCommand;
+    /**
+     * @author Christian Confalonieri
+     */
     public static void inputHandler(Scanner inputScanner) {
         if (inputScanner.hasNext()) {
             String inputString = inputScanner.next();
@@ -29,7 +33,7 @@ public class InputCLI {
                 return;
             }
 
-            globalCommand(command);
+            globalCommand = globalCommand(command);
 
             switch(Client.getInstance().getClientState()) {
                 case LOGIN:
@@ -78,10 +82,6 @@ public class InputCLI {
      * @author Christian Confalonieri
      */
     private static void cliNewGameRequest(String[] command) {
-        if(command.length != 3) {
-            System.out.println(ConsoleColor.RED + "Invalid new game command" + ConsoleColor.RESET);
-            return;
-        }
         try {
             if(Integer.parseInt(command[1]) < 2 || Integer.parseInt(command[1]) > 4) throw new NumberFormatException();
             LobbyService.newGameRequest(Integer.parseInt(command[1]), null, Wizard.parseColor(command[2].toUpperCase()));
@@ -98,10 +98,6 @@ public class InputCLI {
      * @author Christian Confalonieri
      */
     private static void cliJoinGameRequest(String[] command) {
-        if(command.length != 3) {
-            System.out.println(ConsoleColor.RED + "Invalid join game command" + ConsoleColor.RESET);
-            return;
-        }
         try {
             if(Integer.parseInt(command[1]) < 2 || Integer.parseInt(command[1]) > 4) throw new NumberFormatException();
             LobbyService.joinGameRequest(Integer.parseInt(command[1]), Wizard.parseColor(command[2].toUpperCase()));
@@ -119,10 +115,6 @@ public class InputCLI {
      * @author Leonardo Airoldi, Christian Confalonieri
      */
     private static void cliJoinGameIdRequest(String[] command) {
-        if(command.length != 3) {
-            System.out.println(ConsoleColor.RED + "Invalid join game command" + ConsoleColor.RESET);
-            return;
-        }
         try {
             LobbyService.joinGameIdRequest(Client.getInstance().getAllServerLobbys().get(Integer.parseInt(command[1])-1).getGameLobbyId(), Wizard.parseColor(command[2].toUpperCase()));
         } catch (InvalidColor e) {
@@ -136,7 +128,8 @@ public class InputCLI {
      * @author Christian Confalonieri
      */
     private static void cliPlayCardRequest(String[] command) {
-        if(command.length < 1 || command.length > 2) {
+        if(globalCommand) return;
+        if(command.length != 1) {
             System.out.println(ConsoleColor.RED + "Invalid play card command" + ConsoleColor.RESET);
             return;
         }
@@ -164,7 +157,8 @@ public class InputCLI {
      * @author Christian Confalonieri
      */
     private static void cliMoveStudentsRequest(String[] command) {
-        if(command.length <1 || command.length > 14) {
+        if(globalCommand) return;
+        if(command.length != 6) {
             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
             return;
         }
@@ -199,7 +193,8 @@ public class InputCLI {
      * @author Christian Confalonieri
      */
     private static void cliMoveMotherNatureRequest(String[] command) {
-        if(command.length <1 || command.length > 14) {
+        if(globalCommand) return;
+        if(command.length != 1) {
             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
             return;
         }
@@ -210,7 +205,8 @@ public class InputCLI {
      * @author Christian Confalonieri
      */
     private static void cliMoveCloudRequest(String[] command) {
-        if(command.length <1 || command.length > 14) {
+        if(globalCommand) return;
+        if(command.length != 1) {
             System.out.println(ConsoleColor.RED + "Invalid move command" + ConsoleColor.RESET);
             return;
         }
@@ -221,7 +217,7 @@ public class InputCLI {
      * @author Christian Confalonieri
      */
     private static void cliPowersRequest(String[] command) {
-        if(command.length <= 2) {
+        if(command.length < 2 || command.length > 14) {
             System.out.println(ConsoleColor.RED + "Invalid power command" + ConsoleColor.RESET);
             return;
         }
@@ -275,7 +271,7 @@ public class InputCLI {
                     List<Student> toEntranceJ = new ArrayList<>();
 
                     for(int i=2; i< command.length; i+=2) {
-                        if(command[i].equalsIgnoreCase("E:")) {
+                        if(command[i].equalsIgnoreCase("E")) {
                             for(Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
                                 if(student.getColor() == Pawn.parseColor(command[i+1]) && !toJester.contains(student)) {
                                     toJester.add(student);
@@ -361,48 +357,56 @@ public class InputCLI {
     }
 
     /**
-     * @author Leonardo Airoldi, Christian Confalonieri
+     * @author Christian Confalonieri
      */
-    private static void globalCommand(String[] command) {
-        // GLOBAL COMMAND
-        switch(command[0].toUpperCase()) {
-            case "LOGOUT":
+    private static boolean globalCommand(String[] command) {
+        switch (command[0].toUpperCase()) {
+            case "LOGOUT", "L", "LG" -> {
                 if (Client.getInstance().getClientState() == ClientState.LOGIN) {
                     System.out.println(ConsoleColor.RED + "invalid client state" + ConsoleColor.RESET);
-                    return;
+                    return true;
                 }
                 cliLogoutRequest(command);
-                return;
-            case "HELP":
+                return true;
+            }
+            case "HELP", "TIPS", "H", "T" -> {
                 if (Client.getInstance().getClientState() == ClientState.LOGIN) {
                     System.out.println(ConsoleColor.RED + "invalid client state" + ConsoleColor.RESET);
-                    return;
+                    return true;
                 }
                 CLI.getInstance().printHelp(command);
-                return;
-            case "CHARACTER":
-                if(Client.getInstance().getClientState() == ClientState.INGAME && Client.getInstance().getGameHandler().getGamePhase() != GamePhase.PREPARATION) {
-                    if(command.length > 14) {
+                return true;
+            }
+            case "CHARACTERS", "POWERS", "CHARACTER", "POWER", "CHAR", "C", "P" -> {
+                if (Client.getInstance().getClientState() == ClientState.INGAME && Client.getInstance().getGameHandler().getGamePhase() != GamePhase.PREPARATION) {
+                    if (command.length > 14) {
                         System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
-                        return;
+                        return true;
                     }
                     cliPowersRequest(command);
-                }
-                else {
+                } else {
                     System.out.println(ConsoleColor.RED + "invalid phase" + ConsoleColor.RESET);
+                    return true;
                 }
-                return;
+                return true;
+            }
         }
+        return false;
     }
 
     /**
      * @autho Christian Confalonieri
      */
     private static void mainMenu(String[] command) {
+        if(globalCommand) return;
+        if(command.length != 3) {
+            System.out.println(ConsoleColor.RED + "Invalid main menu command" + ConsoleColor.RESET);
+            return;
+        }
         switch (command[0].toUpperCase()) {
-            case "NEWGAME", "N" -> cliNewGameRequest(command);
-            case "JOINGAMEID", "JID" -> cliJoinGameIdRequest(command);
-            case "JOINGAME", "J" -> cliJoinGameRequest(command);
+            case "NEWGAME", "N", "NEW", "NG" -> cliNewGameRequest(command);
+            case "JOINGAMEID", "JID", "JOINID" -> cliJoinGameIdRequest(command);
+            case "JOINGAME", "J", "JOIN", "JG" -> cliJoinGameRequest(command);
         }
     }
 

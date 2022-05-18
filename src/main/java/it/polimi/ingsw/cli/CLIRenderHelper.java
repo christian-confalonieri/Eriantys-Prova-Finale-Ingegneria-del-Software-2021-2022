@@ -10,7 +10,10 @@ import it.polimi.ingsw.model.power.Jester;
 import it.polimi.ingsw.model.power.Princess;
 import it.polimi.ingsw.server.GameLobby;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CLIRenderHelper {
 
@@ -147,7 +150,7 @@ public class CLIRenderHelper {
         if(Client.getInstance().getAllServerLobbys() != null) {
             count = 1;
             for (GameLobby lb : Client.getInstance().getAllServerLobbys()) {
-                mainMenuScreen += " - " + lb.toString() + "[Lobby" + count + "]" + "\n";
+                mainMenuScreen += " - " + lb.toString() + "[Lobby " + count + "]" + "\n";
                 count++;
             }
         }
@@ -428,39 +431,38 @@ public class CLIRenderHelper {
         List<Student> students;
         System.out.println("\n" + ConsoleColor.RED + "+---------------------+\n" + ConsoleColor.RESET + "CHARACTERS: " + "\n-----------------------");
         for(int i=0; i<3; i++) {
-            switch(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType()) {
-                case FRIAR:
-                    students = ((Friar)Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getStudents();
+            switch (Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType()) {
+                case FRIAR -> {
+                    students = ((Friar) Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getStudents();
                     System.out.print(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": ");
-                    for (int j = 0; j < students.size(); j++ ) {
+                    for (int j = 0; j < students.size(); j++) {
                         System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
                     }
                     System.out.println();
-                    break;
-                case JESTER:
-                    students = ((Jester)Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getStudents();
+                }
+                case JESTER -> {
+                    students = ((Jester) Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getStudents();
                     System.out.print(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": ");
-                    for (int j = 0; j < students.size(); j++ ) {
+                    for (int j = 0; j < students.size(); j++) {
                         System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
                     }
                     System.out.println();
-                    break;
-                case PRINCESS:
-                    students = ((Princess)Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getStudents();
+                }
+                case PRINCESS -> {
+                    students = ((Princess) Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getStudents();
                     System.out.print(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": ");
-                    for (int j = 0; j < students.size(); j++ ) {
+                    for (int j = 0; j < students.size(); j++) {
                         System.out.print(ConsoleColor.PawnColorString(students.get(j).getColor()) + "o " + ConsoleColor.RESET);
                     }
                     System.out.println();
-                    break;
-                case HERBALIST:
+                }
+                case HERBALIST -> {
                     System.out.print(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")" + ": " +
-                            ((Herbalist)Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getNoEntryCards() + " No Entry tiles");
+                            ((Herbalist) Client.getInstance().getGameHandler().getGame().getPowerCards().get(i)).getNoEntryCards() + " No Entry tiles");
                     System.out.println();
-                    break;
-                default:
-                    System.out.println(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")");
-                    break;
+                }
+                default ->
+                        System.out.println(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType() + " (" + Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getCost() + ")");
             }
         }
         System.out.println(ConsoleColor.RED + "+---------------------+\n" + ConsoleColor.RESET);
@@ -477,33 +479,33 @@ public class CLIRenderHelper {
     private void printPowersHelp() {
         String help = "";
         String friar = "\nTo activate the power of \"FRIAR\" type the command:\n" +
-                "\"CHARACTER FRIAR RED 7\", where \"RED\" is the color of a FRIAR student and \"7\" is the number of an island of your choice.";
+                "\"CHARACTER FRIAR RED 7\", where \"RED\" is the color of a FRIAR student and \"7\" is the number of an island of your choice.\n";
         String farmer = "\nTo activate the power of \"FARMER\" type the command:\n" +
-                "\"CHARACTER FARMER\"";
+                "\"CHARACTER FARMER\"\n";
         String herald = "\nTo activate the power of \"HERALD\" type the command:\n" +
-                "\"CHARACTER HERALD 7\", where \"7\" is the number of an island of your choice.";
+                "\"CHARACTER HERALD 7\", where \"7\" is the number of an island of your choice.\n";
         String mailman = "\nTo activate the power of \"MAILMAN\" type the command:\n" +
-                "\"CHARACTER MAILMAN\"";
+                "\"CHARACTER MAILMAN\"\n";
         String herbalist = "\nTo activate the power of \"HERBALIST\" type the command:\n" +
-                "\"CHARACTER HERBALIST 7\", where \"7\" is the number of an island of your choice.";
+                "\"CHARACTER HERBALIST 7\", where \"7\" is the number of an island of your choice.\n";
         String centaur = "\nTo activate the power of \"CENTAUR\" type the command:\n" +
-                "\"CHARACTER CENTAUR\"";
+                "\"CHARACTER CENTAUR\"\n";
         String jester = "\nTo activate the power of \"JESTER\" type the command:\n" +
                 "\"CHARACTER JESTER E: RED E: BLUE E: GREEN J: RED J: BLUE J: GREEN\",\n where \"E: RED\" is, " +
                 "for example, the color of a student in your entry\n and \"J: BLUE\" is the color of a student placed " +
-                "on the jester (you can type students in your preferred order).";
+                "on the jester (you can type students in your preferred order).\n";
         String knight = "\nTo activate the power of \"KNIGHT\" type the command:\n" +
-                "\"CHARACTER KNIGHT\"";
+                "\"CHARACTER KNIGHT\"\n";
         String harvester = "\nTo activate the power of \"HARVESTER\" type the command:\n" +
-                "\"CHARACTER HARVESTER RED\", where \"RED\" is the color of a student of your choice.";
+                "\"CHARACTER HARVESTER RED\", where \"RED\" is the color of a student of your choice.\n";
         String minstrel = "\nTo activate the power of \"MINSTREL\" type the command:\n" +
                 "\"CHARACTER MINSTREL E: RED E: BLUE E: GREEN D: RED D: BLUE D: GREEN\",\n where \"E: RED\" is, " +
                 "for example, the color of a student in your entry\n and \"D: BLUE\" is he color of a student in your dining room " +
-                "(you can type students in your preferred order).";
+                "(you can type students in your preferred order).\n";
         String princess = "\nTo activate the power of \"PRINCESS\" type the command:\n" +
-                "\"CHARACTER PRINCESS RED\", where \"RED\" is the color of a student of your choice.";
+                "\"CHARACTER PRINCESS RED\", where \"RED\" is the color of a student of your choice.\n";
         String thief = "\nTo activate the power of \"THIEF\" type the command:\n" +
-                "\"CHARACTER THIEF RED\", where \"RED\" is the color of a student of your choice.";
+                "\"CHARACTER THIEF RED\", where \"RED\" is the color of a student of your choice.\n";
         if(Client.getInstance().getGameHandler() != null) {
             for(int i=0; i<3; i++) {
                 help += switch(Client.getInstance().getGameHandler().getGame().getPowerCards().get(i).getType()) {
@@ -524,9 +526,9 @@ public class CLIRenderHelper {
         }
         else {
             help = friar + farmer + herald + mailman + herbalist + centaur + jester + knight + harvester + minstrel + princess + thief +
-                    "\n\nHowever, you cannot type the command to activate a character since you are not in the correct phase of the game.";
+                    "\nHowever, you cannot type the command to activate a character since you are not in the correct phase of the game.";
         }
-        System.out.println(help + "\n");
+        System.out.println(help + "\n(Type \"HELP KEYWORDS CHARACTERS\" to see other ways to invoke character command)\n");
         System.out.print("Enter the command: ");
     }
 
@@ -534,9 +536,14 @@ public class CLIRenderHelper {
      * @author Christian Confalonieri
      */
     private void printMainMenuHelp() {
-        System.out.println("\nTo disconnect, type the command: \"LOGOUT\".");
-        System.out.println("Type the command: \"NEWGAME X COLOR\" or \"JOINGAME X COLOR\" or\"JOINGAMEID Y COLOR\"\n" +
-                "where \"X\" is the number of players, Y is the number of the chosen lobby and \"COLOR\" is the color of the wizard\n");
+        System.out.println("\nLogout: \"LOGOUT\" (Type \"HELP KEYWORDS LOGOUT\" to see other ways to invoke this command)\n" +
+                "\nNew Game: \"NEWGAME 2 RED\", \"where \"2\" is the number of players AND \"RED\" is the color of the wizard.\n" +
+                "(Type \"HELP KEYWORDS NEWGAME\" to see other ways to invoke this command)\n"+
+                "\nJoin Game: \"JOINGAME 2 RED\", \"where \"2\" is the number of players AND \"RED\" is the color of the wizard.\n" +
+                "(Type \"HELP KEYWORDS JOINGAME\" to see other ways to invoke this command)\n" +
+                "\nJoin Game ID: \"JOINGAMEID 2 RED\", \"where \"2\" is the number of the chosen lobby AND \"RED\" is the color of the wizard.\n" +
+                "(Type \"HELP KEYWORDS JOINGAMEID\" to see other ways to invoke this command)\n" +
+                "\nType \"HELP KEYWORDS\" to see other ways to invoke these commands\n");
         if(Client.getInstance().getClientState() != ClientState.MAINMENU) {
             System.out.println("However, you cannot type the main menu command since you are not in the correct phase of the game.\n");
         }
@@ -547,7 +554,7 @@ public class CLIRenderHelper {
      * @author Christian Confalonieri
      */
     private void printWaitingLobbyHelp() {
-        System.out.println("\nTo disconnect, type: \"LOGOUT\".\n");
+        System.out.println("\nLogout: \"LOGOUT\" (Type \"HELP KEYWORDS LOGOUT\" to see other ways to invoke this command)\n");
         System.out.print("Enter the command: ");
     }
 
@@ -566,35 +573,82 @@ public class CLIRenderHelper {
     /**
      * @author Christian Confalonieri
      */
-    public boolean printHelp(String[] command) {
-        if(command.length != 2) {
+    private void printKeyWordsHelp(String[] command) {
+
+        Map<String,String[]> keyWords = new HashMap<>();
+        keyWords.put("characters",new String[]{"Characters", "CHARACTERS", "POWERS", "CHARACTER", "POWER", "CHAR", "C", "P"});
+        keyWords.put("mainMenu",new String[]{"Main Menu", "MAINMENU", "GAME", "MM"});
+        keyWords.put("waitingLobby",new String[]{"Waiting Lobby", "WAITINGLOBBY", "WAITING", "WAIT", "W", "WL"});
+        keyWords.put("moveStudents",new String[]{"Move Students", "MOVESTUDENTS", "MOVE", "STUDENTS", "MS"});
+        keyWords.put("help",new String[]{"Help", "HELP", "TIPS", "H", "T"});
+        keyWords.put("logout",new String[]{"Logout", "LOGOUT", "L", "LG"});
+        keyWords.put("newGame",new String[]{"New Game", "NEWGAME", "N", "NEW", "NG"});
+        keyWords.put("joinGameID",new String[]{"Join Game ID", "JOINGAMEID", "JID", "JOINID"});
+        keyWords.put("joinGame",new String[]{"Join Game", "JOINGAME", "J", "JOIN", "JG"});
+        keyWords.put("keyWords", new String[]{"Keywords", "KEYWORDS", "KEY", "K", "KW"});
+
+        for(String key : keyWords.keySet()) {
+            keyWords.get(key)[0] += ": { ";
+            for(int i=1;i<keyWords.get(key).length;i++) {
+                keyWords.get(key)[0] += keyWords.get(key)[i];
+                if(i+1!=keyWords.get(key).length) {
+                    keyWords.get(key)[0] += ", ";
+                }
+                else {
+                    keyWords.get(key)[0] += " }\n\n";
+                }
+            }
+        }
+
+        if(command.length == 2) {
+            System.out.println();
+            for(String key : keyWords.keySet()) {
+                System.out.print(keyWords.get(key)[0]);
+            }
+            System.out.print("Enter the command: ");
+            return;
+        }
+
+        switch(command[2].toUpperCase()) {
+            case "CHARACTERS", "POWERS", "CHARACTER", "POWER", "CHAR", "C", "P" -> System.out.print("\n" + keyWords.get("characters")[0]);
+            case "MAINMENU", "GAME", "MM" -> System.out.print("\n" + keyWords.get("mainMenu")[0]);
+            case "WAITINGLOBBY", "WAITING", "WAIT", "W", "WL" -> System.out.print("\n" + keyWords.get("waitingLobby")[0]);
+            case "MOVESTUDENTS", "MOVE", "STUDENTS", "MS" -> System.out.print("\n" + keyWords.get("moveStudents")[0]);
+            case "HELP", "TIPS", "H", "T" -> System.out.print("\n" + keyWords.get("help")[0]);
+            case "LOGOUT", "L", "LG" -> System.out.print("\n" + keyWords.get("logout")[0]);
+            case "NEWGAME", "N", "NEW", "NG" -> System.out.print("\n" + keyWords.get("newGame")[0]);
+            case "JOINGAMEID", "JID", "JOINID" -> System.out.print("\n" + keyWords.get("joinGameID")[0]);
+            case "JOINGAME", "J", "JOIN", "JG" -> System.out.print("\n" + keyWords.get("joinGame")[0]);
+            case "KEYWORDS", "KEY", "K", "KW" -> System.out.print("\n" + keyWords.get("keyWords")[0]);
+            default -> System.out.println(ConsoleColor.RED + "Invalid keywords command" + ConsoleColor.RESET);
+        }
+        System.out.print("Enter the command: ");
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public void printHelp(String[] command) {
+        if(command.length < 1 || command.length > 3) {
             System.out.println(ConsoleColor.RED + "Invalid help command" + ConsoleColor.RESET);
-            return true;
+            return;
         }
-        switch(command[1].toUpperCase()) {
-            case "HELP":
-                System.out.println("\n\"HELP CHARACTERS\"\n"+
-                        "\n\"HELP MAINMENU\"\n" +
-                        "\n\"HELP WAITINGLOBBY\"\n" +
-                        "\n\"HELP MOVESTUDENTS\"\n");
-                System.out.print("Enter the command: ");
-                break;
-            case "CHARACTERS":
-                printPowersHelp();
-                break;
-            case "MAINMENU":
-                printMainMenuHelp();
-                break;
-            case "WAITINGLOBBY":
-                printWaitingLobbyHelp();
-                break;
-            case "MOVESTUDENTS":
-                printMoveStudentsHelp();
-                break;
-            default:
-                System.out.println(ConsoleColor.RED + "Invalid help command" + ConsoleColor.RESET);
-                break;
+        if(command.length == 1) {
+            System.out.println("\nCharaters: \"HELP CHARACTERS\" (Type \"HELP KEYWORDS CHARACTERS\" to see other ways to invoke this command)\n"+
+                    "\nMain Menu: \"HELP MAINMENU\" (Type \"HELP KEYWORDS MAINMENU\" to see other ways to invoke this command)\n" +
+                    "\nWaiting Lobby: \"HELP WAITINGLOBBY\" (Type \"HELP KEYWORDS WAITINGLOBBY\" to see other ways to invoke this command)\n" +
+                    "\nMove Students: \"HELP MOVESTUDENTS\" (Type \"HELP KEYWORDS MOVESTUDENTS\" to see other ways to invoke this command)\n" +
+                    "\nType \"HELP KEYWORDS\" to see other ways to invoke these commands\n");
+            System.out.print("Enter the command: ");
+            return;
         }
-        return true;
+        switch (command[1].toUpperCase()) {
+            case "CHARACTERS", "POWERS", "CHARACTER", "POWER", "CHAR", "C", "P" -> printPowersHelp();
+            case "MAINMENU", "NEWGAME", "JOINGAME", "GAME", "JOIN", "MM" -> printMainMenuHelp();
+            case "WAITINGLOBBY", "WAITING", "WAIT", "W", "WL" -> printWaitingLobbyHelp();
+            case "MOVESTUDENTS", "MOVE", "STUDENTS", "MS" -> printMoveStudentsHelp();
+            case "KEYWORDS", "KEY", "K", "KW" -> printKeyWordsHelp(command);
+            default -> System.out.println(ConsoleColor.RED + "Invalid help command" + ConsoleColor.RESET);
+        }
     }
 }
