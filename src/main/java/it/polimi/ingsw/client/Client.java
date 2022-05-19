@@ -6,9 +6,12 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.NetworkController;
 import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.gui.GUI;
+import it.polimi.ingsw.gui.GUIController;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.server.GameLobby;
+import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 
 import java.io.Console;
 import java.io.IOException;
@@ -16,6 +19,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class Client implements Runnable {
 
@@ -67,9 +71,7 @@ public class Client implements Runnable {
     }
 
     public void attachGUI() {
-        gui = new GUI();
         new Thread(() -> GUI.launch(GUI.class)).start();
-        // Platform.runLater();
     }
 
     public void attachCLI(CLI cli) {
@@ -111,6 +113,10 @@ public class Client implements Runnable {
         }
         clientState = ClientState.LOGIN;
         cli.render();
+        // Prova
+
+
+        Platform.runLater(() -> singleton.gui.getGuiController().printOnWelcomeText("FUNZIONA!"));
     }
 
     private static String parseArg(String[] args, String option, String optionVerbose) {
@@ -216,5 +222,13 @@ public class Client implements Runnable {
 
     public void setPollAllLobbies(boolean pollAllLobbies) {
         this.pollAllLobbies = pollAllLobbies;
+    }
+
+    public GUI getGui() {
+        return gui;
+    }
+
+    public void setGui(GUI gui) {
+        this.gui = gui;
     }
 }
