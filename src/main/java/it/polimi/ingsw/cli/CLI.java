@@ -61,9 +61,8 @@ public class CLI {
     }
 
 
-    public boolean printHelp(String[] command) {
+    public void printHelp(String[] command) {
         cliRenderHelper.printHelp(command);
-        return true;
     }
 
     /**

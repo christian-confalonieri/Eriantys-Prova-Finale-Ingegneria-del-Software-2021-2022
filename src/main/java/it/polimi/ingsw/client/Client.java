@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.cli.CLI;
+import it.polimi.ingsw.cli.CLIBypass;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.NetworkController;
@@ -147,7 +148,9 @@ public class Client implements Runnable {
             return;
         }
 
-        singleton.attachCLI(CLI.CLIFactory());
+        if(!isGui)  singleton.attachCLI(CLI.CLIFactory());
+        else        singleton.attachCLI(new CLIBypass());
+
         singleton.cli.attach(singleton); // For func written with client and not Client.getInstance()
         singleton.cli.render();
 
