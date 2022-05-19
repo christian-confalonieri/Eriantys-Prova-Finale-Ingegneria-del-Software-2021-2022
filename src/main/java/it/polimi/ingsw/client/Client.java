@@ -113,9 +113,9 @@ public class Client implements Runnable {
         }
         clientState = ClientState.LOGIN;
         cli.render();
+
+
         // Prova
-
-
         Platform.runLater(() -> singleton.gui.getGuiController().printOnWelcomeText("FUNZIONA!"));
     }
 
@@ -132,7 +132,7 @@ public class Client implements Runnable {
             if(s.contains("cli")) return true;
             if(s.contains("gui")) return false;
         }
-        return false; // Standard is CLI
+        return false; // Standard is GUI
     }
 
     public static void main(String[] args) {
@@ -146,10 +146,11 @@ public class Client implements Runnable {
             System.out.println(ConsoleColor.RED + "Invalid port number" + ConsoleColor.RESET);
             return;
         }
-        CLI mainCLI = CLI.getInstance();
-        mainCLI.attach(singleton);
-        singleton.attachCLI(mainCLI);
-        mainCLI.render();
+
+        singleton.attachCLI(CLI.CLIFactory());
+        singleton.cli.attach(singleton); // For func written with client and not Client.getInstance()
+        singleton.cli.render();
+
         if(isGui) singleton.attachGUI();
         singleton.attachNetwork();
         singleton.run();

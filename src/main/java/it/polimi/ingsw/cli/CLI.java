@@ -4,13 +4,6 @@ import it.polimi.ingsw.client.Client;
 import java.util.*;
 
 public class CLI {
-    public static CLI getInstance() {
-        if(singleton == null)
-            singleton = CLIFactory();
-        return singleton;
-    }
-    private static CLI singleton;
-
     private Client client;
 
     private Thread inputHandlerThread;
@@ -19,13 +12,13 @@ public class CLI {
 
     private CLIRenderHelper cliRenderHelper;
 
-    private CLI() {
+    protected CLI() {
         this.inputScanner = new Scanner(System.in).useDelimiter("\n");
         cliRenderHelper = new CLIRenderHelper();
         shutdown = false;
     }
 
-    private static CLI CLIFactory() {
+    public static CLI CLIFactory() {
         CLI newCli = new CLI();
         newCli.inputHandlerThread = new Thread(newCli::inputHandler);
         return newCli;

@@ -374,7 +374,7 @@ public class InputCLI {
                     System.out.println(ConsoleColor.RED + "invalid client state" + ConsoleColor.RESET);
                     return true;
                 }
-                CLI.getInstance().printHelp(command);
+                Client.getInstance().getCli().printHelp(command);
                 return true;
             }
             case "CHARACTERS", "POWERS", "CHARACTER", "POWER", "CHAR", "C", "P" -> {
