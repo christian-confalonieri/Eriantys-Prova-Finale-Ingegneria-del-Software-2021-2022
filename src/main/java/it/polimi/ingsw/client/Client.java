@@ -154,7 +154,9 @@ public class Client implements Runnable {
         singleton.cli.attach(singleton); // For func written with client and not Client.getInstance()
         singleton.cli.render();
 
-        if(isGui) singleton.attachGUI();
+        // if(isGui) singleton.attachGUI();
+        //TODO need a system to hide gui but at the same time abstract calls from services to the gui
+        singleton.attachGUI();
         singleton.attachNetwork();
         singleton.run();
     }

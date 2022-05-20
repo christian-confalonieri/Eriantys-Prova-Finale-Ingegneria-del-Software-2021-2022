@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import com.sun.source.tree.AssertTree;
 import it.polimi.ingsw.action.PlayCardAction;
 import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.client.controller.services.LobbyService;
