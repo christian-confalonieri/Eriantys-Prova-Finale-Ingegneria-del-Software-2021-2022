@@ -117,7 +117,7 @@ public class Client implements Runnable {
 
 
         // Prova
-        Platform.runLater(() -> singleton.gui.getGuiController().printOnWelcomeText("FUNZIONA!"));
+        // Platform.runLater(() -> singleton.gui.getGuiController().printOnWelcomeText("FUNZIONA!"));
     }
 
     private static String parseArg(String[] args, String option, String optionVerbose) {

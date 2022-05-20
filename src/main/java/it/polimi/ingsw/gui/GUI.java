@@ -50,14 +50,14 @@ public class GUI extends Application {
 
     @Override
     synchronized public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(GUI.class.getResource("/it/polimi/ingsw/hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/polimi/ingsw/login-view.fxml"));
         Parent root = fxmlLoader.load();
         Client.getInstance().setGui(this); // Attach the gui to the client (Launch is called by attachGui)
 
         guiController = (GUIController) fxmlLoader.getController(); // Loads the controller
         this.notifyAll(); // Wakes up the future waiting for the controller
-        Scene scene = new Scene(root, 320, 240);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(root, 300, 200);
+//        stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
     }
