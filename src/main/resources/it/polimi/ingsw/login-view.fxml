@@ -6,15 +6,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIController">
    <children>
-      <Label fx:id="lblStatus" layoutX="25.0" layoutY="20.0" prefHeight="45.0" prefWidth="251.0" text="Status">
+      <Label fx:id="lblLogin" layoutX="25.0" layoutY="20.0" prefHeight="45.0" prefWidth="251.0" text="Eryantis">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Button layoutX="114.0" layoutY="142.0" mnemonicParsing="false" onAction="#Login" text="Submit">
+      <Button layoutX="114.0" layoutY="142.0" mnemonicParsing="false" onAction="#login" text="Submit">
          <font>
             <Font size="17.0" />
          </font>

@@ -57,7 +57,7 @@ public class GUI extends Application {
         guiController = (GUIController) fxmlLoader.getController(); // Loads the controller
         this.notifyAll(); // Wakes up the future waiting for the controller
         Scene scene = new Scene(root, 300, 200);
-//        stage.setTitle("Hello!");
+        stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
     }

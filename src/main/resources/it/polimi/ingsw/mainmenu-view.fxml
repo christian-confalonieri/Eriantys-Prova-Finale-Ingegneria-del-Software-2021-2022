@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIController">
+   <children>
+      <ListView fx:id="lstLobbies" layoutX="24.0" layoutY="24.0" prefHeight="200.0" prefWidth="553.0" />
+      <Label fx:id="lblError" layoutX="142.0" layoutY="246.0" prefHeight="25.0" prefWidth="435.0" text=" " />
+      <ChoiceBox value="2" fx:id="chcPlayers" layoutX="24.0" layoutY="246.0" onAction="#getPlayerRules" prefHeight="25.0" prefWidth="20.0" >
+      <items>
+      <FXCollections fx:factory="observableArrayList">
+         <String fx:value="2" />
+         <String fx:value="3" />
+         <String fx:value="4" />
+      </FXCollections>
+      </items>
+      </ChoiceBox>
+      <Button layoutX="24.0" layoutY="297.0" mnemonicParsing="false" onAction="#newGame" prefHeight="78.0" prefWidth="257.0" text="New Game">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="320.0" layoutY="297.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="257.0" text="Join Game">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <ChoiceBox value="BLUE" fx:id="chcWizards" layoutX="65.0" layoutY="246.0" onAction="#getSelectedWizard" prefHeight="25.0" prefWidth="67.0">
+      <items>
+         <FXCollections fx:factory="observableArrayList">
+            <String fx:value="BLUE" />
+            <String fx:value="PURPLE" />
+            <String fx:value="GREEN" />
+            <String fx:value="YELLOW" />
+         </FXCollections>
+      </items>
+      </ChoiceBox>
+   </children>
+</AnchorPane>
