@@ -214,6 +214,8 @@ public class GUI extends Application {
         switch(Client.getInstance().getClientState()) {
             case LOGIN -> Platform.runLater(() -> GUILoginController.initSceneAndController(currentStageWindow));
             case MAINMENU -> Platform.runLater(() -> GUIMainMenuController.initSceneAndController(currentStageWindow));
+            case WAITINGLOBBY -> Platform.runLater(() -> GUILobbyController.initSceneAndController(currentStageWindow));
+            case INGAME -> Platform.runLater(() -> GUIGameController.initSceneAndController(currentStageWindow));
         }
     }
 }
