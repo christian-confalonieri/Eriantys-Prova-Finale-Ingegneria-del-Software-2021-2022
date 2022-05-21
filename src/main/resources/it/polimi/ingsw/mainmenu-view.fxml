@@ -11,9 +11,9 @@
 
 <AnchorPane fx:id="mainmenu" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIMainMenuController">
    <children>
-      <ListView fx:id="lstLobbies" layoutX="24.0" layoutY="24.0" onMouseClicked="#getSelectedLobby" prefHeight="200.0" prefWidth="553.0" />
+      <ListView fx:id="lstLobbies" layoutX="24.0" layoutY="24.0" prefHeight="200.0" prefWidth="553.0" />
       <Label fx:id="lblError" layoutX="154.0" layoutY="246.0" prefHeight="25.0" prefWidth="423.0" text=" " />
-      <ChoiceBox fx:id="chcPlayers" layoutX="24.0" layoutY="246.0" onAction="#getPlayerRules" prefHeight="25.0" prefWidth="20.0" value="2">
+      <ChoiceBox fx:id="chcPlayers" layoutX="24.0" layoutY="246.0" prefHeight="25.0" prefWidth="20.0" value="2">
       <items>
       <FXCollections fx:factory="observableArrayList">
          <String fx:value="2" />
@@ -32,7 +32,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <ChoiceBox fx:id="chcWizards" layoutX="75.0" layoutY="246.0" onAction="#getSelectedWizard" prefHeight="25.0" prefWidth="67.0" value="BLUE">
+      <ChoiceBox fx:id="chcWizards" layoutX="75.0" layoutY="246.0" prefHeight="25.0" prefWidth="67.0" value="BLUE">
       <items>
          <FXCollections fx:factory="observableArrayList">
             <String fx:value="BLUE" />

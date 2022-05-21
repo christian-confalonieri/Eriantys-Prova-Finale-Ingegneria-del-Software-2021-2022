@@ -38,11 +38,7 @@ public class GUIMainMenuController {
     @FXML
     private ChoiceBox<String> chcWizards;
 
-    private int playerRules = 2;
-    private String wizard = "BLUE";
     private List<String> lobbies;
-
-    private String selectedLobby;
 
 
     /**
@@ -72,16 +68,11 @@ public class GUIMainMenuController {
     @FXML
     public void newGame() throws IOException {
         try{
-            LobbyService.newGameRequest(playerRules, null, Wizard.parseColor(wizard));
+            LobbyService.newGameRequest(Integer.parseInt(chcPlayers.getValue()), null, Wizard.parseColor(chcWizards.getValue()));
         }
         catch (InvalidColor e) {
             System.out.println(ConsoleColor.RED + "Invalid color" + ConsoleColor.RESET);
         }
-        // close the new game window
-        ((Stage) lblError.getScene().getWindow()).close();
-
-        // open the main menu window
-        //initializeLobby();
     }
 
     /**
@@ -91,7 +82,7 @@ public class GUIMainMenuController {
     public void joinGame() throws IOException {
         if(lstLobbies.getSelectionModel().getSelectedItem() == null || lobbies.isEmpty()) {
             try{
-                LobbyService.joinGameRequest(playerRules, Wizard.parseColor(wizard));
+                LobbyService.joinGameRequest(Integer.parseInt(chcPlayers.getValue()), Wizard.parseColor(chcWizards.getValue()));
             }
             catch (InvalidColor e) {
                 System.out.println(ConsoleColor.RED + "Invalid color" + ConsoleColor.RESET);
@@ -99,36 +90,12 @@ public class GUIMainMenuController {
         }
         else {
             try{
-                LobbyService.joinGameIdRequest(Client.getInstance().getAllServerLobbys().get(lobbies.indexOf(lstLobbies.getSelectionModel().getSelectedItem())).getGameLobbyId(), Wizard.parseColor(wizard));
+                LobbyService.joinGameIdRequest(Client.getInstance().getAllServerLobbys().get(lobbies.indexOf(lstLobbies.getSelectionModel().getSelectedItem())).getGameLobbyId(), Wizard.parseColor(chcWizards.getValue()));
             }
             catch (InvalidColor e) {
                 System.out.println(ConsoleColor.RED + "Invalid color" + ConsoleColor.RESET);
             }
         }
-
-        // close the new game window
-        ((Stage) lblError.getScene().getWindow()).close();
-
-        // open the game windows
-        //initializeGame();
-    }
-
-
-    /**
-     * @author Christian Confalonieri
-     */
-    @FXML
-    public void getPlayerRules() {
-        lstLobbies.getSelectionModel().clearSelection(lobbies.indexOf(lstLobbies.getSelectionModel().getSelectedItem()));
-        playerRules = Integer.parseInt(chcPlayers.getValue());
-    }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    @FXML
-    public void getSelectedWizard() {
-        wizard = chcWizards.getValue();
     }
 
     /**
@@ -156,15 +123,6 @@ public class GUIMainMenuController {
         }
     }
 
-
-
-    /**
-     * @author Christian Confalonieri
-     */
-    @FXML
-    public void getSelectedLobby() {
-        selectedLobby = lstLobbies.getSelectionModel().getSelectedItem();
-    }
     private String getPlayerColorToString(PlayerLobby p) {
         return switch(p.getWizard()) {
             case GREEN -> "G";
