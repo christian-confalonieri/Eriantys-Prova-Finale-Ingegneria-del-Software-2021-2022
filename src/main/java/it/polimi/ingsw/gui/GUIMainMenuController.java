@@ -38,7 +38,6 @@ public class GUIMainMenuController {
     @FXML
     private ChoiceBox<String> chcWizards;
 
-    private List<String> lobbies;
 
 
     /**
@@ -60,6 +59,8 @@ public class GUIMainMenuController {
         stage.setTitle("Main-Menu");
         stage.setScene(scene);
         stage.show();
+
+        Client.getInstance().getGui().guiCallMainMenu(GUIMainMenuController::updateLobbies);
     }
 
     /**
@@ -80,7 +81,7 @@ public class GUIMainMenuController {
      */
     @FXML
     public void joinGame() throws IOException {
-        if(lstLobbies.getSelectionModel().getSelectedItem() == null || lobbies.isEmpty()) {
+        if(lstLobbies.getSelectionModel().getSelectedItem() == null) {
             try{
                 LobbyService.joinGameRequest(Integer.parseInt(chcPlayers.getValue()), Wizard.parseColor(chcWizards.getValue()));
             }
@@ -90,7 +91,7 @@ public class GUIMainMenuController {
         }
         else {
             try{
-                LobbyService.joinGameIdRequest(Client.getInstance().getAllServerLobbys().get(lobbies.indexOf(lstLobbies.getSelectionModel().getSelectedItem())).getGameLobbyId(), Wizard.parseColor(chcWizards.getValue()));
+                LobbyService.joinGameIdRequest(Client.getInstance().getAllServerLobbys().get(lstLobbies.getSelectionModel().getSelectedIndex()).getGameLobbyId(), Wizard.parseColor(chcWizards.getValue()));
             }
             catch (InvalidColor e) {
                 System.out.println(ConsoleColor.RED + "Invalid color" + ConsoleColor.RESET);
@@ -101,35 +102,10 @@ public class GUIMainMenuController {
     /**
      * @author Christian Confalonieri
      */
-    private void updateLobbies() {
-        String r;
-        lobbies = new ArrayList<>();
-
-        for (GameLobby gameLobby : Client.getInstance().getAllServerLobbys()) {
-            r = "";
-            for (PlayerLobby p :
-                    gameLobby.getPlayersWaiting()) {
-                r += getPlayerColorToString(p);
-            }
-            lobbies.add(gameLobby.getLobbySize() + "P\t" + r + "\t\t");
-        }
-        String[] lobbiesString = new String[lobbies.size()];
-
-        for (int i = 0; i < lobbies.size(); i++) {
-            lobbiesString[i] = lobbies.get(i);
-        }
-        if(lstLobbies != null) {
-            lstLobbies.setItems(FXCollections.observableArrayList(lobbiesString));
-        }
-    }
-
-    private String getPlayerColorToString(PlayerLobby p) {
-        return switch(p.getWizard()) {
-            case GREEN -> "G";
-            case YELLOW -> "Y";
-            case PURPLE -> "P";
-            case BLUE -> "B";
-        };
+    public void updateLobbies() {
+        String[] lobbiesString =
+                (String[]) Client.getInstance().getAllServerLobbys().stream().map(GameLobby::toStringNoColors).toList().toArray(new String[0]);
+        lstLobbies.setItems(FXCollections.observableArrayList(lobbiesString));
     }
 
 }

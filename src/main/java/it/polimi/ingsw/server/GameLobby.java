@@ -88,6 +88,8 @@ public class GameLobby {
         return numberOfPlayers + "P\t" + waitingPlayersToString() + "\t";
     }
 
+    public String toStringNoColors() {return numberOfPlayers + "P\t" + waitingPlayersToStringNoColor() + "\t"; }
+
     private String waitingPlayersToString() {
         String r = "";
         for (PlayerLobby p:
@@ -98,12 +100,29 @@ public class GameLobby {
         return r;
     }
 
+    private String waitingPlayersToStringNoColor() {
+        String r = "";
+        for (PlayerLobby p: playersWaiting)
+            r += getPlayerColorToStringNoColor(p);
+        r += "\t";
+        return r;
+    }
+
     private String getPlayerColorToString(PlayerLobby p) {
         return switch(p.getWizard()) {
             case GREEN -> ConsoleColor.GREEN + "G" + ConsoleColor.RESET;
             case YELLOW -> ConsoleColor.YELLOW + "Y" + ConsoleColor.RESET;
             case PURPLE -> ConsoleColor.PURPLE + "P" + ConsoleColor.RESET;
             case BLUE -> ConsoleColor.BLUE + "B" + ConsoleColor.RESET;
+        };
+    }
+
+    private String getPlayerColorToStringNoColor(PlayerLobby p) {
+        return switch(p.getWizard()) {
+            case GREEN -> "G";
+            case YELLOW -> "Y";
+            case PURPLE -> "P";
+            case BLUE -> "B";
         };
     }
 }
