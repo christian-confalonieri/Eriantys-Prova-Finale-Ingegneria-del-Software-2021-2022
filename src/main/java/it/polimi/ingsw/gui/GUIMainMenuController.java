@@ -3,14 +3,10 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.services.LobbyService;
-import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.exceptions.InvalidColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.server.GameLobby;
 import it.polimi.ingsw.server.PlayerLobby;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,25 +15,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIController{
-    @FXML
-    private Label welcomeText;
-
-    // login-view
-    @FXML
-    private Label lblStatus;
-
-    @FXML
-    private TextField txtUsername;
+public class GUIMainMenuController {
 
     //mainmenu-view
     @FXML
@@ -59,51 +44,22 @@ public class GUIController{
 
     private String selectedLobby;
 
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
 
     /**
      * @author Christian Confalonieri
      */
-    @FXML
-    public void initialize() {
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.millis(1000),
-                        actionEvent -> {
-                            // Call update method for every 1 sec.
-                            updateLobbies();
-                        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-    }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    @FXML
-    public void login() throws IOException {
-        if(txtUsername.getText().contains(" ")) {
-            lblStatus.setText("Invalid login command");
+    public static void initSceneAndController(Stage stage) {
+        FXMLLoader fxmlLoader = new FXMLLoader(GUIMainMenuController.class.getResource("/it/polimi/ingsw/mainmenu-view.fxml"));
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        else {
-            LoginService.loginRequest(txtUsername.getText());
-            // close the login window
-            ((Stage) txtUsername.getScene().getWindow()).close();
-
-            // open the main menu window
-            initializeMainMenu();
+        synchronized (Client.getInstance().getGui()) {
+            Client.getInstance().getGui().guiMainMenuController = (GUIMainMenuController) fxmlLoader.getController(); // Loads the controller
+            Client.getInstance().getGui().notifyAll(); // Wakes up the future waiting for the controller
         }
-    }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    private void initializeMainMenu() throws IOException {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/polimi/ingsw/mainmenu-view.fxml"));
-        Parent root = fxmlLoader.load();
         Scene scene = new Scene(root, 600, 400);
         stage.setTitle("Main-Menu");
         stage.setScene(scene);
@@ -125,7 +81,7 @@ public class GUIController{
         ((Stage) lblError.getScene().getWindow()).close();
 
         // open the main menu window
-        initializeLobby();
+        //initializeLobby();
     }
 
     /**
@@ -154,34 +110,9 @@ public class GUIController{
         ((Stage) lblError.getScene().getWindow()).close();
 
         // open the game windows
-        initializeGame();
+        //initializeGame();
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    private void initializeLobby() throws IOException {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/polimi/ingsw/hello-view.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 600, 400);
-        stage.setTitle("Lobby");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    private void initializeGame() throws IOException {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/it/polimi/ingsw/hello-view.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 600, 400);
-        stage.setTitle("Game");
-        stage.setScene(scene);
-        stage.show();
-    }
 
     /**
      * @author Christian Confalonieri
@@ -225,6 +156,8 @@ public class GUIController{
         }
     }
 
+
+
     /**
      * @author Christian Confalonieri
      */
@@ -240,4 +173,5 @@ public class GUIController{
             case BLUE -> "B";
         };
     }
+
 }

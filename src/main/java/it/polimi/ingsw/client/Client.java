@@ -5,22 +5,14 @@ import it.polimi.ingsw.cli.CLIBypass;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.NetworkController;
-import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.gui.GUI;
-import it.polimi.ingsw.gui.GUIController;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.server.GameLobby;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 
-import java.io.Console;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class Client implements Runnable {
 
@@ -33,7 +25,7 @@ public class Client implements Runnable {
     public final int serverPort;
 
     private CLI cli;
-    public GUI gui;
+    private GUI gui;
 
     private ClientState clientState;
     private GameHandler gameHandler;

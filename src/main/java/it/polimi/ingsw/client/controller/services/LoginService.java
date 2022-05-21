@@ -19,10 +19,12 @@ public class LoginService {
     public static void login(LoginAction loginAction) {
         Client.getInstance().setPlayerId(loginAction.getPlayerId());
         Client.getInstance().setClientState(ClientState.MAINMENU);
+        Client.getInstance().getGui().notifyStateChange();
     }
 
     public static void failedLogin(ACK failedAck) {
         System.out.println(ConsoleColor.YELLOW + failedAck.getMessage() + ConsoleColor.RESET);
+        Client.getInstance().getGui().guiCallLogin(guiLoginController -> guiLoginController.errorLabelWrite(failedAck.getMessage()));
     }
 
 
