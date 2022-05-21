@@ -114,8 +114,6 @@ public class Client implements Runnable {
         }
         clientState = ClientState.LOGIN;
         cli.render();
-
-
         // Prova
         // Platform.runLater(() -> singleton.gui.getGuiController().printOnWelcomeText("FUNZIONA!"));
     }
