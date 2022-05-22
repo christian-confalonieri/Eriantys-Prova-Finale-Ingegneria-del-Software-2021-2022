@@ -17,6 +17,9 @@ import java.util.List;
 
 public class GUILobbyController {
 
+    private int prevLobbyNumber; // variable used to anticipate updates from the server
+    // of the number of players in the client-side lobby. (The number is in fact already updated when entering a new lobby).
+
     @FXML
     private Label lblWaitingLobby;
 
@@ -63,13 +66,23 @@ public class GUILobbyController {
         if(allServerLobbies.contains(Client.getInstance().getGameLobby().getGameLobbyId())) {
             for(GameLobby gameLobby : Client.getInstance().getAllServerLobbys()) {
                 if(gameLobby.getGameLobbyId().equals(Client.getInstance().getGameLobby().getGameLobbyId())) {
-                    lblWaitingLobby.setText(gameLobby.getWaitingPlayersNumber() + "/" + gameLobby.getGameRules().cloudsRules.numberOfClouds);
+                    if(prevLobbyNumber < Client.getInstance().getGameLobby().getWaitingPlayersNumber()) {
+                        // case you enter a lobby that has already been updated by the server (so it already exists in allServerLobbies)
+                        lblWaitingLobby.setText(Client.getInstance().getGameLobby().getWaitingPlayersNumber() + "/" + Client.getInstance().getGameLobby().getGameRules().cloudsRules.numberOfClouds);
+                    }
+                    else {
+                        // general case of updating players inside a lobby
+                        lblWaitingLobby.setText(gameLobby.getWaitingPlayersNumber() + "/" + gameLobby.getGameRules().cloudsRules.numberOfClouds);
+                    }
+                    prevLobbyNumber = Client.getInstance().getGameLobby().getWaitingPlayersNumber();
                     break;
                 }
             }
         }
         else {
+            // case you enter a lobby that has not yet been updated by the server
             lblWaitingLobby.setText(Client.getInstance().getGameLobby().getWaitingPlayersNumber() + "/" + Client.getInstance().getGameLobby().getGameRules().cloudsRules.numberOfClouds);
+            prevLobbyNumber = Client.getInstance().getGameLobby().getWaitingPlayersNumber();
         }
     }
 }
