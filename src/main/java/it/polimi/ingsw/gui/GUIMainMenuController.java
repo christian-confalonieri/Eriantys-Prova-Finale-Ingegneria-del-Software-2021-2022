@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.server.GameLobby;
 import it.polimi.ingsw.server.PlayerLobby;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +17,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GUIMainMenuController {
+
     @FXML
     private ListView<String> lstLobbies;
     @FXML
@@ -33,6 +37,8 @@ public class GUIMainMenuController {
     private ChoiceBox<String> chcPlayers;
     @FXML
     private ChoiceBox<String> chcWizards;
+    @FXML
+    private ImageView wizardCardView;
 
     /**
      * @author Christian Confalonieri
@@ -55,6 +61,7 @@ public class GUIMainMenuController {
         stage.show();
 
         Client.getInstance().getGui().guiCallMainMenu(GUIMainMenuController::updateLobbies);
+        Client.getInstance().getGui().guiCallMainMenu(GUIMainMenuController::refreshWizardView);
     }
 
     /**
@@ -126,4 +133,13 @@ public class GUIMainMenuController {
         LoginService.logoutRequest();
     }
 
+    @FXML
+    public void refreshWizardView() {
+        switch(chcWizards.getValue()) {
+            case "BLUE" -> wizardCardView.setImage(new Image(this.getClass().getResource("/assets/wizards/blueWizard.jpg").toExternalForm()));
+            case "PURPLE" -> wizardCardView.setImage(new Image(this.getClass().getResource("/assets/wizards/purpleWizard.jpg").toExternalForm()));
+            case "GREEN" -> wizardCardView.setImage(new Image(this.getClass().getResource("/assets/wizards/greenWizard.jpg").toExternalForm()));
+            case "YELLOW"-> wizardCardView.setImage(new Image(this.getClass().getResource("/assets/wizards/yellowWizard.jpg").toExternalForm()));
+        }
+    }
 }

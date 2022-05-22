@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIMainMenuController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIMainMenuController">
    <children>
-      <ListView fx:id="lstLobbies" layoutX="24.0" layoutY="24.0" prefHeight="200.0" prefWidth="553.0" />
+      <ListView fx:id="lstLobbies" layoutX="24.0" layoutY="24.0" prefHeight="197.0" prefWidth="375.0" />
       <Label fx:id="lblMainMenu" layoutX="154.0" layoutY="246.0" prefHeight="25.0" prefWidth="423.0" text=" " />
       <ChoiceBox fx:id="chcPlayers" layoutX="24.0" layoutY="246.0" onAction="#clearSelection" prefHeight="25.0" prefWidth="20.0" value="2">
       <items>
@@ -32,7 +30,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <ChoiceBox fx:id="chcWizards" layoutX="75.0" layoutY="246.0" prefHeight="25.0" prefWidth="67.0" value="BLUE">
+      <ChoiceBox fx:id="chcWizards" layoutX="75.0" layoutY="246.0" onAction="#refreshWizardView" prefHeight="25.0" prefWidth="67.0" value="BLUE">
       <items>
          <FXCollections fx:factory="observableArrayList">
             <String fx:value="BLUE" />
@@ -47,5 +45,6 @@
             <Font size="20.0" />
          </font>
       </Button>
+      <ImageView fx:id="wizardCardView" fitHeight="197.0" fitWidth="157.0" layoutX="417.0" layoutY="24.0" />
    </children>
 </AnchorPane>

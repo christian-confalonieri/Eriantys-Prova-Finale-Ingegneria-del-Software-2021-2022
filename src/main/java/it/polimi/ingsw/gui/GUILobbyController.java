@@ -62,10 +62,8 @@ public class GUILobbyController {
      * @author Christian Confalonieri
      */
     public void updateConnectedPlayers() {
-        List<String> allServerLobbies = new ArrayList<>();
-        for(GameLobby gameLobby : Client.getInstance().getAllServerLobbys()) {
-            allServerLobbies.add(gameLobby.getGameLobbyId());
-        }
+        List<String> allServerLobbies = Client.getInstance().getAllServerLobbys().stream().map(GameLobby::getGameLobbyId).toList();
+
         if(allServerLobbies.contains(Client.getInstance().getGameLobby().getGameLobbyId())) {
             for(GameLobby gameLobby : Client.getInstance().getAllServerLobbys()) {
                 if(gameLobby.getGameLobbyId().equals(Client.getInstance().getGameLobby().getGameLobbyId())) {
