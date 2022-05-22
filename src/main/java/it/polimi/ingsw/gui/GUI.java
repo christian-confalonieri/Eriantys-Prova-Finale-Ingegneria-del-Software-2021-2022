@@ -15,6 +15,41 @@ import java.util.function.Consumer;
 
 public class GUI extends Application {
 
+    protected GUILoadingController guiLoadingController;
+    private Future<GUILoadingController> guiLoadingControllerFuture = new Future<>() {
+        boolean done = false;
+
+        @Override
+        public boolean cancel(boolean mayInterruptIfRunning) {
+            return false;
+        }
+
+        @Override
+        public boolean isCancelled() {
+            return false;
+        }
+
+        @Override
+        public boolean isDone() {
+            return done;
+        }
+
+        @Override
+        synchronized public GUILoadingController get() throws InterruptedException {
+            while (guiLoadingController == null) {
+                this.wait();
+            }
+            done = true;
+            return guiLoadingController;
+        }
+
+        @Override
+        @Deprecated
+        public GUILoadingController get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+            return null;
+        }
+    };
+
     protected GUILoginController guiLoginController;
     private Future<GUILoginController> guiLoginControllerFuture = new Future<>() {
         boolean done = false;
@@ -155,10 +190,24 @@ public class GUI extends Application {
         }
     };
 
+
+
     @Override
     public void start(Stage stage) throws IOException {
         Client.getInstance().setGui(this); // Attach the gui to the client (Launch is called by attachGui)
-        GUILoginController.initSceneAndController(stage);
+        GUILoadingController.initSceneAndController(stage);
+    }
+
+    public void guiCallLoading(Consumer<GUILoadingController> call) {
+        if(Client.getInstance().getClientState() == ClientState.LOADING) {
+            Platform.runLater(() -> {
+                try {
+                    call.accept(this.guiLoadingControllerFuture.get());
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
     public void guiCallLogin(Consumer<GUILoginController> call) {
@@ -212,6 +261,7 @@ public class GUI extends Application {
     public void notifyStateChange() {
         Stage currentStageWindow = Stage.getWindows().size() != 0 ? ((Stage)(Stage.getWindows().get(0))) : new Stage();
         switch(Client.getInstance().getClientState()) {
+            case LOADING -> Platform.runLater(() -> GUILoadingController.initSceneAndController(currentStageWindow));
             case LOGIN -> Platform.runLater(() -> GUILoginController.initSceneAndController(currentStageWindow));
             case MAINMENU -> Platform.runLater(() -> GUIMainMenuController.initSceneAndController(currentStageWindow));
             case WAITINGLOBBY -> Platform.runLater(() -> GUILobbyController.initSceneAndController(currentStageWindow));
