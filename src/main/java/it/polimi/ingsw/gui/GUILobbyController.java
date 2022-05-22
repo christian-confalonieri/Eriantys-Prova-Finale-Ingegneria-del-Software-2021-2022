@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUILobbyController {
 
@@ -54,11 +56,20 @@ public class GUILobbyController {
      * @author Christian Confalonieri
      */
     public void updateConnectedPlayers() {
+        List<String> allServerLobbies = new ArrayList<>();
         for(GameLobby gameLobby : Client.getInstance().getAllServerLobbys()) {
-            if(gameLobby.getGameLobbyId().equals(Client.getInstance().getGameLobby().getGameLobbyId())) {
-                lblWaitingLobby.setText(gameLobby.getWaitingPlayersNumber() + "/" + gameLobby.getGameRules().cloudsRules.numberOfClouds);
-                break;
+            allServerLobbies.add(gameLobby.getGameLobbyId());
+        }
+        if(allServerLobbies.contains(Client.getInstance().getGameLobby().getGameLobbyId())) {
+            for(GameLobby gameLobby : Client.getInstance().getAllServerLobbys()) {
+                if(gameLobby.getGameLobbyId().equals(Client.getInstance().getGameLobby().getGameLobbyId())) {
+                    lblWaitingLobby.setText(gameLobby.getWaitingPlayersNumber() + "/" + gameLobby.getGameRules().cloudsRules.numberOfClouds);
+                    break;
+                }
             }
+        }
+        else {
+            lblWaitingLobby.setText(Client.getInstance().getGameLobby().getWaitingPlayersNumber() + "/" + Client.getInstance().getGameLobby().getGameRules().cloudsRules.numberOfClouds);
         }
     }
 }
