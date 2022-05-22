@@ -156,6 +156,7 @@ public class LobbyService {
     public static void newGameOk(ACK ack) {
 
     }
+
     public static void newGameFailed(ACK ack) {
         System.out.println(ConsoleColor.RED + ack.getMessage() + ConsoleColor.RESET);
     }
