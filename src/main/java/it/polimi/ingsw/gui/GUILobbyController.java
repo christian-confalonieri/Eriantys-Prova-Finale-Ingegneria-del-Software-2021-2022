@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,9 +20,11 @@ public class GUILobbyController {
 
     private int prevLobbyNumber; // variable used to anticipate updates from the server
     // of the number of players in the client-side lobby. (The number is in fact already updated when entering a new lobby).
-
     @FXML
     private Label lblWaitingLobby;
+
+    @FXML
+    private ListView<String> lstWaitingLobby;
 
     /**
      * @author Christian Confalonieri
@@ -39,7 +42,7 @@ public class GUILobbyController {
             Client.getInstance().getGui().guiLobbyController = (GUILobbyController) fxmlLoader.getController(); // Loads the controller
             Client.getInstance().getGui().notifyAll(); // Wakes up the future waiting for the controller
         }
-        Scene scene = new Scene(root, 333, 158);
+        Scene scene = new Scene(root, 600, 400);
         stage.setTitle("Lobby");
         stage.setScene(scene);
         stage.show();
@@ -69,10 +72,12 @@ public class GUILobbyController {
                     if(prevLobbyNumber < Client.getInstance().getGameLobby().getWaitingPlayersNumber()) {
                         // case you enter a lobby that has already been updated by the server (so it already exists in allServerLobbies)
                         lblWaitingLobby.setText(Client.getInstance().getGameLobby().getWaitingPlayersNumber() + "/" + Client.getInstance().getGameLobby().getGameRules().cloudsRules.numberOfClouds);
+                        lstWaitingLobby.setItems(FXCollections.observableArrayList(Client.getInstance().getGameLobby().toStringPlayers()));
                     }
                     else {
                         // general case of updating players inside a lobby
                         lblWaitingLobby.setText(gameLobby.getWaitingPlayersNumber() + "/" + gameLobby.getGameRules().cloudsRules.numberOfClouds);
+                        lstWaitingLobby.setItems(FXCollections.observableArrayList(gameLobby.toStringPlayers()));
                     }
                     prevLobbyNumber = Client.getInstance().getGameLobby().getWaitingPlayersNumber();
                     break;
@@ -82,6 +87,7 @@ public class GUILobbyController {
         else {
             // case you enter a lobby that has not yet been updated by the server
             lblWaitingLobby.setText(Client.getInstance().getGameLobby().getWaitingPlayersNumber() + "/" + Client.getInstance().getGameLobby().getGameRules().cloudsRules.numberOfClouds);
+            lstWaitingLobby.setItems(FXCollections.observableArrayList(Client.getInstance().getGameLobby().toStringPlayers()));
             prevLobbyNumber = Client.getInstance().getGameLobby().getWaitingPlayersNumber();
         }
     }

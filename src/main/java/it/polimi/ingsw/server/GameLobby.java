@@ -90,6 +90,18 @@ public class GameLobby {
 
     public String toStringNoColors() {return numberOfPlayers + "P\t" + waitingPlayersToStringNoColor() + "\t"; }
 
+    /**
+     * @author Christian Confalonieri
+     */
+    public String[] toStringPlayers()  {
+        int size = getWaitingPlayersNumber();
+        String[] playersLobby = new String[size];
+        for(int i=0;i<size;i++) {
+            playersLobby[i] = getPlayersWaiting().get(i).getPlayerId() + "\t\t" + getPlayersWaiting().get(i).getWizard().toString();
+        }
+        return playersLobby;
+    }
+
     private String waitingPlayersToString() {
         String r = "";
         for (PlayerLobby p:
