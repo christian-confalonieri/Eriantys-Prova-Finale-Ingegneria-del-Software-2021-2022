@@ -210,7 +210,7 @@ public class GUI extends Application {
     }
 
     public void notifyStateChange() {
-        Stage currentStageWindow = ((Stage)(Stage.getWindows().get(0)));
+        Stage currentStageWindow = Stage.getWindows().size() != 0 ? ((Stage)(Stage.getWindows().get(0))) : new Stage();
         switch(Client.getInstance().getClientState()) {
             case LOGIN -> Platform.runLater(() -> GUILoginController.initSceneAndController(currentStageWindow));
             case MAINMENU -> Platform.runLater(() -> GUIMainMenuController.initSceneAndController(currentStageWindow));

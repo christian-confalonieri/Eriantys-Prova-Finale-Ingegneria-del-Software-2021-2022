@@ -105,8 +105,8 @@ public class GUIMainMenuController {
      * @author Christian Confalonieri
      */
     public void updateLobbies() {
-        String[] lobbiesString =
-                Client.getInstance().getAllServerLobbys().stream().map(GameLobby::toStringNoColors).toList().toArray(new String[0]);
+        String[] lobbiesString = (String[]) Client.getInstance().getAllServerLobbys().stream()
+                .map(GameLobby::toStringNoColors).toList().toArray(new String[0]);
         lstLobbies.setItems(FXCollections.observableArrayList(lobbiesString));
     }
 
