@@ -60,6 +60,6 @@ public class GUILobbyController {
      */
     public void updateConnectedPlayers(GameLobby gameLobby) {
         lblWaitingLobby.setText(gameLobby.getWaitingPlayersNumber() + "/" + gameLobby.getGameRules().cloudsRules.numberOfClouds);
-        lstWaitingLobby.setItems(FXCollections.observableArrayList(gameLobby.toStringPlayers()));
+        lstWaitingLobby.setItems(FXCollections.observableArrayList(gameLobby.toStringArrayPlayers()));
     }
 }
