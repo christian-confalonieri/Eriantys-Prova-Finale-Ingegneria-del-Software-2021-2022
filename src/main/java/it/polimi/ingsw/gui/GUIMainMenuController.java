@@ -3,6 +3,7 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.services.LobbyService;
+import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.exceptions.InvalidColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.server.GameLobby;
@@ -105,7 +106,7 @@ public class GUIMainMenuController {
      */
     public void updateLobbies() {
         String[] lobbiesString =
-                (String[]) Client.getInstance().getAllServerLobbys().stream().map(GameLobby::toStringNoColors).toList().toArray(new String[0]);
+                Client.getInstance().getAllServerLobbys().stream().map(GameLobby::toStringNoColors).toList().toArray(new String[0]);
         lstLobbies.setItems(FXCollections.observableArrayList(lobbiesString));
     }
 
@@ -115,6 +116,14 @@ public class GUIMainMenuController {
     public void errorLabelWrite(String string) {
         lblMainMenu.setTextFill(Color.ORANGERED);
         lblMainMenu.setText(string);
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    @FXML
+    public void logout() {
+        LoginService.logoutRequest();
     }
 
 }

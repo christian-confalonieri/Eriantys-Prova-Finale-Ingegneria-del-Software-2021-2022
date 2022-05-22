@@ -22,12 +22,12 @@
       </FXCollections>
       </items>
       </ChoiceBox>
-      <Button layoutX="24.0" layoutY="297.0" mnemonicParsing="false" onAction="#newGame" prefHeight="78.0" prefWidth="257.0" text="New Game">
+      <Button layoutX="24.0" layoutY="297.0" mnemonicParsing="false" onAction="#newGame" prefHeight="78.0" prefWidth="172.0" text="New Game">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button layoutX="320.0" layoutY="297.0" mnemonicParsing="false" onAction="#joinGame" prefHeight="78.0" prefWidth="257.0" text="Join Game">
+      <Button layoutX="214.0" layoutY="297.0" mnemonicParsing="false" onAction="#joinGame" prefHeight="78.0" prefWidth="172.0" text="Join Game">
          <font>
             <Font size="20.0" />
          </font>
@@ -42,5 +42,10 @@
          </FXCollections>
       </items>
       </ChoiceBox>
+      <Button layoutX="405.0" layoutY="297.0" mnemonicParsing="false" onAction="#logout" prefHeight="78.0" prefWidth="172.0" text="Logout">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

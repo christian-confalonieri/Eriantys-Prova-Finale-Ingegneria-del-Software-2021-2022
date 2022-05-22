@@ -6,6 +6,7 @@ import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.ClientState;
 import it.polimi.ingsw.client.controller.ClientActionHandler;
+import it.polimi.ingsw.gui.GUILobbyController;
 import it.polimi.ingsw.gui.GUIMainMenuController;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.MotherNature;
@@ -27,6 +28,7 @@ public class LobbyService {
     public static void getGame(GetGameAction action) {
         Client.getInstance().setGameHandler(parseGameHandler(action.getGameHandlerInfoJson()));
         Client.getInstance().setClientState(ClientState.INGAME);
+        Client.getInstance().getGui().notifyStateChange();
         Client.getInstance().setPollAllLobbies(false);
     }
 
@@ -133,8 +135,10 @@ public class LobbyService {
 
     public static void getAllLobbys(GetAllLobbysAction action) {
         Client.getInstance().setAllServerLobbys(action.getGameLobbyList());
-        if(Client.getInstance().getGui() != null) // TODO Not the best solution, but it's the only method to cal the gui before its cration
+        if(Client.getInstance().getGui() != null) {// TODO Not the best solution, but it's the only method to cal the gui before its cration
             Client.getInstance().getGui().guiCallMainMenu(GUIMainMenuController::updateLobbies);
+            Client.getInstance().getGui().guiCallLobby(GUILobbyController::updateConnectedPlayers);
+        }
     }
 
     public static void getAllLobbysRequest() {

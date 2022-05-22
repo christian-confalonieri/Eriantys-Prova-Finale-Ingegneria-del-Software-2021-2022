@@ -31,6 +31,7 @@ public class LoginService {
     public static void logout(LogoutAction logoutAction) {
         Client.getInstance().setPlayerId(null);
         Client.getInstance().setClientState(ClientState.LOGIN);
+        Client.getInstance().getGui().notifyStateChange();
         Client.getInstance().setPollAllLobbies(true);
     }
 

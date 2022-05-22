@@ -1,15 +1,22 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.controller.services.LoginService;
+import it.polimi.ingsw.server.GameLobby;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class GUILobbyController {
+
+    @FXML
+    private Label lblWaitingLobby;
 
     /**
      * @author Christian Confalonieri
@@ -31,6 +38,27 @@ public class GUILobbyController {
         stage.setTitle("Lobby");
         stage.setScene(scene);
         stage.show();
+
+        Client.getInstance().getGui().guiCallLobby(GUILobbyController::updateConnectedPlayers);
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
+    @FXML
+    public void logout() {
+        LoginService.logoutRequest();
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public void updateConnectedPlayers() {
+        for(GameLobby gameLobby : Client.getInstance().getAllServerLobbys()) {
+            if(gameLobby.getGameLobbyId().equals(Client.getInstance().getGameLobby().getGameLobbyId())) {
+                lblWaitingLobby.setText(gameLobby.getWaitingPlayersNumber() + "/" + gameLobby.getGameRules().cloudsRules.numberOfClouds);
+                break;
+            }
+        }
+    }
 }

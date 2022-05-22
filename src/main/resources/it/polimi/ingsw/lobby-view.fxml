@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="158.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUILobbyController">
    <children>
       <Label alignment="CENTER" layoutY="8.0" prefHeight="58.0" prefWidth="333.0" text="Waiting Lobby" textAlignment="CENTER">
@@ -13,7 +12,7 @@
             <Font size="27.0" />
          </font>
       </Label>
-      <Button layoutX="229.0" layoutY="99.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="90.0" text="Logout">
+      <Button layoutX="229.0" layoutY="99.0" mnemonicParsing="false" onAction="#logout" prefHeight="45.0" prefWidth="90.0" text="Logout">
          <font>
             <Font size="18.0" />
          </font>
@@ -23,7 +22,7 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="lblWaitingLobby" layoutX="127.0" layoutY="60.0" prefHeight="29.0" prefWidth="40.0" text="1/2">
+      <Label fx:id="lblWaitingLobby" layoutX="127.0" layoutY="60.0" prefHeight="29.0" prefWidth="40.0" text=" /">
          <font>
             <Font size="27.0" />
          </font>
