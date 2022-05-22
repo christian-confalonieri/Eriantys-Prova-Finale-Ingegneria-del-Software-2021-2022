@@ -6,6 +6,7 @@ import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.controller.NetworkController;
 import it.polimi.ingsw.gui.GUI;
+import it.polimi.ingsw.gui.GUIBypass;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.server.GameLobby;
 
@@ -146,7 +147,9 @@ public class Client implements Runnable {
 
         // if(isGui) singleton.attachGUI();
         //TODO need a system to hide gui but at the same time abstract calls from services to the gui
-        singleton.attachGUI();
+        if (isGui)  singleton.attachGUI();
+        else        singleton.gui = new GUIBypass();
+
         singleton.attachNetwork();
         singleton.run();
     }
