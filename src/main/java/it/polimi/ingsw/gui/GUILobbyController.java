@@ -69,13 +69,11 @@ public class GUILobbyController {
                 if(gameLobby.getGameLobbyId().equals(Client.getInstance().getGameLobby().getGameLobbyId())) {
                     if(prevLobbyNumber < Client.getInstance().getGameLobby().getWaitingPlayersNumber()) {
                         // case you enter a lobby that has already been updated by the server (so it already exists in allServerLobbies)
-                        lblWaitingLobby.setText(Client.getInstance().getGameLobby().getWaitingPlayersNumber() + "/" + Client.getInstance().getGameLobby().getGameRules().cloudsRules.numberOfClouds);
-                        lstWaitingLobby.setItems(FXCollections.observableArrayList(Client.getInstance().getGameLobby().toStringPlayers()));
+                        labelConnectedWrite(Client.getInstance().getGameLobby());
                     }
                     else {
                         // general case of updating players inside a lobby
-                        lblWaitingLobby.setText(gameLobby.getWaitingPlayersNumber() + "/" + gameLobby.getGameRules().cloudsRules.numberOfClouds);
-                        lstWaitingLobby.setItems(FXCollections.observableArrayList(gameLobby.toStringPlayers()));
+                        labelConnectedWrite(gameLobby);
                     }
                     prevLobbyNumber = Client.getInstance().getGameLobby().getWaitingPlayersNumber();
                     break;
@@ -84,9 +82,14 @@ public class GUILobbyController {
         }
         else {
             // case you enter a lobby that has not yet been updated by the server
-            lblWaitingLobby.setText(Client.getInstance().getGameLobby().getWaitingPlayersNumber() + "/" + Client.getInstance().getGameLobby().getGameRules().cloudsRules.numberOfClouds);
-            lstWaitingLobby.setItems(FXCollections.observableArrayList(Client.getInstance().getGameLobby().toStringPlayers()));
+            labelConnectedWrite(Client.getInstance().getGameLobby());
             prevLobbyNumber = Client.getInstance().getGameLobby().getWaitingPlayersNumber();
         }
     }
+
+    private void labelConnectedWrite(GameLobby gameLobby) {
+        lblWaitingLobby.setText(gameLobby.getWaitingPlayersNumber() + "/" + gameLobby.getLobbySize());
+        lstWaitingLobby.setItems((FXCollections.observableArrayList(gameLobby.toStringArrayPlayers())));
+    }
+
 }

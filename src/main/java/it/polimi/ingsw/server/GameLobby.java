@@ -93,7 +93,7 @@ public class GameLobby {
     /**
      * @author Christian Confalonieri
      */
-    public String[] toStringPlayers()  {
+    public String[] toStringArrayPlayers()  {
         int size = getWaitingPlayersNumber();
         String[] playersLobby = new String[size];
         for(int i=0;i<size;i++) {
