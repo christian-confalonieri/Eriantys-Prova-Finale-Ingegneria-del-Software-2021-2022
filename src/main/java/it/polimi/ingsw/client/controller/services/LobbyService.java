@@ -137,7 +137,9 @@ public class LobbyService {
         Client.getInstance().setAllServerLobbys(action.getGameLobbyList());
         if(Client.getInstance().getGui() != null) {// TODO Not the best solution, but it's the only method to cal the gui before its cration
             Client.getInstance().getGui().guiCallMainMenu(GUIMainMenuController::updateLobbies);
-            Client.getInstance().getGui().guiCallLobby(GUILobbyController::updateConnectedPlayers);
+            for(GameLobby gameLobby : Client.getInstance().getAllServerLobbys()) {
+                Client.getInstance().getGui().guiCallLobby(GUILobbyController -> GUILobbyController.updateConnectedPlayers(gameLobby));
+            }
         }
     }
 
