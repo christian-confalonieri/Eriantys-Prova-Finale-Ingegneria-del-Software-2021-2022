@@ -27,7 +27,7 @@ public class GUILobbyController {
             Client.getInstance().getGui().guiLobbyController = (GUILobbyController) fxmlLoader.getController(); // Loads the controller
             Client.getInstance().getGui().notifyAll(); // Wakes up the future waiting for the controller
         }
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 333, 158);
         stage.setTitle("Lobby");
         stage.setScene(scene);
         stage.show();

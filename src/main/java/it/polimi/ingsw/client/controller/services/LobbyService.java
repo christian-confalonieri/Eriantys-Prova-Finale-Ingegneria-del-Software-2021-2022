@@ -158,6 +158,7 @@ public class LobbyService {
     public static void joinGame(JoinGameAction action) {
         Client.getInstance().setGameLobby(action.getNewGameLobby());
         Client.getInstance().setClientState(ClientState.WAITINGLOBBY);
+        Client.getInstance().getGui().notifyStateChange();
     }
 
     public static void joinGameRequest(int numberOfPlayers, Wizard wizard) {
@@ -175,9 +176,11 @@ public class LobbyService {
     public static void joinGameFailed(ACK ack) {
         if(ack.getMessage().contains("Invalid lobby ID")) {
             System.out.println(ConsoleColor.YELLOW + "No lobby available. Try creating a new one with \"newgame\""+ ConsoleColor.RESET);
+            Client.getInstance().getGui().guiCallMainMenu(guiMainMenuController -> guiMainMenuController.errorLabelWrite("No lobby available. Try creating a new one with \"newgame\""));
         }
         else {
             System.out.println(ConsoleColor.RED + ack.getMessage() + ConsoleColor.RESET);
+            Client.getInstance().getGui().guiCallMainMenu(guiMainMenuController -> guiMainMenuController.errorLabelWrite(ack.getMessage()));
         }
     }
 

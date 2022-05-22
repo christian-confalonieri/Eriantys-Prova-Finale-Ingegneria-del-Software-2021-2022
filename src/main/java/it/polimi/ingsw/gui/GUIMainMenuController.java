@@ -16,6 +16,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,22 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GUIMainMenuController {
-
-    //mainmenu-view
-    @FXML
-    private AnchorPane mainmenu;
-
     @FXML
     private ListView<String> lstLobbies;
     @FXML
-    private Label lblError;
+    private Label lblMainMenu;
     @FXML
     private ChoiceBox<String> chcPlayers;
-
     @FXML
     private ChoiceBox<String> chcWizards;
-
-
 
     /**
      * @author Christian Confalonieri
@@ -67,7 +60,7 @@ public class GUIMainMenuController {
      * @author Christian Confalonieri
      */
     @FXML
-    public void newGame() throws IOException {
+    public void newGame() {
         try{
             LobbyService.newGameRequest(Integer.parseInt(chcPlayers.getValue()), null, Wizard.parseColor(chcWizards.getValue()));
         }
@@ -80,7 +73,7 @@ public class GUIMainMenuController {
      * @author Christian Confalonieri
      */
     @FXML
-    public void joinGame() throws IOException {
+    public void joinGame() {
         if(lstLobbies.getSelectionModel().getSelectedItem() == null) {
             try{
                 LobbyService.joinGameRequest(Integer.parseInt(chcPlayers.getValue()), Wizard.parseColor(chcWizards.getValue()));
@@ -102,10 +95,26 @@ public class GUIMainMenuController {
     /**
      * @author Christian Confalonieri
      */
+    @FXML
+    public void clearSelection() {
+        lstLobbies.getSelectionModel().clearSelection(lstLobbies.getItems().indexOf(lstLobbies.getSelectionModel().getSelectedItem()));
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
     public void updateLobbies() {
         String[] lobbiesString =
                 (String[]) Client.getInstance().getAllServerLobbys().stream().map(GameLobby::toStringNoColors).toList().toArray(new String[0]);
         lstLobbies.setItems(FXCollections.observableArrayList(lobbiesString));
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public void errorLabelWrite(String string) {
+        lblMainMenu.setTextFill(Color.ORANGERED);
+        lblMainMenu.setText(string);
     }
 
 }

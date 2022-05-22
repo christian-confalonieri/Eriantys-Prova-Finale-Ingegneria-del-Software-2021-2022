@@ -36,7 +36,6 @@ public class LoginService {
 
     public static void logoutRequest() {
         Client.getInstance().getNetworkController().send(ClientActionHandler.toJson(new LogoutAction(Client.getInstance().getPlayerId())));
-
     }
 
 }
