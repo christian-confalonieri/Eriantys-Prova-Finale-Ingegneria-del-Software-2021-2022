@@ -24,7 +24,7 @@ public class GUIGameController {
      * @author Christian Confalonieri
      */
     protected static void initSceneAndController(Stage stage) {
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIGameController.class.getResource("/it/polimi/ingsw/table-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(GUIGameController.class.getResource("/it/polimi/ingsw/match-view.fxml"));
         Parent root = null;
         try {
             root = fxmlLoader.load();

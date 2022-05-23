@@ -316,7 +316,7 @@ public class GUI extends Application {
                 case WAITINGLOBBY -> GUILobbyController.initSceneAndController(currentStageWindow);
                 case INGAME -> {
                     GUIGameController.initSceneAndController(currentStageWindow);
-                    GUISchoolController.initSceneAndController(new Stage());
+//                    GUISchoolController.initSceneAndController(new Stage());
                 }
             }
         });
