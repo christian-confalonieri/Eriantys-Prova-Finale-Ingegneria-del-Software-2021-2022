@@ -5,7 +5,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIGameController">
    <children>
@@ -16,17 +16,17 @@
       </ImageView>
       <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="754.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../assets/characterCards/centaur.jpg" />
+            <Image url="@../../../assets/characterCards/edited/centaur_edited.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="186.0" fitWidth="123.0" layoutX="754.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../assets/characterCards/farmer.jpg" />
+            <Image url="@../../../assets/characterCards/edited/farmer_edited.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="186.0" fitWidth="123.0" layoutX="754.0" layoutY="393.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../assets/characterCards/friar.jpg" />
+            <Image url="@../../../assets/characterCards/edited/friar_edited.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="752.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
@@ -249,7 +249,7 @@
             <Image url="@../../../assets/students/red.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="99.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
          <image>
             <Image url="@../../../assets/students/yellow.png" />
          </image>
@@ -299,6 +299,26 @@
       <ImageView fitHeight="105.0" fitWidth="123.0" layoutX="213.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/outlines/cloud.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="763.0" layoutY="25.0" text="3" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="763.0" layoutY="211.0" text="2" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="763.0" layoutY="397.0" text="1" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="38.0" fitWidth="16.0" layoutX="78.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/towers/white_side.png" />
          </image>
       </ImageView>
    </children>
