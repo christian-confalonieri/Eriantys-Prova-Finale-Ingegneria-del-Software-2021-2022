@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUILoadingController">
     <ImageView fx:id="loadingImage" fitHeight="500" fitWidth="500.0" />
+   <AnchorPane layoutX="85.0" layoutY="347.0" style="-fx-background-color: purple;">
+      <children>
+         <Label fx:id="connectionLogLabel" alignment="CENTER" blendMode="DARKEN" prefHeight="68.0" prefWidth="331.0" textFill="#100543">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
 </AnchorPane>

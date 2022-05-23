@@ -31,6 +31,7 @@ public class CLI {
     public void start() {
         inputHandlerThread.start();
         render();
+        System.out.println(ConsoleColor.GREEN_BRIGHT + "Command line interface started..." + ConsoleColor.RESET);
     }
 
     public void shutdown() {

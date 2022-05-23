@@ -26,7 +26,7 @@ public class Client implements Runnable {
     public final int serverPort;
 
     private CLI cli;
-    private GUI gui;
+    private volatile GUI gui;
 
     private ClientState clientState;
     private GameHandler gameHandler;
@@ -97,19 +97,23 @@ public class Client implements Runnable {
     @Override
     public void run() {
         cli.start();
-        System.out.println(ConsoleColor.GREEN_BRIGHT + "Command line interface started..." + ConsoleColor.RESET);
         networkController.start();
         System.out.println(ConsoleColor.GREEN_BRIGHT + "NetworkController connected..." + ConsoleColor.RESET);
+
+        while (gui == null) {
+            Thread.onSpinWait();
+        }
+        gui.guiCallLoading(guiLoadingController -> guiLoadingController.setConnectionLogLabel("Successfully connected to the server"));
+
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             //
         }
         clientState = ClientState.LOGIN;
         cli.render();
         gui.notifyStateChange();
-        // Prova
-        // Platform.runLater(() -> singleton.gui.getGuiController().printOnWelcomeText("FUNZIONA!"));
+
     }
 
     private static String parseArg(String[] args, String option, String optionVerbose) {
