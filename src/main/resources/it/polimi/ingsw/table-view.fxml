@@ -1,14 +1,305 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="it.polimi.ingsw.gui.GUIMainMenuController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIMainMenuController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/table/background.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="754.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/characterCards/centaur.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="186.0" fitWidth="123.0" layoutX="754.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/characterCards/farmer.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="186.0" fitWidth="123.0" layoutX="754.0" layoutY="393.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/characterCards/friar.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="752.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/outlines/card.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="242.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/table/island1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="120.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/table/island2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="368.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/table/island3.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="590.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/table/island1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="485.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/table/island2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="18.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/table/island3.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="25.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/table/island1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="485.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/table/island2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="233.0" layoutY="458.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/table/island3.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="361.0" layoutY="458.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/table/island1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="120.0" layoutY="385.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/table/island2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="589.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/table/island3.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="105.0" fitWidth="123.0" layoutX="213.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/table/cloud1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="105.0" fitWidth="123.0" layoutX="328.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/table/cloud4.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="105.0" fitWidth="123.0" layoutX="328.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/table/cloud2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="105.0" fitWidth="123.0" layoutX="444.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/table/cloud3.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="229.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/students/blue.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="262.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/students/green.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="255.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/students/pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="344.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/students/red.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="380.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/students/yellow.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="335.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/professors/blue.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="367.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/professors/green.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="399.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/professors/pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="351.0" layoutY="306.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/professors/red.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="384.0" layoutY="307.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/professors/yellow.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="374.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/students/blue.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="461.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/students/green.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="499.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/students/pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="489.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/students/red.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="346.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/students/yellow.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="382.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/students/blue.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="370.0" layoutY="402.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/students/pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="34.0" fitWidth="25.0" layoutX="80.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+         <image>
+            <Image url="@../../../assets/table/motherNature.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="179.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+         <image>
+            <Image url="@../../../assets/students/blue.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="300.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+         <image>
+            <Image url="@../../../assets/students/green.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="427.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+         <image>
+            <Image url="@../../../assets/students/pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="544.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+         <image>
+            <Image url="@../../../assets/students/red.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="649.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+         <image>
+            <Image url="@../../../assets/students/yellow.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="545.0" layoutY="439.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+         <image>
+            <Image url="@../../../assets/students/blue.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="421.0" layoutY="514.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+         <image>
+            <Image url="@../../../assets/students/green.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="293.0" layoutY="517.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+         <image>
+            <Image url="@../../../assets/students/pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="183.0" layoutY="437.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+         <image>
+            <Image url="@../../../assets/students/red.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+         <image>
+            <Image url="@../../../assets/students/yellow.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="105.0" fitWidth="80.0" layoutX="14.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/assistantCards/one.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="93.0" layoutY="21.0" text="Nickname 2" />
+      <ImageView fitHeight="105.0" fitWidth="80.0" layoutX="664.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/assistantCards/one.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="592.0" layoutY="21.0" text="Nickname 3" />
+      <ImageView fitHeight="105.0" fitWidth="80.0" layoutX="14.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/assistantCards/one.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="93.0" layoutY="545.0" text="Nickname 1" />
+      <ImageView fitHeight="105.0" fitWidth="80.0" layoutX="664.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/assistantCards/one.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="592.0" layoutY="543.0" text="Nickname 4" />
+      <Label alignment="CENTER" layoutX="105.0" layoutY="567.0" text="Team 1" />
+      <Label alignment="CENTER" layoutX="604.0" layoutY="46.0" text="Team 1" />
+      <Label alignment="CENTER" layoutX="105.0" layoutY="46.0" text="Team 2" />
+      <Label alignment="CENTER" layoutX="604.0" layoutY="565.0" text="Team 2" />
+      <Button layoutX="24.0" layoutY="129.0" mnemonicParsing="false" text="School" />
+      <Button layoutX="674.0" layoutY="129.0" mnemonicParsing="false" text="School" />
+      <Button layoutX="24.0" layoutY="448.0" mnemonicParsing="false" text="School" />
+      <Button layoutX="674.0" layoutY="448.0" mnemonicParsing="false" text="School" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="120.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7">
+         <image>
+            <Image url="@../../../assets/outlines/island_far.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="21.0" fitWidth="30.0" layoutX="132.0" layoutY="317.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/table/noEntry.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="105.0" fitWidth="123.0" layoutX="213.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/outlines/cloud.png" />
+         </image>
+      </ImageView>
+   </children>
 </AnchorPane>
