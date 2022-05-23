@@ -190,6 +190,40 @@ public class GUI extends Application {
         }
     };
 
+    protected GUISchoolController guiSchoolController;
+    private Future<GUISchoolController> guiSchoolControllerFuture = new Future<>() {
+        boolean done = false;
+
+        @Override
+        public boolean cancel(boolean mayInterruptIfRunning) {
+            return false;
+        }
+
+        @Override
+        public boolean isCancelled() {
+            return false;
+        }
+
+        @Override
+        public boolean isDone() {
+            return done;
+        }
+
+        @Override
+        synchronized public GUISchoolController get() throws InterruptedException {
+            while (guiSchoolController == null) {
+                this.wait();
+            }
+            done = true;
+            return guiSchoolController;
+        }
+
+        @Override
+        @Deprecated
+        public GUISchoolController get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+            return null;
+        }
+    };
 
 
     @Override
@@ -258,15 +292,34 @@ public class GUI extends Application {
         }
     }
 
-    public void notifyStateChange() {
-        Stage currentStageWindow = Stage.getWindows().size() != 0 ? ((Stage)(Stage.getWindows().get(0))) : new Stage();
-        switch(Client.getInstance().getClientState()) {
-            case LOADING -> Platform.runLater(() -> GUILoadingController.initSceneAndController(currentStageWindow));
-            case LOGIN -> Platform.runLater(() -> GUILoginController.initSceneAndController(currentStageWindow));
-            case MAINMENU -> Platform.runLater(() -> GUIMainMenuController.initSceneAndController(currentStageWindow));
-            case WAITINGLOBBY -> Platform.runLater(() -> GUILobbyController.initSceneAndController(currentStageWindow));
-            case INGAME -> Platform.runLater(() -> GUIGameController.initSceneAndController(currentStageWindow));
+    public void guiCallSchool(Consumer<GUISchoolController> call) {
+        if(Client.getInstance().getClientState() == ClientState.INGAME) {
+            Platform.runLater(() -> {
+                try {
+                    call.accept(this.guiSchoolControllerFuture.get());
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            });
         }
+    }
+
+
+    public void notifyStateChange() {
+        Platform.runLater( () -> {
+            Stage.getWindows().stream().skip(1).forEach(window -> ((Stage) window).close());
+            Stage currentStageWindow = Stage.getWindows().size() != 0 ? ((Stage)(Stage.getWindows().get(0))) : new Stage();
+            switch(Client.getInstance().getClientState()) {
+                case LOADING -> GUILoadingController.initSceneAndController(currentStageWindow);
+                case LOGIN -> GUILoginController.initSceneAndController(currentStageWindow);
+                case MAINMENU -> GUIMainMenuController.initSceneAndController(currentStageWindow);
+                case WAITINGLOBBY -> GUILobbyController.initSceneAndController(currentStageWindow);
+                case INGAME -> {
+                    GUIGameController.initSceneAndController(currentStageWindow);
+                    GUISchoolController.initSceneAndController(new Stage());
+                }
+            }
+        });
     }
 }
 
