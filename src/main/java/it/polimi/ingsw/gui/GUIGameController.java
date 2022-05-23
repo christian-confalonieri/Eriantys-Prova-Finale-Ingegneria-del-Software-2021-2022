@@ -24,7 +24,7 @@ public class GUIGameController {
      * @author Christian Confalonieri
      */
     protected static void initSceneAndController(Stage stage) {
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIGameController.class.getResource("/it/polimi/ingsw/game-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(GUIGameController.class.getResource("/it/polimi/ingsw/school-view.fxml"));
         Parent root = null;
         try {
             root = fxmlLoader.load();
@@ -35,8 +35,8 @@ public class GUIGameController {
             Client.getInstance().getGui().guiGameController = (GUIGameController) fxmlLoader.getController(); // Loads the controller
             Client.getInstance().getGui().notifyAll(); // Wakes up the future waiting for the controller
         }
-        Scene scene = new Scene(root, 600, 400);
-        stage.setTitle("Game");
+        Scene scene = new Scene(root);
+        stage.setTitle("School");
         stage.setScene(scene);
         stage.show();
     }
