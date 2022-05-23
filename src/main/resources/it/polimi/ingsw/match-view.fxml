@@ -403,7 +403,7 @@
                  </Label>
                  <Label layoutX="-264.0" layoutY="493.0" prefHeight="121.0" prefWidth="1426.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Play a card">
                     <font>
-                       <Font size="60.0" />
+                       <Font size="48.0" />
                     </font>
                  </Label>
                  <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="-25.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
@@ -849,31 +849,21 @@
                        <Image url="@../../../assets/assistantCards/ten.png" />
                     </image>
                  </ImageView>
-                 <ImageView fitHeight="71.0" fitWidth="58.0" layoutX="800.0" layoutY="391.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+                 <ImageView fitHeight="71.0" fitWidth="58.0" layoutX="795.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
                     <image>
                        <Image url="@../../../assets/coin/coin.png" />
                     </image>
                  </ImageView>
-                 <Label alignment="CENTER" layoutX="745.0" layoutY="426.0" prefHeight="43.0" prefWidth="186.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Nickname 2">
+                 <Label alignment="CENTER" layoutX="746.0" layoutY="456.0" prefHeight="43.0" prefWidth="186.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Nickname 2">
                     <font>
                        <Font size="24.0" />
                     </font>
                  </Label>
-                 <Label layoutX="843.0" layoutY="378.0" prefHeight="80.0" prefWidth="41.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text=":1">
+                 <Label layoutX="838.0" layoutY="393.0" prefHeight="80.0" prefWidth="41.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text=":1">
                     <font>
                        <Font size="45.0" />
                     </font>
                  </Label>
-                 <Label layoutX="-264.0" layoutY="493.0" prefHeight="121.0" prefWidth="1426.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Play a card">
-                    <font>
-                       <Font size="60.0" />
-                    </font>
-                 </Label>
-                 <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="-25.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
-                    <image>
-                       <Image url="@../../../assets/outlines/card.png" />
-                    </image>
-                 </ImageView>
                  <ImageView fitHeight="73.0" fitWidth="69.0" layoutX="15.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
                     <image>
                        <Image url="@../../../assets/students/blue.png" />
@@ -1229,21 +1219,6 @@
                        <Image url="@../../../assets/towers/white.png" />
                     </image>
                  </ImageView>
-                 <ImageView fitHeight="85.0" fitWidth="69.0" layoutX="15.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
-                    <image>
-                       <Image url="@../../../assets/outlines/student.png" />
-                    </image>
-                 </ImageView>
-                 <ImageView fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="287.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
-                    <image>
-                       <Image url="@../../../assets/outlines/diningRoom.png" />
-                    </image>
-                 </ImageView>
-                 <Button layoutX="769.0" layoutY="451.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="137.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Logout">
-                    <font>
-                       <Font size="24.0" />
-                    </font>
-                 </Button>
                  <ImageView fitHeight="83.0" fitWidth="69.0" layoutX="68.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
                     <image>
                        <Image url="@../../../assets/students/red.png" />
@@ -1312,31 +1287,21 @@
                        <Image url="@../../../assets/assistantCards/ten.png" />
                     </image>
                  </ImageView>
-                 <ImageView fitHeight="71.0" fitWidth="58.0" layoutX="800.0" layoutY="391.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+                 <ImageView fitHeight="71.0" fitWidth="58.0" layoutX="795.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
                     <image>
                        <Image url="@../../../assets/coin/coin.png" />
                     </image>
                  </ImageView>
-                 <Label alignment="CENTER" layoutX="745.0" layoutY="426.0" prefHeight="43.0" prefWidth="186.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Nickname 3">
+                 <Label alignment="CENTER" layoutX="746.0" layoutY="456.0" prefHeight="43.0" prefWidth="186.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Nickname 3">
                     <font>
                        <Font size="24.0" />
                     </font>
                  </Label>
-                 <Label layoutX="843.0" layoutY="378.0" prefHeight="80.0" prefWidth="41.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text=":1">
+                 <Label layoutX="838.0" layoutY="393.0" prefHeight="80.0" prefWidth="41.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text=":1">
                     <font>
                        <Font size="45.0" />
                     </font>
                  </Label>
-                 <Label layoutX="-264.0" layoutY="493.0" prefHeight="121.0" prefWidth="1426.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Play a card">
-                    <font>
-                       <Font size="60.0" />
-                    </font>
-                 </Label>
-                 <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="-25.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
-                    <image>
-                       <Image url="@../../../assets/outlines/card.png" />
-                    </image>
-                 </ImageView>
                  <ImageView fitHeight="73.0" fitWidth="69.0" layoutX="15.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
                     <image>
                        <Image url="@../../../assets/students/blue.png" />
@@ -1692,21 +1657,6 @@
                        <Image url="@../../../assets/towers/white.png" />
                     </image>
                  </ImageView>
-                 <ImageView fitHeight="85.0" fitWidth="69.0" layoutX="15.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
-                    <image>
-                       <Image url="@../../../assets/outlines/student.png" />
-                    </image>
-                 </ImageView>
-                 <ImageView fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="287.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
-                    <image>
-                       <Image url="@../../../assets/outlines/diningRoom.png" />
-                    </image>
-                 </ImageView>
-                 <Button layoutX="769.0" layoutY="451.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="137.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Logout">
-                    <font>
-                       <Font size="24.0" />
-                    </font>
-                 </Button>
                  <ImageView fitHeight="83.0" fitWidth="69.0" layoutX="68.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
                     <image>
                        <Image url="@../../../assets/students/red.png" />
@@ -1775,31 +1725,21 @@
                        <Image url="@../../../assets/assistantCards/ten.png" />
                     </image>
                  </ImageView>
-                 <ImageView fitHeight="71.0" fitWidth="58.0" layoutX="800.0" layoutY="391.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+                 <ImageView fitHeight="71.0" fitWidth="58.0" layoutX="795.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
                     <image>
                        <Image url="@../../../assets/coin/coin.png" />
                     </image>
                  </ImageView>
-                 <Label alignment="CENTER" layoutX="745.0" layoutY="426.0" prefHeight="43.0" prefWidth="186.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Nickname 4">
+                 <Label alignment="CENTER" layoutX="746.0" layoutY="456.0" prefHeight="43.0" prefWidth="186.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Nickname 4">
                     <font>
                        <Font size="24.0" />
                     </font>
                  </Label>
-                 <Label layoutX="843.0" layoutY="378.0" prefHeight="80.0" prefWidth="41.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text=":1">
+                 <Label layoutX="838.0" layoutY="393.0" prefHeight="80.0" prefWidth="41.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text=":1">
                     <font>
                        <Font size="45.0" />
                     </font>
                  </Label>
-                 <Label layoutX="-264.0" layoutY="493.0" prefHeight="121.0" prefWidth="1426.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Play a card">
-                    <font>
-                       <Font size="60.0" />
-                    </font>
-                 </Label>
-                 <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="-25.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
-                    <image>
-                       <Image url="@../../../assets/outlines/card.png" />
-                    </image>
-                 </ImageView>
                  <ImageView fitHeight="73.0" fitWidth="69.0" layoutX="15.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
                     <image>
                        <Image url="@../../../assets/students/blue.png" />
@@ -2155,21 +2095,6 @@
                        <Image url="@../../../assets/towers/white.png" />
                     </image>
                  </ImageView>
-                 <ImageView fitHeight="85.0" fitWidth="69.0" layoutX="15.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
-                    <image>
-                       <Image url="@../../../assets/outlines/student.png" />
-                    </image>
-                 </ImageView>
-                 <ImageView fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="287.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
-                    <image>
-                       <Image url="@../../../assets/outlines/diningRoom.png" />
-                    </image>
-                 </ImageView>
-                 <Button layoutX="769.0" layoutY="451.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="137.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Logout">
-                    <font>
-                       <Font size="24.0" />
-                    </font>
-                 </Button>
                  <ImageView fitHeight="83.0" fitWidth="69.0" layoutX="68.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
                     <image>
                        <Image url="@../../../assets/students/red.png" />
