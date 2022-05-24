@@ -7,59 +7,64 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUISchoolController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIGameController">
    <children>
+      <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/table/background.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="649.0" fitWidth="1461.0" layoutX="-280.0" layoutY="-122.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/school/school.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="186.0" fitWidth="134.0" layoutX="-24.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="assistant1" fitHeight="186.0" fitWidth="134.0" layoutX="-24.0" layoutY="354.0" onMouseEntered="#selectAssistant1" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/assistantCards/one.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="53.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="assistant2" fitHeight="186.0" fitWidth="127.0" layoutX="53.0" layoutY="354.0" onMouseEntered="#selectAssistant2" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/assistantCards/two.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="130.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="assistant3" fitHeight="186.0" fitWidth="127.0" layoutX="130.0" layoutY="354.0" onMouseEntered="#selectAssistant3" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/assistantCards/three.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="207.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="assistant4" fitHeight="186.0" fitWidth="127.0" layoutX="207.0" layoutY="354.0" onMouseEntered="#selectAssistant4" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/assistantCards/four.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="284.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="assistant5" fitHeight="186.0" fitWidth="127.0" layoutX="284.0" layoutY="354.0" onMouseEntered="#selectAssistant5" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/assistantCards/five.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="361.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="assistant6" fitHeight="186.0" fitWidth="127.0" layoutX="361.0" layoutY="354.0" onMouseEntered="#selectAssistant6" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/assistantCards/six.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="438.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="assistant7" fitHeight="186.0" fitWidth="127.0" layoutX="438.0" layoutY="354.0" onMouseEntered="#selectAssistant7" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/assistantCards/seven.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="189.0" fitWidth="127.0" layoutX="515.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="assistant8" fitHeight="186.0" fitWidth="127.0" layoutX="515.0" layoutY="354.0" onMouseEntered="#selectAssistant8" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/assistantCards/eight.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="592.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="assistant9" fitHeight="186.0" fitWidth="127.0" layoutX="592.0" layoutY="354.0" onMouseEntered="#selectAssistant9" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/assistantCards/nine.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="186.0" fitWidth="138.0" layoutX="669.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="assistant10" fitHeight="186.0" fitWidth="138.0" layoutX="669.0" layoutY="354.0" onMouseEntered="#selectAssistant10" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/assistantCards/ten.png" />
          </image>
@@ -69,62 +74,62 @@
             <Image url="@../../../assets/coin/coin.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" layoutX="745.0" layoutY="426.0" prefHeight="43.0" prefWidth="186.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Nickname">
+      <Label alignment="CENTER" layoutX="745.0" layoutY="426.0" prefHeight="43.0" prefWidth="186.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Nickname1" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="843.0" layoutY="378.0" prefHeight="80.0" prefWidth="41.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text=":1">
+      <Label layoutX="843.0" layoutY="378.0" prefHeight="80.0" prefWidth="41.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text=":1" textFill="WHITE">
          <font>
             <Font size="45.0" />
          </font>
       </Label>
-      <Label layoutX="-264.0" layoutY="493.0" prefHeight="53.0" prefWidth="1426.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Play a card">
+      <Label layoutX="-264.0" layoutY="493.0" prefHeight="113.0" prefWidth="1426.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Play a card" textFill="WHITE">
          <font>
-            <Font size="24.0" />
+            <Font name="Jokerman" size="57.0" />
          </font>
       </Label>
-      <ImageView fitHeight="186.0" fitWidth="127.0" layoutX="-25.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="outlineAssistant1" fitHeight="186.0" fitWidth="127.0" layoutX="-25.0" layoutY="354.0" onMouseExited="#deselectAssistant1" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
          <image>
             <Image url="@../../../assets/outlines/card.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="73.0" fitWidth="69.0" layoutX="15.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="student8" fitHeight="73.0" fitWidth="69.0" layoutX="15.0" layoutY="289.0" onMouseEntered="#selectStudent8" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/students/blue.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="68.0" fitWidth="69.0" layoutX="68.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="student9" fitHeight="68.0" fitWidth="69.0" layoutX="68.0" layoutY="289.0" onMouseEntered="#selectStudent9" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/students/green.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="68.0" fitWidth="69.0" layoutX="15.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="student6" fitHeight="68.0" fitWidth="69.0" layoutX="15.0" layoutY="226.0" onMouseEntered="#selectStudent6" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/students/pink.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="83.0" fitWidth="69.0" layoutX="68.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="student7" fitHeight="83.0" fitWidth="69.0" layoutX="68.0" layoutY="226.0" onMouseEntered="#selectStudent7" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/students/red.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="84.0" fitWidth="69.0" layoutX="15.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="student4" fitHeight="84.0" fitWidth="69.0" layoutX="15.0" layoutY="162.0" onMouseEntered="#selectStudent4" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/students/yellow.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="73.0" fitWidth="69.0" layoutX="68.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="student5" fitHeight="73.0" fitWidth="69.0" layoutX="68.0" layoutY="162.0" onMouseEntered="#selectStudent5" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/students/blue.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="68.0" fitWidth="69.0" layoutX="15.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="student2" fitHeight="68.0" fitWidth="69.0" layoutX="15.0" layoutY="98.0" onMouseEntered="#selectStudent2" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/students/green.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="68.0" fitWidth="69.0" layoutX="68.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="student3" fitHeight="68.0" fitWidth="69.0" layoutX="68.0" layoutY="98.0" onMouseEntered="#selectStudent3" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/students/pink.png" />
          </image>
@@ -444,24 +449,154 @@
             <Image url="@../../../assets/towers/white.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="85.0" fitWidth="69.0" layoutX="15.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
-         <image>
-            <Image url="@../../../assets/outlines/student.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="287.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
-         <image>
-            <Image url="@../../../assets/outlines/diningRoom.png" />
-         </image>
-      </ImageView>
-      <Button layoutX="769.0" layoutY="451.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="137.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Logout">
+      <Button layoutX="769.0" layoutY="451.0" mnemonicParsing="false" onAction="#logout" prefHeight="55.0" prefWidth="137.0" scaleX="0.6160164271047228" scaleY="0.6160164271047228" text="Logout">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <ImageView fitHeight="83.0" fitWidth="69.0" layoutX="68.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+      <ImageView fx:id="student1" fitHeight="83.0" fitWidth="69.0" layoutX="68.0" layoutY="34.0" onMouseEntered="#selectStudent1" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
          <image>
             <Image url="@../../../assets/students/red.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineAssistant2" fitHeight="186.0" fitWidth="127.0" layoutX="53.0" layoutY="354.0" onMouseExited="#deselectAssistant2" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/card.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineAssistant3" fitHeight="186.0" fitWidth="127.0" layoutX="130.0" layoutY="354.0" onMouseExited="#deselectAssistant3" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/card.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineAssistant4" fitHeight="186.0" fitWidth="127.0" layoutX="207.0" layoutY="354.0" onMouseExited="#deselectAssistant4" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/card.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineAssistant5" fitHeight="186.0" fitWidth="127.0" layoutX="284.0" layoutY="354.0" onMouseExited="#deselectAssistant5" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/card.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineAssistant6" fitHeight="186.0" fitWidth="127.0" layoutX="361.0" layoutY="354.0" onMouseExited="#deselectAssistant6" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/card.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineAssistant7" fitHeight="186.0" fitWidth="127.0" layoutX="438.0" layoutY="354.0" onMouseExited="#deselectAssistant7" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/card.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineAssistant8" fitHeight="186.0" fitWidth="127.0" layoutX="515.0" layoutY="354.0" onMouseExited="#deselectAssistant8" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/card.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineAssistant9" fitHeight="186.0" fitWidth="127.0" layoutX="592.0" layoutY="354.0" onMouseExited="#deselectAssistant9" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/card.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineAssistant10" fitHeight="186.0" fitWidth="127.0" layoutX="669.0" layoutY="354.0" onMouseExited="#deselectAssistant10" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/card.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineStudent1" fitHeight="85.0" fitWidth="69.0" layoutX="68.0" layoutY="34.0" onMouseExited="#deselectStudent1" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/student.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineStudent2" fitHeight="85.0" fitWidth="69.0" layoutX="15.0" layoutY="98.0" onMouseExited="#deselectStudent2" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/student.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineStudent3" fitHeight="85.0" fitWidth="69.0" layoutX="68.0" layoutY="98.0" onMouseExited="#deselectStudent3" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/student.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineStudent4" fitHeight="85.0" fitWidth="69.0" layoutX="15.0" layoutY="162.0" onMouseExited="#deselectStudent4" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/student.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineStudent5" fitHeight="85.0" fitWidth="69.0" layoutX="68.0" layoutY="162.0" onMouseExited="#deselectStudent5" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/student.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineStudent6" fitHeight="85.0" fitWidth="69.0" layoutX="15.0" layoutY="226.0" onMouseExited="#deselectStudent6" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/student.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineStudent7" fitHeight="85.0" fitWidth="69.0" layoutX="68.0" layoutY="226.0" onMouseExited="#deselectStudent7" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/student.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineStudent8" fitHeight="85.0" fitWidth="69.0" layoutX="15.0" layoutY="289.0" onMouseExited="#deselectStudent8" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/student.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineStudent9" fitHeight="85.0" fitWidth="69.0" layoutX="68.0" layoutY="289.0" onMouseExited="#deselectStudent9" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/student.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="diningRoomGreen" fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="31.0" onMouseEntered="#selectDiningRoomGreen" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+         <image>
+            <Image url="@../../../assets/outlines/diningRoomTransparent.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="diningRoomRed" fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="95.0" onMouseEntered="#selectDiningRoomRed" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+         <image>
+            <Image url="@../../../assets/outlines/diningRoomTransparent.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="diningRoomYellow" fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="159.0" onMouseEntered="#selectDiningRoomYellow" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+         <image>
+            <Image url="@../../../assets/outlines/diningRoomTransparent.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="diningRoomPink" fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="222.0" onMouseEntered="#selectDiningRoomPink" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+         <image>
+            <Image url="@../../../assets/outlines/diningRoomTransparent.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="diningRoomBlue" fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="287.0" onMouseEntered="#selectDiningRoomBlue" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228">
+         <image>
+            <Image url="@../../../assets/outlines/diningRoomTransparent.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineDiningRoomBlue" fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="287.0" onMouseExited="#deselectDiningRoomBlue" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/diningRoom.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineDiningRoomPink" fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="222.0" onMouseExited="#deselectDiningRoomPink" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/diningRoom.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineDiningRoomYellow" fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="159.0" onMouseExited="#deselectDiningRoomYellow" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/diningRoom.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineDiningRoomGreen" fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="31.0" onMouseExited="#deselectDiningRoomGreen" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/diningRoom.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="outlineDiningRoomRed" fitHeight="73.0" fitWidth="726.0" layoutX="26.0" layoutY="95.0" onMouseExited="#deselectDiningRoomRed" pickOnBounds="true" preserveRatio="true" scaleX="0.6160164271047228" scaleY="0.6160164271047228" visible="false">
+         <image>
+            <Image url="@../../../assets/outlines/diningRoom.png" />
          </image>
       </ImageView>
    </children>

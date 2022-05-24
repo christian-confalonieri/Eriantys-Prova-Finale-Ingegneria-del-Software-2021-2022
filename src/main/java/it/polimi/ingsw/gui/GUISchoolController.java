@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class GUISchoolController {
     protected static void initSceneAndController(Stage stage) {
-        FXMLLoader fxmlLoader = new FXMLLoader(GUISchoolController.class.getResource("/it/polimi/ingsw/school-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(GUISchoolController.class.getResource("/it/polimi/ingsw/mainSchool-view.fxml"));
         Parent root = null;
         try {
             root = fxmlLoader.load();

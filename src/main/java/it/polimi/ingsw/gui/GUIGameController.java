@@ -8,14 +8,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class GUIGameController {
     @FXML
+    private AnchorPane anchorPaneTable;
+    @FXML
     private Label welcomeText;
-
 
     @FXML
     protected void onHelloButtonClick() {
@@ -195,6 +197,9 @@ public class GUIGameController {
     @FXML
     private ImageView outlineDiningRoomBlue;
 
+    @FXML
+    private AnchorPane anchorPaneIsland1;
+
     /**
      * @author Christian Confalonieri
      */
@@ -263,6 +268,16 @@ public class GUIGameController {
      */
     public void selectIsland1() {
         outlineIsland1.setVisible(true);
+
+        // temp
+        try {
+            AnchorPane anchorPaneIsland2 = (AnchorPane) FXMLLoader.load(this.getClass().getResource("it/polimi/ingsw/island-view.xml"));
+            anchorPaneTable.getChildren().add(anchorPaneIsland2);
+            anchorPaneIsland2.setLayoutX(120);
+            anchorPaneIsland2.setLayoutY(69);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -824,4 +839,6 @@ public class GUIGameController {
     public void logout() {
         LoginService.logoutRequest();
     }
+
+
 }
