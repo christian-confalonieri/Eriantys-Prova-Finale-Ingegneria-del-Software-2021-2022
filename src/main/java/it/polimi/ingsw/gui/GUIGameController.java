@@ -211,7 +211,7 @@ public class GUIGameController {
             Client.getInstance().getGui().notifyAll(); // Wakes up the future waiting for the controller
         }
         Scene scene = new Scene(root);
-        stage.setTitle("Table");
+        stage.setTitle("Eriantys");
         stage.setScene(scene);
         stage.show();
     }

@@ -28,7 +28,7 @@ public class InputCLI {
 
             String[] command = inputString.split(" ");
 
-            if(command[0].equalsIgnoreCase("refresh")) {
+            if(command[0].equalsIgnoreCase("refresh") || command[0].equalsIgnoreCase("r")) {
                 Client.getInstance().getCli().render();
                 return;
             }
