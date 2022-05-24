@@ -1,10 +1,12 @@
 package it.polimi.ingsw.controller.services;
 
 import it.polimi.ingsw.action.*;
+import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.ActionHandler;
 import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
+import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.GamePhase;
 import it.polimi.ingsw.model.enumeration.TurnPhase;
@@ -21,6 +23,12 @@ public class GameService {
         GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
 
         if (gameHandler.getGamePhase().equals(GamePhase.PREPARATION)) {
+            if (!gameHandler.getGame().getPlayerFromId(action.getPlayerId()).getHandCards().contains(action.getPlayedCard())){
+                Server.getInstance().getClientNetHandler(action.getPlayerId())
+                        .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.PLAYCARD, "Card is not in your deck", false)));
+                throw new InvalidAction("PlayCardAction: card was not in player deck");
+            }
+
             if(gameHandler.previousPlayedCards().contains(action.getPlayedCard())) {
                 if(gameHandler.previousPlayedCards().containsAll(gameHandler.getCurrentPlayer().getHandCards())) { // all your cards are already played: no alternative
                     gameHandler.getCurrentPlayer().playCard(action.getPlayedCard());
@@ -50,6 +58,9 @@ public class GameService {
                     broadcastClient.send(ActionHandler.toJson(action));
                 }
                 System.out.println(action.getPlayerId() + " played successfully the card with number: " + action.getPlayedCard().getNumber());
+            }
+            if(gameHandler.isEnded()) {
+                notifyAndCloseGameEnd(gameHandler, null);
             }
         }
     }
@@ -119,6 +130,9 @@ public class GameService {
         for(ClientNetworkHandler broadcastClient : broadcastClients) {
             broadcastClient.send(ActionHandler.toJson(action));
         }
+        if(gameHandler.isEnded()) {
+            notifyAndCloseGameEnd(gameHandler, null);
+        }
     }
 
     /**
@@ -173,6 +187,9 @@ public class GameService {
         for(ClientNetworkHandler broadcastClient : broadcastClients) {
             broadcastClient.send(ActionHandler.toJson(action));
         }
+        if(gameHandler.isEnded()) {
+            notifyAndCloseGameEnd(gameHandler, null);
+        }
     }
 
     /**
@@ -183,7 +200,15 @@ public class GameService {
 
         if (gameHandler.getGamePhase().equals(GamePhase.TURN) &&
                 gameHandler.getTurnPhase().equals(TurnPhase.MOVEFROMCLOUD)) {
+
             Cloud cloud = gameHandler.getGame().getCloudFromId(action.getCloudUUID());
+
+            if (cloud.getStudents().isEmpty()){
+                Server.getInstance().getClientNetHandler(action.getPlayerId())
+                        .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.MOVECLOUD, "Invalid cloud selected", false)));
+                throw new InvalidAction("MoveCloudAction: invalid cloud");
+            }
+
             List<Student> students = cloud.pickAllStudents();
             for(Student student : students) {
                 gameHandler.getCurrentPlayer().getSchool().addEntrance(student);
@@ -200,6 +225,9 @@ public class GameService {
         List<ClientNetworkHandler> broadcastClients = Server.getInstance().getConnectionsForGameBroadcast(gameHandler);
         for(ClientNetworkHandler broadcastClient : broadcastClients) {
             broadcastClient.send(ActionHandler.toJson(action));
+        }
+        if(gameHandler.isEnded()) {
+            notifyAndCloseGameEnd(gameHandler, null);
         }
     }
 
@@ -262,6 +290,30 @@ public class GameService {
             Server.getInstance().getClientNetHandler(action.getPlayerId())
                     .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "invalid phase",false)));
             throw new InvalidAction("Power: invalid phase");
+        }
+        if(gameHandler.isEnded()) {
+            notifyAndCloseGameEnd(gameHandler, null);
+        }
+    }
+
+    public static void notifyAndCloseGameEnd(GameHandler gameHandler, String playerIdToExclude) {
+        Server.getInstance().getConnectionsForGameBroadcast(gameHandler).forEach(net -> {
+                    if(net != null) {
+                        net.send(
+                                ActionHandler.toJson(new GameInterruptedAction(null,
+                                        gameHandler.getGame().getLeaderBoard().stream().map(Player::getName).filter(id -> !id.equals(playerIdToExclude)).toList()))
+                        );
+                        System.out.println(net + " has been notified GameInterruptedAction");
+                    }
+                }
+        );
+        gameHandler.getOrderedTurnPlayers().stream().map(Player::getName).forEach(id -> Server.getInstance().removePlayerFromGame(id));
+
+        if (gameHandler
+                .getOrderedTurnPlayers().stream().map(Player::getName).noneMatch(id -> Server.getInstance().getGameHandler(id) == gameHandler))
+        {   // All players disconnected from the game
+            System.out.println(ConsoleColor.YELLOW + "All player disconnected from " + gameHandler + ". Game deleted.");
+            Server.getInstance().removeGame(gameHandler);
         }
     }
 }

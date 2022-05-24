@@ -45,24 +45,7 @@ public class LoginService {
 
                 GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
 
-                Server.getInstance().getConnectionsForGameBroadcast(gameHandler).forEach(net -> {
-                    if(net != null){
-                        net.send(
-                                ActionHandler.toJson(new GameInterruptedAction(action.getPlayerId(),
-                                        gameHandler.getGame().getLeaderBoard().stream().map(Player::getName).filter(id -> !id.equals(action.getPlayerId())).toList()))
-                        );
-                        System.out.println(net + " has been notified GameInterruptedAction");
-                    }
-                }
-                );
-                gameHandler.getOrderedTurnPlayers().stream().map(Player::getName).forEach(id -> Server.getInstance().removePlayerFromGame(id));
-
-                if (gameHandler
-                        .getOrderedTurnPlayers().stream().map(Player::getName).noneMatch(id -> Server.getInstance().getGameHandler(id) == gameHandler))
-                {   // All players disconnected from the game
-                    System.out.println(ConsoleColor.YELLOW + "All player disconnected from " + gameHandler + ". Game deleted.");
-                    Server.getInstance().removeGame(gameHandler);
-                }
+                GameService.notifyAndCloseGameEnd(gameHandler, action.getPlayerId());
             }
 
             Server.getInstance().exitLobbys(action.getPlayerId());
