@@ -9,32 +9,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIGameController">
-   <tabs>
-      <Tab closable="false" text="Table">
-         <content>
-            <fx:include source="table-view.fxml"></fx:include>
-         </content>
-      </Tab>
-      <Tab closable="false" text="Nickname1's School">
-        <content>
-           <fx:include source="mainSchool-view.fxml"></fx:include>
-        </content>
-      </Tab>
-      <Tab closable="false" text="Nickname2's School">
-        <content>
-           <fx:include source="simpleSchool-view.fxml"></fx:include>
-        </content>
-      </Tab>
-      <Tab closable="false" text="Nickname3's School">
-        <content>
-           <fx:include source="simpleSchool-view.fxml"></fx:include>
-        </content>
-      </Tab>
-      <Tab closable="false" text="Nickname4' School">
-        <content>
-           <fx:include source="simpleSchool-view.fxml"></fx:include>
-        </content>
-      </Tab>
-   </tabs>
+<TabPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="it.polimi.ingsw.gui.GUIGameController">
+    <Tab closable="false" text="Table">
+        <fx:include source="table-view.fxml"/>
+    </Tab>
+    <Tab closable="false" text="Nickname1's School">
+        <fx:include source="mainSchool-view.fxml"/>
+    </Tab>
+    <Tab closable="false" text="Nickname2's School">
+        <fx:include source="simpleSchool-view.fxml"/>
+    </Tab>
+    <Tab closable="false" text="Nickname3's School">
+        <fx:include source="simpleSchool-view.fxml"/>
+    </Tab>
+    <Tab closable="false" text="Nickname4' School">
+        <fx:include source="simpleSchool-view.fxml"/>
+    </Tab>
 </TabPane>

@@ -1,7 +1,11 @@
 package it.polimi.ingsw.gui;
 
+import it.polimi.ingsw.action.MoveStudentsAction;
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.client.controller.services.LoginService;
+import it.polimi.ingsw.model.entity.Student;
+import it.polimi.ingsw.model.enumeration.Card;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,17 +16,20 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class GUIGameController {
     @FXML
-    private AnchorPane anchorPaneTable;
-    @FXML
-    private Label welcomeText;
+    private AnchorPane anchorPaneIsland;
+    private Card selectedCard;
+    private List<Student> selectedStudents;
+    private List<String> selectedIslandsId;
+    private Character selectedCharacter;
+
+
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
+    private AnchorPane anchorPaneTable;
 
     @FXML
     private ImageView outlineCharacter1;
@@ -196,13 +203,10 @@ public class GUIGameController {
     private ImageView diningRoomBlue;
     @FXML
     private ImageView outlineDiningRoomBlue;
-
     @FXML
     private AnchorPane anchorPaneIsland1;
 
-    /**
-     * @author Christian Confalonieri
-     */
+    
     protected static void initSceneAndController(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIGameController.class.getResource("/it/polimi/ingsw/match-view.fxml"));
         Parent root = null;
@@ -221,54 +225,43 @@ public class GUIGameController {
         stage.show();
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectCharacter1() {
-        outlineCharacter1.setVisible(true);
-    }
 
     /**
-     * @author Christian Confalonieri
+     * TABLE CODE
      */
-    public void deselectCharacter1() {
+
+    @FXML
+    private void selectCharacter1() {
+        outlineCharacter1.setVisible(true);
+    }
+    @FXML
+    private void deselectCharacter1() {
         outlineCharacter1.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectCharacter2() {
+    @FXML
+    private void selectCharacter2() {
         outlineCharacter2.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectCharacter2() {
+    @FXML
+    private void deselectCharacter2() {
         outlineCharacter2.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectCharacter3() {
+    @FXML
+    private void selectCharacter3() {
         outlineCharacter3.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectCharacter3() {
+    @FXML
+    private void deselectCharacter3() {
         outlineCharacter3.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectIsland1() {
+    
+    @FXML
+    private void selectIsland1() {
         outlineIsland1.setVisible(true);
-
+        
         // temp
         try {
             AnchorPane anchorPaneIsland2 = (AnchorPane) FXMLLoader.load(this.getClass().getResource("it/polimi/ingsw/island-view.xml"));
@@ -279,564 +272,372 @@ public class GUIGameController {
             e.printStackTrace();
         }
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectIsland1() {
+    @FXML
+    private void deselectIsland1() {
         outlineIsland1.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectIsland2() {
+    @FXML
+    private void selectIsland2() {
         outlineIsland2.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectIsland2() {
+    @FXML
+    private void deselectIsland2() {
         outlineIsland2.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectIsland3() {
+    @FXML
+    private void selectIsland3() {
         outlineIsland3.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectIsland3() {
+    @FXML
+    private void deselectIsland3() {
         outlineIsland3.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectIsland4() {
+    @FXML
+    private void selectIsland4() {
         outlineIsland4.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectIsland4() {
+    @FXML
+    private void deselectIsland4() {
         outlineIsland4.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectIsland5() {
+    @FXML
+    private void selectIsland5() {
         outlineIsland5.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectIsland5() {
+    @FXML
+    private void deselectIsland5() {
         outlineIsland5.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectIsland6() {
+    @FXML
+    private void selectIsland6() {
         outlineIsland6.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectIsland6() {
+    @FXML
+    private void deselectIsland6() {
         outlineIsland6.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectIsland7() {
+    @FXML
+    private void selectIsland7() {
         outlineIsland7.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectIsland7() {
+    @FXML
+    private void deselectIsland7() {
         outlineIsland7.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectIsland8() {
+    @FXML
+    private void selectIsland8() {
         outlineIsland8.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectIsland8() {
+    @FXML
+    private void deselectIsland8() {
         outlineIsland8.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectIsland9() {
+    @FXML
+    private void selectIsland9() {
         outlineIsland9.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectIsland9() {
+    @FXML
+    private void deselectIsland9() {
         outlineIsland9.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectIsland10() {
+    @FXML
+    private void selectIsland10() {
         outlineIsland10.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectIsland10() {
+    @FXML
+    private void deselectIsland10() {
         outlineIsland10.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectIsland11() {
+    @FXML
+    private void selectIsland11() {
         outlineIsland11.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectIsland11() {
+    @FXML
+    private void deselectIsland11() {
         outlineIsland11.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectIsland12() {
+    @FXML
+    private void selectIsland12() {
         outlineIsland12.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectIsland12() {
+    @FXML
+    private void deselectIsland12() {
         outlineIsland12.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectCloud1() {
+
+    @FXML
+    private void selectCloud1() {
         outlineCloud1.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectCloud1() {
+    @FXML
+    private void deselectCloud1() {
         outlineCloud1.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectCloud2() {
+    @FXML
+    private void selectCloud2() {
         outlineCloud2.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectCloud2() {
+    @FXML
+    private void deselectCloud2() {
         outlineCloud2.setVisible(false);
     }
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectCloud3() {
+    
+    @FXML
+    private void selectCloud3() {
         outlineCloud3.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectCloud3() {
+    @FXML
+    private void deselectCloud3() {
         outlineCloud3.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectCloud4() {
+    @FXML
+    private void selectCloud4() {
         outlineCloud4.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectCloud4() {
+    @FXML
+    private void deselectCloud4() {
         outlineCloud4.setVisible(false);
     }
 
     /**
-     * @author Christian Confalonieri
+     * MAIN SCHOOL CODE
      */
-    public void selectAssistant1() {
+
+    @FXML
+    private void selectAssistant1() {
         outlineAssistant1.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectAssistant1() {
+    @FXML
+    private void deselectAssistant1() {
         outlineAssistant1.setVisible(false);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectAssistant2() {
+    
+    @FXML
+    private void selectAssistant2() {
         outlineAssistant2.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectAssistant2() {
+    @FXML
+    private void deselectAssistant2() {
         outlineAssistant2.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectAssistant3() {
+    @FXML
+    private void selectAssistant3() {
         outlineAssistant3.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectAssistant3() {
+    @FXML
+    private void deselectAssistant3() {
         outlineAssistant3.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectAssistant4() {
+    @FXML
+    private void selectAssistant4() {
         outlineAssistant4.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectAssistant4() {
+    @FXML
+    private void deselectAssistant4() {
         outlineAssistant4.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectAssistant5() {
+    @FXML
+    private void selectAssistant5() {
         outlineAssistant5.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectAssistant5() {
+    @FXML
+    private void deselectAssistant5() {
         outlineAssistant5.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectAssistant6() {
+    @FXML
+    private void selectAssistant6() {
         outlineAssistant6.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectAssistant6() {
+    @FXML
+    private void deselectAssistant6() {
         outlineAssistant6.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectAssistant7() {
+    @FXML
+    private void selectAssistant7() {
         outlineAssistant7.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectAssistant7() {
+    @FXML
+    private void deselectAssistant7() {
         outlineAssistant7.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectAssistant8() {
+    @FXML
+    private void selectAssistant8() {
         outlineAssistant8.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectAssistant8() {
+    @FXML
+    private void deselectAssistant8() {
         outlineAssistant8.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectAssistant9() {
+    @FXML
+    private void selectAssistant9() {
         outlineAssistant9.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectAssistant9() {
+    @FXML
+    private void deselectAssistant9() {
         outlineAssistant9.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectAssistant10() {
+    @FXML
+    private void selectAssistant10() {
         outlineAssistant10.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectAssistant10() {
+    @FXML
+    private void deselectAssistant10() {
         outlineAssistant10.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectStudent1() {
+
+    @FXML
+    private void selectStudent1() {
         outlineStudent1.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectStudent1() {
+    @FXML
+    private void deselectStudent1() {
         outlineStudent1.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectStudent2() {
+    @FXML
+    private void selectStudent2() {
         outlineStudent2.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectStudent2() {
+    @FXML
+    private void deselectStudent2() {
         outlineStudent2.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectStudent3() {
+    @FXML
+    private void selectStudent3() {
         outlineStudent3.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectStudent3() {
+    @FXML
+    private void deselectStudent3() {
         outlineStudent3.setVisible(false);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectStudent4() {
+    
+    @FXML
+    private void selectStudent4() {
         outlineStudent4.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectStudent4() {
+    @FXML
+    private void deselectStudent4() {
         outlineStudent4.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectStudent5() {
+    @FXML
+    private void selectStudent5() {
         outlineStudent5.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectStudent5() {
+    @FXML
+    private void deselectStudent5() {
         outlineStudent5.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectStudent6() {
+    @FXML
+    private void selectStudent6() {
         outlineStudent6.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectStudent6() {
+    @FXML
+    private void deselectStudent6() {
         outlineStudent6.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectStudent7() {
+    @FXML
+    private void selectStudent7() {
         outlineStudent7.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectStudent7() {
+    @FXML
+    private void deselectStudent7() {
         outlineStudent7.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectStudent8() {
+    @FXML
+    private void selectStudent8() {
         outlineStudent8.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectStudent8() {
+    @FXML
+    private void deselectStudent8() {
         outlineStudent8.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectStudent9() {
+    @FXML
+    private void selectStudent9() {
         outlineStudent9.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectStudent9() {
+    @FXML
+    private void deselectStudent9() {
         outlineStudent9.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectDiningRoomGreen() {
+
+    @FXML
+    private void selectDiningRoomGreen() {
         outlineDiningRoomGreen.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectDiningRoomGreen() {
+    @FXML
+    private void deselectDiningRoomGreen() {
         outlineDiningRoomGreen.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectDiningRoomRed() {
+    @FXML
+    private void selectDiningRoomRed() {
         outlineDiningRoomRed.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectDiningRoomRed() {
+    @FXML
+    private void deselectDiningRoomRed() {
         outlineDiningRoomRed.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectDiningRoomYellow() {
+    @FXML
+    private void selectDiningRoomYellow() {
         outlineDiningRoomYellow.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectDiningRoomYellow() {
+    @FXML
+    private void deselectDiningRoomYellow() {
         outlineDiningRoomYellow.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectDiningRoomPink() {
+    @FXML
+    private void selectDiningRoomPink() {
         outlineDiningRoomPink.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectDiningRoomPink() {
+    @FXML
+    private void deselectDiningRoomPink() {
         outlineDiningRoomPink.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectDiningRoomBlue() {
+    @FXML
+    private void selectDiningRoomBlue() {
         outlineDiningRoomBlue.setVisible(true);
     }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void deselectDiningRoomBlue() {
+    @FXML
+    private void deselectDiningRoomBlue() {
         outlineDiningRoomBlue.setVisible(false);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
+    
     @FXML
-    public void logout() {
+    private void logout() {
         LoginService.logoutRequest();
     }
 
