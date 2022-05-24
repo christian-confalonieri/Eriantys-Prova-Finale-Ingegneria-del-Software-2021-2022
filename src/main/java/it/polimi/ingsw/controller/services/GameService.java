@@ -106,7 +106,7 @@ public class GameService {
 
             if(studentsToDiningRoom != null) {
                 for(Student student : studentsToDiningRoom) {
-                    gameHandler.getCurrentPlayer().getSchool().entranceToDiningRoom(student);
+                    gameHandler.getCurrentPlayer().setCoins(gameHandler.getCurrentPlayer().getCoins() + gameHandler.getCurrentPlayer().getSchool().entranceToDiningRoom(student));
                 }
                 gameHandler.getGame().professorRelocate();
                 System.out.println("Students moved to dining room and professors relocated");
