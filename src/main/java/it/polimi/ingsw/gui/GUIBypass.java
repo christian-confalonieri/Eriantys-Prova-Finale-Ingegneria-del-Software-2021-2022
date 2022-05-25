@@ -37,10 +37,6 @@ public class GUIBypass extends GUI{
     }
 
     @Override
-    public void guiCallSchool(Consumer<GUISchoolController> call) {
-    }
-
-    @Override
     public void notifyStateChange() {
 
     }

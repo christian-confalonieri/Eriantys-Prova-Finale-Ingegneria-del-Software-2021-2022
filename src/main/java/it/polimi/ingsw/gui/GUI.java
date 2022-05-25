@@ -190,42 +190,6 @@ public class GUI extends Application {
         }
     };
 
-    protected GUISchoolController guiSchoolController;
-    private Future<GUISchoolController> guiSchoolControllerFuture = new Future<>() {
-        boolean done = false;
-
-        @Override
-        public boolean cancel(boolean mayInterruptIfRunning) {
-            return false;
-        }
-
-        @Override
-        public boolean isCancelled() {
-            return false;
-        }
-
-        @Override
-        public boolean isDone() {
-            return done;
-        }
-
-        @Override
-        synchronized public GUISchoolController get() throws InterruptedException {
-            while (guiSchoolController == null) {
-                this.wait();
-            }
-            done = true;
-            return guiSchoolController;
-        }
-
-        @Override
-        @Deprecated
-        public GUISchoolController get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
-            return null;
-        }
-    };
-
-
     @Override
     public void start(Stage stage) throws IOException {
         Client.getInstance().setGui(this); // Attach the gui to the client (Launch is called by attachGui)
@@ -292,17 +256,6 @@ public class GUI extends Application {
         }
     }
 
-    public void guiCallSchool(Consumer<GUISchoolController> call) {
-        if(Client.getInstance().getClientState() == ClientState.INGAME) {
-            Platform.runLater(() -> {
-                try {
-                    call.accept(this.guiSchoolControllerFuture.get());
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-    }
 
 
     public void notifyStateChange() {
@@ -314,10 +267,7 @@ public class GUI extends Application {
                 case LOGIN -> GUILoginController.initSceneAndController(currentStageWindow);
                 case MAINMENU -> GUIMainMenuController.initSceneAndController(currentStageWindow);
                 case WAITINGLOBBY -> GUILobbyController.initSceneAndController(currentStageWindow);
-                case INGAME -> {
-                    GUIGameController.initSceneAndController(currentStageWindow);
-//                    GUISchoolController.initSceneAndController(new Stage());
-                }
+                case INGAME -> GUIGameController.initSceneAndController(currentStageWindow);
             }
         });
     }
