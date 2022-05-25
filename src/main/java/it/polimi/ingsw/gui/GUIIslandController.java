@@ -70,11 +70,10 @@ public class GUIIslandController {
     @FXML
     private void highlightIsland() {
         outline.setOpacity(0.5);
-        outline.setVisible(true);
     }
 
     @FXML
     private void unhighlightIsland() {
-        outline.setVisible(false);
+        outline.setOpacity(0);
     }
 }

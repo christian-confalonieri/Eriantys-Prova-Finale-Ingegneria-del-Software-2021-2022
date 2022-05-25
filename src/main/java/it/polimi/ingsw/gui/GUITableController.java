@@ -133,7 +133,6 @@ public class GUITableController {
     }
 
     public void render() {
-        List<Island> islands = Client.getInstance().getGameHandler().getGame().getIslands();
         renderIsland(island1, island1Controller, 26, 154);
         renderIsland(island2, island2Controller, 120, 69);
         renderIsland(island3, island3Controller, 242, -7);
