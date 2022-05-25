@@ -6,9 +6,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 public class GUITableController {
+
+
 
     @FXML
     private AnchorPane island1;
@@ -118,33 +123,23 @@ public class GUITableController {
 
     protected void initializeTable() {
         List<Island> islands = Client.getInstance().getGameHandler().getGame().getIslands();
-        island1Controller.setIslandModel(islands.get(0));
-        island2Controller.setIslandModel(islands.get(1));
-        island3Controller.setIslandModel(islands.get(2));
-        island4Controller.setIslandModel(islands.get(3));
-        island5Controller.setIslandModel(islands.get(4));
-        island6Controller.setIslandModel(islands.get(5));
-        island7Controller.setIslandModel(islands.get(6));
-        island8Controller.setIslandModel(islands.get(7));
-        island9Controller.setIslandModel(islands.get(8));
-        island10Controller.setIslandModel(islands.get(9));
-        island11Controller.setIslandModel(islands.get(10));
-        island12Controller.setIslandModel(islands.get(11));
+        Iterator<Island> islandIterator = islands.iterator();
+
+        allIslandExecute(((anchorPane, guiIslandController) -> guiIslandController.setIslandModel(islandIterator.next())));
+
+        int[] n = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        Iterator<Integer> nIt = Arrays.stream(n).iterator();
+        allIslandExecute((((anchorPane, guiIslandController) -> guiIslandController.setIslandNumber(nIt.next()))));
     }
 
     public void render() {
-        renderIsland(island1, island1Controller, 26, 154);
-        renderIsland(island2, island2Controller, 120, 69);
-        renderIsland(island3, island3Controller, 242, -7);
-        renderIsland(island4, island4Controller, 368, -7);
-        renderIsland(island5, island5Controller, 485, 69);
-        renderIsland(island6, island6Controller, 590, 167);
-        renderIsland(island7, island7Controller, 589, 300);
-        renderIsland(island8, island8Controller, 485, 388);
-        renderIsland(island9, island9Controller, 361, 458);
-        renderIsland(island10, island10Controller, 233, 458);
-        renderIsland(island11, island11Controller, 120, 385);
-        renderIsland(island12, island12Controller, 25, 300);
+        int[] x = new int[]{26, 120, 242, 368, 458, 590, 589, 485, 361, 233, 120, 25};
+        int[] y = new int[]{124, 39, -37, -37, 39, 137, 270, 358, 428, 428, 355, 270};
+
+        Iterator<Integer> xIt = Arrays.stream(x).iterator();
+        Iterator<Integer> yIt = Arrays.stream(y).iterator();
+
+        allIslandExecute((islandPane, islandController) -> renderIsland(islandPane, islandController, xIt.next(), yIt.next()));
     }
 
     private void renderIsland(AnchorPane islandPane, GUIIslandController islandController, double x, double y) {
@@ -157,6 +152,21 @@ public class GUITableController {
             islandController.remove();
         }
 
+    }
+
+    public void allIslandExecute(BiConsumer<AnchorPane, GUIIslandController> function) {
+        function.accept(island1, island1Controller);
+        function.accept(island2, island2Controller);
+        function.accept(island3, island3Controller);
+        function.accept(island4, island4Controller);
+        function.accept(island5, island5Controller);
+        function.accept(island6, island6Controller);
+        function.accept(island7, island7Controller);
+        function.accept(island8, island8Controller);
+        function.accept(island9, island9Controller);
+        function.accept(island10, island10Controller);
+        function.accept(island11, island11Controller);
+        function.accept(island12, island12Controller);
     }
 
 }

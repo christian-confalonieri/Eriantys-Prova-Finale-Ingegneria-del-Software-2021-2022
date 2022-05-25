@@ -1,13 +1,17 @@
 package it.polimi.ingsw.gui;
 
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Island;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class GUIIslandController {
+    @FXML
+    private Label labelIslandCountAndSelected;
     @FXML
     private ImageView noEntry;
     @FXML
@@ -61,10 +65,13 @@ public class GUIIslandController {
 
     @FXML
     private void selectIsland() {
+        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.addSelectedIsland(islandModel));
+        labelIslandCountAndSelected.setStyle("-fx-text-fill: RED");
     }
 
     @FXML
     private void deselectIsland() {
+        labelIslandCountAndSelected.setStyle("-fx-text-fill: BLACK");
     }
 
     @FXML
@@ -76,4 +83,11 @@ public class GUIIslandController {
     private void unhighlightIsland() {
         outline.setOpacity(0);
     }
+
+    @FXML
+    public void setIslandNumber(int number) {
+        labelIslandCountAndSelected.setText(String.valueOf(number));
+    }
+
+
 }

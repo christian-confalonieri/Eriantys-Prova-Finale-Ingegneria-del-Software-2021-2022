@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.model.entity.Island;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,8 +10,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUIGameController {
+
+    private List<Island> selectedIslands = new ArrayList<>();
+
 
     @FXML
     public AnchorPane school1;
@@ -38,18 +44,6 @@ public class GUIGameController {
     @FXML
     private GUITableController tableController;
 
-    public void initializeTable() {
-        tableController.initializeTable();
-    }
-
-    protected void renderTable() {
-        tableController.render();
-    }
-
-    public void render() {
-        tableController.render();
-    }
-
 
     protected static void initSceneAndController(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIGameController.class.getResource("/it/polimi/ingsw/match-view.fxml"));
@@ -72,5 +66,27 @@ public class GUIGameController {
         Client.getInstance().getGui().guiCallGame(GUIGameController::render);
 
     }
+
+
+    public void initializeTable() {
+        tableController.initializeTable();
+    }
+
+    protected void renderTable() {
+        tableController.render();
+    }
+
+    public void render() {
+        tableController.render();
+    }
+
+    public void addSelectedIsland(Island island) {
+        selectedIslands.add(island);
+    }
+
+    public void clearSelectedIslands() {
+        selectedIslands.clear();
+    }
+
 
 }

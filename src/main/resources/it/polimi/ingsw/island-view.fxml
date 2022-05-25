@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="islandPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIIslandController">
+<AnchorPane fx:id="islandPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIIslandController" scaleX="0.35" scaleY="0.35">
 
     <children>
         <ImageView fx:id="noEntry" layoutX="250.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
@@ -73,16 +73,22 @@
                 <Font name="System Bold" size="22.0" />
             </font>
         </Label>
-        <Label fx:id="labelStudent3" layoutX="255.0" layoutY="170.0" scaleX="1.5" scaleY="1.5" text="2" textFill="WHITE">
+        <Label fx:id="labelStudent3" layoutX="255.0" layoutY="170.0" scaleX="1.5" scaleY="1.5" text="2">
             <font>
                 <Font name="System Bold" size="22.0" />
             </font>
         </Label>
-        <ImageView fx:id="outline" onMouseEntered="#highlightIsland" onMouseExited="#unhighlightIsland" preserveRatio="true">
+        <ImageView fx:id="outline" onMouseEntered="#highlightIsland" onMouseExited="#unhighlightIsland" onMouseClicked="#selectIsland" preserveRatio="true">
             <image>
                 <Image url="@../../../assets/outlines/island_far.png" />
             </image>
         </ImageView>
+
+        <Label scaleX="1.5" scaleY="1.5" fx:id="labelIslandCountAndSelected">
+            <font>
+                <Font name="System Bold" size="22.0" />
+            </font>
+        </Label>
     </children>
 
 </AnchorPane>
