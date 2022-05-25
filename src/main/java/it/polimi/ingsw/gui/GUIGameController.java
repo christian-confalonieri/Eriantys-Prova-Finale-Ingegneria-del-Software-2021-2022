@@ -38,6 +38,18 @@ public class GUIGameController {
     @FXML
     private GUITableController tableController;
 
+    public void initializeTable() {
+        tableController.initializeTable();
+    }
+
+    protected void renderTable() {
+        tableController.render();
+    }
+
+    public void render() {
+        tableController.render();
+    }
+
 
     protected static void initSceneAndController(Stage stage) {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIGameController.class.getResource("/it/polimi/ingsw/match-view.fxml"));
@@ -55,6 +67,10 @@ public class GUIGameController {
         stage.setTitle("Eriantys");
         stage.setScene(scene);
         stage.show();
+
+        Client.getInstance().getGui().guiCallGame(GUIGameController::initializeTable);
+        Client.getInstance().getGui().guiCallGame(GUIGameController::render);
+
     }
 
 }

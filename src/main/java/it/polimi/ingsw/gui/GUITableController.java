@@ -1,7 +1,12 @@
 package it.polimi.ingsw.gui;
 
+import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.model.entity.Island;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+
+import java.util.List;
 
 public class GUITableController {
 
@@ -109,5 +114,50 @@ public class GUITableController {
     private GUIPowerController power2Controller;
     @FXML
     private GUIPowerController power3Controller;
+
+
+    protected void initializeTable() {
+        List<Island> islands = Client.getInstance().getGameHandler().getGame().getIslands();
+        island1Controller.setIslandModel(islands.get(0));
+        island2Controller.setIslandModel(islands.get(1));
+        island3Controller.setIslandModel(islands.get(2));
+        island4Controller.setIslandModel(islands.get(3));
+        island5Controller.setIslandModel(islands.get(4));
+        island6Controller.setIslandModel(islands.get(5));
+        island7Controller.setIslandModel(islands.get(6));
+        island8Controller.setIslandModel(islands.get(7));
+        island9Controller.setIslandModel(islands.get(8));
+        island10Controller.setIslandModel(islands.get(9));
+        island11Controller.setIslandModel(islands.get(10));
+        island12Controller.setIslandModel(islands.get(11));
+    }
+
+    public void render() {
+        List<Island> islands = Client.getInstance().getGameHandler().getGame().getIslands();
+        renderIsland(island1, island1Controller, 26, 154);
+        renderIsland(island2, island2Controller, 120, 69);
+        renderIsland(island3, island3Controller, 242, -7);
+        renderIsland(island4, island4Controller, 368, -7);
+        renderIsland(island5, island5Controller, 485, 69);
+        renderIsland(island6, island6Controller, 590, 167);
+        renderIsland(island7, island7Controller, 589, 300);
+        renderIsland(island8, island8Controller, 485, 388);
+        renderIsland(island9, island9Controller, 361, 458);
+        renderIsland(island10, island10Controller, 233, 458);
+        renderIsland(island11, island11Controller, 120, 385);
+        renderIsland(island12, island12Controller, 25, 300);
+    }
+
+    private void renderIsland(AnchorPane islandPane, GUIIslandController islandController, double x, double y) {
+        if(Client.getInstance().getGameHandler().getGame().getIslands().contains(islandController.getIslandModel())) {
+            islandPane.setLayoutX(x);
+            islandPane.setLayoutY(y);
+            islandController.render();
+        }
+        else {
+            islandController.remove();
+        }
+
+    }
 
 }

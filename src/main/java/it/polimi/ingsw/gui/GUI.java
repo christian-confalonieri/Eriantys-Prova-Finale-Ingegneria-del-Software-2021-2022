@@ -245,7 +245,7 @@ public class GUI extends Application {
     }
 
     public void guiCallGame(Consumer<GUIGameController> call) {
-        if(Client.getInstance().getClientState() == ClientState.MAINMENU) {
+        if(Client.getInstance().getClientState() == ClientState.INGAME) {
             Platform.runLater(() -> {
                 try {
                     call.accept(this.guiGameControllerFuture.get());

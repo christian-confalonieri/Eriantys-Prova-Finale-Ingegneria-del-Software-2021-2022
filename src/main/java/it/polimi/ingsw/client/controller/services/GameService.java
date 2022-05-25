@@ -6,6 +6,7 @@ import it.polimi.ingsw.action.*;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.ClientState;
+import it.polimi.ingsw.gui.GUIGameController;
 import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Student;
@@ -26,6 +27,7 @@ public class GameService {
         GameHandler gameHandler = Client.getInstance().getGameHandler();
         gameHandler.getCurrentPlayer().playCard(action.getPlayedCard());
         gameHandler.advance();
+        Client.getInstance().getGui().guiCallGame(GUIGameController::render);
     }
 
     /**
@@ -66,6 +68,7 @@ public class GameService {
             }
         }
         gameHandler.advance();
+        Client.getInstance().getGui().guiCallGame(GUIGameController::render);
     }
 
     /**
@@ -101,6 +104,7 @@ public class GameService {
             gameHandler.getGame().unifyIsland(currentIsland,currentIsland.getPrevIsland());
         }
         gameHandler.advance();
+        Client.getInstance().getGui().guiCallGame(GUIGameController::render);
     }
 
     /**
@@ -129,6 +133,7 @@ public class GameService {
             gameHandler.getCurrentPlayer().getSchool().addEntrance(student);
         }
         gameHandler.advance();
+        Client.getInstance().getGui().guiCallGame(GUIGameController::render);
     }
 
     /**
@@ -156,6 +161,7 @@ public class GameService {
         gameHandler.getGame().setEffectHandler(action.getEffectHandler());
 
         powerCard.power();
+        Client.getInstance().getGui().guiCallGame(GUIGameController::render);
     }
 
     /**
