@@ -66,7 +66,14 @@ public class GUIIslandController {
     @FXML
     private void selectIsland() {
         Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.addSelectedIsland(islandModel));
-        labelIslandCountAndSelected.setStyle("-fx-text-fill: RED");
+        if(outline.getOpacity()==0.5) {
+            labelIslandCountAndSelected.setStyle("-fx-text-fill: RED");
+            outline.setOpacity(1);
+        }
+        else {
+            labelIslandCountAndSelected.setStyle("-fx-text-fill: BLACK");
+            outline.setOpacity(0.5);
+        }
     }
 
     @FXML
@@ -76,12 +83,16 @@ public class GUIIslandController {
 
     @FXML
     private void highlightIsland() {
-        outline.setOpacity(0.5);
+        if(outline.getOpacity() == 0) {
+            outline.setOpacity(0.5);
+        }
     }
 
     @FXML
     private void unhighlightIsland() {
-        outline.setOpacity(0);
+        if(outline.getOpacity() == 0.5) {
+            outline.setOpacity(0);
+        }
     }
 
     @FXML
