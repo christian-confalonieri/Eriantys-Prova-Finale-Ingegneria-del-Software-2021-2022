@@ -84,6 +84,10 @@ public class GUIGameController {
         selectedIslands.add(island);
     }
 
+    public void removeSelectedIsland(Island island) {
+        selectedIslands.remove(island);
+    }
+
     public void clearSelectedIslands() {
         selectedIslands.clear();
     }
