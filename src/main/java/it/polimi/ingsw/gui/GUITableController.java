@@ -133,7 +133,7 @@ public class GUITableController {
     }
 
     public void render() {
-        int[] x = new int[]{26, 120, 242, 368, 458, 590, 589, 485, 361, 233, 120, 25};
+        int[] x = new int[]{26, 120, 242, 368, 485, 590, 589, 485, 361, 233, 120, 25};
         int[] y = new int[]{124, 39, -37, -37, 39, 137, 270, 358, 428, 428, 355, 270};
 
         Iterator<Integer> xIt = Arrays.stream(x).iterator();
