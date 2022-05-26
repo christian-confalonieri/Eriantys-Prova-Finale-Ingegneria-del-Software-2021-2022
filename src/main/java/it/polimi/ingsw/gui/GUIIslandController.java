@@ -3,10 +3,9 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Island;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class GUIIslandController {
@@ -96,10 +95,22 @@ public class GUIIslandController {
         }
     }
 
+    public void setIslands(int number) {
+        setIslandNumber(number);
+        setIslandImage(number);
+    }
+
     @FXML
     public void setIslandNumber(int number) {
         labelIslandCountAndSelected.setText(String.valueOf(number));
     }
 
-
+    @FXML
+    public void setIslandImage(int x) {
+        switch(x) {
+            case 1,4,7,10 -> islandBackground.setImage(new Image(this.getClass().getResource("/assets/table/island1.png").toExternalForm()));
+            case 2,5,8,11 -> islandBackground.setImage(new Image(this.getClass().getResource("/assets/table/island2.png").toExternalForm()));
+            case 3,6,9,12 -> islandBackground.setImage(new Image(this.getClass().getResource("/assets/table/island3.png").toExternalForm()));
+        }
+    }
 }

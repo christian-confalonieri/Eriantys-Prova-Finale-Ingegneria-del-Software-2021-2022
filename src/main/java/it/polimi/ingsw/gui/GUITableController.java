@@ -3,9 +3,7 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Island;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -129,7 +127,7 @@ public class GUITableController {
 
         int[] n = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
         Iterator<Integer> nIt = Arrays.stream(n).iterator();
-        allIslandExecute((((anchorPane, guiIslandController) -> guiIslandController.setIslandNumber(nIt.next()))));
+        allIslandExecute((((anchorPane, guiIslandController) -> guiIslandController.setIslands(nIt.next()))));
     }
 
     public void render() {
