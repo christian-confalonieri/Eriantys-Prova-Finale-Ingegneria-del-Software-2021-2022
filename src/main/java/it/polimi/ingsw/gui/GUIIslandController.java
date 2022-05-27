@@ -64,7 +64,7 @@ public class GUIIslandController {
     }
 
     protected void render() {
-
+        setStudents();
     }
 
     public void remove() {
@@ -118,8 +118,8 @@ public class GUIIslandController {
      * @author Christian Confalonieri
      */
     @FXML
-    public void setStudents(int number) {
-        List<Student> students = Client.getInstance().getGameHandler().getGame().getIslands().get(number-1).getStudents();
+    public void setStudents() {
+        List<Student> students = islandModel.getStudents();
         List<PawnColor> colors = new ArrayList<>(); //all student colors on the island are saved in order
         List<PawnColor> colorsPosition = new ArrayList<>(); //every color of the students on the island is saved (only once), which is useful for knowing the location where it is printed
         for(int i=0; i<students.size(); i++) {
