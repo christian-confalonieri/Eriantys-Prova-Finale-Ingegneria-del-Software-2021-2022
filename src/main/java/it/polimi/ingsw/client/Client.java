@@ -124,18 +124,23 @@ public class Client implements Runnable {
         return null;
     }
 
-    private static boolean parseIsCLI(String[] args) {
+    private static LaunchMode parseLaunchMode(String[] args) {
         for(String s : args) {
-            if(s.contains("cli")) return true;
-            if(s.contains("gui")) return false;
+            if(s.contains("cli")) return LaunchMode.CLI;
+            if(s.contains("gui")) return LaunchMode.GUI;
+            if(s.contains("debug")) return LaunchMode.DEBUG;
         }
-        return false; // Standard is GUI
+        return LaunchMode.GUI; // Standard is GUI
+    }
+
+    private enum LaunchMode {
+        CLI, GUI, DEBUG
     }
 
     public static void main(String[] args) {
         String hostname = parseArg(args, "-a", "--address");
         String port = parseArg(args, "-p", "--port");
-        boolean isGui = !parseIsCLI(args);
+        LaunchMode launchMode = parseLaunchMode(args);
 
         try {
             singleton = new Client(hostname == null ? "localhost" : hostname, Integer.parseInt(port == null ? "23154" : port));
@@ -144,16 +149,18 @@ public class Client implements Runnable {
             return;
         }
 
-        if(!isGui)  singleton.attachCLI(CLI.CLIFactory());
-        else        singleton.attachCLI(new CLIBypass());
+        if(launchMode == LaunchMode.CLI || launchMode == LaunchMode.DEBUG)
+            singleton.attachCLI(CLI.CLIFactory());
+        else
+            singleton.attachCLI(new CLIBypass());
 
         singleton.cli.attach(singleton); // For func written with client and not Client.getInstance()
         singleton.cli.render();
 
-        // if(isGui) singleton.attachGUI();
-        //TODO need a system to hide gui but at the same time abstract calls from services to the gui
-        if (isGui)  singleton.attachGUI();
-        else        singleton.gui = new GUIBypass();
+        if (launchMode == LaunchMode.GUI || launchMode == LaunchMode.DEBUG)
+            singleton.attachGUI();
+        else
+            singleton.gui = new GUIBypass();
 
         singleton.attachNetwork();
         singleton.run();
