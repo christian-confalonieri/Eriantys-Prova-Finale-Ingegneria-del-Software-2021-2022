@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GUITableController {
 
@@ -164,8 +165,8 @@ public class GUITableController {
      * @author Leonardo Airoldi, Christian Confalonieri
      */
     protected void initializeTable() {
-        islandControllers = List.of(island1Controller, island2Controller, island3Controller, island4Controller, island5Controller, island6Controller, island7Controller, island8Controller, island9Controller, island10Controller, island11Controller, island12Controller);
-        islandAnchorPanes = List.of(island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11, island12);
+        islandControllers = Stream.of(island1Controller, island2Controller, island3Controller, island4Controller, island5Controller, island6Controller, island7Controller, island8Controller, island9Controller, island10Controller, island11Controller, island12Controller).collect(Collectors.toList());
+        islandAnchorPanes = Stream.of(island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11, island12).collect(Collectors.toList());
 
         cloudAnchorPanes = List.of(cloud1, cloud2, cloud3, cloud4);
         cloudControllers = List.of(cloud1Controller, cloud2Controller, cloud3Controller, cloud4Controller);

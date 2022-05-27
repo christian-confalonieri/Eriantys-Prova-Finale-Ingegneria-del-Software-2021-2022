@@ -5,7 +5,9 @@
 
 
 <TabPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="it.polimi.ingsw.gui.GUIGameController">
+         fx:controller="it.polimi.ingsw.gui.GUIGameController"
+         fx:id="tabPane"
+>
     <Tab closable="false" text="Table">
         <fx:include source="table-view.fxml" fx:id="table"/>
     </Tab>
