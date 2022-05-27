@@ -3,14 +3,22 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.TowerColor;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.util.List;
 
 public class GUISchoolController {
+
+    /**
+     * TOWERS
+     */
+    @FXML
+    private GridPane towerGrid;
 
     /**
      * PROFESSORS
@@ -27,7 +35,9 @@ public class GUISchoolController {
     private ImageView yellowProfessor;
 
 
-
+    /**
+     * LANES
+     */
     @FXML
     private HBox greenHBox;
     @FXML
@@ -52,6 +62,7 @@ public class GUISchoolController {
         renderLane(pinkHBox, PawnColor.PINK);
         renderLane(blueHBox, PawnColor.BLUE);
         renderProfessors();
+        renderTowers();
     }
 
     private void renderLane(HBox hBox, PawnColor pawnColor) {
@@ -90,6 +101,40 @@ public class GUISchoolController {
             case PINK -> new Image(this.getClass().getResource("/assets/students/pink.png").toExternalForm());
             case BLUE -> new Image(this.getClass().getResource("/assets/students/blue.png").toExternalForm());
             case YELLOW -> new Image(this.getClass().getResource("/assets/students/yellow.png").toExternalForm());
+        });
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(height);
+        return imageView;
+    }
+
+    private void renderTowers() {
+        if(playerModel.getTowerColor() == null) return;
+
+        int towerNumber = playerModel.getSchool().getTowers().size();
+        double height = 50;
+
+        int inViewTowers = towerGrid.getChildren().size();
+
+        if(inViewTowers == towerNumber) return;
+        if(inViewTowers < towerNumber) {
+            while(inViewTowers < towerNumber) {
+                towerGrid.add(getTowerImage(playerModel.getTowerColor(), height), inViewTowers % 2, inViewTowers / 2);
+                inViewTowers++;
+            }
+        }
+        else {
+            while(inViewTowers > towerNumber) {
+                towerGrid.getChildren().remove(inViewTowers - 1);
+                inViewTowers--;
+            }
+        }
+    }
+
+    private ImageView getTowerImage(TowerColor towerColor, double height) {
+        ImageView imageView = new ImageView(switch (towerColor) {
+            case WHITE -> new Image(this.getClass().getResource("/assets/towers/white.png").toExternalForm());
+            case BLACK -> new Image(this.getClass().getResource("/assets/towers/black.png").toExternalForm());
+            case GREY -> new Image(this.getClass().getResource("/assets/towers/grey.png").toExternalForm());
         });
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(height);
