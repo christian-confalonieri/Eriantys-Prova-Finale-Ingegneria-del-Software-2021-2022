@@ -94,11 +94,6 @@ public class GUIIslandController {
         }
     }
 
-    public void setIslands(int number) {
-        setIslandNumber(number);
-        setIslandImage(number);
-    }
-
     @FXML
     public void setIslandNumber(int number) {
         labelIslandCountAndSelected.setText(String.valueOf(number));

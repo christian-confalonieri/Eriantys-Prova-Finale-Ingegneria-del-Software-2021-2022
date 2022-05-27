@@ -9,8 +9,31 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public class GUITableController {
+
+    private List<GUIIslandController> islandControllers;
+    private List<AnchorPane> islandAnchorPanes;
+
+    public List<GUIIslandController> getIslandControllers() {
+        return islandControllers;
+    }
+
+    public List<AnchorPane> getIslandAnchorPanes() {
+        return islandAnchorPanes;
+    }
+
+    private List<GUICloudController> cloudControllers;
+    private List<AnchorPane> cloudAnchorPanes;
+
+    public List<GUICloudController> getCloudControllers() {
+        return cloudControllers;
+    }
+
+    public List<AnchorPane> getCloudAnchorPanes() {
+        return cloudAnchorPanes;
+    }
 
     @FXML
     private AnchorPane island1;
@@ -116,29 +139,42 @@ public class GUITableController {
      * @author Leonardo Airoldi, Christian Confalonieri
      */
     protected void initializeTable() {
+        islandControllers = List.of(island1Controller, island2Controller, island3Controller, island4Controller, island5Controller, island6Controller, island7Controller, island8Controller, island9Controller, island10Controller, island11Controller, island12Controller);
+        islandAnchorPanes = List.of(island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11, island12);
+
+        cloudAnchorPanes = List.of(cloud1, cloud2, cloud3, cloud4);
+        cloudControllers = List.of(cloud1Controller, cloud2Controller, cloud3Controller, cloud4Controller);
+
+        // Bind a GUIIsland with the Islands in the model
         List<Island> islands = Client.getInstance().getGameHandler().getGame().getIslands();
         Iterator<Island> islandIterator = islands.iterator();
-
-        List<Cloud> clouds = Client.getInstance().getGameHandler().getGame().getClouds();
-        Iterator<Cloud> cloudIterator = clouds.iterator();
-
         allIslandExecute(((anchorPane, guiIslandController) -> guiIslandController.setIslandModel(islandIterator.next())));
-        allCloudExecute(((anchorPane, guiCloudController) -> guiCloudController.setCloudModel(cloudIterator.next())));
 
-        int[] islandsN = new int[islands.size()];
-        for(int i=1;i<=islands.size();i++) {
-            islandsN[i-1] = i;
+        // Set the island numbers and images
+        for (int i = 0; i < islandControllers.size(); i++) {
+            islandControllers.get(i).setIslandNumber(i+1);
+            islandControllers.get(i).setIslandImage(i+1);
         }
-        Iterator<Integer> islandsNIt = Arrays.stream(islandsN).iterator();
-        allIslandExecute((((anchorPane, guiIslandController) -> guiIslandController.setIslands(islandsNIt.next()))));
 
-        int[] cloudsN = new int[clouds.size()];
-        for(int i=1;i<=clouds.size();i++) {
-            cloudsN[i-1] = i;
+
+        // Bind GUIClouds with the clouds in the model
+        List<Cloud> clouds = Client.getInstance().getGameHandler().getGame().getClouds();
+        Iterator<GUICloudController> cloudControllerIterator = cloudControllers.iterator();
+
+        clouds.forEach(cloud -> cloudControllerIterator.next().setCloudModel(cloud));
+
+        cloudControllers.stream().filter((guiCloudController1 -> !guiCloudController1.isBoundToModel())).forEach(GUICloudController::remove);
+
+        cloudControllers = cloudControllers.stream().filter(GUICloudController::isBoundToModel).toList();
+        cloudAnchorPanes = cloudAnchorPanes.stream().limit(cloudControllers.size()).toList();
+
+
+        // Set the cloud images
+        for (int i = 0; i < cloudControllers.size(); i++) {
+            cloudControllers.get(i).setCloudImage(i);
         }
-        Iterator<Integer> cloudsNIt = Arrays.stream(cloudsN).iterator();
-        allCloudExecute((((anchorPane, guiCloudController) -> guiCloudController.setClouds(cloudsNIt.next()))));
     }
+
 
     /**
      * @author Leonardo Airoldi, Christian Confalonieri
@@ -220,48 +256,30 @@ public class GUITableController {
      * @author Christian Confalonieri
      */
     private void renderCloud(AnchorPane cloudPane, GUICloudController cloudController, double x, double y) {
-        if(Client.getInstance().getGameHandler().getGame().getClouds().contains(cloudController.getCloudModel())) {
-            cloudPane.setLayoutX(x);
-            cloudPane.setLayoutY(y);
-            cloudController.render();
-        }
-        else {
-            cloudController.remove();
-        }
+        cloudPane.setLayoutX(x);
+        cloudPane.setLayoutY(y);
+        cloudController.render();
     }
 
     public void allIslandExecute(BiConsumer<AnchorPane, GUIIslandController> function) {
-        function.accept(island1, island1Controller);
-        function.accept(island2, island2Controller);
-        function.accept(island3, island3Controller);
-        function.accept(island4, island4Controller);
-        function.accept(island5, island5Controller);
-        function.accept(island6, island6Controller);
-        function.accept(island7, island7Controller);
-        function.accept(island8, island8Controller);
-        function.accept(island9, island9Controller);
-        function.accept(island10, island10Controller);
-        function.accept(island11, island11Controller);
-        function.accept(island12, island12Controller);
+        Iterator<AnchorPane> islandAnchorPaneIt = islandAnchorPanes.iterator();
+        Iterator<GUIIslandController> islandControllerIt = islandControllers.iterator();
+
+        while (islandAnchorPaneIt.hasNext() && islandControllerIt.hasNext()) {
+            function.accept(islandAnchorPaneIt.next(), islandControllerIt.next());
+        }
     }
 
     /**
      * @author Christian Confalonieri
      */
     public void allCloudExecute(BiConsumer<AnchorPane, GUICloudController> function) {
-        function.accept(cloud1, cloud1Controller);
-        function.accept(cloud2, cloud2Controller);
-        if(Client.getInstance().getGameHandler().getGame().getClouds().size() == 2) {
-            cloud3Controller.remove();
-            cloud4Controller.remove();
-            return;
+        Iterator<AnchorPane> cloudAnchorPaneIt = cloudAnchorPanes.iterator();
+        Iterator<GUICloudController> cloudControllerIt = cloudControllers.iterator();
+
+        while (cloudAnchorPaneIt.hasNext() && cloudControllerIt.hasNext()) {
+            function.accept(cloudAnchorPaneIt.next(), cloudControllerIt.next());
         }
-        function.accept(cloud3, cloud3Controller);
-        if(Client.getInstance().getGameHandler().getGame().getClouds().size() == 3) {
-            cloud4Controller.remove();
-            return;
-        }
-        function.accept(cloud4, cloud4Controller);
     }
 
 }

@@ -38,7 +38,12 @@ public class GUICloudController {
         return cloudModel;
     }
 
+    protected boolean isBoundToModel() { return !(cloudModel == null); }
+
+
+
     protected void render() {
+
     }
 
     /**
@@ -84,12 +89,6 @@ public class GUICloudController {
         }
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void setClouds(Integer number) {
-        setCloudImage(number);
-    }
 
     /**
      * @author Christian Confalonieri
