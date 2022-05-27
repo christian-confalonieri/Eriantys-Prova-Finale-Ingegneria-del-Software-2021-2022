@@ -8,7 +8,26 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+import java.util.List;
+
 public class GUISchoolController {
+
+    /**
+     * PROFESSORS
+     */
+    @FXML
+    private ImageView blueProfessor;
+    @FXML
+    private ImageView greenProfessor;
+    @FXML
+    private ImageView redProfessor;
+    @FXML
+    private ImageView pinkProfessor;
+    @FXML
+    private ImageView yellowProfessor;
+
+
+
     @FXML
     private HBox greenHBox;
     @FXML
@@ -32,7 +51,7 @@ public class GUISchoolController {
         renderLane(yellowHBox, PawnColor.YELLOW);
         renderLane(pinkHBox, PawnColor.PINK);
         renderLane(blueHBox, PawnColor.BLUE);
-
+        renderProfessors();
     }
 
     private void renderLane(HBox hBox, PawnColor pawnColor) {
@@ -54,6 +73,14 @@ public class GUISchoolController {
                 inLaneStudents--;
             }
         }
+    }
+
+    private void renderProfessors() {
+        blueProfessor.setVisible(playerModel.getSchool().hasProfessor(PawnColor.BLUE));
+        greenProfessor.setVisible(playerModel.getSchool().hasProfessor(PawnColor.GREEN));
+        yellowProfessor.setVisible(playerModel.getSchool().hasProfessor(PawnColor.YELLOW));
+        pinkProfessor.setVisible(playerModel.getSchool().hasProfessor(PawnColor.PINK));
+        redProfessor.setVisible(playerModel.getSchool().hasProfessor(PawnColor.RED));
     }
 
     private ImageView getStudentImage(PawnColor color, double height) {
