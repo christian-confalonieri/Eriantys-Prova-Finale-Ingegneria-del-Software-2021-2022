@@ -15,6 +15,12 @@ import java.util.List;
 public class GUISchoolController {
 
     /**
+     * ENTRANCE
+     */
+    @FXML
+    private GridPane entranceGrid;
+
+    /**
      * TOWERS
      */
     @FXML
@@ -63,6 +69,7 @@ public class GUISchoolController {
         renderLane(blueHBox, PawnColor.BLUE);
         renderProfessors();
         renderTowers();
+        renderEntrance();
     }
 
     private void renderLane(HBox hBox, PawnColor pawnColor) {
@@ -94,19 +101,6 @@ public class GUISchoolController {
         redProfessor.setVisible(playerModel.getSchool().hasProfessor(PawnColor.RED));
     }
 
-    private ImageView getStudentImage(PawnColor color, double height) {
-        ImageView imageView = new ImageView(switch(color) {
-            case GREEN -> new Image(this.getClass().getResource("/assets/students/green.png").toExternalForm());
-            case RED -> new Image(this.getClass().getResource("/assets/students/red.png").toExternalForm());
-            case PINK -> new Image(this.getClass().getResource("/assets/students/pink.png").toExternalForm());
-            case BLUE -> new Image(this.getClass().getResource("/assets/students/blue.png").toExternalForm());
-            case YELLOW -> new Image(this.getClass().getResource("/assets/students/yellow.png").toExternalForm());
-        });
-        imageView.setPreserveRatio(true);
-        imageView.setFitHeight(height);
-        return imageView;
-    }
-
     private void renderTowers() {
         if(playerModel.getTowerColor() == null) return;
 
@@ -128,6 +122,30 @@ public class GUISchoolController {
                 inViewTowers--;
             }
         }
+    }
+
+    private void renderEntrance() {
+        int studentsNumber = playerModel.getSchool().getEntrance().size();
+        double height = 40;
+        entranceGrid.getChildren().clear();
+        for (int i = 0; i < studentsNumber; i++) {
+            entranceGrid.add(getStudentImage(playerModel.getSchool().getEntrance().get(i).getColor(), height), (i+1) % 2, (i+1) / 2);
+        }
+    }
+
+
+
+    private ImageView getStudentImage(PawnColor color, double height) {
+        ImageView imageView = new ImageView(switch(color) {
+            case GREEN -> new Image(this.getClass().getResource("/assets/students/green.png").toExternalForm());
+            case RED -> new Image(this.getClass().getResource("/assets/students/red.png").toExternalForm());
+            case PINK -> new Image(this.getClass().getResource("/assets/students/pink.png").toExternalForm());
+            case BLUE -> new Image(this.getClass().getResource("/assets/students/blue.png").toExternalForm());
+            case YELLOW -> new Image(this.getClass().getResource("/assets/students/yellow.png").toExternalForm());
+        });
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(height);
+        return imageView;
     }
 
     private ImageView getTowerImage(TowerColor towerColor, double height) {
