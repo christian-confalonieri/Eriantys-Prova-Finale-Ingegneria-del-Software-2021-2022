@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="it.polimi.ingsw.gui.GUIPlayerTableController"
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIPlayerTableController"
+            fx:id="anchorPane"
 >
+    <ImageView fx:id="wizardCard" fitHeight="100.0" fitWidth="70.0">
+        <Image url="@../../../assets/wizards/blueWizard.jpg" />
+    </ImageView>
+    <Label fx:id="playerName" layoutX="75.0" text="PLAYERNAME">
+        <font>
+            <Font name="System Bold" />
+        </font>
+    </Label>
 
 
 </AnchorPane>

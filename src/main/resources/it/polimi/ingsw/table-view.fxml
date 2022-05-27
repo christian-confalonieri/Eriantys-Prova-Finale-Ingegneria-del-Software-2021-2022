@@ -29,10 +29,10 @@
    <fx:include source="cloud-view.fxml" fx:id="cloud3"/>
    <fx:include source="cloud-view.fxml" fx:id="cloud4"/>
 
-<!--   <fx:include source="playerTable-view.fxml" fx:id="playerT1" />-->
-<!--   <fx:include source="playerTable-view.fxml" fx:id="playerT2" />-->
-<!--   <fx:include source="playerTable-view.fxml" fx:id="playerT3" />-->
-<!--   <fx:include source="playerTable-view.fxml" fx:id="playerT4" />-->
+   <fx:include source="playerTable-view.fxml" fx:id="playerT1" />
+   <fx:include source="playerTable-view.fxml" fx:id="playerT2" />
+   <fx:include source="playerTable-view.fxml" fx:id="playerT3" />
+   <fx:include source="playerTable-view.fxml" fx:id="playerT4" />
 
 <!--   <fx:include source="power-view.fxml" fx:id="power1" />-->
 <!--   <fx:include source="power-view.fxml" fx:id="power2" />-->

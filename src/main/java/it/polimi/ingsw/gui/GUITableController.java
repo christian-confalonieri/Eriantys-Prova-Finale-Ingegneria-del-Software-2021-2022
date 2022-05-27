@@ -3,12 +3,14 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
+import it.polimi.ingsw.model.entity.Player;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class GUITableController {
@@ -33,6 +35,17 @@ public class GUITableController {
 
     public List<AnchorPane> getCloudAnchorPanes() {
         return cloudAnchorPanes;
+    }
+
+    private List<GUIPlayerTableController> playerTableControllers;
+    private List<AnchorPane> playerTableAnchorPanes;
+
+    public List<GUIPlayerTableController> getPlayerTableControllers() {
+        return playerTableControllers;
+    }
+
+    public List<AnchorPane> getPlayerTableAnchorPanes() {
+        return playerTableAnchorPanes;
     }
 
     @FXML
@@ -163,7 +176,7 @@ public class GUITableController {
 
         clouds.forEach(cloud -> cloudControllerIterator.next().setCloudModel(cloud));
 
-        cloudControllers.stream().filter((guiCloudController1 -> !guiCloudController1.isBoundToModel())).forEach(GUICloudController::remove);
+        cloudControllers.stream().filter(Predicate.not(GUICloudController::isBoundToModel)).forEach(GUICloudController::remove);
 
         cloudControllers = cloudControllers.stream().filter(GUICloudController::isBoundToModel).toList();
         cloudAnchorPanes = cloudAnchorPanes.stream().limit(cloudControllers.size()).toList();
@@ -173,6 +186,20 @@ public class GUITableController {
         for (int i = 0; i < cloudControllers.size(); i++) {
             cloudControllers.get(i).setCloudImage(i);
         }
+
+
+        // Bind playerTable views with players
+        playerTableControllers = List.of(playerT1Controller, playerT2Controller, playerT3Controller, playerT4Controller);
+        playerTableAnchorPanes = List.of(playerT1, playerT2, playerT3, playerT4);
+
+        Iterator<GUIPlayerTableController> playerTableControllerIt = playerTableControllers.iterator();
+        for (Player player : Client.getInstance().getGameHandler().getGame().getPlayers()) {
+            playerTableControllerIt.next().setPlayer(player);
+        }
+        playerTableControllers.stream().filter(Predicate.not(GUIPlayerTableController::isBoundToModel)).forEach(GUIPlayerTableController::remove);
+        playerTableControllers = playerTableControllers.stream().filter(GUIPlayerTableController::isBoundToModel).toList();
+        playerTableAnchorPanes = playerTableAnchorPanes.stream().limit(playerTableControllers.size()).toList();
+
     }
 
 
@@ -202,6 +229,7 @@ public class GUITableController {
                 default -> 0;
             };
         }
+
         int[] cloudsX = new int[Client.getInstance().getGameHandler().getGame().getClouds().size()];
         int[] cloudsY = new int[Client.getInstance().getGameHandler().getGame().getClouds().size()];
         for(int i=1;i<=Client.getInstance().getGameHandler().getGame().getClouds().size();i++) {
@@ -232,13 +260,27 @@ public class GUITableController {
             }
         }
 
+        int[] playerTableX = new int[] {0, 750, 0, 750};
+        int[] playerTableY = new int[] {0, 0, 500, 500};
+
+
         Iterator<Integer> islandsXIt = Arrays.stream(islandsX).iterator();
         Iterator<Integer> islandsYIt = Arrays.stream(islandsY).iterator();
+
+        allIslandExecute((islandPane, islandController) -> renderIsland(islandPane, islandController, islandsXIt.next(), islandsYIt.next()));
+
+
         Iterator<Integer> cloudsXIt = Arrays.stream(cloudsX).iterator();
         Iterator<Integer> cloudsYIt = Arrays.stream(cloudsY).iterator();
 
-        allIslandExecute((islandPane, islandController) -> renderIsland(islandPane, islandController, islandsXIt.next(), islandsYIt.next()));
         allCloudExecute((cloudPane, cloudController) -> renderCloud(cloudPane, cloudController, cloudsXIt.next(), cloudsYIt.next()));
+
+
+        Iterator<Integer> playerTableXIt = Arrays.stream(playerTableX).iterator();
+        Iterator<Integer> playerTableYIt = Arrays.stream(playerTableY).iterator();
+
+        allPlayerTableExecute((playerTablePane, playerTableController) -> renderPlayerTable(playerTablePane, playerTableController, playerTableXIt.next(), playerTableYIt.next()));
+
     }
 
     private void renderIsland(AnchorPane islandPane, GUIIslandController islandController, double x, double y) {
@@ -261,6 +303,17 @@ public class GUITableController {
         cloudController.render();
     }
 
+
+    private void renderPlayerTable(AnchorPane playerTablePane, GUIPlayerTableController playerTableController, double x, double y) {
+        playerTablePane.setLayoutX(x);
+        playerTablePane.setLayoutY(y);
+        playerTableController.render();
+    }
+
+
+
+
+
     public void allIslandExecute(BiConsumer<AnchorPane, GUIIslandController> function) {
         Iterator<AnchorPane> islandAnchorPaneIt = islandAnchorPanes.iterator();
         Iterator<GUIIslandController> islandControllerIt = islandControllers.iterator();
@@ -279,6 +332,15 @@ public class GUITableController {
 
         while (cloudAnchorPaneIt.hasNext() && cloudControllerIt.hasNext()) {
             function.accept(cloudAnchorPaneIt.next(), cloudControllerIt.next());
+        }
+    }
+
+    public void allPlayerTableExecute(BiConsumer<AnchorPane, GUIPlayerTableController> function) {
+        Iterator<AnchorPane> playerTableAnchorPaneIt = playerTableAnchorPanes.iterator();
+        Iterator<GUIPlayerTableController> playerTableControllersIt = playerTableControllers.iterator();
+
+        while (playerTableAnchorPaneIt.hasNext() && playerTableControllersIt.hasNext()) {
+            function.accept(playerTableAnchorPaneIt.next(), playerTableControllersIt.next());
         }
     }
 

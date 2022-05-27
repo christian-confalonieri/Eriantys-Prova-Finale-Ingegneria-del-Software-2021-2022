@@ -97,4 +97,8 @@ public class Player {
     public void setPlayedPowerThisTurn(boolean playedPowerThisTurn) {
         this.playedPowerThisTurn = playedPowerThisTurn;
     }
+
+    public Wizard getWizard() {
+        return wizard;
+    }
 }
