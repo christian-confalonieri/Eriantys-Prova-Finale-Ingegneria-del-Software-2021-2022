@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,8 @@ import java.util.List;
 public class GUIGameController {
 
     private List<Island> selectedIslands = new ArrayList<>();
+
+    private List<Cloud> selectedClouds = new ArrayList<>();
 
 
     @FXML
@@ -64,7 +67,6 @@ public class GUIGameController {
 
         Client.getInstance().getGui().guiCallGame(GUIGameController::initializeTable);
         Client.getInstance().getGui().guiCallGame(GUIGameController::render);
-
     }
 
 
@@ -86,6 +88,14 @@ public class GUIGameController {
 
     public void removeSelectedIsland(Island island) {
         selectedIslands.remove(island);
+    }
+
+    public void addSelectedCloud(Cloud cloud) {
+        selectedClouds.add(cloud);
+    }
+
+    public void removeSelectedCloud(Cloud cloud) {
+        selectedClouds.remove(cloud);
     }
 
     public void clearSelectedIslands() {

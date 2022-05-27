@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
@@ -10,8 +11,6 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public class GUITableController {
-
-
 
     @FXML
     private AnchorPane island1;
@@ -62,7 +61,6 @@ public class GUITableController {
     private GUIIslandController island11Controller;
     @FXML
     private GUIIslandController island12Controller;
-
     
     @FXML
     private AnchorPane cloud1;
@@ -82,8 +80,6 @@ public class GUITableController {
     @FXML
     private GUICloudController cloud4Controller;
 
-
-    
     @FXML
     private AnchorPane playerT1;
     @FXML
@@ -101,8 +97,6 @@ public class GUITableController {
     private GUIPlayerTableController playerT3Controller;
     @FXML
     private GUIPlayerTableController playerT4Controller;
-
-    
     
     @FXML
     private AnchorPane power1;
@@ -118,26 +112,97 @@ public class GUITableController {
     @FXML
     private GUIPowerController power3Controller;
 
-
+    /**
+     * @author Leonardo Airoldi, Christian Confalonieri
+     */
     protected void initializeTable() {
         List<Island> islands = Client.getInstance().getGameHandler().getGame().getIslands();
         Iterator<Island> islandIterator = islands.iterator();
 
-        allIslandExecute(((anchorPane, guiIslandController) -> guiIslandController.setIslandModel(islandIterator.next())));
+        List<Cloud> clouds = Client.getInstance().getGameHandler().getGame().getClouds();
+        Iterator<Cloud> cloudIterator = clouds.iterator();
 
-        int[] n = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-        Iterator<Integer> nIt = Arrays.stream(n).iterator();
-        allIslandExecute((((anchorPane, guiIslandController) -> guiIslandController.setIslands(nIt.next()))));
+        allIslandExecute(((anchorPane, guiIslandController) -> guiIslandController.setIslandModel(islandIterator.next())));
+        allCloudExecute(((anchorPane, guiCloudController) -> guiCloudController.setCloudModel(cloudIterator.next())));
+
+        int[] islandsN = new int[islands.size()];
+        for(int i=1;i<=islands.size();i++) {
+            islandsN[i-1] = i;
+        }
+        Iterator<Integer> islandsNIt = Arrays.stream(islandsN).iterator();
+        allIslandExecute((((anchorPane, guiIslandController) -> guiIslandController.setIslands(islandsNIt.next()))));
+
+        int[] cloudsN = new int[clouds.size()];
+        for(int i=1;i<=clouds.size();i++) {
+            cloudsN[i-1] = i;
+        }
+        Iterator<Integer> cloudsNIt = Arrays.stream(cloudsN).iterator();
+        allCloudExecute((((anchorPane, guiCloudController) -> guiCloudController.setClouds(cloudsNIt.next()))));
     }
 
+    /**
+     * @author Leonardo Airoldi, Christian Confalonieri
+     */
     public void render() {
-        int[] x = new int[]{26, 120, 242, 368, 485, 590, 589, 485, 361, 233, 120, 25};
-        int[] y = new int[]{124, 39, -37, -37, 39, 137, 270, 358, 428, 428, 355, 270};
+        int[] islandsX = new int[Client.getInstance().getGameHandler().getGame().getIslands().size()];
+        int[] islandsY = new int[Client.getInstance().getGameHandler().getGame().getIslands().size()];
+        for(int i=1;i<=Client.getInstance().getGameHandler().getGame().getIslands().size();i++) {
+            islandsX[i-1] = switch (i) {
+                case 1,12 -> 77;
+                case 2,11 -> 162;
+                case 3,10 -> 267;
+                case 4,9 -> 386;
+                case 5,8 -> 495;
+                case 6,7 -> 573;
+                default -> 0;
+            };
+            islandsY[i-1] = switch (i) {
+                case 1,6 -> 202;
+                case 2,5 -> 98;
+                case 3,4 -> 28;
+                case 7,12 -> 316;
+                case 8,11 -> 422;
+                case 9,10 -> 481;
+                default -> 0;
+            };
+        }
+        int[] cloudsX = new int[Client.getInstance().getGameHandler().getGame().getClouds().size()];
+        int[] cloudsY = new int[Client.getInstance().getGameHandler().getGame().getClouds().size()];
+        for(int i=1;i<=Client.getInstance().getGameHandler().getGame().getClouds().size();i++) {
+            if(Client.getInstance().getGameHandler().getGame().getClouds().size() == 2) {
+                cloudsX[i-1] = switch (i) {
+                    case 1 -> 213;
+                    case 2-> 444;
+                    default -> 0;
+                };
+                cloudsY[i-1] = switch (i) {
+                    case 1,2 -> 247;
+                    default -> 0;
+                };
+            }
+            else {
+                cloudsX[i-1] = switch (i) {
+                    case 1 -> 213;
+                    case 2,4 -> 328;
+                    case 3 -> 444;
+                    default -> 0;
+                };
+                cloudsY[i-1] = switch (i) {
+                    case 1,3 -> 247;
+                    case 2 -> 158;
+                    case 4 -> 345;
+                    default -> 0;
+                };
+            }
+        }
 
-        Iterator<Integer> xIt = Arrays.stream(x).iterator();
-        Iterator<Integer> yIt = Arrays.stream(y).iterator();
+        Iterator<Integer> islandsXIt = Arrays.stream(islandsX).iterator();
+        Iterator<Integer> islandsYIt = Arrays.stream(islandsY).iterator();
+        Iterator<Integer> cloudsXIt = Arrays.stream(cloudsX).iterator();
+        Iterator<Integer> cloudsYIt = Arrays.stream(cloudsY).iterator();
 
-        allIslandExecute((islandPane, islandController) -> renderIsland(islandPane, islandController, xIt.next(), yIt.next()));
+        allIslandExecute((islandPane, islandController) -> renderIsland(islandPane, islandController, islandsXIt.next(), islandsYIt.next()));
+        allCloudExecute((cloudPane, cloudController) -> renderCloud(cloudPane, cloudController, cloudsXIt.next(), cloudsYIt.next()));
     }
 
     private void renderIsland(AnchorPane islandPane, GUIIslandController islandController, double x, double y) {
@@ -149,7 +214,20 @@ public class GUITableController {
         else {
             islandController.remove();
         }
+    }
 
+    /**
+     * @author Christian Confalonieri
+     */
+    private void renderCloud(AnchorPane cloudPane, GUICloudController cloudController, double x, double y) {
+        if(Client.getInstance().getGameHandler().getGame().getClouds().contains(cloudController.getCloudModel())) {
+            cloudPane.setLayoutX(x);
+            cloudPane.setLayoutY(y);
+            cloudController.render();
+        }
+        else {
+            cloudController.remove();
+        }
     }
 
     public void allIslandExecute(BiConsumer<AnchorPane, GUIIslandController> function) {
@@ -165,6 +243,25 @@ public class GUITableController {
         function.accept(island10, island10Controller);
         function.accept(island11, island11Controller);
         function.accept(island12, island12Controller);
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public void allCloudExecute(BiConsumer<AnchorPane, GUICloudController> function) {
+        function.accept(cloud1, cloud1Controller);
+        function.accept(cloud2, cloud2Controller);
+        if(Client.getInstance().getGameHandler().getGame().getClouds().size() == 2) {
+            cloud3Controller.remove();
+            cloud4Controller.remove();
+            return;
+        }
+        function.accept(cloud3, cloud3Controller);
+        if(Client.getInstance().getGameHandler().getGame().getClouds().size() == 3) {
+            cloud4Controller.remove();
+            return;
+        }
+        function.accept(cloud4, cloud4Controller);
     }
 
 }

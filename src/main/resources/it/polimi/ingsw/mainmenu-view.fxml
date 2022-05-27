@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIMainMenuController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIMainMenuController">
    <children>
       <ListView fx:id="lstLobbies" layoutX="24.0" layoutY="24.0" prefHeight="197.0" prefWidth="375.0" />
       <Label fx:id="lblMainMenu" layoutX="154.0" layoutY="246.0" prefHeight="25.0" prefWidth="423.0" text=" " />
