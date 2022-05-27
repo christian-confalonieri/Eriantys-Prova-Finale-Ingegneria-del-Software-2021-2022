@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="it.polimi.ingsw.gui.GUIPowerController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIPowerController">
+
+    <ImageView fx:id="powerCard" fitHeight="100.0" fitWidth="70.0">
+        <Image url="@../../../assets/characterCards/edited/centaur_edited.png" />
+    </ImageView>
+    <Label fx:id="cost" layoutX="6.0" layoutY="2.0" text="2" textFill="#4a3304">
+        <font>
+            <Font name="System Bold" />
+        </font>
+    </Label>
 
 </AnchorPane>

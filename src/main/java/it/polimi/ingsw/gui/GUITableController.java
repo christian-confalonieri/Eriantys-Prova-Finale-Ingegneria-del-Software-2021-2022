@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.power.PowerCard;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import java.util.Arrays;
@@ -46,6 +47,17 @@ public class GUITableController {
 
     public List<AnchorPane> getPlayerTableAnchorPanes() {
         return playerTableAnchorPanes;
+    }
+
+    private List<GUIPowerController> powerControllers;
+    private List<AnchorPane> powerAnchorPanes;
+
+    public List<GUIPowerController> getPowerControllers() {
+        return powerControllers;
+    }
+
+    public List<AnchorPane> getPowerAnchorPanes() {
+        return powerAnchorPanes;
     }
 
     @FXML
@@ -201,6 +213,15 @@ public class GUITableController {
         playerTableControllers = playerTableControllers.stream().filter(GUIPlayerTableController::isBoundToModel).toList();
         playerTableAnchorPanes = playerTableAnchorPanes.stream().limit(playerTableControllers.size()).toList();
 
+
+        // Bind power card views with the characters in game
+        powerControllers = List.of(power1Controller, power2Controller, power3Controller);
+        powerAnchorPanes = List.of(power1, power2, power3);
+
+        Iterator<GUIPowerController> powerControllerIt = powerControllers.iterator();
+        for (PowerCard powerCard : Client.getInstance().getGameHandler().getGame().getPowerCards()) {
+            powerControllerIt.next().setPowerCard(powerCard);
+        }
     }
 
 
@@ -264,6 +285,9 @@ public class GUITableController {
         int[] playerTableX = new int[] {0, 750, 0, 750};
         int[] playerTableY = new int[] {0, 0, 500, 500};
 
+        int[] powerX = new int[] {810, 810, 810};
+        int[] powerY = new int[] {130, 240, 350};
+
 
         Iterator<Integer> islandsXIt = Arrays.stream(islandsX).iterator();
         Iterator<Integer> islandsYIt = Arrays.stream(islandsY).iterator();
@@ -282,6 +306,11 @@ public class GUITableController {
 
         allPlayerTableExecute((playerTablePane, playerTableController) -> renderPlayerTable(playerTablePane, playerTableController, playerTableXIt.next(), playerTableYIt.next()));
 
+
+        Iterator<Integer> powerXIt = Arrays.stream(powerX).iterator();
+        Iterator<Integer> powerYIt = Arrays.stream(powerY).iterator();
+
+        allPowerExecute(((anchorPane, guiPowerController) -> renderPower(anchorPane, guiPowerController, powerXIt.next(), powerYIt.next())));
     }
 
     private void renderIsland(AnchorPane islandPane, GUIIslandController islandController, double x, double y) {
@@ -311,6 +340,11 @@ public class GUITableController {
         playerTableController.render();
     }
 
+    private void renderPower(AnchorPane powerAnchorPane, GUIPowerController powerController, double x, double y) {
+        powerAnchorPane.setLayoutX(x);
+        powerAnchorPane.setLayoutY(y);
+        powerController.render();
+    }
 
 
 
@@ -342,6 +376,15 @@ public class GUITableController {
 
         while (playerTableAnchorPaneIt.hasNext() && playerTableControllersIt.hasNext()) {
             function.accept(playerTableAnchorPaneIt.next(), playerTableControllersIt.next());
+        }
+    }
+
+    public void allPowerExecute(BiConsumer<AnchorPane, GUIPowerController> function) {
+        Iterator<AnchorPane> powerAnchorPaneIt = powerAnchorPanes.iterator();
+        Iterator<GUIPowerController> powerControllerIt = powerControllers.iterator();
+
+        while (powerAnchorPaneIt.hasNext() && powerControllerIt.hasNext()) {
+            function.accept(powerAnchorPaneIt.next(), powerControllerIt.next());
         }
     }
 

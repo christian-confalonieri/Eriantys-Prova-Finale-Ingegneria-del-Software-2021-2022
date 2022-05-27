@@ -34,7 +34,7 @@
    <fx:include source="playerTable-view.fxml" fx:id="playerT3" />
    <fx:include source="playerTable-view.fxml" fx:id="playerT4" />
 
-<!--   <fx:include source="power-view.fxml" fx:id="power1" />-->
-<!--   <fx:include source="power-view.fxml" fx:id="power2" />-->
-<!--   <fx:include source="power-view.fxml" fx:id="power3" />-->
+   <fx:include source="power-view.fxml" fx:id="power1" />
+   <fx:include source="power-view.fxml" fx:id="power2" />
+   <fx:include source="power-view.fxml" fx:id="power3" />
 </AnchorPane>
