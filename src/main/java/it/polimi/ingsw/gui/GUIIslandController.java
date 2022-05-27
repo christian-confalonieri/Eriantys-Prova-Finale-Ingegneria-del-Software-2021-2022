@@ -119,13 +119,14 @@ public class GUIIslandController {
      */
     @FXML
     public void setStudents() {
+        clearStudents();
         List<Student> students = islandModel.getStudents();
         List<PawnColor> colors = new ArrayList<>(); //all student colors on the island are saved in order
         List<PawnColor> colorsPosition = new ArrayList<>(); //every color of the students on the island is saved (only once), which is useful for knowing the location where it is printed
         for(int i=0; i<students.size(); i++) {
 
             if(colorsPosition.contains(students.get(i).getColor())) {
-                getGUILabelStudent(colorsPosition.indexOf(students.get(i).getColor()) + 1).setText(Integer.toString(Collections.frequency(colors,students.get(i).getColor())) + 1);
+                getGUILabelStudent(colorsPosition.indexOf(students.get(i).getColor()) + 1).setText(Integer.toString(Collections.frequency(colors,students.get(i).getColor()) + 1));
                 getGUILabelStudent(colorsPosition.indexOf(students.get(i).getColor()) + 1).setOpacity(1);
             }
             else {
@@ -139,6 +140,16 @@ public class GUIIslandController {
                 }
                 colors.add(students.get(i).getColor());
             }
+        }
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private void clearStudents() {
+        for(int i=1; i<=5; i++) {
+            getGUIStudent(i).setOpacity(0);
+            getGUILabelStudent(i).setOpacity(0);
         }
     }
 
