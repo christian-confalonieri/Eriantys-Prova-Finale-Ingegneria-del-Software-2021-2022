@@ -158,7 +158,7 @@ public class InputCLI {
      */
     private static void cliMoveStudentsRequest(String[] command) {
         if(globalCommand) return;
-        if(command.length != 6) {
+        if(command.length != Client.getInstance().getGameHandler().getGame().getGameRules().studentsRules.turnStudents * 2) {
             System.out.println(ConsoleColor.RED + "Invalid command" + ConsoleColor.RESET);
             return;
         }
@@ -166,7 +166,7 @@ public class InputCLI {
         Map<Student,String> toIslands = new HashMap<>();
 
         try {
-            for (int i = 0; i < 6; i += 2) {
+            for (int i = 0; i < Client.getInstance().getGameHandler().getGame().getGameRules().studentsRules.turnStudents * 2; i += 2) {
                 if (command[i].equalsIgnoreCase("D")) {
                     for (Student student : Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool().getEntrance()) {
                         if (student.getColor() == Pawn.parseColor(command[i + 1]) && !toDiningRoom.contains(student) && !toIslands.keySet().contains(student)) {
