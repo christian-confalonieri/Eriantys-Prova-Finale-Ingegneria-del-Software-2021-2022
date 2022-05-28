@@ -240,6 +240,7 @@ public class GUISchoolController {
         hBoxContainer.setScaleX(1.75);
         hBoxContainer.setScaleY(1.75);
         hBoxContainer.setStyle("-fx-border-color: rgba(255,255,255,0.5); -fx-border-width: 5;");
+        hBoxContainer.setViewOrder(-1);
     }
 
     private void cardUnhighlight(MouseEvent mouseEvent) {
@@ -247,6 +248,7 @@ public class GUISchoolController {
         hBoxContainer.setScaleX(1);
         hBoxContainer.setScaleY(1);
         hBoxContainer.setStyle("");
+        hBoxContainer.setViewOrder(0);
     }
 
     private void selectCard(MouseEvent mouseEvent, Card card) {
