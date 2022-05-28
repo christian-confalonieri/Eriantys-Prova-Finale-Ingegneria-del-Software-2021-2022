@@ -305,7 +305,7 @@ public class GUITableController {
         int[] playerTableX = new int[] {0, 750, 750, 0};
         int[] playerTableY = new int[] {0, 0, 500, 500};
 
-        int[] powerX = new int[] {810, 810, 810};
+        int[] powerX = new int[] {750, 750, 750};
         int[] powerY = new int[] {130, 240, 350};
 
 
@@ -430,13 +430,6 @@ public class GUITableController {
             case 4 -> cloud4Controller;
             default -> null;
         };
-    }
-
-    public void selectPower(ImageView outline) {
-        for(int i=1; i<=Client.getInstance().getGameHandler().getGame().getPowerCards().size();i++) {
-            getPowerController(i).unselectPower();
-        }
-        outline.setOpacity(1);
     }
 
     /**

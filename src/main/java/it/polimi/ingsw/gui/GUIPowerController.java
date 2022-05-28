@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 public class GUIPowerController {
     @FXML
@@ -19,6 +20,8 @@ public class GUIPowerController {
     private ImageView powerCard;
 
     private PowerCard powerCardModel;
+
+    private boolean isActiveSelected = false;
 
     public void setPowerCard(PowerCard powerCard) {
         this.powerCardModel = powerCard;
@@ -46,36 +49,52 @@ public class GUIPowerController {
      * @author Christian Confalonieri
      */
     public void selectPower() {
-        if(outline.getOpacity()==0.5) {
+        if(!isActiveSelected) {
             Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.addSelectedPower(powerCardModel));
-            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.selectPower(outline));
+            isActiveSelected = true;
+            anchorPane.setStyle("-fx-border-width: 5; -fx-border-color: WHITE");
         }
         else {
             Client.getInstance().getGui().guiCallGame(GUIGameController::removeSelectedPower);
-            outline.setOpacity(0.5);
+            isActiveSelected = false;
+            anchorPane.setStyle("");
         }
     }
 
     /**
      * @author Christian Confalonieri
      */
-    public void highlightPower() {
-        if(outline.getOpacity() == 0) {
-            outline.setOpacity(0.5);
+    @FXML
+    private void highlightPower() {
+        anchorPane.toFront();
+        anchorPane.setScaleX(1.75);
+        anchorPane.setScaleY(1.75);
+        if(isActiveSelected) {
+            anchorPane.setStyle("-fx-border-width: 5; -fx-border-color: WHITE");
         }
+        else {
+            anchorPane.setStyle("-fx-border-width: 5; -fx-border-color: rgba(255,255,255,0.5)");
+        }
+
     }
 
     /**
      * @author Christian Confalonieri
      */
-    public void unhighlightPower() {
-        if(outline.getOpacity() == 0.5) {
-            unselectPower();
+    @FXML
+    private void unhighlightPower() {
+        anchorPane.setScaleX(1);
+        anchorPane.setScaleY(1);
+
+        if (isActiveSelected) {
+            anchorPane.setStyle("-fx-border-width: 5; -fx-border-color: WHITE");
+        } else {
+            anchorPane.setStyle("");
         }
     }
 
     public void unselectPower() {
-        outline.setOpacity(0);
+
     }
 }
 

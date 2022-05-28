@@ -177,10 +177,4 @@ public class GUIGameController {
         tableController.selectCloud(outline);
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectPower(ImageView outline) {
-        tableController.selectPower(outline);
-    }
 }
