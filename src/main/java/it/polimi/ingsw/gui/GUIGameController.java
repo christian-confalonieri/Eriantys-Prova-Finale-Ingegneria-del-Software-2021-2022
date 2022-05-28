@@ -136,6 +136,11 @@ public class GUIGameController {
         schoolControllers.forEach(GUISchoolController::render);
     }
 
+    public void errorWrite(String errorMessage) {
+        // Table?
+        schoolControllers.forEach(guiSchoolController -> guiSchoolController.errorWrite(errorMessage));
+    }
+
     public void addSelectedIsland(Island island) {
         selectedIslands.add(island);
     }

@@ -43,6 +43,7 @@ public class GameService {
      */
     public static void failedPlayCard(ACK failedAck) {
         System.out.println(ConsoleColor.YELLOW + failedAck.getMessage() + ConsoleColor.RESET);
+        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.errorWrite(failedAck.getMessage()));
     }
 
     /**
@@ -84,6 +85,7 @@ public class GameService {
      */
     public static void failedMoveStudents(ACK failedAck) {
         System.out.println(ConsoleColor.YELLOW + failedAck.getMessage() + ConsoleColor.RESET);
+        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.errorWrite(failedAck.getMessage()));
     }
 
     /**
@@ -120,6 +122,7 @@ public class GameService {
      */
     public static void failedMoveMotherNature(ACK failedAck) {
         System.out.println(ConsoleColor.YELLOW + failedAck.getMessage() + ConsoleColor.RESET);
+        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.errorWrite(failedAck.getMessage()));
     }
 
     /**
@@ -149,6 +152,7 @@ public class GameService {
      */
     public static void failedMoveCloud(ACK failedAck) {
         System.out.println(ConsoleColor.YELLOW + failedAck.getMessage() + ConsoleColor.RESET);
+        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.errorWrite(failedAck.getMessage()));
     }
 
     /**
@@ -177,6 +181,7 @@ public class GameService {
      */
     public static void failedPower(ACK failedAck) {
         System.out.println(ConsoleColor.YELLOW + failedAck.getMessage() + ConsoleColor.RESET);
+        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.errorWrite(failedAck.getMessage()));
     }
 
     public static void gameInterrupted(GameInterruptedAction action) {

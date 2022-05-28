@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +20,8 @@ import java.util.List;
 
 public class GUISchoolController {
 
+    @FXML
+    private Label errorLabel;
 
     /**
      * ENTRANCE
@@ -78,6 +81,8 @@ public class GUISchoolController {
     }
 
     public void render() {
+        resetErrors();
+
         renderLane(greenHBox, PawnColor.GREEN);
         renderLane(redHBox, PawnColor.RED);
         renderLane(yellowHBox, PawnColor.YELLOW);
@@ -253,8 +258,18 @@ public class GUISchoolController {
 
     private void selectCard(MouseEvent mouseEvent, Card card) {
         if(Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(Client.getInstance().getPlayerId())) {
+            ((HBox) mouseEvent.getSource()).setStyle("-fx-border-color: WHITE; -fx-border-width: 5;");
             GameService.playCardRequest(card);
         }
-        //Client.getGui -> selectedCard = card or something like that
+        else
+            errorWrite("Wait your turn to play a card");
+    }
+
+    public void errorWrite(String errorMessage) {
+        errorLabel.setText(errorMessage);
+    }
+
+    public void resetErrors() {
+        errorLabel.setText("");
     }
 }

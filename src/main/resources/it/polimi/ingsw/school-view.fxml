@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
@@ -140,5 +141,8 @@
    <ImageView fx:id="lastPlayedCard" fitHeight="100" fitWidth="70" layoutX="792.0" layoutY="443.0">
       <Image url="@../../../assets/assistantCards/one.png" />
    </ImageView>
+
+
+   <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="341.0" layoutY="400.0" prefHeight="29.0" prefWidth="219.0" text="Error label" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
 
 </AnchorPane>
