@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.enumeration.Card;
 import it.polimi.ingsw.model.enumeration.PawnColor;
@@ -249,6 +250,9 @@ public class GUISchoolController {
     }
 
     private void selectCard(MouseEvent mouseEvent, Card card) {
+        if(Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(Client.getInstance().getPlayerId())) {
+            GameService.playCardRequest(card);
+        }
         //Client.getGui -> selectedCard = card or something like that
     }
 }
