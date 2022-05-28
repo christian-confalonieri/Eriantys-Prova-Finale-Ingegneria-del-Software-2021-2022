@@ -446,7 +446,7 @@ public class GUITableController {
     private void setProfessors() {
         clearProfessors();
         List<Professor> professors = Client.getInstance().getGameHandler().getGame().getBoardProfessors();
-        for(int i=1;i<=5;i++) {
+        for(int i=1;i<=professors.size();i++) {
             getGUIProfessor(i).setImage(getProfessorImage(professors.get(i-1)));
             getGUIProfessor(i).setOpacity(1);
         }
