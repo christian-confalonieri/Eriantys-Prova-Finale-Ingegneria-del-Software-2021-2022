@@ -6,59 +6,59 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="islandPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIIslandController">
+<AnchorPane fx:id="islandPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIIslandController">
 <children>
     <ImageView fx:id="islandBackground" fitHeight="112.0" fitWidth="110.0" layoutX="16.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../../assets/table/island1.png" />
         </image>
     </ImageView>
-    <ImageView fx:id="student3" fitHeight="25.0" fitWidth="20.0" layoutX="85.0" layoutY="57.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="student3" fitHeight="25.0" fitWidth="20.0" layoutX="85.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../../assets/students/blue.png" />
         </image>
     </ImageView>
-    <ImageView fx:id="student5" fitHeight="25.0" fitWidth="20.0" layoutX="37.0" layoutY="57.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="student5" fitHeight="25.0" fitWidth="20.0" layoutX="37.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../../assets/students/yellow.png" />
         </image>
     </ImageView>
-    <ImageView fx:id="student1" fitHeight="25.0" fitWidth="20.0" layoutX="37.0" layoutY="34.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="student1" fitHeight="25.0" fitWidth="20.0" layoutX="37.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../../assets/students/green.png" />
         </image>
     </ImageView>
-    <ImageView fx:id="student2" fitHeight="25.0" fitWidth="20.0" layoutX="85.0" layoutY="34.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="student2" fitHeight="25.0" fitWidth="20.0" layoutX="85.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../../assets/students/red.png" />
         </image>
     </ImageView>
-    <Label fx:id="labelStudent5" layoutX="42.0" layoutY="54.0" opacity="0.0" text="2">
+    <Label fx:id="labelStudent5" layoutX="42.0" layoutY="54.0" text="2">
         <font>
             <Font name="System Bold" size="17.0" />
         </font>
     </Label>
-    <ImageView fx:id="student4" fitHeight="25.0" fitWidth="20.0" layoutX="61.0" layoutY="73.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="student4" fitHeight="25.0" fitWidth="20.0" layoutX="61.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../../assets/students/pink.png" />
         </image>
     </ImageView>
-    <Label fx:id="labelStudent4" layoutX="66.0" layoutY="70.0" opacity="0.0" text="2">
+    <Label fx:id="labelStudent4" layoutX="66.0" layoutY="70.0" text="2">
         <font>
             <Font name="System Bold" size="17.0" />
         </font>
     </Label>
-    <Label fx:id="labelStudent3" layoutX="91.0" layoutY="54.0" opacity="0.0" text="2">
+    <Label fx:id="labelStudent3" layoutX="91.0" layoutY="54.0" text="2">
         <font>
             <Font name="System Bold" size="17.0" />
         </font>
     </Label>
-    <Label fx:id="labelStudent2" layoutX="91.0" layoutY="31.0" opacity="0.0" text="2">
+    <Label fx:id="labelStudent2" layoutX="91.0" layoutY="31.0" text="2">
         <font>
             <Font name="System Bold" size="17.0" />
         </font>
     </Label>
-    <Label fx:id="labelStudent1" layoutX="42.0" layoutY="31.0" opacity="0.0" text="2">
+    <Label fx:id="labelStudent1" layoutX="42.0" layoutY="31.0" text="2">
         <font>
             <Font name="System Bold" size="17.0" />
         </font>

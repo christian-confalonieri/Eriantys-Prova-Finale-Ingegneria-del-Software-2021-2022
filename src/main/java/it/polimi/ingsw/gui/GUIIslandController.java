@@ -3,6 +3,7 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Student;
+import it.polimi.ingsw.model.entity.Tower;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -65,6 +66,7 @@ public class GUIIslandController {
 
     protected void render() {
         setStudents();
+        setTowers();
     }
 
     public void remove() {
@@ -156,7 +158,6 @@ public class GUIIslandController {
     /**
      * @author Christian Confalonieri
      */
-    @FXML
     private ImageView getFirstBlankStudentSpace() {
         ImageView student;
         for(int i=1; i<=5; i++) {
@@ -207,5 +208,41 @@ public class GUIIslandController {
             case BLUE -> new Image(this.getClass().getResource("/assets/students/blue.png").toExternalForm());
             case YELLOW -> new Image(this.getClass().getResource("/assets/students/yellow.png").toExternalForm());
         };
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    @FXML
+    public void setTowers() {
+        clearTowers();
+        List<Tower> towers = islandModel.getTowers();
+        if(towers.size() != 0) {
+            tower.setOpacity(1);
+            tower.setImage(getTowerImage(towers.get(0)));
+            if(towers.size() > 1) {
+                labelTower.setOpacity(1);
+                labelTower.setText(Integer.toString(towers.size()));
+            }
+        }
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private Image getTowerImage(Tower tower) {
+        return switch(tower.getColor()) {
+            case WHITE -> new Image(this.getClass().getResource("/assets/towers/white_side.png").toExternalForm());
+            case BLACK -> new Image(this.getClass().getResource("/assets/towers/black_side.png").toExternalForm());
+            case GREY -> new Image(this.getClass().getResource("/assets/towers/grey_side.png").toExternalForm());
+        };
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private void clearTowers() {
+        tower.setOpacity(0);
+        labelTower.setOpacity(0);
     }
 }
