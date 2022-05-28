@@ -441,4 +441,8 @@ public class Game {
     public void setMotherNature(MotherNature motherNature) {
         this.motherNature = motherNature;
     }
+
+    public List<Professor> getBoardProfessors() {
+        return boardProfessors;
+    }
 }

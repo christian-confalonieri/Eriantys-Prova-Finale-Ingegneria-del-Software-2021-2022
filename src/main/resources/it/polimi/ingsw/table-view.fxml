@@ -1,40 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUITableController">
    <ImageView fitHeight="600.0" fitWidth="900.0" preserveRatio="true">
-      <Image url="@../../../assets/table/background.png"/>
+      <Image url="@../../../assets/table/background.png" />
    </ImageView>
 
-   <fx:include source="island-view.fxml" fx:id="island1" />
-   <fx:include source="island-view.fxml" fx:id="island2" />
-   <fx:include source="island-view.fxml" fx:id="island3" />
-   <fx:include source="island-view.fxml" fx:id="island4" />
-   <fx:include source="island-view.fxml" fx:id="island5" />
-   <fx:include source="island-view.fxml" fx:id="island6" />
-   <fx:include source="island-view.fxml" fx:id="island7" />
-   <fx:include source="island-view.fxml" fx:id="island8" />
-   <fx:include source="island-view.fxml" fx:id="island9" />
-   <fx:include source="island-view.fxml" fx:id="island10" />
-   <fx:include source="island-view.fxml" fx:id="island11" />
-   <fx:include source="island-view.fxml" fx:id="island12" />
+   <fx:include fx:id="island1" source="island-view.fxml" />
+   <fx:include fx:id="island2" source="island-view.fxml" />
+   <fx:include fx:id="island3" source="island-view.fxml" />
+   <fx:include fx:id="island4" source="island-view.fxml" />
+   <fx:include fx:id="island5" source="island-view.fxml" />
+   <fx:include fx:id="island6" source="island-view.fxml" />
+   <fx:include fx:id="island7" source="island-view.fxml" />
+   <fx:include fx:id="island8" source="island-view.fxml" />
+   <fx:include fx:id="island9" source="island-view.fxml" />
+   <fx:include fx:id="island10" source="island-view.fxml" />
+   <fx:include fx:id="island11" source="island-view.fxml" />
+   <fx:include fx:id="island12" source="island-view.fxml" />
 
 
-   <fx:include source="cloud-view.fxml" fx:id="cloud1"/>
-   <fx:include source="cloud-view.fxml" fx:id="cloud2"/>
-   <fx:include source="cloud-view.fxml" fx:id="cloud3"/>
-   <fx:include source="cloud-view.fxml" fx:id="cloud4"/>
+   <fx:include fx:id="cloud1" source="cloud-view.fxml" />
+   <fx:include fx:id="cloud2" source="cloud-view.fxml" />
+   <fx:include fx:id="cloud3" source="cloud-view.fxml" />
+   <fx:include fx:id="cloud4" source="cloud-view.fxml" />
 
-   <fx:include source="playerTable-view.fxml" fx:id="playerT1" />
-   <fx:include source="playerTable-view.fxml" fx:id="playerT2" />
-   <fx:include source="playerTable-view.fxml" fx:id="playerT3" />
-   <fx:include source="playerTable-view.fxml" fx:id="playerT4" />
+   <fx:include fx:id="playerT1" source="playerTable-view.fxml" />
+   <fx:include fx:id="playerT2" source="playerTable-view.fxml" />
+   <fx:include fx:id="playerT3" source="playerTable-view.fxml" />
+   <fx:include fx:id="playerT4" source="playerTable-view.fxml" />
 
-   <fx:include source="power-view.fxml" fx:id="power1" />
-   <fx:include source="power-view.fxml" fx:id="power2" />
-   <fx:include source="power-view.fxml" fx:id="power3" />
+   <fx:include fx:id="power1" source="power-view.fxml" />
+   <fx:include fx:id="power2" source="power-view.fxml" />
+   <fx:include fx:id="power3" source="power-view.fxml" />
+   <ImageView fx:id="professor1" fitHeight="32.0" fitWidth="32.0" layoutX="335.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../assets/professors/green.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="professor2" fitHeight="32.0" fitWidth="32.0" layoutX="367.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../assets/professors/green.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="professor3" fitHeight="32.0" fitWidth="32.0" layoutX="399.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../assets/professors/green.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="professor4" fitHeight="32.0" fitWidth="32.0" layoutX="351.0" layoutY="306.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../assets/professors/green.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="professor5" fitHeight="32.0" fitWidth="32.0" layoutX="384.0" layoutY="307.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../assets/professors/green.png" />
+      </image>
+   </ImageView>
 </AnchorPane>

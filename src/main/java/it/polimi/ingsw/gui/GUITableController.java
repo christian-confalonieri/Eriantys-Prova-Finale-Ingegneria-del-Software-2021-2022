@@ -1,11 +1,10 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.model.entity.Cloud;
-import it.polimi.ingsw.model.entity.Island;
-import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.entity.*;
 import it.polimi.ingsw.model.power.PowerCard;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import java.util.Arrays;
@@ -17,7 +16,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GUITableController {
-
+    @FXML
+    private ImageView professor1;
+    @FXML
+    private ImageView professor2;
+    @FXML
+    private ImageView professor3;
+    @FXML
+    private ImageView professor4;
+    @FXML
+    private ImageView professor5;
     private List<GUIIslandController> islandControllers;
     private List<AnchorPane> islandAnchorPanes;
 
@@ -295,7 +303,6 @@ public class GUITableController {
 
         allIslandExecute((islandPane, islandController) -> renderIsland(islandPane, islandController, islandsXIt.next(), islandsYIt.next()));
 
-
         Iterator<Integer> cloudsXIt = Arrays.stream(cloudsX).iterator();
         Iterator<Integer> cloudsYIt = Arrays.stream(cloudsY).iterator();
 
@@ -312,6 +319,8 @@ public class GUITableController {
         Iterator<Integer> powerYIt = Arrays.stream(powerY).iterator();
 
         allPowerExecute(((anchorPane, guiPowerController) -> renderPower(anchorPane, guiPowerController, powerXIt.next(), powerYIt.next())));
+
+        setProfessors();
     }
 
     private void renderIsland(AnchorPane islandPane, GUIIslandController islandController, double x, double y) {
@@ -429,5 +438,53 @@ public class GUITableController {
             case 3 -> power3Controller;
             default -> null;
         };
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private void setProfessors() {
+        clearProfessors();
+        List<Professor> professors = Client.getInstance().getGameHandler().getGame().getBoardProfessors();
+        for(int i=1;i<=5;i++) {
+            getGUIProfessor(i).setImage(getProfessorImage(professors.get(i-1)));
+            getGUIProfessor(i).setOpacity(1);
+        }
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private ImageView getGUIProfessor(int number) {
+        return switch (number) {
+            case 1 -> professor1;
+            case 2 -> professor2;
+            case 3 -> professor3;
+            case 4 -> professor4;
+            case 5 -> professor5;
+            default -> null;
+        };
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private Image getProfessorImage(Professor professor) {
+        return switch(professor.getColor()) {
+            case GREEN -> new Image(this.getClass().getResource("/assets/professors/green.png").toExternalForm());
+            case RED -> new Image(this.getClass().getResource("/assets/professors/red.png").toExternalForm());
+            case PINK -> new Image(this.getClass().getResource("/assets/professors/pink.png").toExternalForm());
+            case BLUE -> new Image(this.getClass().getResource("/assets/professors/blue.png").toExternalForm());
+            case YELLOW -> new Image(this.getClass().getResource("/assets/professors/yellow.png").toExternalForm());
+        };
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private void clearProfessors() {
+        for(int i=1; i<=5; i++) {
+            getGUIProfessor(i).setOpacity(0);
+        }
     }
 }

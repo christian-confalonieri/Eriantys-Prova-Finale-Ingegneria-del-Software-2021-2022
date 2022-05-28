@@ -26,15 +26,15 @@
                 <Image url="@../../../assets/students/pink.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="outline" fitHeight="105.0" fitWidth="123.0" onMouseClicked="#selectCloud" onMouseEntered="#highlightCloud" onMouseExited="#unhighlightCloud" opacity="0.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../assets/outlines/cloud.png" />
-            </image>
-        </ImageView>
       <ImageView fx:id="student4" fitHeight="32.0" fitWidth="32.0" layoutX="37.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/students/pink.png" />
          </image>
       </ImageView>
+        <ImageView fx:id="outline" fitHeight="105.0" fitWidth="123.0" onMouseClicked="#selectCloud" onMouseEntered="#highlightCloud" onMouseExited="#unhighlightCloud" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../assets/outlines/cloud.png" />
+            </image>
+        </ImageView>
     </children>
 </AnchorPane>
