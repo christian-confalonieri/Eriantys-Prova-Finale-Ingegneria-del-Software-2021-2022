@@ -2,17 +2,22 @@ package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.enumeration.Card;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
+import it.polimi.ingsw.model.enumeration.Wizard;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import java.util.EventListener;
 import java.util.List;
 
 public class GUISchoolController {
+
 
     /**
      * ENTRANCE
@@ -55,6 +60,16 @@ public class GUISchoolController {
     @FXML
     private HBox blueHBox;
 
+
+    /**
+     * CARDS
+     */
+    @FXML
+    private HBox deckBox;
+    @FXML
+    private ImageView lastPlayedCard;
+
+
     private Player playerModel;
 
     public void setPlayerModel(Player playerModel) {
@@ -70,6 +85,8 @@ public class GUISchoolController {
         renderProfessors();
         renderTowers();
         renderEntrance();
+        renderHandDeck();
+        renderLastPlayedCard();
     }
 
     private void renderLane(HBox hBox, PawnColor pawnColor) {
@@ -133,7 +150,46 @@ public class GUISchoolController {
         }
     }
 
+    private void renderHandDeck() {
+        deckBox.getChildren().clear();
+        if (playerModel.getName().equals(Client.getInstance().getPlayerId())) {
+            for (Card card : playerModel.getHandCards()) {
+                ImageView image = getAssistantImage(card, 100, 70);
+                HBox borderBox = new HBox();
+                borderBox.getChildren().add(image);
+                borderBox.setOnMouseEntered(this::cardHighlight);
+                borderBox.setOnMouseExited(this::cardUnhighlight);
+                borderBox.setOnMouseClicked((mouseEvent) -> selectCard(mouseEvent, card));
+                deckBox.getChildren().add(borderBox);
+            }
+        }
+    }
 
+    private void renderLastPlayedCard() {
+        double height = 100;
+        double width = 70;
+
+        Card card = playerModel.getLastPlayedCard();
+        if (card == null) {
+            lastPlayedCard.setImage(getWizardImage(playerModel.getWizard(), height, width).getImage());
+        }
+        else {
+            lastPlayedCard.setImage(getAssistantImage(card, height, width).getImage());
+        }
+    }
+
+
+    private ImageView getWizardImage(Wizard wizard, double height, double width) {
+        ImageView imageView = new ImageView(switch (wizard) {
+            case BLUE -> new Image(this.getClass().getResource("/assets/wizards/blueWizard.jpg").toExternalForm());
+            case PURPLE -> new Image(this.getClass().getResource("/assets/wizards/purpleWizard.jpg").toExternalForm());
+            case GREEN -> new Image(this.getClass().getResource("/assets/wizards/greenWizard.jpg").toExternalForm());
+            case YELLOW-> new Image(this.getClass().getResource("/assets/wizards/yellowWizard.jpg").toExternalForm());
+        });
+        imageView.setFitHeight(height);
+        imageView.setFitWidth(width);
+        return imageView;
+    }
 
     private ImageView getStudentImage(PawnColor color, double height) {
         ImageView imageView = new ImageView(switch(color) {
@@ -157,5 +213,42 @@ public class GUISchoolController {
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(height);
         return imageView;
+    }
+
+    private ImageView getAssistantImage(Card card, double height, double width) {
+        ImageView imageView = new ImageView(switch(card) {
+            case ONE -> new Image(this.getClass().getResource("/assets/assistantCards/one.png").toExternalForm());
+            case TWO -> new Image(this.getClass().getResource("/assets/assistantCards/two.png").toExternalForm());
+            case THREE -> new Image(this.getClass().getResource("/assets/assistantCards/three.png").toExternalForm());
+            case FOUR -> new Image(this.getClass().getResource("/assets/assistantCards/four.png").toExternalForm());
+            case FIVE -> new Image(this.getClass().getResource("/assets/assistantCards/five.png").toExternalForm());
+            case SIX -> new Image(this.getClass().getResource("/assets/assistantCards/six.png").toExternalForm());
+            case SEVEN -> new Image(this.getClass().getResource("/assets/assistantCards/seven.png").toExternalForm());
+            case EIGHT -> new Image(this.getClass().getResource("/assets/assistantCards/eight.png").toExternalForm());
+            case NINE -> new Image(this.getClass().getResource("/assets/assistantCards/nine.png").toExternalForm());
+            case TEN -> new Image(this.getClass().getResource("/assets/assistantCards/ten.png").toExternalForm());
+        });
+        imageView.setFitHeight(height);
+        imageView.setFitWidth(width);
+        return imageView;
+    }
+
+    @FXML
+    private void cardHighlight(MouseEvent mouseEvent) {
+        HBox hBoxContainer = (HBox) mouseEvent.getTarget();
+        hBoxContainer.setScaleX(1.75);
+        hBoxContainer.setScaleY(1.75);
+        hBoxContainer.setStyle("-fx-border-color: rgba(255,255,255,0.5); -fx-border-width: 5;");
+    }
+
+    private void cardUnhighlight(MouseEvent mouseEvent) {
+        HBox hBoxContainer = (HBox) mouseEvent.getTarget();
+        hBoxContainer.setScaleX(1);
+        hBoxContainer.setScaleY(1);
+        hBoxContainer.setStyle("");
+    }
+
+    private void selectCard(MouseEvent mouseEvent, Card card) {
+        //Client.getGui -> selectedCard = card or something like that
     }
 }
