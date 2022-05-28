@@ -4,12 +4,14 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.power.PowerCard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -24,7 +26,9 @@ public class GUIGameController {
 
     private List<Island> selectedIslands = new ArrayList<>();
 
-    private List<Cloud> selectedClouds = new ArrayList<>();
+    private Cloud selectedCloud = null;
+
+    private PowerCard selectedPower = null;
 
 
 
@@ -141,11 +145,11 @@ public class GUIGameController {
     }
 
     public void addSelectedCloud(Cloud cloud) {
-        selectedClouds.add(cloud);
+        selectedCloud = cloud;
     }
 
-    public void removeSelectedCloud(Cloud cloud) {
-        selectedClouds.remove(cloud);
+    public void removeSelectedCloud() {
+        selectedCloud = null;
     }
 
     public void clearSelectedIslands() {
@@ -153,4 +157,25 @@ public class GUIGameController {
     }
 
 
+    public void addSelectedPower(PowerCard power) {
+        selectedPower = power;
+    }
+
+    public void removeSelectedPower() {
+        selectedPower = null;
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public void selectCloud(ImageView outline) {
+        tableController.selectCloud(outline);
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public void selectPower(ImageView outline) {
+        tableController.selectPower(outline);
+    }
 }

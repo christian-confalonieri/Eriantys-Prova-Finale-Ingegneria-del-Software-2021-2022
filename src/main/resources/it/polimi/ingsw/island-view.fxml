@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="islandPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIIslandController">
+<AnchorPane fx:id="islandPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIIslandController">
 <children>
     <ImageView fx:id="islandBackground" fitHeight="112.0" fitWidth="110.0" layoutX="16.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
         <image>

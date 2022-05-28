@@ -61,10 +61,10 @@ public class GUICloudController {
     private void selectCloud() {
         if(outline.getOpacity()==0.5) {
             Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.addSelectedCloud(cloudModel));
-            outline.setOpacity(1);
+            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.selectCloud(outline));
         }
         else {
-            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.removeSelectedCloud(cloudModel));
+            Client.getInstance().getGui().guiCallGame(GUIGameController::removeSelectedCloud);
             outline.setOpacity(0.5);
         }
     }
@@ -85,7 +85,7 @@ public class GUICloudController {
     @FXML
     private void unhighlightCloud() {
         if(outline.getOpacity() == 0.5) {
-            outline.setOpacity(0);
+            unselectCloud();
         }
     }
 
@@ -101,5 +101,12 @@ public class GUICloudController {
             case 3 -> cloudBackground.setImage(new Image(this.getClass().getResource("/assets/table/cloud3.png").toExternalForm()));
             case 4 -> cloudBackground.setImage(new Image(this.getClass().getResource("/assets/table/cloud4.png").toExternalForm()));
         }
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public void unselectCloud() {
+        outline.setOpacity(0);
     }
 }

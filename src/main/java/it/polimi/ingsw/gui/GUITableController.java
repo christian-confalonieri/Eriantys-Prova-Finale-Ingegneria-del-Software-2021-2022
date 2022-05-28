@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.power.PowerCard;
 import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -388,4 +389,45 @@ public class GUITableController {
         }
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
+    public void selectCloud(ImageView outline) {
+        for(int i=1; i<=Client.getInstance().getGameHandler().getGame().getClouds().size();i++) {
+            getCloudController(i).unselectCloud();
+        }
+        outline.setOpacity(1);
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private GUICloudController getCloudController(int number) {
+        return switch(number) {
+            case 1 -> cloud1Controller;
+            case 2 -> cloud2Controller;
+            case 3 -> cloud3Controller;
+            case 4 -> cloud4Controller;
+            default -> null;
+        };
+    }
+
+    public void selectPower(ImageView outline) {
+        for(int i=1; i<=Client.getInstance().getGameHandler().getGame().getPowerCards().size();i++) {
+            getPowerController(i).unselectPower();
+        }
+        outline.setOpacity(1);
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private GUIPowerController getPowerController(int number) {
+        return switch(number) {
+            case 1 -> power1Controller;
+            case 2 -> power2Controller;
+            case 3 -> power3Controller;
+            default -> null;
+        };
+    }
 }

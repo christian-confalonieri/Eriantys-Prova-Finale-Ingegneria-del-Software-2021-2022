@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gui;
 
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.power.PowerCard;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,6 +9,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class GUIPowerController {
+    @FXML
+    private ImageView outline;
     @FXML
     private Label cost;
     @FXML
@@ -39,5 +42,40 @@ public class GUIPowerController {
         cost.setText(String.valueOf(powerCardModel.getCost()));
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
+    public void selectPower() {
+        if(outline.getOpacity()==0.5) {
+            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.addSelectedPower(powerCardModel));
+            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.selectPower(outline));
+        }
+        else {
+            Client.getInstance().getGui().guiCallGame(GUIGameController::removeSelectedPower);
+            outline.setOpacity(0.5);
+        }
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public void highlightPower() {
+        if(outline.getOpacity() == 0) {
+            outline.setOpacity(0.5);
+        }
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    public void unhighlightPower() {
+        if(outline.getOpacity() == 0.5) {
+            unselectPower();
+        }
+    }
+
+    public void unselectPower() {
+        outline.setOpacity(0);
+    }
 }
 

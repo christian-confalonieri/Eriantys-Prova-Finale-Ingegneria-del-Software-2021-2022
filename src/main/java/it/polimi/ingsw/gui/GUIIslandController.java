@@ -67,6 +67,8 @@ public class GUIIslandController {
     protected void render() {
         setStudents();
         setTowers();
+        setMotherNature();
+        setNoEntry();
     }
 
     public void remove() {
@@ -244,5 +246,27 @@ public class GUIIslandController {
     private void clearTowers() {
         tower.setOpacity(0);
         labelTower.setOpacity(0);
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    @FXML
+    public void setMotherNature() {
+        motherNature.setOpacity(0);
+        if(Client.getInstance().getGameHandler().getGame().getMotherNature().isOn() == islandModel) {
+            motherNature.setOpacity(1);
+        }
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    @FXML
+    public void setNoEntry() {
+        noEntry.setOpacity(0);
+        if(islandModel.isNoEntry()) {
+            noEntry.setOpacity(1);
+        }
     }
 }
