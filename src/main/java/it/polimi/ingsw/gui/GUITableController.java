@@ -190,7 +190,6 @@ public class GUITableController {
 
         // Set the island numbers and images
         for (int i = 0; i < islandControllers.size(); i++) {
-            islandControllers.get(i).setIslandNumber(i+1);
             islandControllers.get(i).setIslandImage(i+1);
         }
 

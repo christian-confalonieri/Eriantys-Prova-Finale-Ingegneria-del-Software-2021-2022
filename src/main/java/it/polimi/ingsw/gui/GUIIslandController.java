@@ -65,6 +65,7 @@ public class GUIIslandController {
     }
 
     protected void render() {
+        renderIslandNumber();
         setStudents();
         setTowers();
         setMotherNature();
@@ -105,8 +106,8 @@ public class GUIIslandController {
     }
 
     @FXML
-    public void setIslandNumber(int number) {
-        labelIslandCountAndSelected.setText(String.valueOf(number));
+    public void renderIslandNumber() {
+        labelIslandCountAndSelected.setText(String.valueOf(Client.getInstance().getGameHandler().getGame().getIslands().indexOf(islandModel) + 1));
     }
 
     @FXML
