@@ -3,19 +3,37 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Font?>
-<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIPlayerTableController"
-            fx:id="anchorPane"
->
-    <ImageView fx:id="wizardCard" fitHeight="100.0" fitWidth="70.0">
-        <Image url="@../../../assets/wizards/blueWizard.jpg" />
-    </ImageView>
-    <Label fx:id="playerName" layoutX="75.0" text="PLAYERNAME">
-        <font>
-            <Font name="System Bold" />
-        </font>
-    </Label>
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIPlayerTableController">
+   <HBox spacing="5.0">
+      <children>
+      
+          <ImageView fx:id="wizardCard" fitHeight="100.0" fitWidth="70.0">
+              <Image url="@../../../assets/wizards/blueWizard.jpg" />
+          </ImageView>
+      
+         <VBox spacing="10.0">
+            <children>
+                <Label fx:id="playerName" text="PLAYERNAME">
+                    <font>
+                        <Font name="System Bold" />
+                    </font>
+                </Label>
+                <HBox spacing="3.0">
+                    <ImageView fitHeight="50" preserveRatio="true">
+                        <Image url="@../../../assets/coin/coin.png" />
+                    </ImageView>
+                    <Label fx:id="coinsLabel" text="3" textFill="#ae8e00">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
+                </HBox>
+            </children>
+         </VBox>
+      </children>
+   </HBox>
 
 
 </AnchorPane>

@@ -7,7 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -221,6 +224,14 @@ public class GUITableController {
         playerTableControllers.stream().filter(Predicate.not(GUIPlayerTableController::isBoundToModel)).forEach(GUIPlayerTableController::remove);
         playerTableControllers = playerTableControllers.stream().filter(GUIPlayerTableController::isBoundToModel).toList();
         playerTableAnchorPanes = playerTableAnchorPanes.stream().limit(playerTableControllers.size()).toList();
+        try {
+            playerTableControllers.get(1).rotate();
+            playerTableControllers.get(2).rotate();
+        } catch (Exception e) {
+            // 3 player not present
+        }
+
+
 
 
         // Bind power card views with the characters in game
@@ -231,6 +242,7 @@ public class GUITableController {
         for (PowerCard powerCard : Client.getInstance().getGameHandler().getGame().getPowerCards()) {
             powerControllerIt.next().setPowerCard(powerCard);
         }
+
     }
 
 
@@ -291,7 +303,7 @@ public class GUITableController {
             }
         }
 
-        int[] playerTableX = new int[] {0, 750, 0, 750};
+        int[] playerTableX = new int[] {0, 750, 750, 0};
         int[] playerTableY = new int[] {0, 0, 500, 500};
 
         int[] powerX = new int[] {810, 810, 810};

@@ -7,8 +7,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 public class GUIPlayerTableController {
+    @FXML
+    private Label coinsLabel;
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -38,10 +41,15 @@ public class GUIPlayerTableController {
         else {
             playerName.setStyle("-fx-text-fill: BLACK");
         }
+        coinsLabel.setText(String.valueOf(playerModel.getCoins()));
     }
 
     public void remove() {
         anchorPane.setDisable(true);
         anchorPane.setVisible(false);
+    }
+
+    public void rotate() {
+        ((HBox) anchorPane.getChildren().get(0)).getChildren().get(0).toFront();
     }
 }
