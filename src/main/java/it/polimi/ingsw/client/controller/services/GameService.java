@@ -183,5 +183,8 @@ public class GameService {
         Client.getInstance().setFinalLeaderBoard(action.getLeaderBoard());
         Client.getInstance().setClientState(ClientState.ENDGAME);
         Client.getInstance().getCli().render();
+
+        Client.getInstance().getGui().notifyStateChange();
+        Client.getInstance().getGui().guiCallScoreboard(guiScoreboardController -> guiScoreboardController.renderScoreBoard(action.getLeaderBoard()));
     }
 }

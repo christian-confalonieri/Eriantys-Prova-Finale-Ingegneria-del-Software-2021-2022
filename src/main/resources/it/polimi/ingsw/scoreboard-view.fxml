@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="466.0" prefWidth="641.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="800.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIScoreboardController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -53,7 +53,7 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="388.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
+    <AnchorPane prefHeight="388.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
       <children>
             <ImageView fitHeight="443.0" fitWidth="640.0" pickOnBounds="true" preserveRatio="true" />
         <Label alignment="CENTER" layoutX="183.0" layoutY="-13.0" style="&#10;" text="Final Scoreboard" textAlignment="CENTER" textFill="#00e1ff" wrapText="false">

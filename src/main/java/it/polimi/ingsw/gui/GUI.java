@@ -190,6 +190,42 @@ public class GUI extends Application {
         }
     };
 
+    protected GUIScoreboardController guiScoreboardController;
+    private Future<GUIScoreboardController> guiScoreboardControllerFuture = new Future<>() {
+        boolean done = false;
+
+        @Override
+        public boolean cancel(boolean mayInterruptIfRunning) {
+            return false;
+        }
+
+        @Override
+        public boolean isCancelled() {
+            return false;
+        }
+
+        @Override
+        public boolean isDone() {
+            return done;
+        }
+
+        @Override
+        synchronized public GUIScoreboardController get() throws InterruptedException {
+            while (guiScoreboardController == null) {
+                this.wait();
+            }
+            done = true;
+            return guiScoreboardController;
+        }
+
+        @Override
+        @Deprecated
+        public GUIScoreboardController get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+            return null;
+        }
+    };
+
+
     @Override
     public void start(Stage stage) throws IOException {
         Client.getInstance().setGui(this); // Attach the gui to the client (Launch is called by attachGui)
@@ -256,6 +292,18 @@ public class GUI extends Application {
         }
     }
 
+    public void guiCallScoreboard(Consumer<GUIScoreboardController> call) {
+        if(Client.getInstance().getClientState() == ClientState.ENDGAME) {
+            Platform.runLater(() -> {
+                try {
+                    call.accept(this.guiScoreboardControllerFuture.get());
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+    }
+
 
 
     public void notifyStateChange() {
@@ -268,6 +316,7 @@ public class GUI extends Application {
                 case MAINMENU -> GUIMainMenuController.initSceneAndController(currentStageWindow);
                 case WAITINGLOBBY -> GUILobbyController.initSceneAndController(currentStageWindow);
                 case INGAME -> GUIGameController.initSceneAndController(currentStageWindow);
+                case ENDGAME -> GUIScoreboardController.initSceneAndController(currentStageWindow);
             }
         });
     }
