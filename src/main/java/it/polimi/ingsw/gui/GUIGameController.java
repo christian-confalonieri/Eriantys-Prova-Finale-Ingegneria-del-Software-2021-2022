@@ -125,6 +125,25 @@ public class GUIGameController {
         schoolControllers.removeAll(toRemoveC);
         schoolAnchorPanes.remove(toRemoveA);
 
+        //new tab order
+        List<Tab> tabs = new ArrayList<>();
+        Player clientPlayer = Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId());
+        int indexPlayer = Client.getInstance().getGameHandler().getGame().getPlayers().indexOf(clientPlayer);
+
+        //I add table to the new list
+        tabs.add(tabPane.getTabs().get(0));
+        tabPane.getTabs().remove(tabPane.getTabs().get(0));
+
+        //I am adding the client school to the new list
+        tabs.add(tabPane.getTabs().get(indexPlayer));
+        tabPane.getTabs().remove(tabPane.getTabs().get(indexPlayer));
+
+        //I will add the remaining schools to the list
+        tabs.addAll(tabPane.getTabs());
+        tabPane.getTabs().clear();
+
+        //I update tabPane
+        tabPane.getTabs().addAll(tabs);
     }
 
     protected void renderTable() {
