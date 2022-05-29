@@ -115,12 +115,9 @@ public class GUIGameController {
             AnchorPane sPane = schoolsAnchorPaneIt.next();
             Tab sTab = tabsIt.next();
 
-            sPane.setDisable(true);
-            sPane.setVisible(false);
             toRemoveC.add(sController);
             toRemoveA.add(sPane);
             sTab.setText("");
-            sTab.setDisable(true);
         }
         schoolControllers.removeAll(toRemoveC);
         schoolAnchorPanes.remove(toRemoveA);
