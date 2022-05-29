@@ -138,12 +138,18 @@ public class GUIGameController {
         tabs.add(tabPane.getTabs().get(indexPlayer));
         tabPane.getTabs().remove(tabPane.getTabs().get(indexPlayer));
 
-        //I will add the remaining schools to the list
-        tabs.addAll(tabPane.getTabs());
+        //I will add the remaining schools to the list (And I removed the unused tabs)
+        for(Tab tab : tabPane.getTabs()) {
+            if(tab.getText() != "") {
+                tabs.add(tab);
+            }
+        }
         tabPane.getTabs().clear();
 
         //I update tabPane
         tabPane.getTabs().addAll(tabs);
+
+
     }
 
     protected void renderTable() {
