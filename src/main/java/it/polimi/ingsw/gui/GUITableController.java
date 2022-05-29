@@ -4,11 +4,13 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.*;
 import it.polimi.ingsw.model.power.PowerCard;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -19,6 +21,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GUITableController {
+
+    @FXML
+    private Label errorLabel;
     @FXML
     private ImageView professor1;
     @FXML
@@ -249,6 +254,7 @@ public class GUITableController {
      * @author Leonardo Airoldi, Christian Confalonieri
      */
     public void render() {
+        clearErrors();
         int[] islandsX = new int[Client.getInstance().getGameHandler().getGame().getIslands().size()];
         int[] islandsY = new int[Client.getInstance().getGameHandler().getGame().getIslands().size()];
         for(int i=1;i<=Client.getInstance().getGameHandler().getGame().getIslands().size();i++) {
@@ -332,6 +338,14 @@ public class GUITableController {
         allPowerExecute(((anchorPane, guiPowerController) -> renderPower(anchorPane, guiPowerController, powerXIt.next(), powerYIt.next())));
 
         setProfessors();
+    }
+
+    protected void errorWrite(String errorMessage) {
+        errorLabel.setText(errorMessage);
+    }
+
+    private void clearErrors() {
+        errorLabel.setText("");
     }
 
     private void renderIsland(AnchorPane islandPane, GUIIslandController islandController, double x, double y) {

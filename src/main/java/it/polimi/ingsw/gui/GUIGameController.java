@@ -159,7 +159,7 @@ public class GUIGameController {
     }
 
     public void errorWrite(String errorMessage) {
-        // Table?
+        tableController.errorWrite(errorMessage);
         schoolControllers.forEach(guiSchoolController -> guiSchoolController.errorWrite(errorMessage));
     }
 

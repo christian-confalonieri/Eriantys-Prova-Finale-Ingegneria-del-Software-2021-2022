@@ -4,6 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.control.Label?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUITableController">
    <ImageView fitHeight="600.0" fitWidth="900.0" preserveRatio="true">
       <Image url="@../../../assets/table/background.png" />
@@ -61,4 +62,7 @@
          <Image url="@../../../assets/professors/green.png" />
       </image>
    </ImageView>
+
+   <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="400.0" prefHeight="29.0" prefWidth="219.0" text="Error label" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+
 </AnchorPane>
