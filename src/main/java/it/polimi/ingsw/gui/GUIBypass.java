@@ -37,6 +37,10 @@ public class GUIBypass extends GUI{
     }
 
     @Override
+    public void guiCallScoreboard(Consumer<GUIScoreboardController> call) {
+    }
+
+    @Override
     public void notifyStateChange() {
 
     }
