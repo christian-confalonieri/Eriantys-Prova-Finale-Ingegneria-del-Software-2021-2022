@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.power.PowerCard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +29,7 @@ public class GUIGameController {
 
     private PowerCard selectedPower = null;
 
-
+    private PawnColor selectedLane;
 
     private List<GUISchoolController> schoolControllers;
     private List<AnchorPane> schoolAnchorPanes;
@@ -182,5 +183,11 @@ public class GUIGameController {
         selectedPower = null;
     }
 
+    public void setSelectedLane(PawnColor selectedLane) {
+        this.selectedLane = selectedLane;
+    }
 
+    public void clearSelectedLane() {
+        this.selectedLane = null;
+    }
 }

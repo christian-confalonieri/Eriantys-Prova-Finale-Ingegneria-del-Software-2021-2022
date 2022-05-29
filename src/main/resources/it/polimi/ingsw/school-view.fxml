@@ -19,7 +19,7 @@
    </ImageView>
 
 
-   <HBox fx:id="greenHBox" layoutX="167.0" layoutY="48.0" prefHeight="40.0" prefWidth="495.0" spacing="2.0">
+   <HBox fx:id="greenHBox" layoutX="167.0" layoutY="48.0" prefHeight="40.0" spacing="2.0" onMouseEntered="#laneHighLight" onMouseExited="#laneUnhighlight" onMouseClicked="#selectLaneGreen">
       <children>
          <ImageView fitHeight="40" preserveRatio="true">
             <Image url="@../../../assets/students/blue.png" />
@@ -27,7 +27,7 @@
       </children>
    </HBox>
 
-   <HBox fx:id="redHBox" layoutX="167.0" layoutY="114.0" prefHeight="40.0" prefWidth="495.0" spacing="2.0">
+   <HBox fx:id="redHBox" layoutX="167.0" layoutY="114.0" prefHeight="40.0" spacing="2.0" onMouseEntered="#laneHighLight" onMouseExited="#laneUnhighlight" onMouseClicked="#selectLaneRed">
       <children>
          <ImageView fitHeight="40" preserveRatio="true">
             <Image url="@../../../assets/students/blue.png" />
@@ -35,7 +35,7 @@
       </children>
    </HBox>
 
-   <HBox fx:id="yellowHBox" layoutX="168.0" layoutY="175.0" prefHeight="40.0" prefWidth="495.0" spacing="2.0">
+   <HBox fx:id="yellowHBox" layoutX="168.0" layoutY="175.0" prefHeight="40.0" spacing="2.0" onMouseEntered="#laneHighLight" onMouseExited="#laneUnhighlight" onMouseClicked="#selectLaneYellow">
       <children>
          <ImageView fitHeight="40" preserveRatio="true">
             <Image url="@../../../assets/students/blue.png" />
@@ -43,7 +43,7 @@
       </children>
    </HBox>
 
-   <HBox fx:id="pinkHBox" layoutX="167.0" layoutY="240.0" prefHeight="40.0" prefWidth="495.0" spacing="2.0">
+   <HBox fx:id="pinkHBox" layoutX="167.0" layoutY="240.0" prefHeight="40.0" spacing="2.0" onMouseEntered="#laneHighLight" onMouseExited="#laneUnhighlight" onMouseClicked="#selectLanePink">
       <children>
          <ImageView fitHeight="40" preserveRatio="true">
             <Image url="@../../../assets/students/blue.png" />
@@ -51,7 +51,7 @@
       </children>
    </HBox>
 
-   <HBox fx:id="blueHBox" layoutX="168.0" layoutY="303.0" prefHeight="40.0" prefWidth="495.0" spacing="2.0">
+   <HBox fx:id="blueHBox" layoutX="168.0" layoutY="303.0" prefHeight="40.0" spacing="2.0" onMouseEntered="#laneHighLight" onMouseExited="#laneUnhighlight" onMouseClicked="#selectLaneBlue">
       <children>
          <ImageView fitHeight="40" preserveRatio="true">
             <Image url="@../../../assets/students/blue.png" />
