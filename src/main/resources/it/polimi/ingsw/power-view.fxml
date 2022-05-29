@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" onMouseClicked="#selectPower" onMouseEntered="#highlightPower" onMouseExited="#unhighlightPower" prefWidth="9.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIPowerController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#selectPower" onMouseEntered="#highlightPower" onMouseExited="#unhighlightPower" prefHeight="106.0" prefWidth="82.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIPowerController">
 
-    <ImageView fx:id="powerCard" fitHeight="97.0" fitWidth="72.0" layoutX="8.0" layoutY="8.0" smooth="false">
+    <ImageView fx:id="powerCard" fitHeight="97.0" fitWidth="72.0" layoutX="5.0" layoutY="5.0" smooth="false">
         <Image url="@../../../assets/characterCards/edited/centaur_edited.png" />
     </ImageView>
 
