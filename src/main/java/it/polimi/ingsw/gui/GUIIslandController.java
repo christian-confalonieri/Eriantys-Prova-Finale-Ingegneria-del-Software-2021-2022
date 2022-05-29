@@ -1,10 +1,13 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.entity.Tower;
+import it.polimi.ingsw.model.enumeration.GamePhase;
 import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.TurnPhase;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -79,6 +82,16 @@ public class GUIIslandController {
 
     @FXML
     private void selectIsland() {
+        if(Client.getInstance().getGameHandler().getGamePhase() == GamePhase.TURN && Client.getInstance().getGameHandler().getTurnPhase() == TurnPhase.MOVEMOTHER) {
+            GameService.moveMotherNatureRequest(
+                    (Client.getInstance().getGameHandler().getGame().getIslands().indexOf(islandModel)
+                            - Client.getInstance().getGameHandler().getGame().getIslands().indexOf(Client.getInstance().getGameHandler().getGame().getMotherNature().isOn())
+                    + Client.getInstance().getGameHandler().getGame().getIslands().size())
+                        % Client.getInstance().getGameHandler().getGame().getIslands().size()
+            );
+            return;
+        }
+
         if(outline.getOpacity()==0.5) {
             Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.addSelectedIsland(islandModel));
             labelIslandCountAndSelected.setStyle("-fx-text-fill: RED");
