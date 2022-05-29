@@ -96,7 +96,7 @@ public class GameService {
             }
 
 
-            if(!gameHandler.getCurrentPlayer().getSchool().getEntrance().containsAll(studentsToDiningRoom) &&
+            if(!gameHandler.getCurrentPlayer().getSchool().getEntrance().containsAll(studentsToDiningRoom) ||
             !gameHandler.getCurrentPlayer().getSchool().getEntrance().containsAll(studentsToIsland.keySet())) {
                 Server.getInstance().getClientNetHandler(action.getPlayerId())
                         .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.MOVESTUDENTS, "invalid students in the lists",false)));
