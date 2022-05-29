@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.power.PowerCard;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -30,6 +32,8 @@ public class GUIGameController {
     private PowerCard selectedPower = null;
 
     private PawnColor selectedLane;
+
+    private List<Student> selectedEntranceStudents = new ArrayList<>();
 
     private List<GUISchoolController> schoolControllers;
     private List<AnchorPane> schoolAnchorPanes;
@@ -189,5 +193,27 @@ public class GUIGameController {
 
     public void clearSelectedLane() {
         this.selectedLane = null;
+    }
+
+
+    protected void studentClicked(ImageView studentImage, Student student, Image studentSelectedImage, Image studentStandardImage) {
+        if(!selectedEntranceStudents.contains(student)) {
+            studentImage.setImage(studentSelectedImage);
+            addSelectedEntranceStudent(student);
+        }
+        else {
+            studentImage.setImage(studentStandardImage);
+            removeSelectedEntranceStudent(student);
+        }
+    }
+
+    public void addSelectedEntranceStudent(Student student) {
+        selectedEntranceStudents.add(student);
+    }
+    public void removeSelectedEntranceStudent(Student student) {
+        selectedEntranceStudents.remove(student);
+    }
+    public void clearSelectedStudents() {
+        selectedEntranceStudents.clear();
     }
 }

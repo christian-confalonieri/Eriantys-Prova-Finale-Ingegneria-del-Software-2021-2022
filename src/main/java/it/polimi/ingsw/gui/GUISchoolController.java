@@ -3,6 +3,7 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.Card;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.TowerColor;
@@ -156,7 +157,13 @@ public class GUISchoolController {
         double height = 40;
         entranceGrid.getChildren().clear();
         for (int i = 0; i < studentsNumber; i++) {
-            entranceGrid.add(getStudentImage(playerModel.getSchool().getEntrance().get(i).getColor(), height), (i+1) % 2, (i+1) / 2);
+            Student student = playerModel.getSchool().getEntrance().get(i);
+            PawnColor color = student.getColor();
+            ImageView studentImage = getStudentImage(color, height);
+
+            studentImage.setOnMouseClicked(mouseEvent -> clickStudentHandler(mouseEvent, student));
+
+            entranceGrid.add(studentImage, (i+1) % 2, (i+1) / 2);
         }
     }
 
@@ -208,6 +215,19 @@ public class GUISchoolController {
             case PINK -> new Image(this.getClass().getResource("/assets/students/pink.png").toExternalForm());
             case BLUE -> new Image(this.getClass().getResource("/assets/students/blue.png").toExternalForm());
             case YELLOW -> new Image(this.getClass().getResource("/assets/students/yellow.png").toExternalForm());
+        });
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(height);
+        return imageView;
+    }
+
+    private ImageView getClickedStudentImage(PawnColor color, double height) {
+        ImageView imageView = new ImageView(switch(color) {
+            case GREEN -> new Image(this.getClass().getResource("/assets/students/green_temporary.png").toExternalForm());
+            case RED -> new Image(this.getClass().getResource("/assets/students/red_temporary.png").toExternalForm());
+            case PINK -> new Image(this.getClass().getResource("/assets/students/pink_temporary.png").toExternalForm());
+            case BLUE -> new Image(this.getClass().getResource("/assets/students/blue_temporary.png").toExternalForm());
+            case YELLOW -> new Image(this.getClass().getResource("/assets/students/yellow_temporary.png").toExternalForm());
         });
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(height);
@@ -370,4 +390,15 @@ public class GUISchoolController {
             case BLUE -> blueHBox;
         };
     }
+
+
+    @FXML
+    private void clickStudentHandler(MouseEvent mouseEvent, Student student) {
+        ImageView studentImageView = ((ImageView) mouseEvent.getSource());
+        Image studentImageSelected = getClickedStudentImage(student.getColor(), 40).getImage();
+        Image studentImageStandard = getStudentImage(student.getColor(), 40).getImage();
+        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.studentClicked(studentImageView, student, studentImageSelected, studentImageStandard));
+    }
+
+
 }
