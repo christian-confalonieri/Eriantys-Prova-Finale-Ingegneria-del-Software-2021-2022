@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Student;
 import javafx.fxml.FXML;
@@ -63,14 +64,8 @@ public class GUICloudController {
      */
     @FXML
     private void selectCloud() {
-        if(outline.getOpacity()==0.5) {
-            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.addSelectedCloud(cloudModel));
-            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.selectCloud(outline));
-        }
-        else {
-            Client.getInstance().getGui().guiCallGame(GUIGameController::removeSelectedCloud);
-            outline.setOpacity(0.5);
-        }
+        outline.setOpacity(1);
+        GameService.moveCloudRequest(cloudModel);
     }
 
     /**
@@ -78,9 +73,7 @@ public class GUICloudController {
      */
     @FXML
     private void highlightCloud() {
-        if(outline.getOpacity() == 0) {
-            outline.setOpacity(0.5);
-        }
+        outline.setOpacity(0.5);
     }
 
     /**
@@ -88,9 +81,7 @@ public class GUICloudController {
      */
     @FXML
     private void unhighlightCloud() {
-        if(outline.getOpacity() == 0.5) {
-            unselectCloud();
-        }
+        outline.setOpacity(0);
     }
 
 
@@ -105,13 +96,6 @@ public class GUICloudController {
             case 3 -> cloudBackground.setImage(new Image(this.getClass().getResource("/assets/table/cloud3.png").toExternalForm()));
             case 4 -> cloudBackground.setImage(new Image(this.getClass().getResource("/assets/table/cloud4.png").toExternalForm()));
         }
-    }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    public void unselectCloud() {
-        outline.setOpacity(0);
     }
 
     /**

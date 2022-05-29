@@ -423,15 +423,6 @@ public class GUITableController {
         }
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectCloud(ImageView outline) {
-        for(int i=1; i<=Client.getInstance().getGameHandler().getGame().getClouds().size();i++) {
-            getCloudController(i).unselectCloud();
-        }
-        outline.setOpacity(1);
-    }
 
     /**
      * @author Christian Confalonieri

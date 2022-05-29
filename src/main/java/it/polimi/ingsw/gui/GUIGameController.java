@@ -26,8 +26,6 @@ public class GUIGameController {
 
     private List<Island> selectedIslands = new ArrayList<>();
 
-    private Cloud selectedCloud = null;
-
     private PowerCard selectedPower = null;
 
 
@@ -171,14 +169,6 @@ public class GUIGameController {
         selectedIslands.remove(island);
     }
 
-    public void addSelectedCloud(Cloud cloud) {
-        selectedCloud = cloud;
-    }
-
-    public void removeSelectedCloud() {
-        selectedCloud = null;
-    }
-
     public void clearSelectedIslands() {
         selectedIslands.clear();
     }
@@ -192,11 +182,5 @@ public class GUIGameController {
         selectedPower = null;
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
-    public void selectCloud(ImageView outline) {
-        tableController.selectCloud(outline);
-    }
 
 }
