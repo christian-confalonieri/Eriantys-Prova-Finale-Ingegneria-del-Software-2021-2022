@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIPlayerTableController">
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIPlayerTableController">
    <HBox spacing="5.0">
       <children>
       
@@ -13,14 +13,14 @@
               <Image url="@../../../assets/wizards/blueWizard.jpg" />
           </ImageView>
       
-         <VBox spacing="10.0">
+         <VBox fx:id="vBox" spacing="10.0">
             <children>
                 <Label fx:id="playerName" text="PLAYERNAME">
                     <font>
                         <Font name="System Bold" />
                     </font>
                 </Label>
-                <Label fx:id="teamName" text="PLAYERNAME">
+                <Label fx:id="teamName">
                     <font>
                         <Font name="System Bold" />
                     </font>

@@ -11,10 +11,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.List;
 
 public class GUIPlayerTableController {
+    @FXML
+    private VBox vBox;
     @FXML
     private Label teamName;
     @FXML
@@ -44,6 +47,8 @@ public class GUIPlayerTableController {
                 teamName.setText("TEAM 1");
             else
                 teamName.setText("TEAM 2");
+        } else {
+            vBox.getChildren().remove(teamName);
         }
 
         switch(player.getWizard()) {
