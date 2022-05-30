@@ -1,15 +1,26 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.model.entity.Student;
+import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.power.Friar;
+import it.polimi.ingsw.model.power.Jester;
 import it.polimi.ingsw.model.power.PowerCard;
+import it.polimi.ingsw.model.power.Princess;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+
+import java.util.List;
 
 public class GUIPowerController {
+    @FXML
+    private GridPane powerStudentGrid;
     @FXML
     private ImageView outline;
     @FXML
@@ -43,6 +54,7 @@ public class GUIPowerController {
 
     public void render() {
         cost.setText(String.valueOf(powerCardModel.getCost()));
+        renderStudents();
     }
 
     /**
@@ -96,5 +108,65 @@ public class GUIPowerController {
     public void unselectPower() {
 
     }
+
+
+    public void renderStudents() {
+        List<Student> powerStudents;
+        powerStudentGrid.getChildren().clear();
+
+        switch (powerCardModel.getType()) {
+            case JESTER -> powerStudents = ((Jester) powerCardModel).getStudents();
+            case PRINCESS -> powerStudents = ((Princess) powerCardModel).getStudents();
+            case FRIAR -> powerStudents = ((Friar) powerCardModel).getStudents();
+            default -> {
+                return;
+            }
+        }
+
+        int i = 0;
+        for (Student student : powerStudents) {
+            ImageView studentImage = getStudentImage(student.getColor(), 20);
+            studentImage.setOnMouseClicked((mouseEvent -> clickPowerStudentHandler(mouseEvent, student)));
+
+            powerStudentGrid.add(studentImage, i % 3, i / 3);
+            i++;
+        }
+    }
+
+    @FXML
+    private void clickPowerStudentHandler(MouseEvent mouseEvent, Student student) {
+        ImageView studentImageView = ((ImageView) mouseEvent.getSource());
+        Image studentImageSelected = getClickedStudentImage(student.getColor(), 20).getImage();
+        Image studentImageStandard = getStudentImage(student.getColor(), 20).getImage();
+        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.powerStudentClicked(studentImageView, student, studentImageSelected, studentImageStandard));
+    }
+
+
+    private ImageView getStudentImage(PawnColor color, double height) {
+        ImageView imageView = new ImageView(switch(color) {
+            case GREEN -> new Image(this.getClass().getResource("/assets/students/green.png").toExternalForm());
+            case RED -> new Image(this.getClass().getResource("/assets/students/red.png").toExternalForm());
+            case PINK -> new Image(this.getClass().getResource("/assets/students/pink.png").toExternalForm());
+            case BLUE -> new Image(this.getClass().getResource("/assets/students/blue.png").toExternalForm());
+            case YELLOW -> new Image(this.getClass().getResource("/assets/students/yellow.png").toExternalForm());
+        });
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(height);
+        return imageView;
+    }
+
+    private ImageView getClickedStudentImage(PawnColor color, double height) {
+        ImageView imageView = new ImageView(switch(color) {
+            case GREEN -> new Image(this.getClass().getResource("/assets/students/green_temporary.png").toExternalForm());
+            case RED -> new Image(this.getClass().getResource("/assets/students/red_temporary.png").toExternalForm());
+            case PINK -> new Image(this.getClass().getResource("/assets/students/pink_temporary.png").toExternalForm());
+            case BLUE -> new Image(this.getClass().getResource("/assets/students/blue_temporary.png").toExternalForm());
+            case YELLOW -> new Image(this.getClass().getResource("/assets/students/yellow_temporary.png").toExternalForm());
+        });
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(height);
+        return imageView;
+    }
+
 }
 

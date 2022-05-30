@@ -30,6 +30,9 @@ public class GUIGameController {
     private List<Island> selectedIslands = new ArrayList<>();
 
     private PowerCard selectedPower = null;
+    
+    private List<Student> selectedPowerStudents = new ArrayList<>();
+    
 
     private PawnColor selectedLane;
 
@@ -213,7 +216,29 @@ public class GUIGameController {
     public void removeSelectedEntranceStudent(Student student) {
         selectedEntranceStudents.remove(student);
     }
+
+
     public void clearSelectedStudents() {
         selectedEntranceStudents.clear();
+        selectedPowerStudents.clear();
+    }
+
+    
+    protected void powerStudentClicked(ImageView studentImage, Student student, Image studentSelectedImage, Image studentStandardImage) {
+        if(!selectedPowerStudents.contains(student)) {
+            studentImage.setImage(studentSelectedImage);
+            addSelectedPowerStudent(student);
+        }
+        else {
+            studentImage.setImage(studentStandardImage);
+            removeSelectedPowerStudent(student);
+        }
+    }
+
+    public void addSelectedPowerStudent(Student student) {
+        selectedPowerStudents.add(student);
+    }
+    public void removeSelectedPowerStudent(Student student) {
+        selectedPowerStudents.remove(student);
     }
 }
