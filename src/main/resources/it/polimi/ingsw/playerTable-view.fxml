@@ -20,6 +20,11 @@
                         <Font name="System Bold" />
                     </font>
                 </Label>
+                <Label fx:id="teamName" text="PLAYERNAME">
+                    <font>
+                        <Font name="System Bold" />
+                    </font>
+                </Label>
                 <HBox spacing="3.0">
                     <ImageView fitHeight="50" preserveRatio="true">
                         <Image url="@../../../assets/coin/coin.png" />

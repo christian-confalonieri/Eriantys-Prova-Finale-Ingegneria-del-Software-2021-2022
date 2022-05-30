@@ -2,6 +2,9 @@ package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.entity.Team;
+import it.polimi.ingsw.model.game.Game4P;
+import it.polimi.ingsw.model.game.GameHandler4P;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -9,7 +12,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
+import java.util.List;
+
 public class GUIPlayerTableController {
+    @FXML
+    private Label teamName;
     @FXML
     private Label coinsLabel;
     @FXML
@@ -25,7 +32,20 @@ public class GUIPlayerTableController {
 
     public void setPlayer(Player player) {
         playerModel = player;
-        playerName.setText(player.getName());
+        String name = player.getName();
+        if (Client.getInstance().getPlayerId().equals(playerModel.getName())) {
+            name += " (YOU)";
+        }
+        playerName.setText(name);
+
+        if (Client.getInstance().getGameHandler().getGame().getClass().equals(Game4P.class)) {
+            List<Team> teamList = ((Game4P) Client.getInstance().getGameHandler().getGame()).getTeams();
+            if (teamList.get(0).getPlayers().contains(player))
+                teamName.setText("TEAM 1");
+            else
+                teamName.setText("TEAM 2");
+        }
+
         switch(player.getWizard()) {
             case BLUE -> wizardCard.setImage(new Image(this.getClass().getResource("/assets/wizards/blueWizard.jpg").toExternalForm()));
             case PURPLE -> wizardCard.setImage(new Image(this.getClass().getResource("/assets/wizards/purpleWizard.jpg").toExternalForm()));
