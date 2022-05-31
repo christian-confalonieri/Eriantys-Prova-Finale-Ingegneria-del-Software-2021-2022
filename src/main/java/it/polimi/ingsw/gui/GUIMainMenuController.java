@@ -7,9 +7,7 @@ import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.exceptions.InvalidColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.server.GameLobby;
-import it.polimi.ingsw.server.PlayerLobby;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,13 +17,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GUIMainMenuController {
 

@@ -4,7 +4,6 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.entity.Team;
 import it.polimi.ingsw.model.game.Game4P;
-import it.polimi.ingsw.model.game.GameHandler4P;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

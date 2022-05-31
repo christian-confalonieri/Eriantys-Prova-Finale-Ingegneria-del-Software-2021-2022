@@ -2,7 +2,6 @@ package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.services.LoginService;
-import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.entity.Student;
@@ -144,7 +143,7 @@ public class GUIGameController {
 
         //I will add the remaining schools to the list (And I removed the unused tabs)
         for(Tab tab : tabPane.getTabs()) {
-            if(tab.getText() != "") {
+            if(!tab.getText().equals("")) {
                 tabs.add(tab);
             }
         }

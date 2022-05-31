@@ -1,6 +1,5 @@
 package it.polimi.ingsw.gui;
 
-import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Student;
