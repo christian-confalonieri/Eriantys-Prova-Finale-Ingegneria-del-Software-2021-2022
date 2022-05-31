@@ -14,7 +14,7 @@
             <Image url="@../../../assets/table/background.png" />
          </image>
       </ImageView>
-      <VBox layoutX="20.0" layoutY="36.0" prefWidth="494.0">
+      <VBox fx:id="leaderboardVBox" layoutX="20.0" layoutY="36.0" prefWidth="494.0">
          <children>
          
                            <fx:include source="leaderboardbox-view.fxml" />

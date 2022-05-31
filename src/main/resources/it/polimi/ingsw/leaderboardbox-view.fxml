@@ -9,19 +9,19 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="173.0" prefWidth="559.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIScoreboardController">
+<AnchorPane scaleX="0.6" scaleY="0.6" prefHeight="161.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIScoreboardboxController">
    <children>
-      <ImageView fx:id="background" fitHeight="86.0" fitWidth="675.0" layoutX="23.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="background" fitHeight="86.0" fitWidth="675.0" layoutX="24.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/leaderboard/leaderBackground1.png" />
          </image>
       </ImageView>
-      <Label fx:id="position" layoutX="-1.0" layoutY="-15.0" prefHeight="124.0" prefWidth="54.0" text="1">
+      <Label fx:id="position" layoutX="14.0" layoutY="6.0" prefHeight="124.0" prefWidth="67.0" text="1">
          <font>
-            <Font name="Arial Bold" size="170.0" />
+            <Font name="Arial Bold" size="130.0" />
          </font>
       </Label>
-      <ImageView fx:id="wizard" fitHeight="151.0" fitWidth="105.0" layoutX="79.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="wizard" fitHeight="151.0" fitWidth="105.0" layoutX="80.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/wizards/blueWizard.jpg" />
          </image>
@@ -33,7 +33,7 @@
             </InnerShadow>
          </effect>
       </ImageView>
-      <Label fx:id="player" layoutX="200.0" layoutY="46.0" text="Nickname">
+      <Label fx:id="player" layoutX="201.0" layoutY="40.0" text="Nickname">
          <font>
             <Font name="Arial" size="73.0" />
          </font>
