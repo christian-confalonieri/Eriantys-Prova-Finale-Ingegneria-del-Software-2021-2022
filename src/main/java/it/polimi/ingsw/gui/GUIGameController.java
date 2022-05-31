@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.model.entity.Cloud;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Player;
@@ -240,5 +241,13 @@ public class GUIGameController {
     }
     public void removeSelectedPowerStudent(Student student) {
         selectedPowerStudents.remove(student);
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    @FXML
+    public void logout() {
+        LoginService.logoutRequest();
     }
 }
