@@ -2,12 +2,20 @@ package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.*;
+import it.polimi.ingsw.model.enumeration.GamePhase;
+import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.TurnPhase;
 import it.polimi.ingsw.model.power.PowerCard;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.nio.charset.StandardCharsets;
@@ -21,7 +29,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GUITableController {
-
+    @FXML
+    private GridPane entranceGrid;
     @FXML
     private Label errorLabel;
     @FXML
@@ -255,6 +264,7 @@ public class GUITableController {
      */
     public void render() {
         clearErrors();
+
         int[] islandsX = new int[Client.getInstance().getGameHandler().getGame().getIslands().size()];
         int[] islandsY = new int[Client.getInstance().getGameHandler().getGame().getIslands().size()];
         for(int i=1;i<=Client.getInstance().getGameHandler().getGame().getIslands().size();i++) {
@@ -338,6 +348,8 @@ public class GUITableController {
         allPowerExecute(((anchorPane, guiPowerController) -> renderPower(anchorPane, guiPowerController, powerXIt.next(), powerYIt.next())));
 
         setProfessors();
+
+        renderPlayerEntrance();
     }
 
     protected void errorWrite(String errorMessage) {
@@ -357,6 +369,50 @@ public class GUITableController {
         else {
             islandController.remove();
         }
+    }
+
+    private void renderPlayerEntrance() {
+        Player playerModel = Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId());
+
+        int studentsNumber = playerModel.getSchool().getEntrance().size();
+        double height = 40;
+        entranceGrid.getChildren().clear();
+        if (Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(Client.getInstance().getPlayerId()) &&
+                Client.getInstance().getGameHandler().getGamePhase() == GamePhase.TURN &&
+                Client.getInstance().getGameHandler().getTurnPhase() == TurnPhase.MOVESTUDENTS
+        )   {
+            for (int i = 0; i < studentsNumber; i++) {
+                Student student = playerModel.getSchool().getEntrance().get(i);
+                PawnColor color = student.getColor();
+                ImageView studentImage = getStudentImage(color, height);
+                studentImage.setRotate(90);
+                studentImage.setOnDragDetected(mouseEvent -> {
+                    studentImage.setOpacity(0.5);
+
+                    Dragboard db = studentImage.startDragAndDrop(TransferMode.ANY);
+
+                    ClipboardContent content = new ClipboardContent();
+                    content.putString("");
+                    db.setContent(content);
+                });
+
+                studentImage.setOnDragDone(dragEvent -> studentDragOnIslandDone(dragEvent, student));
+                // studentImage.setOnMouseClicked(mouseEvent -> clickStudentHandler(mouseEvent, student));
+
+                entranceGrid.add(studentImage, (i + 1) % 2, (i + 1) / 2);
+            }
+        }
+    }
+
+    private void studentDragOnIslandDone(DragEvent dragEvent, Student student) {
+        ImageView studentImageView = ((ImageView) dragEvent.getSource());
+        if(dragEvent.isAccepted()) {
+            Image studentImageSelected = getClickedStudentImage(student.getColor(), 40).getImage();
+            Image studentImageStandard = getStudentImage(student.getColor(), 40).getImage();
+            String islandUUID = dragEvent.getDragboard().getString();
+            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.studentOnIslandDragged(studentImageView, student, islandUUID, studentImageSelected, studentImageStandard));
+        }
+        studentImageView.setOpacity(1);
     }
 
     /**
@@ -486,6 +542,32 @@ public class GUITableController {
             case BLUE -> new Image(this.getClass().getResource("/assets/professors/blue.png").toExternalForm());
             case YELLOW -> new Image(this.getClass().getResource("/assets/professors/yellow.png").toExternalForm());
         };
+    }
+
+    private ImageView getStudentImage(PawnColor color, double height) {
+        ImageView imageView = new ImageView(switch(color) {
+            case GREEN -> new Image(this.getClass().getResource("/assets/students/green.png").toExternalForm());
+            case RED -> new Image(this.getClass().getResource("/assets/students/red.png").toExternalForm());
+            case PINK -> new Image(this.getClass().getResource("/assets/students/pink.png").toExternalForm());
+            case BLUE -> new Image(this.getClass().getResource("/assets/students/blue.png").toExternalForm());
+            case YELLOW -> new Image(this.getClass().getResource("/assets/students/yellow.png").toExternalForm());
+        });
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(height);
+        return imageView;
+    }
+
+    private ImageView getClickedStudentImage(PawnColor color, double height) {
+        ImageView imageView = new ImageView(switch(color) {
+            case GREEN -> new Image(this.getClass().getResource("/assets/students/green_temporary.png").toExternalForm());
+            case RED -> new Image(this.getClass().getResource("/assets/students/red_temporary.png").toExternalForm());
+            case PINK -> new Image(this.getClass().getResource("/assets/students/pink_temporary.png").toExternalForm());
+            case BLUE -> new Image(this.getClass().getResource("/assets/students/blue_temporary.png").toExternalForm());
+            case YELLOW -> new Image(this.getClass().getResource("/assets/students/yellow_temporary.png").toExternalForm());
+        });
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(height);
+        return imageView;
     }
 
     /**

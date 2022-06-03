@@ -12,6 +12,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
@@ -282,5 +285,18 @@ public class GUIIslandController {
         if(islandModel.isNoEntry()) {
             noEntry.setOpacity(1);
         }
+    }
+
+    @FXML
+    private void studentDroppedOnIsland(DragEvent dragEvent) {
+        dragEvent.setDropCompleted(true);
+        ClipboardContent content = new ClipboardContent();
+        content.putString(islandModel.getUuid());
+        dragEvent.getDragboard().setContent(content);
+    }
+
+    @FXML
+    private void studentOverIsland(DragEvent dragEvent) {
+        dragEvent.acceptTransferModes(TransferMode.ANY);
     }
 }

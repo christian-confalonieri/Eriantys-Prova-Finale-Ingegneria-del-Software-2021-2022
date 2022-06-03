@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.entity.Player;
@@ -19,9 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,6 +36,7 @@ public class GUIGameController {
     private PawnColor selectedLane;
 
     private List<Student> selectedEntranceToSchoolStudents = new ArrayList<>();
+    private Map<Student, String> selectedEntranceToIslandStudents = new HashMap<>();
 
     private List<GUISchoolController> schoolControllers;
     private List<AnchorPane> schoolAnchorPanes;
@@ -160,6 +160,8 @@ public class GUIGameController {
     }
 
     public void render() {
+        clearSelectedStudents();
+
         tableController.render();
         schoolControllers.forEach(GUISchoolController::render);
     }
@@ -202,25 +204,39 @@ public class GUIGameController {
     protected void studentOnSchoolClicked(ImageView studentImage, Student student, Image studentSelectedImage, Image studentStandardImage) {
         if(!selectedEntranceToSchoolStudents.contains(student)) {
             studentImage.setImage(studentSelectedImage);
-            addSelectedEntranceStudent(student);
+            selectedEntranceToSchoolStudents.add(student);
         }
         else {
             studentImage.setImage(studentStandardImage);
-            removeSelectedEntranceStudent(student);
+            selectedEntranceToSchoolStudents.remove(student);
+        }
+
+        if (selectedEntranceToSchoolStudents.size() + selectedEntranceToIslandStudents.size() ==
+                Client.getInstance().getGameHandler().getGame().getGameRules().studentsRules.turnStudents) {
+            GameService.moveStudentsRequest(selectedEntranceToSchoolStudents, selectedEntranceToIslandStudents);
         }
     }
 
-    public void addSelectedEntranceStudent(Student student) {
-        selectedEntranceToSchoolStudents.add(student);
-    }
-    public void removeSelectedEntranceStudent(Student student) {
-        selectedEntranceToSchoolStudents.remove(student);
-    }
+    protected void studentOnIslandDragged(ImageView studentImage, Student student, String islandUUID, Image studentSelectedImage, Image studentStandardImage) {
+        if(!selectedEntranceToIslandStudents.containsKey(student) && islandUUID != null) {
+            studentImage.setImage(studentSelectedImage);
+            selectedEntranceToIslandStudents.put(student, islandUUID);
+        }
+        else {
+            studentImage.setImage(studentStandardImage);
+            selectedEntranceToIslandStudents.remove(student);
+        }
 
+        if (selectedEntranceToSchoolStudents.size() + selectedEntranceToIslandStudents.size() ==
+                Client.getInstance().getGameHandler().getGame().getGameRules().studentsRules.turnStudents) {
+            GameService.moveStudentsRequest(selectedEntranceToSchoolStudents, selectedEntranceToIslandStudents);
+        }
+    }
 
     public void clearSelectedStudents() {
         selectedEntranceToSchoolStudents.clear();
         selectedPowerStudents.clear();
+        selectedEntranceToIslandStudents.clear();
     }
 
     

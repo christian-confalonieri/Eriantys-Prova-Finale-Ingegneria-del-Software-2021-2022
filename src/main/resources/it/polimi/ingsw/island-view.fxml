@@ -88,7 +88,10 @@
             <Font name="System Bold" size="17.0" />
         </font>
     </Label>
-    <ImageView fx:id="outline" fitHeight="112.0" fitWidth="110.0" layoutX="16.0" layoutY="12.0" onMouseClicked="#selectIsland" onMouseEntered="#highlightIsland" onMouseExited="#unhighlightIsland" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="outline" fitHeight="112.0" fitWidth="110.0" layoutX="16.0" layoutY="12.0"
+               onMouseClicked="#selectIsland" onMouseEntered="#highlightIsland" onMouseExited="#unhighlightIsland"
+               onDragDropped="#studentDroppedOnIsland" onDragOver="#studentOverIsland"
+               opacity="0.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../../assets/outlines/island_far.png" />
         </image>
