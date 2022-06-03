@@ -78,20 +78,20 @@ public class GameService {
 
             if(studentsToDiningRoom == null && studentsToIsland == null) {
                 Server.getInstance().getClientNetHandler(action.getPlayerId())
-                        .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.MOVESTUDENTS, "invalid lists",false)));
+                        .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.MOVESTUDENTS, "Invalid lists",false)));
                 throw new InvalidAction("MoveStudentsAction: invalid lists");
             }
 
             if(studentsToDiningRoom.size() == 0 && studentsToIsland.size() == 0) {
                 Server.getInstance().getClientNetHandler(action.getPlayerId())
-                        .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.MOVESTUDENTS, "invalid lists",false)));
+                        .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.MOVESTUDENTS, "Invalid lists",false)));
                 throw new InvalidAction("MoveStudentsAction: invalid lists");
             }
 
             if(studentsToIsland.size() + studentsToDiningRoom.size() !=
                     gameHandler.getGame().getGameRules().studentsRules.turnStudents) {
                 Server.getInstance().getClientNetHandler(action.getPlayerId())
-                        .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.MOVESTUDENTS, "invalid number of students",false)));
+                        .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.MOVESTUDENTS, "Invalid number of students",false)));
                 throw new InvalidAction("MoveStudentsAction: invalid number of students");
             }
 
@@ -99,10 +99,15 @@ public class GameService {
             if(!gameHandler.getCurrentPlayer().getSchool().getEntrance().containsAll(studentsToDiningRoom) ||
             !gameHandler.getCurrentPlayer().getSchool().getEntrance().containsAll(studentsToIsland.keySet())) {
                 Server.getInstance().getClientNetHandler(action.getPlayerId())
-                        .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.MOVESTUDENTS, "invalid students in the lists",false)));
+                        .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.MOVESTUDENTS, "Invalid students in the lists",false)));
                 throw new InvalidAction("MoveStudentsAction: invalid students in the lists");
             }
 
+            if (studentsToIsland.keySet().stream().anyMatch(studentsToDiningRoom::contains)) {
+                Server.getInstance().getClientNetHandler(action.getPlayerId())
+                        .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.MOVESTUDENTS, "Duplicate student to island and to dining room",false)));
+                throw new InvalidAction("MoveStudentsAction: Duplicate student to island and to dining room");
+            }
 
             if(studentsToDiningRoom != null) {
                 for(Student student : studentsToDiningRoom) {
