@@ -3,10 +3,7 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.PawnColor;
-import it.polimi.ingsw.model.power.Friar;
-import it.polimi.ingsw.model.power.Jester;
-import it.polimi.ingsw.model.power.PowerCard;
-import it.polimi.ingsw.model.power.Princess;
+import it.polimi.ingsw.model.power.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -15,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GUIPowerController {
@@ -110,10 +108,12 @@ public class GUIPowerController {
 
 
     public void renderStudents() {
-        List<Student> powerStudents;
+        List<Student> powerStudents = new ArrayList<>();
+        int noEntry = 0;
         powerStudentGrid.getChildren().clear();
 
         switch (powerCardModel.getType()) {
+            case HERBALIST -> noEntry = ((Herbalist) powerCardModel).getNoEntryCards();
             case JESTER -> powerStudents = ((Jester) powerCardModel).getStudents();
             case PRINCESS -> powerStudents = ((Princess) powerCardModel).getStudents();
             case FRIAR -> powerStudents = ((Friar) powerCardModel).getStudents();
@@ -129,6 +129,13 @@ public class GUIPowerController {
 
             powerStudentGrid.add(studentImage, i % 3, i / 3);
             i++;
+        }
+
+        for(i=0; i<noEntry; i++) {
+            ImageView noEntryImage = new ImageView(new Image(this.getClass().getResource("/assets/table/noEntry.png").toExternalForm()));
+            noEntryImage.setPreserveRatio(true);
+            noEntryImage.setFitHeight(20);
+            powerStudentGrid.add(noEntryImage,i % 3, i / 3);
         }
     }
 
