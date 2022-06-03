@@ -77,14 +77,20 @@ public class GameHandler {
     }
 
     /**
-     * Returns a list of the cards played from the players before the current player
+     * Returns a list of the cards played from the players before the current player in the current turn
      *
      * @return the list of cards
      * @author Christian Confalonieri
      */
     public List<Card> previousPlayedCards() {
         List<Card> playedCard = new ArrayList<>();
-        for(Player player : orderedTurnPlayers) {
+
+        int firstPlayerIndex = orderedTurnPlayers.indexOf(firstTurnPlayer);
+
+        List<Player> orderedPlayerFromFirst = new ArrayList<>(orderedTurnPlayers).stream().skip(firstPlayerIndex).collect(Collectors.toCollection(ArrayList::new));
+        orderedPlayerFromFirst.addAll(orderedTurnPlayers.stream().limit(firstPlayerIndex).toList());
+
+        for(Player player : orderedPlayerFromFirst) {
             if(player != currentPlayer) {
                 Card card = player.getLastPlayedCard();
                 if(card != null) {
