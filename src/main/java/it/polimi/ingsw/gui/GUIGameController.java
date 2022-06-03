@@ -36,7 +36,7 @@ public class GUIGameController {
 
     private PawnColor selectedLane;
 
-    private List<Student> selectedEntranceStudents = new ArrayList<>();
+    private List<Student> selectedEntranceToSchoolStudents = new ArrayList<>();
 
     private List<GUISchoolController> schoolControllers;
     private List<AnchorPane> schoolAnchorPanes;
@@ -199,8 +199,8 @@ public class GUIGameController {
     }
 
 
-    protected void studentClicked(ImageView studentImage, Student student, Image studentSelectedImage, Image studentStandardImage) {
-        if(!selectedEntranceStudents.contains(student)) {
+    protected void studentOnSchoolClicked(ImageView studentImage, Student student, Image studentSelectedImage, Image studentStandardImage) {
+        if(!selectedEntranceToSchoolStudents.contains(student)) {
             studentImage.setImage(studentSelectedImage);
             addSelectedEntranceStudent(student);
         }
@@ -211,15 +211,15 @@ public class GUIGameController {
     }
 
     public void addSelectedEntranceStudent(Student student) {
-        selectedEntranceStudents.add(student);
+        selectedEntranceToSchoolStudents.add(student);
     }
     public void removeSelectedEntranceStudent(Student student) {
-        selectedEntranceStudents.remove(student);
+        selectedEntranceToSchoolStudents.remove(student);
     }
 
 
     public void clearSelectedStudents() {
-        selectedEntranceStudents.clear();
+        selectedEntranceToSchoolStudents.clear();
         selectedPowerStudents.clear();
     }
 

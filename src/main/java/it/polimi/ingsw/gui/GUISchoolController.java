@@ -12,12 +12,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 public class GUISchoolController {
 
+    @FXML
+    private ImageView schoolBackground;
     @FXML
     private Label errorLabel;
 
@@ -157,6 +159,18 @@ public class GUISchoolController {
             Student student = playerModel.getSchool().getEntrance().get(i);
             PawnColor color = student.getColor();
             ImageView studentImage = getStudentImage(color, height);
+
+            studentImage.setOnDragDetected(mouseEvent -> {
+                studentImage.setOpacity(0.5);
+
+                Dragboard db = studentImage.startDragAndDrop(TransferMode.ANY);
+
+                ClipboardContent content = new ClipboardContent();
+                content.putString("");
+                //content.putString("Pippo");
+                db.setContent(content);
+            });
+            studentImage.setOnDragDone(dragEvent -> studentDragDone(dragEvent, student));
 
             studentImage.setOnMouseClicked(mouseEvent -> clickStudentHandler(mouseEvent, student));
 
@@ -394,8 +408,29 @@ public class GUISchoolController {
         ImageView studentImageView = ((ImageView) mouseEvent.getSource());
         Image studentImageSelected = getClickedStudentImage(student.getColor(), 40).getImage();
         Image studentImageStandard = getStudentImage(student.getColor(), 40).getImage();
-        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.studentClicked(studentImageView, student, studentImageSelected, studentImageStandard));
+        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.studentOnSchoolClicked(studentImageView, student, studentImageSelected, studentImageStandard));
     }
 
 
+    @FXML
+    private void studentDragDone(DragEvent dragEvent, Student student) {
+        ImageView studentImageView = ((ImageView) dragEvent.getSource());
+        if (dragEvent.isAccepted()) {
+            Image studentImageSelected = getClickedStudentImage(student.getColor(), 40).getImage();
+            Image studentImageStandard = getStudentImage(student.getColor(), 40).getImage();
+            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.studentOnSchoolClicked(studentImageView, student, studentImageSelected, studentImageStandard));
+        }
+        studentImageView.setOpacity(1);
+    }
+
+    @FXML
+    private void onSchoolDropped(DragEvent dragEvent) {
+        //String s = dragEvent.getDragboard().getString();
+        dragEvent.setDropCompleted(true);
+    }
+
+    @FXML
+    private void onSchoolOver(DragEvent dragEvent) {
+        dragEvent.acceptTransferModes(TransferMode.ANY);
+    }
 }
