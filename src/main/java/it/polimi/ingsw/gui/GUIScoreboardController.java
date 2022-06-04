@@ -45,13 +45,19 @@ public class GUIScoreboardController {
         int count = 1;
         leaderboardVBox.getChildren().clear();
         for(Player player : playersScoreboard) {
-            AnchorPane anchorPane = getAnchorPane(count,player.getWizard(),player.getName());
+            AnchorPane anchorPane = loadLeaderboardBox(count, player.getWizard(), player.getName());
             leaderboardVBox.getChildren().add(anchorPane);
             count++;
         }
+        switch (scoreboardIds.size()) {
+            case 1 -> { leaderboardVBox.setLayoutX(120); leaderboardVBox.setLayoutY(167);}
+            case 2 -> { leaderboardVBox.setLayoutX(120); leaderboardVBox.setLayoutY(118);}
+            case 3 -> { leaderboardVBox.setLayoutX(120); leaderboardVBox.setLayoutY(70);}
+            default -> { leaderboardVBox.setLayoutX(120); leaderboardVBox.setLayoutY(19.0);}
+        }
     }
 
-    private AnchorPane getAnchorPane(int position, Wizard wizard, String player) {
+    private AnchorPane loadLeaderboardBox(int position, Wizard wizard, String player) {
        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/it/polimi/ingsw/leaderboardbox-view.fxml"));
        AnchorPane anchorPane = null;
        try {
