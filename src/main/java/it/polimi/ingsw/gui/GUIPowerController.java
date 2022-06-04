@@ -59,7 +59,7 @@ public class GUIPowerController {
      */
     public void selectPower() {
         if(!isActiveSelected) {
-            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.addSelectedPower(powerCardModel));
+            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.addSelectedPower(powerCardModel,cost,powerStudentGrid));
             isActiveSelected = true;
             anchorPane.setStyle("-fx-border-width: 5; -fx-border-color: WHITE");
         }
