@@ -49,6 +49,12 @@ public class GUIScoreboardController {
             leaderboardVBox.getChildren().add(anchorPane);
             count++;
         }
+        switch (scoreboardIds.size()) {
+            case 1 -> { leaderboardVBox.setLayoutX(120); leaderboardVBox.setLayoutY(167);}
+            case 2 -> { leaderboardVBox.setLayoutX(120); leaderboardVBox.setLayoutY(118);}
+            case 3 -> { leaderboardVBox.setLayoutX(120); leaderboardVBox.setLayoutY(70);}
+            default -> { leaderboardVBox.setLayoutX(120); leaderboardVBox.setLayoutY(19.0);}
+        }
     }
 
     private AnchorPane loadLeaderboardBox(int position, Wizard wizard, String player) {

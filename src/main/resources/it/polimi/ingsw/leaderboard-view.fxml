@@ -11,11 +11,8 @@
             <Image url="@../../../assets/table/background.png" />
          </image>
       </ImageView>
-      <VBox fx:id="leaderboardVBox" layoutX="117.0" layoutY="19.0" spacing="30">
+      <VBox fx:id="leaderboardVBox" layoutX="120.0" layoutY="167.0" spacing="30">
          <children>
-            <fx:include source="leaderboardbox-view.fxml" />
-            <fx:include source="leaderboardbox-view.fxml" />
-            <fx:include source="leaderboardbox-view.fxml" />
             <fx:include source="leaderboardbox-view.fxml" />
          </children>
       </VBox>

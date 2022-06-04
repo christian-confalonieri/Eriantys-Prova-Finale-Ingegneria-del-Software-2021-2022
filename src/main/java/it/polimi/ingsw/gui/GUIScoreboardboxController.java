@@ -1,10 +1,13 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.model.enumeration.Wizard;
+import javafx.css.converter.PaintConverter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class GUIScoreboardboxController {
     @FXML
@@ -18,6 +21,11 @@ public class GUIScoreboardboxController {
 
     public void setPosition(int position) {
         this.position.setText(Integer.toString(position));
+        switch (position) {
+            case 1 -> this.position.setTextFill(Color.GOLD);
+            case 2 -> this.position.setTextFill(Color.SILVER);
+            case 3 -> this.position.setTextFill(Color.ROSYBROWN);
+        }
     }
 
     public void setPlayer(String player) {
