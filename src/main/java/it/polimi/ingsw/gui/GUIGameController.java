@@ -186,6 +186,9 @@ public class GUIGameController {
 
     public void addSelectedPower(PowerCard power) {
         selectedPower = power;
+
+        //Opens the power banner
+        GUIPowerBannerController.initSceneAndController();
     }
 
     public void removeSelectedPower() {

@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<VBox prefHeight="351.0" prefWidth="539.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="351.0" prefWidth="539.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIPowerBannerController">
    <children>
       <MenuBar VBox.vgrow="NEVER">
          <menus>
@@ -61,7 +54,7 @@
                   <Font name="Cooper Black" size="18.0" />
                </font>
             </Label>
-            <Rectangle arcWidth="5.0" fill="#d9d9d9df" height="78.0" layoutX="-184.0" layoutY="253.0" stroke="#dedede00" strokeType="INSIDE" width="723.0" />
+            <Rectangle arcWidth="5.0" fill="#d9d9d9df" height="78.0" layoutY="253.0" stroke="#dedede00" strokeType="INSIDE" width="539.0" />
             <Label layoutX="97.0" layoutY="283.0" text="Do you wish to proceed ?">
                <font>
                   <Font name="Cooper Black" size="12.0" />
