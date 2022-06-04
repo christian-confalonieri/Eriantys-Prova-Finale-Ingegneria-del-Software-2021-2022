@@ -86,6 +86,8 @@
             <excludes>
               <exclude>**/ClientTest.java</exclude>
               <exclude>**/ServerTest.java</exclude>
+              <exclude>**/GUITest.java</exclude>
+              <exclude>**/GUITestApplication.java</exclude>
             </excludes>
           </configuration>
         </plugin>
@@ -126,6 +128,8 @@
           <excludes>
             <exclude>**/ClientTest.java</exclude>
             <exclude>**/ServerTest.java</exclude>
+            <exclude>**/GUITest.java</exclude>
+            <exclude>**/GUITestApplication.java</exclude>
           </excludes>
         </configuration>
         <executions>
