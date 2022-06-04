@@ -12,11 +12,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -184,11 +186,11 @@ public class GUIGameController {
     }
 
 
-    public void addSelectedPower(PowerCard power) {
+    public void addSelectedPower(PowerCard power,Label cost, GridPane powerStudentGrid) {
         selectedPower = power;
 
         //Opens the power banner
-        GUIPowerBannerController.initSceneAndController();
+        GUIPowerBannerController.initSceneAndController(cost,powerStudentGrid);
     }
 
     public void removeSelectedPower() {
