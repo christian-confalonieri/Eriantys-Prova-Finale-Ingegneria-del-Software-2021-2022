@@ -105,9 +105,6 @@ public class GUIPowerBannerController {
             case JESTER -> powerStudents = ((Jester) powerCard).getStudents();
             case PRINCESS -> powerStudents = ((Princess) powerCard).getStudents();
             case FRIAR -> powerStudents = ((Friar) powerCard).getStudents();
-            default -> {
-                break;
-            }
         }
 
         int i = 0;
