@@ -1,8 +1,10 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.power.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -55,6 +57,9 @@ public class GUIPowerBannerController {
     private Label messageLabel;
     @FXML
     private ChoiceBox<String> colorChoiceBox;
+
+    private List<Student> clickedCardStudents = new ArrayList<>();
+    private List<Student> clickedEntranceStudents = new ArrayList<>();
 
     protected static void initSceneAndRender(PowerCard powerCard) {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIMainMenuController.class.getResource("/it/polimi/ingsw/powerbanner-view.fxml"));
@@ -328,8 +333,37 @@ public class GUIPowerBannerController {
         };
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @FXML
     private void clickPowerStudentHandler(MouseEvent mouseEvent, Student student) {
+        List<Student> powerStudents = new ArrayList<>();
+        PowerCard powerCard = Client.getInstance().getGameHandler().getGame().getPowerCard(PowerType.valueOf(powerName.getText()));
+
+        switch (powerCard.getType()) {
+            case JESTER -> powerStudents = ((Jester) powerCard).getStudents();
+            case PRINCESS -> powerStudents = ((Princess) powerCard).getStudents();
+            case FRIAR -> powerStudents = ((Friar) powerCard).getStudents();
+        }
+
+        if(powerStudents.contains(student)) {
+            if(!clickedCardStudents.contains(student)) {
+                clickedCardStudents.add(student);
+            }
+            else {
+                clickedCardStudents.remove(student);
+            }
+        }
+        else {
+            if(!clickedEntranceStudents.contains(student)) {
+                clickedEntranceStudents.add(student);
+            }
+            else {
+                clickedEntranceStudents.remove(student);
+            }
+        }
+
         ImageView studentImageView = ((ImageView) mouseEvent.getSource());
         Image studentImageSelected = getClickedStudentImage(student.getColor(), 20).getImage();
         Image studentImageStandard = getStudentImage(student.getColor(), 20).getImage();
@@ -365,7 +399,16 @@ public class GUIPowerBannerController {
 
     @FXML
     private void powerRequest() {
-
+        PowerType powerType = PowerType.valueOf(powerName.getText());
+        EffectHandler effectHandler = new EffectHandler();
+        switch (powerType) {
+            case FRIAR -> {
+                effectHandler.setChosenStudents1(clickedCardStudents);
+                effectHandler.setChosenIslandUuid(Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(islandChoiceBox.getValue())-1).getUuid());
+            }
+        }
+        GameService.powerRequest(powerType,effectHandler);
+        ((Stage) powerCard.getScene().getWindow()).close();
     }
 
     /**
