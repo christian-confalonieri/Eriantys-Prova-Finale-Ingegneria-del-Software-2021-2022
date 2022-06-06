@@ -3,7 +3,7 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.PawnColor;
-import it.polimi.ingsw.model.power.PowerCard;
+import it.polimi.ingsw.model.power.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +18,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUIPowerBannerController {
 
@@ -54,7 +56,7 @@ public class GUIPowerBannerController {
     @FXML
     private ChoiceBox<String> colorChoiceBox;
 
-    protected static void initSceneAndController(PowerCard powerCard, GridPane powerStudentGrid) {
+    protected static void initSceneAndController(PowerCard powerCard) {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIMainMenuController.class.getResource("/it/polimi/ingsw/powerbanner-view.fxml"));
         Parent root = null;
         try {
@@ -74,14 +76,54 @@ public class GUIPowerBannerController {
     /**
      * @author Christian Confalonieri
      */
-    private void renderPower(PowerCard powerCard, GridPane powerStudentGrid) {
+    private void renderPower(PowerCard powerCard) {
         this.powerCard.setImage(setPowerCard(powerCard));
         cost.setText(Integer.toString(powerCard.getCost()));
         powerName.setText(powerCard.getType().toString());
         powerEffect.setText(setPowerEffect(powerCard));
         messageLabel.setText(getPowerMessage(powerCard));
 
-        gridCardStudents = powerStudentGrid;
+        renderCardStudents(powerCard);
+        renderEntranceStudents(powerCard);
+        renderIslandChoiceBox(powerCard);
+        renderDiningRoomCheckBox(powerCard);
+        renderInputPosition(powerCard);
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private void renderCardStudents(PowerCard powerCard) {
+        List<Student> powerStudents = new ArrayList<>();
+        int noEntry = 0;
+        gridCardStudents.getChildren().clear();
+
+        switch (powerCard.getType()) {
+            case HERBALIST -> noEntry = ((Herbalist) powerCard).getNoEntryCards();
+            case JESTER -> powerStudents = ((Jester) powerCard).getStudents();
+            case PRINCESS -> powerStudents = ((Princess) powerCard).getStudents();
+            case FRIAR -> powerStudents = ((Friar) powerCard).getStudents();
+            default -> {
+                return;
+            }
+        }
+
+        int i = 0;
+        for (Student student : powerStudents) {
+            ImageView studentImage = getStudentImage(student.getColor(), 20);
+            studentImage.setOnMouseClicked((mouseEvent -> clickPowerStudentHandler(mouseEvent, student)));
+
+            gridCardStudents.add(studentImage, i % 3, i / 3);
+            i++;
+        }
+
+        for(i=0; i<noEntry; i++) {
+            ImageView noEntryImage = new ImageView(new Image(this.getClass().getResource("/assets/table/noEntry.png").toExternalForm()));
+            noEntryImage.setPreserveRatio(true);
+            noEntryImage.setFitHeight(20);
+            gridCardStudents.add(noEntryImage,i % 3, i / 3);
+        }
+
         switch(powerCard.getType()) {
             case HERBALIST -> cardStudentsLabel.setText("No entry tiles on the card");
             case JESTER, PRINCESS, FRIAR -> cardStudentsLabel.setText("Students on the card");
@@ -90,7 +132,12 @@ public class GUIPowerBannerController {
                 cardStudentsLabel.setOpacity(0);
             }
         }
+    }
 
+    /**
+     * @author Christian Confalonieri
+     */
+    private void renderEntranceStudents(PowerCard powerCard) {
         switch(powerCard.getType()) {
             case JESTER, MINSTREL -> {
                 int i = 0;
@@ -106,12 +153,22 @@ public class GUIPowerBannerController {
                 entranceStudentsLabel.setOpacity(0);
             }
         }
+    }
 
+    /**
+     * @author Christian Confalonieri
+     */
+    private  void renderIslandChoiceBox(PowerCard powerCard) {
         switch(powerCard.getType()) {
             case HERBALIST, FRIAR, HERALD -> {}
             default -> islandChoiceBox.setOpacity(0);
         }
+    }
 
+    /**
+     * @author Christian Confalonieri
+     */
+    private void renderDiningRoomCheckBox(PowerCard powerCard) {
         switch(powerCard.getType()) {
             case HARVESTER,THIEF -> {
                 checkBoxRed.setOpacity(0);
@@ -130,7 +187,12 @@ public class GUIPowerBannerController {
                 checkBoxPink.setOpacity(0);
             }
         }
+    }
 
+    /**
+     * @author Christian Confalonieri
+     */
+    private void renderInputPosition(PowerCard powerCard) {
         switch(powerCard.getType()) {
             case PRINCESS -> {
                 gridCardStudents.setLayoutX(180);
@@ -163,19 +225,6 @@ public class GUIPowerBannerController {
                 colorChoiceBox.setLayoutX(183);
             }
         }
-    }
-
-    @FXML
-    private void powerRequest() {
-
-    }
-
-    /**
-     * @author Christian Confalonieri
-     */
-    @FXML
-    private void cancel() {
-        ((Stage) powerCard.getScene().getWindow()).close();
     }
 
     private Image setPowerCard(PowerCard powerCard) {
@@ -274,5 +323,18 @@ public class GUIPowerBannerController {
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(height);
         return imageView;
+    }
+
+    @FXML
+    private void powerRequest() {
+
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    @FXML
+    private void cancel() {
+        ((Stage) powerCard.getScene().getWindow()).close();
     }
 }
