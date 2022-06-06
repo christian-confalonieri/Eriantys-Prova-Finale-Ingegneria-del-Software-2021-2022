@@ -106,7 +106,7 @@ public class GUIPowerBannerController {
             case PRINCESS -> powerStudents = ((Princess) powerCard).getStudents();
             case FRIAR -> powerStudents = ((Friar) powerCard).getStudents();
             default -> {
-                return;
+                break;
             }
         }
 
@@ -131,7 +131,11 @@ public class GUIPowerBannerController {
             case JESTER, PRINCESS, FRIAR -> cardStudentsLabel.setText("Students on the card");
             default -> {
                 gridCardStudents.setOpacity(0);
+                gridCardStudents.setDisable(true);
+                gridCardStudents.toBack();
                 cardStudentsLabel.setOpacity(0);
+                cardStudentsLabel.setDisable(true);
+                cardStudentsLabel.toBack();
             }
         }
     }
@@ -140,6 +144,7 @@ public class GUIPowerBannerController {
      * @author Christian Confalonieri
      */
     private void renderEntranceStudents(PowerCard powerCard) {
+        gridEntrance.getChildren().clear();
         switch(powerCard.getType()) {
             case JESTER, MINSTREL -> {
                 int i = 0;
@@ -152,7 +157,11 @@ public class GUIPowerBannerController {
             }
             default -> {
                 gridEntrance.setOpacity(0);
+                gridEntrance.setDisable(true);
+                gridEntrance.toBack();
                 entranceStudentsLabel.setOpacity(0);
+                entranceStudentsLabel.setDisable(true);
+                entranceStudentsLabel.toBack();
             }
         }
     }
@@ -163,7 +172,11 @@ public class GUIPowerBannerController {
     private  void renderIslandChoiceBox(PowerCard powerCard) {
         switch(powerCard.getType()) {
             case HERBALIST, FRIAR, HERALD -> {}
-            default -> islandChoiceBox.setOpacity(0);
+            default -> {
+                islandChoiceBox.setOpacity(0);
+                islandChoiceBox.setDisable(true);
+                islandChoiceBox.toBack();
+            }
         }
     }
 
@@ -174,19 +187,45 @@ public class GUIPowerBannerController {
         switch(powerCard.getType()) {
             case HARVESTER,THIEF -> {
                 checkBoxRed.setOpacity(0);
+                checkBoxRed.setDisable(true);
+                checkBoxRed.toBack();
                 checkBoxBlue.setOpacity(0);
+                checkBoxBlue.setDisable(true);
+                checkBoxBlue.toBack();
                 checkBoxGreen.setOpacity(0);
+                checkBoxGreen.setDisable(true);
+                checkBoxGreen.toBack();
                 checkBoxYellow.setOpacity(0);
+                checkBoxYellow.setDisable(true);
+                checkBoxYellow.toBack();
                 checkBoxPink.setOpacity(0);
+                checkBoxPink.setDisable(true);
+                checkBoxPink.toBack();
             }
-            case MINSTREL ->  colorChoiceBox.setOpacity(0);
+            case MINSTREL ->  {
+                colorChoiceBox.setOpacity(0);
+                colorChoiceBox.setDisable(true);
+                colorChoiceBox.toBack();
+            }
             default -> {
                 colorChoiceBox.setOpacity(0);
+                colorChoiceBox.setDisable(true);
+                colorChoiceBox.toBack();
                 checkBoxRed.setOpacity(0);
+                checkBoxRed.setDisable(true);
+                checkBoxRed.toBack();
                 checkBoxBlue.setOpacity(0);
+                checkBoxBlue.setDisable(true);
+                checkBoxBlue.toBack();
                 checkBoxGreen.setOpacity(0);
+                checkBoxGreen.setDisable(true);
+                checkBoxGreen.toBack();
                 checkBoxYellow.setOpacity(0);
+                checkBoxYellow.setDisable(true);
+                checkBoxYellow.toBack();
                 checkBoxPink.setOpacity(0);
+                checkBoxPink.setDisable(true);
+                checkBoxPink.toBack();
             }
         }
     }
@@ -198,22 +237,22 @@ public class GUIPowerBannerController {
         switch(powerCard.getType()) {
             case PRINCESS -> {
                 gridCardStudents.setLayoutX(180);
-                cardStudentsLabel.setLayoutX(171);
+                cardStudentsLabel.setLayoutX(160);
             }
             case FRIAR, HERBALIST -> {
                 gridCardStudents.setLayoutX(144);
-                cardStudentsLabel.setLayoutX(135);
+                cardStudentsLabel.setLayoutX(124);
                 islandChoiceBox.setLayoutX(231);
             }
             case JESTER -> {
                 gridCardStudents.setLayoutX(142);
-                cardStudentsLabel.setLayoutX(133);
+                cardStudentsLabel.setLayoutX(122);
                 gridEntrance.setLayoutX(226);
-                entranceStudentsLabel.setLayoutX(246);
+                entranceStudentsLabel.setLayoutX(215);
             }
             case MINSTREL -> {
                 gridEntrance.setLayoutX(109);
-                entranceStudentsLabel.setLayoutX(129);
+                entranceStudentsLabel.setLayoutX(98);
                 checkBoxRed.setLayoutX(223);
                 checkBoxBlue.setLayoutX(223);
                 checkBoxGreen.setLayoutX(301);

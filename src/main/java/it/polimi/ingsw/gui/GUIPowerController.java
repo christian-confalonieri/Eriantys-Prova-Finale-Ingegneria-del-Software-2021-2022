@@ -127,7 +127,7 @@ public class GUIPowerController {
         int i = 0;
         for (Student student : powerStudents) {
             ImageView studentImage = getStudentImage(student.getColor(), 20);
-            studentImage.setOnMouseClicked((mouseEvent -> clickPowerStudentHandler(mouseEvent, student)));
+//            studentImage.setOnMouseClicked((mouseEvent -> clickPowerStudentHandler(mouseEvent, student)));
 
             powerStudentGrid.add(studentImage, i % 3, i / 3);
             i++;
@@ -141,13 +141,13 @@ public class GUIPowerController {
         }
     }
 
-    @FXML
-    private void clickPowerStudentHandler(MouseEvent mouseEvent, Student student) {
-        ImageView studentImageView = ((ImageView) mouseEvent.getSource());
-        Image studentImageSelected = getClickedStudentImage(student.getColor(), 20).getImage();
-        Image studentImageStandard = getStudentImage(student.getColor(), 20).getImage();
-        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.powerStudentClicked(studentImageView, student, studentImageSelected, studentImageStandard));
-    }
+//    @FXML
+//    private void clickPowerStudentHandler(MouseEvent mouseEvent, Student student) {
+//        ImageView studentImageView = ((ImageView) mouseEvent.getSource());
+//        Image studentImageSelected = getClickedStudentImage(student.getColor(), 20).getImage();
+//        Image studentImageStandard = getStudentImage(student.getColor(), 20).getImage();
+//        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.powerStudentClicked(studentImageView, student, studentImageSelected, studentImageStandard));
+//    }
 
 
     private ImageView getStudentImage(PawnColor color, double height) {
@@ -163,18 +163,18 @@ public class GUIPowerController {
         return imageView;
     }
 
-    private ImageView getClickedStudentImage(PawnColor color, double height) {
-        ImageView imageView = new ImageView(switch(color) {
-            case GREEN -> new Image(this.getClass().getResource("/assets/students/green_temporary.png").toExternalForm());
-            case RED -> new Image(this.getClass().getResource("/assets/students/red_temporary.png").toExternalForm());
-            case PINK -> new Image(this.getClass().getResource("/assets/students/pink_temporary.png").toExternalForm());
-            case BLUE -> new Image(this.getClass().getResource("/assets/students/blue_temporary.png").toExternalForm());
-            case YELLOW -> new Image(this.getClass().getResource("/assets/students/yellow_temporary.png").toExternalForm());
-        });
-        imageView.setPreserveRatio(true);
-        imageView.setFitHeight(height);
-        return imageView;
-    }
+//    private ImageView getClickedStudentImage(PawnColor color, double height) {
+//        ImageView imageView = new ImageView(switch(color) {
+//            case GREEN -> new Image(this.getClass().getResource("/assets/students/green_temporary.png").toExternalForm());
+//            case RED -> new Image(this.getClass().getResource("/assets/students/red_temporary.png").toExternalForm());
+//            case PINK -> new Image(this.getClass().getResource("/assets/students/pink_temporary.png").toExternalForm());
+//            case BLUE -> new Image(this.getClass().getResource("/assets/students/blue_temporary.png").toExternalForm());
+//            case YELLOW -> new Image(this.getClass().getResource("/assets/students/yellow_temporary.png").toExternalForm());
+//        });
+//        imageView.setPreserveRatio(true);
+//        imageView.setFitHeight(height);
+//        return imageView;
+//    }
 
 }
 
