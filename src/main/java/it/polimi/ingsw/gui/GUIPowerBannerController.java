@@ -54,7 +54,7 @@ public class GUIPowerBannerController {
     @FXML
     private ChoiceBox<String> colorChoiceBox;
 
-    protected static void initSceneAndController(PowerCard powerCard,Label cost, GridPane powerStudentGrid) {
+    protected static void initSceneAndController(PowerCard powerCard, GridPane powerStudentGrid) {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIMainMenuController.class.getResource("/it/polimi/ingsw/powerbanner-view.fxml"));
         Parent root = null;
         try {
@@ -74,9 +74,9 @@ public class GUIPowerBannerController {
     /**
      * @author Christian Confalonieri
      */
-    private void renderPower(PowerCard powerCard,Label cost, GridPane powerStudentGrid) {
+    private void renderPower(PowerCard powerCard, GridPane powerStudentGrid) {
         this.powerCard.setImage(setPowerCard(powerCard));
-        this.cost = cost;
+        cost.setText(Integer.toString(powerCard.getCost()));
         powerName.setText(powerCard.getType().toString());
         powerEffect.setText(setPowerEffect(powerCard));
         messageLabel.setText(getPowerMessage(powerCard));
