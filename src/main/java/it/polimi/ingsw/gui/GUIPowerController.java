@@ -58,16 +58,18 @@ public class GUIPowerController {
      * @author Christian Confalonieri
      */
     public void selectPower() {
-        if(!isActiveSelected) {
-            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.addSelectedPower(powerCardModel,cost,powerStudentGrid));
-            isActiveSelected = true;
-            anchorPane.setStyle("-fx-border-width: 5; -fx-border-color: WHITE");
-        }
-        else {
-            Client.getInstance().getGui().guiCallGame(GUIGameController::removeSelectedPower);
-            isActiveSelected = false;
-            anchorPane.setStyle("");
-        }
+        GUIPowerBannerController.initSceneAndRender(powerCardModel);
+
+//        if(!isActiveSelected) {
+//            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.addSelectedPower(powerCardModel,cost,powerStudentGrid));
+//            isActiveSelected = true;
+//            anchorPane.setStyle("-fx-border-width: 5; -fx-border-color: WHITE");
+//        }
+//        else {
+//            Client.getInstance().getGui().guiCallGame(GUIGameController::removeSelectedPower);
+//            isActiveSelected = false;
+//            anchorPane.setStyle("");
+//        }
     }
 
     /**

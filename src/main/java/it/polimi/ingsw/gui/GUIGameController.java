@@ -190,7 +190,6 @@ public class GUIGameController {
         selectedPower = power;
 
         //Opens the power banner
-        GUIPowerBannerController.initSceneAndController(power);
     }
 
     public void removeSelectedPower() {

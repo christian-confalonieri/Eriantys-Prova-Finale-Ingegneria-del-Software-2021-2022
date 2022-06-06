@@ -56,7 +56,7 @@ public class GUIPowerBannerController {
     @FXML
     private ChoiceBox<String> colorChoiceBox;
 
-    protected static void initSceneAndController(PowerCard powerCard) {
+    protected static void initSceneAndRender(PowerCard powerCard) {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIMainMenuController.class.getResource("/it/polimi/ingsw/powerbanner-view.fxml"));
         Parent root = null;
         try {
@@ -70,6 +70,8 @@ public class GUIPowerBannerController {
         stage.setTitle("Power");
         stage.setScene(scene);
         stage.show();
+
+        ((GUIPowerBannerController) fxmlLoader.getController()).renderPower(powerCard);
     }
 
 

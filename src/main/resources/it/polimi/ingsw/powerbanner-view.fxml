@@ -179,9 +179,9 @@
          </FXCollections>
       </items>
    </ChoiceBox>
-   <CheckBox layoutX="220.0" layoutY="129.0" mnemonicParsing="false" text="BLUE" />
-   <CheckBox layoutX="220.0" layoutY="153.0" mnemonicParsing="false" text="RED" />
-   <CheckBox layoutX="298.0" layoutY="129.0" mnemonicParsing="false" text="GREEN" />
-   <CheckBox layoutX="298.0" layoutY="153.0" mnemonicParsing="false" text="PINK" />
-   <CheckBox layoutX="220.0" layoutY="175.0" mnemonicParsing="false" text="YELLOW" />
+   <CheckBox fx:id="checkBoxBlue" layoutX="220.0" layoutY="129.0" mnemonicParsing="false" text="BLUE" />
+   <CheckBox fx:id="checkBoxRed" layoutX="220.0" layoutY="153.0" mnemonicParsing="false" text="RED" />
+   <CheckBox fx:id="checkBoxGreen" layoutX="298.0" layoutY="129.0" mnemonicParsing="false" text="GREEN" />
+   <CheckBox fx:id="checkBoxPink" layoutX="298.0" layoutY="153.0" mnemonicParsing="false" text="PINK" />
+   <CheckBox fx:id="checkBoxYellow" layoutX="220.0" layoutY="175.0" mnemonicParsing="false" text="YELLOW" />
 </AnchorPane>
