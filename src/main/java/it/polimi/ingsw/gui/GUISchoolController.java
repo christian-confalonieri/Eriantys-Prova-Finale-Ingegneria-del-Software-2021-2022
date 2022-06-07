@@ -98,6 +98,11 @@ public class GUISchoolController {
     }
 
     private void renderGamePhaseLabel() {
+        if(!Client.getInstance().getPlayerId().equals(playerModel.getName())) {
+            gamePhaseLabel.setOpacity(0);
+            errorLabel.setOpacity(0);
+            return;
+        }
         if(!Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(playerModel.getName())) {
             gamePhaseLabel.setText("WAIT YOUR TURN...");
             return;
