@@ -305,7 +305,7 @@ public class GUI extends Application {
 
     public void notifyStateChange() {
         Platform.runLater( () -> {
-            Stage.getWindows().stream().skip(1).forEach(window -> ((Stage) window).close());
+            if(Stage.getWindows().size() > 1) Stage.getWindows().forEach(window -> ((Stage) window).close());
             Stage currentStageWindow = Stage.getWindows().size() != 0 ? ((Stage)(Stage.getWindows().get(0))) : new Stage();
 
             currentStageWindow.setOnCloseRequest(windowEvent -> {
