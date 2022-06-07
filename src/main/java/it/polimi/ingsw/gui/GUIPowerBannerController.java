@@ -2,6 +2,8 @@ package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.services.GameService;
+import it.polimi.ingsw.model.entity.Pawn;
+import it.polimi.ingsw.model.entity.School;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.PowerType;
@@ -397,18 +399,90 @@ public class GUIPowerBannerController {
         return imageView;
     }
 
+    /**
+     * @author Christian Confalonieri
+     */
     @FXML
     private void powerRequest() {
         PowerType powerType = PowerType.valueOf(powerName.getText());
         EffectHandler effectHandler = new EffectHandler();
+        List<Student> diningRoomStudents = new ArrayList<>();
         switch (powerType) {
             case FRIAR -> {
+                if(clickedCardStudents.size() != 1) {
+                    messageLabel.setText("Students selected incorrectly, please try again");
+                    return;
+                }
                 effectHandler.setChosenStudents1(clickedCardStudents);
                 effectHandler.setChosenIslandUuid(Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(islandChoiceBox.getValue())-1).getUuid());
             }
+            case HERALD, HERBALIST -> effectHandler.setChosenIslandUuid(Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(islandChoiceBox.getValue())-1).getUuid());
+            case JESTER -> {
+                if(clickedCardStudents.size() > 3 || clickedCardStudents.size()!=clickedEntranceStudents.size()) {
+                    messageLabel.setText("Students selected incorrectly, please try again");
+                    return;
+                }
+                effectHandler.setChosenStudents1(clickedCardStudents);
+                effectHandler.setChosenStudents2(clickedEntranceStudents);
+            }
+            case HARVESTER -> effectHandler.setHarvesterColor(PawnColor.valueOf(colorChoiceBox.getValue()));
+            case MINSTREL -> {
+                int checked = 0;
+                List<PawnColor> checkedColors = new ArrayList<>();
+                School playerSchool = Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId()).getSchool();
+                for(PawnColor color : PawnColor.values()) {
+                    if(getColorCheckBox(color).isSelected()) {
+                        checkedColors.add(color);
+                        checked++;
+                    }
+                }
+
+                if(checked == 1 && playerSchool.getStudentsDiningRoom(checkedColors.get(0)).size() >= clickedEntranceStudents.size()) {
+                    for(int i=0;i<clickedEntranceStudents.size();i++) {
+                            diningRoomStudents.add(playerSchool.getStudentsDiningRoom(checkedColors.get(0)).get(i));
+                        }
+                }
+                else {
+                    if(checked == 2 &&
+                            playerSchool.getStudentsDiningRoom(checkedColors.get(0)).size() != 0
+                            && playerSchool.getStudentsDiningRoom(checkedColors.get(1)).size() != 0) {
+                        for(int i=0;i<2;i++) {
+                            diningRoomStudents.add(playerSchool.getStudentsDiningRoom(checkedColors.get(i)).get(0));
+                        }
+                    }
+                    else {
+                        messageLabel.setText("Students selected incorrectly, please try again");
+                        return;
+                    }
+                }
+
+                effectHandler.setChosenStudents1(clickedEntranceStudents);
+                effectHandler.setChosenStudents2(diningRoomStudents);
+            }
+            case PRINCESS -> {
+                if(clickedCardStudents.size() != 1) {
+                    messageLabel.setText("Students selected incorrectly, please try again");
+                    return;
+                }
+                effectHandler.setChosenStudents1(clickedCardStudents);
+            }
+            case THIEF -> effectHandler.setThiefColor(PawnColor.valueOf(colorChoiceBox.getValue()));
         }
         GameService.powerRequest(powerType,effectHandler);
         ((Stage) powerCard.getScene().getWindow()).close();
+    }
+
+    /**
+     * @author Christian Confalonieri
+     */
+    private CheckBox getColorCheckBox(PawnColor color) {
+        return switch(color) {
+            case RED -> checkBoxRed;
+            case BLUE -> checkBoxBlue;
+            case GREEN -> checkBoxGreen;
+            case YELLOW -> checkBoxYellow;
+            case PINK -> checkBoxPink;
+        };
     }
 
     /**
