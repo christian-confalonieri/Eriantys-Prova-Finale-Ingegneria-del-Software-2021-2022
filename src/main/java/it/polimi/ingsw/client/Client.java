@@ -53,6 +53,7 @@ public class Client implements Runnable {
 
         clientState = ClientState.LOGIN;
         cli.render();
+        gui.notifyStateChange();
     }
 
     public Client(String serverIp, int serverPort) {
