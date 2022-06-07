@@ -215,9 +215,11 @@ public class GUISchoolController {
 
         Card card = playerModel.getLastPlayedCard();
         if (card == null) {
-            lastPlayedCard.setImage(getWizardImage(playerModel.getWizard(), height, width).getImage());
+//            lastPlayedCard.setImage(getWizardImage(playerModel.getWizard(), height, width).getImage());
+            lastPlayedCard.setOpacity(0);
         }
         else {
+            lastPlayedCard.setOpacity(1);
             lastPlayedCard.setImage(getAssistantImage(card, height, width).getImage());
         }
     }

@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUISchoolController">
+<AnchorPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUISchoolController">
 
    <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
       <image>
@@ -16,6 +22,14 @@
 
    <ImageView fitHeight="220.0" fitWidth="900.0" layoutY="380.0">
       <Image url="@../../../assets/textures/wood.jpg" />
+   </ImageView>
+   <ImageView fitHeight="143.0" fitWidth="119.0" layoutX="776.0" layoutY="421.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../assets/school/lastPlayedCardBackground.png" />
+      </image>
+      <effect>
+         <InnerShadow choke="0.51" height="5.86" radius="4.015" width="12.2" />
+      </effect>
    </ImageView>
 
    <ImageView fx:id="schoolBackground" fitWidth="900" onDragDropped="#onSchoolDropped" onDragOver="#onSchoolOver" preserveRatio="true">
