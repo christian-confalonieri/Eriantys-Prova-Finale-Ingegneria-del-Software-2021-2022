@@ -9,3 +9,10 @@ Software Engineering Final Project
 | Christian Confalonieri  | christian.confalonieri@mail.polimi.it |
 | Alessandro Ettore       | alessandro.ettore@mail.polimi.it      |
 
+## Usage
+
+### Server
+`java -jar EryantisServer.jar [#PORTNUMBER]`
+
+### Client
+`java -jar EryantisClient.jar [-p|--port #PORTNUMBER] [-a|--address #ADDRESS]`
