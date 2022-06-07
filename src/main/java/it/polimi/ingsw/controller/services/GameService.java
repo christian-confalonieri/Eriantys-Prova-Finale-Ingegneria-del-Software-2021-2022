@@ -15,8 +15,10 @@ import it.polimi.ingsw.model.power.PowerCard;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameService {
     public static void playCard(PlayCardAction action) throws InvalidAction {
@@ -304,9 +306,10 @@ public class GameService {
     public static void notifyAndCloseGameEnd(GameHandler gameHandler, String playerIdToExclude) {
         Server.getInstance().getConnectionsForGameBroadcast(gameHandler).forEach(net -> {
                     if(net != null) {
+                        List<String> leaderboard = gameHandler.getGame().getLeaderBoard().stream().map(Player::getName).filter(id -> !id.equals(playerIdToExclude)).collect(Collectors.toCollection(ArrayList::new));
+                        leaderboard.add(playerIdToExclude); // Left the game player is in last position
                         net.send(
-                                ActionHandler.toJson(new GameInterruptedAction(null,
-                                        gameHandler.getGame().getLeaderBoard().stream().map(Player::getName).filter(id -> !id.equals(playerIdToExclude)).toList()))
+                                ActionHandler.toJson(new GameInterruptedAction(null, leaderboard))
                         );
                         System.out.println(net + " has been notified GameInterruptedAction");
                     }
