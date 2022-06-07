@@ -30,6 +30,8 @@ import java.util.stream.Stream;
 
 public class GUITableController {
     @FXML
+    private ImageView entranceBackground;
+    @FXML
     private GridPane entranceGrid;
     @FXML
     private Label errorLabel;
@@ -376,11 +378,15 @@ public class GUITableController {
 
         int studentsNumber = playerModel.getSchool().getEntrance().size();
         double height = 40;
+
         entranceGrid.getChildren().clear();
+        entranceBackground.setOpacity(0);
+
         if (Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(Client.getInstance().getPlayerId()) &&
                 Client.getInstance().getGameHandler().getGamePhase() == GamePhase.TURN &&
                 Client.getInstance().getGameHandler().getTurnPhase() == TurnPhase.MOVESTUDENTS
         )   {
+            entranceBackground.setOpacity(1);
             for (int i = 0; i < studentsNumber; i++) {
                 Student student = playerModel.getSchool().getEntrance().get(i);
                 PawnColor color = student.getColor();

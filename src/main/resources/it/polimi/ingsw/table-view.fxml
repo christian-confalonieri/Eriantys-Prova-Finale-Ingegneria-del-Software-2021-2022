@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUITableController">
    <ImageView fitHeight="600.0" fitWidth="900.0" preserveRatio="true">
       <Image url="@../../../assets/table/background.png" />
+   </ImageView>
+
+   <ImageView fx:id="entranceBackground" fitWidth="100.0" layoutX="338.0" layoutY="252.0" preserveRatio="true" rotate="-90">
+      <Image url="@../../../assets/school/entranceOnly.png" />
+      <effect>
+         <InnerShadow blurType="ONE_PASS_BOX" choke="0.67" height="227.07" radius="91.91" width="142.57">
+            <color>
+               <Color red="0.4117647111415863" green="0.729411780834198" blue="0.9137254953384399" />
+            </color>
+         </InnerShadow>
+      </effect>
    </ImageView>
 
    <fx:include fx:id="island1" source="island-view.fxml" />
@@ -75,6 +88,27 @@
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       </rowConstraints>
+      <ImageView fitHeight="40" preserveRatio="true" rotate="90" GridPane.columnIndex="1" GridPane.rowIndex="0">
+         <Image url="@../../../assets/students/blue.png" />
+      </ImageView>
+      <ImageView fitHeight="40" preserveRatio="true" rotate="90" GridPane.columnIndex="0" GridPane.rowIndex="1">
+         <Image url="@../../../assets/students/blue.png" />
+      </ImageView>
+      <ImageView fitHeight="40" preserveRatio="true" rotate="90" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <Image url="@../../../assets/students/blue.png" />
+      </ImageView>
+      <ImageView fitHeight="40" preserveRatio="true" rotate="90" GridPane.columnIndex="0" GridPane.rowIndex="2">
+         <Image url="@../../../assets/students/blue.png" />
+      </ImageView>
+      <ImageView fitHeight="40" preserveRatio="true" rotate="90" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <Image url="@../../../assets/students/blue.png" />
+      </ImageView>
+      <ImageView fitHeight="40" preserveRatio="true" rotate="90" GridPane.columnIndex="0" GridPane.rowIndex="3">
+         <Image url="@../../../assets/students/blue.png" />
+      </ImageView>
+      <ImageView fitHeight="40" preserveRatio="true" rotate="90" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <Image url="@../../../assets/students/blue.png" />
+      </ImageView>
    </GridPane>
 
    <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="275.0" layoutY="25.0" prefHeight="29.0" prefWidth="219.0" text="Error label" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />

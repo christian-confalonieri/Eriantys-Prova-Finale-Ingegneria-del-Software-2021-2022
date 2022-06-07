@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUIScoreboardController">
    <children>
@@ -14,7 +16,15 @@
       <VBox fx:id="leaderboardVBox" layoutX="120.0" layoutY="167.0" spacing="30">
          <children>
             <fx:include source="leaderboardbox-view.fxml" />
+            <fx:include source="leaderboardbox-view.fxml" />
          </children>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" height="45.47" radius="23.53" width="50.65">
+               <color>
+                  <Color red="0.3552631437778473" green="0.34046053886413574" blue="0.34046053886413574" />
+               </color>
+            </DropShadow>
+         </effect>
       </VBox>
       <Button layoutX="532.0" layoutY="10.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
    </children>
