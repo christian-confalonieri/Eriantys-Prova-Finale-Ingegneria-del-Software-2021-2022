@@ -112,11 +112,11 @@
       </ImageView>
    </GridPane>
 
-   <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="207.0" layoutY="30.0" prefHeight="29.0" prefWidth="353.0" text="Error label" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+   <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="207.0" layoutY="16.0" prefHeight="29.0" prefWidth="353.0" text="Error label" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
       <font>
          <Font name="System Bold Italic" size="14.0" />
       </font></Label>
-   <Label fx:id="gamePhaseLabel" alignment="CENTER" layoutX="289.0" layoutY="14.0" prefHeight="27.0" prefWidth="191.0" text="GAMEPHASE" textAlignment="CENTER" textFill="WHITE">
+   <Label fx:id="gamePhaseLabel" alignment="CENTER" layoutX="216.0" layoutY="1.0" prefHeight="27.0" prefWidth="335.0" text="GAMEPHASE" textAlignment="CENTER" textFill="WHITE">
       <font>
          <Font name="System Bold" size="18.0" />
       </font></Label>
