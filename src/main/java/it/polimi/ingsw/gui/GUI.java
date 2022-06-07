@@ -307,6 +307,12 @@ public class GUI extends Application {
         Platform.runLater( () -> {
             Stage.getWindows().stream().skip(1).forEach(window -> ((Stage) window).close());
             Stage currentStageWindow = Stage.getWindows().size() != 0 ? ((Stage)(Stage.getWindows().get(0))) : new Stage();
+
+            currentStageWindow.setOnCloseRequest(windowEvent -> {
+                        Client.getInstance().getNetworkController().shutdown();
+                    }
+            );
+
             switch(Client.getInstance().getClientState()) {
                 case LOADING -> GUILoadingController.initSceneAndController(currentStageWindow);
                 case LOGIN -> GUILoginController.initSceneAndController(currentStageWindow);
