@@ -30,6 +30,8 @@ import java.util.stream.Stream;
 
 public class GUITableController {
     @FXML
+    private Label gamePhaseLabel;
+    @FXML
     private ImageView entranceBackground;
     @FXML
     private GridPane entranceGrid;
@@ -352,6 +354,24 @@ public class GUITableController {
         setProfessors();
 
         renderPlayerEntrance();
+
+        renderGamePhaseLabel();
+    }
+
+    private void renderGamePhaseLabel() {
+        if(!Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(Client.getInstance().getPlayerId())) {
+            gamePhaseLabel.setText("WAIT YOUR TURN...");
+            return;
+        }
+        if(Client.getInstance().getGameHandler().getGamePhase() == GamePhase.PREPARATION) {
+            gamePhaseLabel.setText("PLAY A CARD");
+            return;
+        }
+        switch (Client.getInstance().getGameHandler().getTurnPhase()) {
+            case MOVESTUDENTS -> gamePhaseLabel.setText("MOVE STUDENTS");
+            case MOVEMOTHER -> gamePhaseLabel.setText("MOVE MOTHER NATURE");
+            case MOVEFROMCLOUD -> gamePhaseLabel.setText("PICK A CLOUD");
+        }
     }
 
     protected void errorWrite(String errorMessage) {

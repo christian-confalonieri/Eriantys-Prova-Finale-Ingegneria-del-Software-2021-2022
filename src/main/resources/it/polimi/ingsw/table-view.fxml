@@ -5,6 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUITableController">
    <ImageView fitHeight="600.0" fitWidth="900.0" preserveRatio="true">
@@ -111,6 +112,13 @@
       </ImageView>
    </GridPane>
 
-   <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="275.0" layoutY="25.0" prefHeight="29.0" prefWidth="219.0" text="Error label" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+   <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="207.0" layoutY="30.0" prefHeight="29.0" prefWidth="353.0" text="Error label" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+      <font>
+         <Font name="System Bold Italic" size="14.0" />
+      </font></Label>
+   <Label fx:id="gamePhaseLabel" alignment="CENTER" layoutX="289.0" layoutY="14.0" prefHeight="27.0" prefWidth="191.0" text="GAMEPHASE" textAlignment="CENTER" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="18.0" />
+      </font></Label>
 
 </AnchorPane>
