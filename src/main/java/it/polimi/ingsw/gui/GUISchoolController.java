@@ -4,10 +4,7 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.entity.Student;
-import it.polimi.ingsw.model.enumeration.Card;
-import it.polimi.ingsw.model.enumeration.PawnColor;
-import it.polimi.ingsw.model.enumeration.TowerColor;
-import it.polimi.ingsw.model.enumeration.Wizard;
+import it.polimi.ingsw.model.enumeration.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -22,6 +19,8 @@ public class GUISchoolController {
     private ImageView schoolBackground;
     @FXML
     private Label errorLabel;
+    @FXML
+    private Label gamePhaseLabel;
 
     /**
      * ENTRANCE
@@ -95,6 +94,23 @@ public class GUISchoolController {
         renderEntrance();
         renderHandDeck();
         renderLastPlayedCard();
+        renderGamePhaseLabel();
+    }
+
+    private void renderGamePhaseLabel() {
+        if(!Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(playerModel.getName())) {
+            gamePhaseLabel.setText("WAIT YOUR TURN...");
+            return;
+        }
+        if(Client.getInstance().getGameHandler().getGamePhase() == GamePhase.PREPARATION) {
+            gamePhaseLabel.setText("PLAY A CARD");
+            return;
+        }
+        switch (Client.getInstance().getGameHandler().getTurnPhase()) {
+            case MOVESTUDENTS -> gamePhaseLabel.setText("MOVE STUDENTS");
+            case MOVEMOTHER -> gamePhaseLabel.setText("MOVE MOTHER NATURE");
+            case MOVEFROMCLOUD -> gamePhaseLabel.setText("PICK A CLOUD");
+        }
     }
 
     private void renderLane(HBox hBox, PawnColor pawnColor) {

@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUISchoolController">
+<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.GUISchoolController">
 
-   <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true" >
+   <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../../assets/table/background.png" />
       </image>
    </ImageView>
 
-   <ImageView fx:id="schoolBackground" fitWidth="900" preserveRatio="true" onDragDropped="#onSchoolDropped" onDragOver="#onSchoolOver">
+   <ImageView fitHeight="220.0" fitWidth="900.0" layoutY="380.0">
+      <Image url="@../../../assets/textures/wood.jpg" />
+   </ImageView>
+
+   <ImageView fx:id="schoolBackground" fitWidth="900" onDragDropped="#onSchoolDropped" onDragOver="#onSchoolOver" preserveRatio="true">
       <image>
          <Image url="@../../../assets/school/school.png" />
       </image>
@@ -105,6 +111,16 @@
      </rowConstraints>
    </GridPane>
 
+   <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="226.0" layoutY="414.0" prefHeight="29.0" prefWidth="448.0" text="Error label" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+      <font>
+         <Font name="System Bold Italic" size="12.0" />
+      </font></Label>
+   <Label fx:id="gamePhaseLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="285.0" layoutY="397.0" prefHeight="17.0" prefWidth="330.0" text="GAMEPHASE LABEL" textAlignment="CENTER" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="18.0" />
+      </font>
+   </Label>
+
    <HBox fx:id="deckBox" layoutX="14.0" layoutY="443.0" prefHeight="100.0" prefWidth="606.0" spacing="5.0">
       <ImageView fitHeight="100" fitWidth="70">
          <Image url="@../../../assets/assistantCards/one.png" />
@@ -136,13 +152,16 @@
       <ImageView fitHeight="100" fitWidth="70">
          <Image url="@../../../assets/assistantCards/one.png" />
       </ImageView>
+      <effect>
+         <DropShadow />
+      </effect>
    </HBox>
 
    <ImageView fx:id="lastPlayedCard" fitHeight="100" fitWidth="70" layoutX="792.0" layoutY="443.0">
       <Image url="@../../../assets/assistantCards/one.png" />
+      <effect>
+         <DropShadow />
+      </effect>
    </ImageView>
-
-
-   <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="341.0" layoutY="400.0" prefHeight="29.0" prefWidth="219.0" text="Error label" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
 
 </AnchorPane>
