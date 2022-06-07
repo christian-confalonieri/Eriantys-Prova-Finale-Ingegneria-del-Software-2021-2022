@@ -95,6 +95,7 @@ public class NetworkController implements Runnable {
         }
         if(!ponged) {
             System.out.println(ConsoleColor.RED + "Server did not ponged back in 10s. Logging out and resetting" + ConsoleColor.RESET);
+
             LoginService.logout(new LogoutAction(Client.getInstance().getPlayerId())); // Logout te client without contacting the server (as its not respoding)
 
             Client.getInstance().restartNetwork(Client.getInstance().serverIp, Client.getInstance().serverPort);

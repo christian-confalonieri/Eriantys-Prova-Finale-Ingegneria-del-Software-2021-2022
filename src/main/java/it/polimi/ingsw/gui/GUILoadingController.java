@@ -36,6 +36,11 @@ public class GUILoadingController {
         stage.setScene(scene);
         stage.show();
 
+        stage.setOnCloseRequest(windowEvent -> {
+                    Client.getInstance().getNetworkController().shutdown();
+                }
+        );
+
         Client.getInstance().getGui().guiCallLoading(GUILoadingController::loadImage);
     }
 

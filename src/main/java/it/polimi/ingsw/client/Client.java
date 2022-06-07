@@ -44,6 +44,7 @@ public class Client implements Runnable {
 
     public void restartNetwork(String serverIp, int serverPort) {
         clientState = ClientState.LOADING;
+        gui.notifyStateChange();
         cli.render();
 
         if(Client.getInstance().getNetworkController() != null) Client.getInstance().getNetworkController().shutdown();
@@ -85,6 +86,9 @@ public class Client implements Runnable {
                 return;
             } catch (IOException e) {
                 System.out.println(ConsoleColor.RED + "Failed to connect to the server. Retrying in 10s" + ConsoleColor.RESET);
+
+                while (gui == null) Thread.onSpinWait();
+                gui.guiCallLoading(guiLoadingController -> guiLoadingController.setConnectionLogLabel("Failed to connect to the server. Retrying in 10s"));
                 try {
                     Thread.sleep(10000);
                 } catch (InterruptedException ex) {
