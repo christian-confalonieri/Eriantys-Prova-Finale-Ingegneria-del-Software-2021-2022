@@ -1,0 +1,9 @@
+Instructions
+
+1. If you want to start only the cli add the option: -cli
+2. If you want to start only the gui add the option: -gui
+3. If you want to start both cli and gui add the option: -debug
+
+If no options are added only the gui will be started.
+
+More information will be added later.
