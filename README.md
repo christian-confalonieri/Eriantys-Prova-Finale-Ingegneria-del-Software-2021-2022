@@ -15,4 +15,4 @@ Software Engineering Final Project
 `java -jar EryantisServer.jar [#PORTNUMBER]`
 
 ### Client
-`java -jar EryantisClient.jar [-p|--port #PORTNUMBER] [-a|--address #ADDRESS]`[-cli|-gui|-debug]
+`java -jar EryantisClient.jar [-p|--port #PORTNUMBER] [-a|--address #ADDRESS] [-cli|-gui|-debug]`
