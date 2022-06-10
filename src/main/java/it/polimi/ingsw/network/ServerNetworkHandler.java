@@ -51,9 +51,9 @@ public class ServerNetworkHandler implements Runnable {
 
     private void pollingPing() {
         while(!shutdown) {
-            System.out.println(ConsoleColor.PURPLE + "Pinging all [" + Server.getInstance().getAllClientConnections().size()
+            System.out.println(ConsoleColor.PURPLE + "Pinging all [" + Server.getInstance().getClientConnectionsSize()
                     + "] client connections. Expecting some pongs..." + ConsoleColor.RESET);
-            Server.getInstance().getAllClientConnections().forEach(ClientNetworkHandler::startTimerPongResponse);
+            Server.getInstance().forEachClientConnection(ClientNetworkHandler::startTimerPongResponse);
 
             try {
                 Thread.sleep(20000);

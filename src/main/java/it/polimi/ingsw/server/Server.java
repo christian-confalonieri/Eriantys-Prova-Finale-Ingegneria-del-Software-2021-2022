@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.function.Consumer;
 
 public class Server {
 
@@ -100,7 +102,19 @@ public class Server {
     public String getAssignedPlayerId(ClientNetworkHandler clientNetworkHandler) {
         return assignedConnections.keySet().stream().filter(id -> assignedConnections.get(id).equals(clientNetworkHandler)).findAny().orElse(null);
     }
-    public List<ClientNetworkHandler> getAllClientConnections() { return clientConnections; }
+
+    // public List<ClientNetworkHandler> getAllClientConnections() { return clientConnections; }
+    public void forEachClientConnection(Consumer<ClientNetworkHandler> function) {
+        synchronized (clientConnections) {
+            clientConnections.forEach(function);
+        }
+    }
+
+    public int getClientConnectionsSize() {
+        synchronized (clientConnections) {
+            return clientConnections.size();
+        }
+    }
 
     public void addPlayerInGame(String playerId, GameHandler game, Player player) {
         synchronized (loggedPlayersInGame) {

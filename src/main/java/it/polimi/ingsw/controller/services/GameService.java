@@ -307,7 +307,7 @@ public class GameService {
         Server.getInstance().getConnectionsForGameBroadcast(gameHandler).forEach(net -> {
                     if(net != null) {
                         List<String> leaderboard = gameHandler.getGame().getLeaderBoard().stream().map(Player::getName).filter(id -> !id.equals(playerIdToExclude)).collect(Collectors.toCollection(ArrayList::new));
-                        leaderboard.add(playerIdToExclude); // Left the game player is in last position
+                        if(playerIdToExclude != null) leaderboard.add(playerIdToExclude); // Left the game player is in last position
                         net.send(
                                 ActionHandler.toJson(new GameInterruptedAction(null, leaderboard))
                         );
