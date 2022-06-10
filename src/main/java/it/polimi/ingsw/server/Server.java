@@ -9,11 +9,9 @@ import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.network.ServerNetworkHandler;
 
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.function.Consumer;
 
@@ -148,7 +146,28 @@ public class Server {
     }
 
 
+    public static void logAction() {
+        try {
+            logFileWriter.write("Prova log server");
+            logFileWriter.flush();
 
+        } catch (IOException e) {
+            System.out.println(ConsoleColor.RED + "LOG WRITING FAILED\n");
+            e.printStackTrace();
+            System.out.println(ConsoleColor.RESET);
+        }
+    }
+    public static void logControllerCall() {
+
+    }
+
+    private static FileWriter logFileWriter;
+
+    public static void logInit(String logDirectory) throws IOException {
+        String runName = UUID.randomUUID().toString();
+        String filePath = logDirectory + "\\ServerLog_" + runName + ".txt";
+        logFileWriter = new FileWriter(filePath);
+    }
 
     private Server(int serverPort) {
         this.hostedGames = new ArrayList<>();
@@ -178,6 +197,7 @@ public class Server {
      * @throws IOException when setting up a serverSocket fails
      */
     public void run() throws IOException {
+        logAction();
         ServerNetworkHandler serverNetworkHandler = new ServerNetworkHandler(serverPort);
         serverNetworkHandler.run();
     }
@@ -187,6 +207,14 @@ public class Server {
             singleton = new Server();
         else {
             singleton = new Server(Integer.parseInt(args[0]));
+        }
+
+        try {
+            logInit("D:\\debug\\");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(ConsoleColor.RED + "Could not initialize log file" + ConsoleColor.RESET);
+            return;
         }
 
         try {
