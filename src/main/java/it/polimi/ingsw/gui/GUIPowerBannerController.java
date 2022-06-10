@@ -175,7 +175,13 @@ public class GUIPowerBannerController {
      */
     private  void renderIslandChoiceBox(PowerCard powerCard) {
         switch(powerCard.getType()) {
-            case HERBALIST, FRIAR, HERALD -> {}
+            case HERBALIST, FRIAR, HERALD -> {
+                islandChoiceBox.getItems().clear();
+                islandChoiceBox.setValue(Integer.toString(1));
+                for(int i=1;i<=Client.getInstance().getGameHandler().getGame().getIslands().size();i++) {
+                    islandChoiceBox.getItems().add(Integer.toString(i));
+                }
+            }
             default -> {
                 islandChoiceBox.setOpacity(0);
                 islandChoiceBox.setDisable(true);
