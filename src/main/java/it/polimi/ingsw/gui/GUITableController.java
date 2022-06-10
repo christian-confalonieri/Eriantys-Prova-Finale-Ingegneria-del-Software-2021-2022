@@ -269,7 +269,7 @@ public class GUITableController {
     public void render() {
         clearErrors();
 
-        int[] islandsX = new int[] {77, 162, 267, 368, 495, 573, 573, 495, 368, 267, 162, 77};
+        int[] islandsX = new int[] {77, 162, 267, 386, 495, 573, 573, 495, 386, 267, 162, 77};
         int[] islandsY = new int[] {202, 98, 28, 28, 98, 202, 316, 422, 481, 481, 422, 316};
 
         int[] cloudsX = new int[] {213, 444, 328, 328};
