@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.action.Action;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
@@ -11,8 +12,8 @@ import it.polimi.ingsw.network.ServerNetworkHandler;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.*;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.function.Consumer;
 
 public class Server {
@@ -146,29 +147,6 @@ public class Server {
     }
 
 
-    public static void logAction() {
-        try {
-            logFileWriter.write("Prova log server");
-            logFileWriter.flush();
-
-        } catch (IOException e) {
-            System.out.println(ConsoleColor.RED + "LOG WRITING FAILED\n");
-            e.printStackTrace();
-            System.out.println(ConsoleColor.RESET);
-        }
-    }
-    public static void logControllerCall() {
-
-    }
-
-    private static FileWriter logFileWriter;
-
-    public static void logInit(String logDirectory) throws IOException {
-        String runName = UUID.randomUUID().toString();
-        String filePath = logDirectory + "\\ServerLog_" + runName + ".txt";
-        logFileWriter = new FileWriter(filePath);
-    }
-
     private Server(int serverPort) {
         this.hostedGames = new ArrayList<>();
         this.lobbyGames = new ArrayList<>();
@@ -197,7 +175,6 @@ public class Server {
      * @throws IOException when setting up a serverSocket fails
      */
     public void run() throws IOException {
-        logAction();
         ServerNetworkHandler serverNetworkHandler = new ServerNetworkHandler(serverPort);
         serverNetworkHandler.run();
     }
@@ -222,5 +199,53 @@ public class Server {
         } catch (IOException e) {
             System.out.println(ConsoleColor.RED + "An IO error occurred. Please check your network connection" + ConsoleColor.RESET);
         }
+    }
+
+
+
+
+    public static void logActionReceived(ClientNetworkHandler networkHandler, Action action) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        try {
+            logFileWriter.write(timestamp + ":\t[RECEIVED]\t");
+            logFileWriter.write(networkHandler.toString() + " " + action.getActionType() +  "\t\tplayerId:{" +  action.getPlayerId() + "}\n");
+
+            logFileWriter.flush();
+        } catch (IOException e) {
+            System.out.println(ConsoleColor.RED + "LOG WRITING FAILED\n");
+            e.printStackTrace();
+            System.out.println(ConsoleColor.RESET);
+        }
+    }
+
+    public static void logActionIgnored(ClientNetworkHandler networkHandler, Action action) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        try {
+            logFileWriter.write(timestamp + ":\t[IGNORED]\t");
+            logFileWriter.write(networkHandler.toString() + " " + action.getActionType() +  "\t\tplayerId:{" +  action.getPlayerId() + "}\n");
+
+            logFileWriter.flush();
+        } catch (IOException e) {
+            System.out.println(ConsoleColor.RED + "LOG WRITING FAILED\n");
+            e.printStackTrace();
+            System.out.println(ConsoleColor.RESET);
+        }
+    }
+
+
+    public static void logControllerCall() {
+
+    }
+
+    private static FileWriter logFileWriter;
+
+    public static void logInit(String logDirectory) throws IOException {
+        String runName = UUID.randomUUID().toString();
+        String filePath = logDirectory + "\\ServerLog_" + runName + ".txt";
+
+        logFileWriter = new FileWriter(filePath);
+        logFileWriter.write("RUN " + runName + "\n");
+        logFileWriter.write(new Timestamp(System.currentTimeMillis()) + " server booted up\n\n");
+        logFileWriter.flush();
     }
 }
