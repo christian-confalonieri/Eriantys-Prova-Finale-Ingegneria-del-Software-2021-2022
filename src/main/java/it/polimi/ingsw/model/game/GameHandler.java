@@ -53,10 +53,10 @@ public class GameHandler {
                         return;
                     case MOVEFROMCLOUD: // END TURN
                         this.ended = checkEndGame(); // Checks at the end of each turn if the game has ended
-                        currentPlayer = getNextPlayer();
                         for(PowerCard pc : game.powerCards) {
                             pc.endPower();
                         }
+                        currentPlayer = getNextPlayer();
                         turnPhase = TurnPhase.MOVESTUDENTS;
                         if(currentPlayer == firstTurnPlayer) {
                             orderedTurnPlayers = new ArrayList<>(game.players); // Return to a clockwise order for preparation
