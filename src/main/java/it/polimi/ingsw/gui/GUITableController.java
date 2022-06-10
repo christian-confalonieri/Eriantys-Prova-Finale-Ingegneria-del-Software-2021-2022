@@ -269,58 +269,11 @@ public class GUITableController {
     public void render() {
         clearErrors();
 
-        int[] islandsX = new int[Client.getInstance().getGameHandler().getGame().getIslands().size()];
-        int[] islandsY = new int[Client.getInstance().getGameHandler().getGame().getIslands().size()];
-        for(int i=1;i<=Client.getInstance().getGameHandler().getGame().getIslands().size();i++) {
-            islandsX[i-1] = switch (i) {
-                case 1,12 -> 77;
-                case 2,11 -> 162;
-                case 3,10 -> 267;
-                case 4,9 -> 386;
-                case 5,8 -> 495;
-                case 6,7 -> 573;
-                default -> 0;
-            };
-            islandsY[i-1] = switch (i) {
-                case 1,6 -> 202;
-                case 2,5 -> 98;
-                case 3,4 -> 28;
-                case 7,12 -> 316;
-                case 8,11 -> 422;
-                case 9,10 -> 481;
-                default -> 0;
-            };
-        }
+        int[] islandsX = new int[] {77, 162, 267, 368, 495, 573, 573, 495, 368, 267, 162, 77};
+        int[] islandsY = new int[] {202, 98, 28, 28, 98, 202, 316, 422, 481, 481, 422, 316};
 
-        int[] cloudsX = new int[Client.getInstance().getGameHandler().getGame().getClouds().size()];
-        int[] cloudsY = new int[Client.getInstance().getGameHandler().getGame().getClouds().size()];
-        for(int i=1;i<=Client.getInstance().getGameHandler().getGame().getClouds().size();i++) {
-            if(Client.getInstance().getGameHandler().getGame().getClouds().size() == 2) {
-                cloudsX[i-1] = switch (i) {
-                    case 1 -> 213;
-                    case 2-> 444;
-                    default -> 0;
-                };
-                cloudsY[i-1] = switch (i) {
-                    case 1,2 -> 247;
-                    default -> 0;
-                };
-            }
-            else {
-                cloudsX[i-1] = switch (i) {
-                    case 1 -> 213;
-                    case 2,4 -> 328;
-                    case 3 -> 444;
-                    default -> 0;
-                };
-                cloudsY[i-1] = switch (i) {
-                    case 1,3 -> 247;
-                    case 2 -> 158;
-                    case 4 -> 345;
-                    default -> 0;
-                };
-            }
-        }
+        int[] cloudsX = new int[] {213, 444, 328, 328};
+        int[] cloudsY = new int[] {247, 247, 158, 345};
 
         int[] playerTableX = new int[] {0, 750, 750, 0};
         int[] playerTableY = new int[] {0, 0, 500, 500};
