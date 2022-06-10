@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.action.Action;
 import it.polimi.ingsw.cli.CLI;
 import it.polimi.ingsw.cli.CLIBypass;
 import it.polimi.ingsw.cli.ConsoleColor;
@@ -8,12 +9,16 @@ import it.polimi.ingsw.client.controller.NetworkController;
 import it.polimi.ingsw.gui.GUI;
 import it.polimi.ingsw.gui.GUIBypass;
 import it.polimi.ingsw.model.game.GameHandler;
+import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.GameLobby;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 
 public class Client implements Runnable {
 
@@ -148,6 +153,14 @@ public class Client implements Runnable {
         LaunchMode launchMode = parseLaunchMode(args);
 
         try {
+            logInit("D:\\debug\\client");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(ConsoleColor.RED + "Could not initialize log file" + ConsoleColor.RESET);
+            return;
+        }
+
+        try {
             singleton = new Client(hostname == null ? "localhost" : hostname, Integer.parseInt(port == null ? "23154" : port));
         } catch (NumberFormatException e) {
             System.out.println(ConsoleColor.RED + "Invalid port number" + ConsoleColor.RESET);
@@ -246,5 +259,53 @@ public class Client implements Runnable {
 
     public void setGui(GUI gui) {
         this.gui = gui;
+    }
+
+
+    public static void logActionReceived(Action action) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        try {
+            logFileWriter.write(timestamp + ":\t[RECEIVED]\t");
+            logFileWriter.write(action.getActionType() +  "\t\tplayerId:{" +  action.getPlayerId() + "}\n");
+
+            logFileWriter.flush();
+        } catch (IOException e) {
+            System.out.println(ConsoleColor.RED + "LOG WRITING FAILED\n");
+            e.printStackTrace();
+            System.out.println(ConsoleColor.RESET);
+        }
+    }
+
+    public static void logActionSent(Action action) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        try {
+            logFileWriter.write(timestamp + ":\t[SENT]   \t");
+            logFileWriter.write(action.getActionType() +  "\t\tplayerId:{" +  action.getPlayerId() + "}\n");
+
+            logFileWriter.flush();
+        } catch (IOException e) {
+            System.out.println(ConsoleColor.RED + "LOG WRITING FAILED\n");
+            e.printStackTrace();
+            System.out.println(ConsoleColor.RESET);
+        }
+    }
+
+
+    public static void logControllerCall() {
+
+    }
+
+    private static FileWriter logFileWriter;
+
+    public static void logInit(String logDirectory) throws IOException {
+        String runName = UUID.randomUUID().toString();
+        String filePath = logDirectory + "\\ClientLog_" + runName + ".txt";
+
+        System.out.println(ConsoleColor.GREEN_BOLD + "DEBUG LOG FILE: " + filePath + ConsoleColor.RESET);
+
+        logFileWriter = new FileWriter(filePath);
+        logFileWriter.write("RUN " + runName + "\n");
+        logFileWriter.write(new Timestamp(System.currentTimeMillis()) + " client booted up\n\n");
+        logFileWriter.flush();
     }
 }

@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.network.ServerNetworkHandler;
 
+import java.io.Console;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -187,7 +188,7 @@ public class Server {
         }
 
         try {
-            logInit("D:\\debug\\");
+            logInit("D:\\debug\\server");
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(ConsoleColor.RED + "Could not initialize log file" + ConsoleColor.RESET);
@@ -221,7 +222,21 @@ public class Server {
     public static void logActionIgnored(ClientNetworkHandler networkHandler, Action action) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         try {
-            logFileWriter.write(timestamp + ":\t[IGNORED]\t");
+            logFileWriter.write(timestamp + ":\t(IGNORED)\t");
+            logFileWriter.write(networkHandler.toString() + " " + action.getActionType() +  "\t\tplayerId:{" +  action.getPlayerId() + "}\n");
+
+            logFileWriter.flush();
+        } catch (IOException e) {
+            System.out.println(ConsoleColor.RED + "LOG WRITING FAILED\n");
+            e.printStackTrace();
+            System.out.println(ConsoleColor.RESET);
+        }
+    }
+
+    public static void logActionSent(ClientNetworkHandler networkHandler, Action action) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        try {
+            logFileWriter.write(timestamp + ":\t[SENT]   \t");
             logFileWriter.write(networkHandler.toString() + " " + action.getActionType() +  "\t\tplayerId:{" +  action.getPlayerId() + "}\n");
 
             logFileWriter.flush();
@@ -242,6 +257,8 @@ public class Server {
     public static void logInit(String logDirectory) throws IOException {
         String runName = UUID.randomUUID().toString();
         String filePath = logDirectory + "\\ServerLog_" + runName + ".txt";
+
+        System.out.println(ConsoleColor.GREEN_BOLD + "DEBUG LOG FILE: " + filePath + ConsoleColor.RESET);
 
         logFileWriter = new FileWriter(filePath);
         logFileWriter.write("RUN " + runName + "\n");

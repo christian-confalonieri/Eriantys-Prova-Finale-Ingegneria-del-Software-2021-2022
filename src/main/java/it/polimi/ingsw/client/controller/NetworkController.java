@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.services.LobbyService;
 import it.polimi.ingsw.client.controller.services.LoginService;
 import it.polimi.ingsw.controller.ActionHandler;
+import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
 
@@ -131,6 +132,13 @@ public class NetworkController implements Runnable {
     }
 
     public void send(String obj) {
+        try {
+            Client.logActionSent(ClientActionHandler.fromJson(obj));
+        } catch (InvalidAction e) {
+            System.out.println(ConsoleColor.RED + "Failed converting a sent action for logging" + ConsoleColor.RESET);
+            e.printStackTrace();
+        }
+
         if (obj != null) {
             try {
                 PrintWriter pw = new PrintWriter(socket.getOutputStream());

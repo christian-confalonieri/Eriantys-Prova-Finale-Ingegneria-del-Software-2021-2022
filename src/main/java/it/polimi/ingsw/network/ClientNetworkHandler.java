@@ -1,9 +1,11 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.action.Action;
 import it.polimi.ingsw.action.LogoutAction;
 import it.polimi.ingsw.action.PING;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.ActionHandler;
+import it.polimi.ingsw.exceptions.InvalidAction;
 import it.polimi.ingsw.server.Server;
 
 import java.io.*;
@@ -92,6 +94,12 @@ public class ClientNetworkHandler implements Runnable {
     }
 
     public void send(String obj) {
+        try {
+            Server.logActionSent(this, ActionHandler.fromJson(obj));
+        } catch (InvalidAction e) {
+            System.out.println(ConsoleColor.RED + "Failed converting a sent action for logging" + ConsoleColor.RESET);
+        }
+
         if (obj != null) {
             try {
                 PrintWriter pw = new PrintWriter(clientSocket.getOutputStream());

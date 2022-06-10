@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.controller;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.action.*;
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.client.controller.services.LobbyService;
 import it.polimi.ingsw.client.controller.services.LoginService;
@@ -16,6 +17,8 @@ public class ClientActionHandler {
     }
 
     public static void actionServiceInvoker(Action action) {
+        Client.logActionReceived(action);
+
         switch (action.getActionType()) {
             case LOGIN -> LoginService.login((LoginAction) action);
             case GETGAME -> LobbyService.getGame((GetGameAction) action);
