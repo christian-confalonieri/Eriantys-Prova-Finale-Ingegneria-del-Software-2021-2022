@@ -19,10 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -346,12 +343,34 @@ public class GUITableController {
         }
     }
 
+
+    private Map<Student, ImageView> entranceStudentImageMap = new HashMap<>();
+
+    protected void disableStudentFromSchool(Student student) {
+        ImageView studentImage = entranceStudentImageMap.get(student);
+        if (entranceStudentImageMap != null) {
+            studentImage.setImage(getClickedStudentImage(student.getColor(), 40).getImage());
+            studentImage.setOpacity(0.5);
+            studentImage.setDisable(true);
+        }
+    }
+
+    protected void enableStudentFromSchool(Student student) {
+        ImageView studentImage = entranceStudentImageMap.get(student);
+        if (entranceStudentImageMap != null) {
+            studentImage.setImage(getStudentImage(student.getColor(), 40).getImage());
+            studentImage.setOpacity(1);
+            studentImage.setDisable(false);
+        }
+    }
+
     private void renderPlayerEntrance() {
         Player playerModel = Client.getInstance().getGameHandler().getGame().getPlayerFromId(Client.getInstance().getPlayerId());
 
         int studentsNumber = playerModel.getSchool().getEntrance().size();
         double height = 40;
 
+        entranceStudentImageMap.clear();
         entranceGrid.getChildren().clear();
         entranceBackground.setOpacity(0);
 
@@ -364,6 +383,7 @@ public class GUITableController {
                 Student student = playerModel.getSchool().getEntrance().get(i);
                 PawnColor color = student.getColor();
                 ImageView studentImage = getStudentImage(color, height);
+                entranceStudentImageMap.put(student, studentImage);
                 studentImage.setRotate(90);
                 studentImage.setOnDragDetected(mouseEvent -> {
                     studentImage.setOpacity(0.5);

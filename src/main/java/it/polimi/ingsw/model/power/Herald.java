@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.power;
 
+import it.polimi.ingsw.model.entity.Island;
 import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.game.GameHandler;
 
@@ -36,6 +37,16 @@ public class Herald extends PowerCard {
     public void power() {
         super.power();
         getGameHandler().getGame().conquerIsland(getGameHandler().getGame().getIslandFromId(getGameHandler().getGame().getEffectHandler().getChosenIslandUuid()));
+
+        Island currentIsland = getGameHandler().getGame().getMotherNature().isOn();
+
+        if(currentIsland.checkUnifyNext()) {
+            getGameHandler().getGame().unifyIsland(currentIsland,currentIsland.getNextIsland());
+        }
+        if(currentIsland.checkUnifyPrev()) {
+            getGameHandler().getGame().unifyIsland(currentIsland,currentIsland.getPrevIsland());
+        }
+
     }
 
 }

@@ -13,6 +13,9 @@ import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GUISchoolController {
 
     @FXML
@@ -172,14 +175,39 @@ public class GUISchoolController {
         }
     }
 
+    private Map<Student, ImageView> entranceStudentImageMap = new HashMap<>();
+
+    protected void disableStudentFromTable(Student student) {
+        ImageView studentImage = entranceStudentImageMap.get(student);
+        if (entranceStudentImageMap != null) {
+            studentImage.setImage(getClickedStudentImage(student.getColor(), 40).getImage());
+            studentImage.setOpacity(0.5);
+            studentImage.setDisable(true);
+        }
+    }
+
+    protected void enableStudentFromTable(Student student) {
+        ImageView studentImage = entranceStudentImageMap.get(student);
+        if (entranceStudentImageMap != null) {
+            studentImage.setImage(getStudentImage(student.getColor(), 40).getImage());
+            studentImage.setOpacity(1);
+            studentImage.setDisable(false);
+        }
+    }
+
     private void renderEntrance() {
         int studentsNumber = playerModel.getSchool().getEntrance().size();
         double height = 40;
+
         entranceGrid.getChildren().clear();
+        entranceStudentImageMap.clear();
+
         for (int i = 0; i < studentsNumber; i++) {
             Student student = playerModel.getSchool().getEntrance().get(i);
             PawnColor color = student.getColor();
             ImageView studentImage = getStudentImage(color, height);
+
+            entranceStudentImageMap.put(student, studentImage);
 
             studentImage.setOnDragDetected(mouseEvent -> {
                 studentImage.setOpacity(0.5);

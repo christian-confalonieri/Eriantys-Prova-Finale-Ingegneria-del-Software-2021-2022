@@ -100,6 +100,12 @@ public class GUIGameController {
         tableController.initializeTable();
     }
 
+    private GUISchoolController clientSchoolController;
+
+    private GUISchoolController getClientSchoolController() {
+        return clientSchoolController;
+    }
+
     public void initializeSchools() {
         schoolAnchorPanes = Stream.of(school1, school2, school3, school4).collect(Collectors.toList());
         schoolControllers = Stream.of(school1Controller, school2Controller, school3Controller, school4Controller).collect(Collectors.toList());
@@ -114,6 +120,7 @@ public class GUIGameController {
             Tab sTab = tabsIt.next();
 
             sController.setPlayerModel(player);
+            if(player.getName().equals(Client.getInstance().getPlayerId())) clientSchoolController = sController;
             sTab.setText(player.getName() + "'s school");
         }
         List<GUISchoolController> toRemoveC = new ArrayList<>();
@@ -205,14 +212,18 @@ public class GUIGameController {
     }
 
 
+
+
     protected void studentOnSchoolClicked(ImageView studentImage, Student student, Image studentSelectedImage, Image studentStandardImage) {
         if(!selectedEntranceToSchoolStudents.contains(student)) {
             studentImage.setImage(studentSelectedImage);
             selectedEntranceToSchoolStudents.add(student);
+            tableController.disableStudentFromSchool(student);
         }
         else {
             studentImage.setImage(studentStandardImage);
             selectedEntranceToSchoolStudents.remove(student);
+            tableController.enableStudentFromSchool(student);
         }
 
         if (selectedEntranceToSchoolStudents.size() + selectedEntranceToIslandStudents.size() ==
@@ -225,10 +236,12 @@ public class GUIGameController {
         if(!selectedEntranceToIslandStudents.containsKey(student) && islandUUID != null) {
             studentImage.setImage(studentSelectedImage);
             selectedEntranceToIslandStudents.put(student, islandUUID);
+            getClientSchoolController().disableStudentFromTable(student);
         }
         else {
             studentImage.setImage(studentStandardImage);
             selectedEntranceToIslandStudents.remove(student);
+            getClientSchoolController().enableStudentFromTable(student);
         }
 
         if (selectedEntranceToSchoolStudents.size() + selectedEntranceToIslandStudents.size() ==

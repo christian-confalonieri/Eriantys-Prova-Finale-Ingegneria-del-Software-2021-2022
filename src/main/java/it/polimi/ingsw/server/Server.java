@@ -184,7 +184,8 @@ public class Server {
         if(args.length == 0)
             singleton = new Server();
         else {
-            singleton = new Server(Integer.parseInt(args[0]));
+            try { singleton = new Server(Integer.parseInt(args[0])); }
+            catch (NumberFormatException e) { System.out.println(ConsoleColor.RED + "Could not convert arg to a port number" + ConsoleColor.RESET); return;}
         }
 
         try {
@@ -198,7 +199,7 @@ public class Server {
         try {
             singleton.run();
         } catch (IOException e) {
-            System.out.println(ConsoleColor.RED + "An IO error occurred. Please check your network connection" + ConsoleColor.RESET);
+            System.out.println(ConsoleColor.RED + "An IO error occurred. \nPlease check your network connection\nTry looking of another instance of this server application running\nTry verifying your port number if chosen\n" + ConsoleColor.RESET);
         }
     }
 
