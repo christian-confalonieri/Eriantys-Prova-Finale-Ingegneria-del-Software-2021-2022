@@ -16,3 +16,19 @@ Software Engineering Final Project
 
 ### Client
 `java -jar EryantisClient.jar [-p|--port #PORTNUMBER] [-a|--address #ADDRESS] [-cli|-gui|-debug]`
+
+## Features
+| Functionality | Status |
+|:-----------------------|:------------------------------------:|
+| Basic rules | 🟢 |
+| Hard Mode | 🟢 |
+| Socket | 🟢 |
+| GUI | 🟢 |
+| CLI | 🟢 |
+| Multiple games | 🟢 |
+| All Characters cards | 🟢 |
+| Team Games | 🟢 |
+| Persistance | 🔴 |
+
+#### Legend
+🔴 Not Implemented &nbsp;&nbsp;&nbsp;&nbsp;🟡 Implementing&nbsp;&nbsp;&nbsp;&nbsp;🟢 Implemented
