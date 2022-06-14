@@ -48,6 +48,7 @@ public class Client implements Runnable {
         cli.render();
 
         if(Client.getInstance().getNetworkController() != null) Client.getInstance().getNetworkController().shutdown();
+        connected = false;
         attachNetwork();
         networkController.start();
 
@@ -74,8 +75,11 @@ public class Client implements Runnable {
         this.cli = cli;
     }
 
+    private volatile boolean connected = false;
+    public void interruptReconnection() {
+        connected = true;
+    }
     public void attachNetwork() {
-        boolean connected = false;
         while (!connected){
             try {
                 Socket socket = new Socket(serverIp, serverPort);
@@ -168,7 +172,7 @@ public class Client implements Runnable {
             singleton.gui = new GUIBypass();
 
         singleton.attachNetwork();
-        singleton.run();
+        if (singleton.networkController != null) singleton.run();
     }
 
 
