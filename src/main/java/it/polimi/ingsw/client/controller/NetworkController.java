@@ -46,6 +46,7 @@ public class NetworkController implements Runnable {
         shutdown = true;
         try {
             socket.close();
+            pollingPingThread.interrupt();
         } catch (IOException e) {
             System.out.println("Couldn't close the socket safely");
         }
@@ -124,7 +125,7 @@ public class NetworkController implements Runnable {
             try {
                 Thread.sleep(20000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println(ConsoleColor.YELLOW + "PollingPingThread interrupted" + ConsoleColor.RESET);
             }
         }
         System.out.println(ConsoleColor.RED + "PollingPingThread closed" + ConsoleColor.RESET);
