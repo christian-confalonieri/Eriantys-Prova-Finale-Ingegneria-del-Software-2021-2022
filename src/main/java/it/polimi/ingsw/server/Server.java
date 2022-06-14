@@ -55,6 +55,7 @@ public class Server {
         }
     }
     public List<GameLobby> getAllGameLobbys() { return lobbyGames; }
+
     public GameLobby getGameLobby(String lobbyId) {
         return lobbyGames.stream().filter(lb -> lb.getGameLobbyId().equals(lobbyId)).findAny().orElse(null);
     }
@@ -71,15 +72,8 @@ public class Server {
     public boolean isWaitingInALobby(String playerId) {
         return lobbyGames.stream().anyMatch(l -> l.isPlayerWaiting(playerId));
     }
-    public List<GameHandler> getAllHostedGames() {
-        return hostedGames;
-    }
 
-    public GameHandler getGameHandler(String playerId) {
-        return loggedPlayersInGame.get(playerId);
-    }
-    public Player getInGamePlayer(String playerId) { return playersInGameReference.get(playerId); }
-    public ClientNetworkHandler getClientNetHandler(String playerId) { return assignedConnections.get(playerId); }
+    public ClientNetworkHandler getClientNetHandler(String playerId) { synchronized (assignedConnections) { return assignedConnections.get(playerId); } }
 
     public void addClientConnection(ClientNetworkHandler clientConnection) {
         synchronized (clientConnections) {
@@ -94,16 +88,23 @@ public class Server {
     }
 
     public void assignConnection(String playerId, ClientNetworkHandler networkHandler) {
-        assignedConnections.put(playerId, networkHandler);
+        synchronized (assignedConnections) { assignedConnections.put(playerId, networkHandler); }
     }
-    public void unassignConnection(String playerId) { assignedConnections.remove(playerId); }
-    public boolean isAssigned(String playerId) { return assignedConnections.containsKey(playerId); }
-    public boolean isAssigned(ClientNetworkHandler clientNetworkHandler) { return assignedConnections.containsValue(clientNetworkHandler); }
+    public void unassignConnection(String playerId) { synchronized (assignedConnections) { assignedConnections.remove(playerId); } }
+    public boolean isAssigned(String playerId) { synchronized (assignedConnections) { return assignedConnections.containsKey(playerId); } }
+    public boolean isAssigned(ClientNetworkHandler clientNetworkHandler) { synchronized (assignedConnections) { return assignedConnections.containsValue(clientNetworkHandler); } }
     public String getAssignedPlayerId(ClientNetworkHandler clientNetworkHandler) {
-        return assignedConnections.keySet().stream().filter(id -> assignedConnections.get(id).equals(clientNetworkHandler)).findAny().orElse(null);
+        synchronized (assignedConnections) { return assignedConnections.keySet().stream().filter(id -> assignedConnections.get(id).equals(clientNetworkHandler)).findAny().orElse(null); }
     }
 
-    // public List<ClientNetworkHandler> getAllClientConnections() { return clientConnections; }
+
+
+    public GameHandler getGameHandler(String playerId) {
+        synchronized (loggedPlayersInGame) {
+            return loggedPlayersInGame.get(playerId);
+        }
+    }
+
     public void forEachClientConnection(Consumer<ClientNetworkHandler> function) {
         synchronized (clientConnections) {
             clientConnections.forEach(function);
@@ -129,19 +130,33 @@ public class Server {
         }
     }
     public boolean isInGame(String playerId) {
-        return loggedPlayersInGame.containsKey(playerId);
+        synchronized (loggedPlayersInGame) {
+            return loggedPlayersInGame.containsKey(playerId);
+        }
+    }
+
+    public Player getInGamePlayer(String playerId) {
+        synchronized (loggedPlayersInGame) {
+            return playersInGameReference.get(playerId);
+        }
+    }
+
+    private List<String> getLoggedPlayersInGame(GameHandler gameHandler) {
+        synchronized (loggedPlayersInGame) {
+            return loggedPlayersInGame.keySet().stream().filter(id -> loggedPlayersInGame.get(id).equals(gameHandler)).toList();
+        }
     }
 
     public List<ClientNetworkHandler> getConnectionsForGameBroadcast(GameHandler gameHandler) {
         synchronized (clientConnections) {
-            List<String> playerIds = loggedPlayersInGame.keySet().stream().filter(id -> loggedPlayersInGame.get(id).equals(gameHandler)).toList();
+            List<String> playerIds = getLoggedPlayersInGame(gameHandler);
             List<ClientNetworkHandler> netConnections = playerIds.stream().map(this::getClientNetHandler).toList();
             return netConnections;
         }
     }
 
-    public void addGame(GameHandler gameHandler) { hostedGames.add(gameHandler); }
-    public void removeGame(GameHandler gameHandler) { hostedGames.remove(gameHandler); }
+    public void addGame(GameHandler gameHandler) { synchronized (hostedGames) { hostedGames.add(gameHandler); } }
+    public void removeGame(GameHandler gameHandler) { synchronized (hostedGames) { hostedGames.remove(gameHandler); } }
 
     public GameController getGameController() {
         return gameController;
