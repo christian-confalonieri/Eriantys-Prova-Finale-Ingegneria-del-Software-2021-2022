@@ -13,17 +13,17 @@ import java.util.*;
  */
 public class GameLobby {
 
-    public List<PlayerLobby> getPlayersWaiting() { return playersWaiting; }
+    synchronized public List<PlayerLobby> getPlayersWaiting() { return new ArrayList<>(playersWaiting); }
 
     public Wizard getWizard(String playerId) {
         return playersWaiting.stream().filter(p -> p.getPlayerId().equals(playerId)).findAny().get().getWizard();
     }
 
-    public GameRules getGameRules() {
+    synchronized public GameRules getGameRules() {
         return gameRules;
     }
 
-    public String getGameLobbyId() {
+    synchronized public String getGameLobbyId() {
         return gameLobbyId;
     }
 
@@ -33,15 +33,15 @@ public class GameLobby {
     private final GameRules gameRules;
     private final int numberOfPlayers;
 
-    public boolean canStart() {
+    synchronized public boolean canStart() {
         return playersWaiting.size() == numberOfPlayers;
     }
 
-    public int getWaitingPlayersNumber() {
+    synchronized public int getWaitingPlayersNumber() {
         return playersWaiting.size();
     }
 
-    public int getLobbySize() {
+    synchronized public int getLobbySize() {
         return numberOfPlayers;
     }
 
@@ -51,7 +51,7 @@ public class GameLobby {
      * or the name is already taken and the wizard is already taken
      * @return true if the player was added.
      */
-    public boolean addPlayer(String playerId, Wizard wizard) {
+    synchronized public boolean addPlayer(String playerId, Wizard wizard) {
         if (playersWaiting.stream().noneMatch(p -> p.getPlayerId().equals(playerId)) && playersWaiting.stream().noneMatch(p -> p.getWizard().equals(wizard))) {
             playersWaiting.add(new PlayerLobby(playerId, wizard));
             return true;
@@ -64,15 +64,15 @@ public class GameLobby {
      *
      * @param playerId the id of the player that exits the lobby
      */
-    public void removePlayer(String playerId) {
+    synchronized public void removePlayer(String playerId) {
         playersWaiting.stream().filter(playerLobby -> playerLobby.getPlayerId().equals(playerId)).findAny().ifPresent(playersWaiting::remove);
     }
 
-    public boolean isPlayerWaiting(String playerId) {
+    synchronized public boolean isPlayerWaiting(String playerId) {
         return playersWaiting.stream().anyMatch(pl -> pl.getPlayerId().equals(playerId));
     }
 
-    public boolean isEmpty() {
+    synchronized public boolean isEmpty() {
         return playersWaiting.isEmpty();
     }
 
@@ -84,20 +84,20 @@ public class GameLobby {
     }
 
     @Override
-    public String toString() {
+    synchronized public String toString() {
         return numberOfPlayers + "P\t" + waitingPlayersToString() + "\t";
     }
 
-    public String toStringNoColors() {return numberOfPlayers + "P\t" + waitingPlayersToStringNoColor() + "\t"; }
+    synchronized public String toStringNoColors() {return numberOfPlayers + "P\t" + waitingPlayersToStringNoColor() + "\t"; }
 
     /**
      * @author Christian Confalonieri
      */
-    public String[] toStringArrayPlayers()  {
+    synchronized public String[] toStringArrayPlayers()  {
         int size = getWaitingPlayersNumber();
         String[] playersLobby = new String[size];
         for(int i=0;i<size;i++) {
-            playersLobby[i] = getPlayersWaiting().get(i).getPlayerId() + "\t\t" + getPlayersWaiting().get(i).getWizard().toString();
+            playersLobby[i] = playersWaiting.get(i).getPlayerId() + "\t\t" + playersWaiting.get(i).getWizard().toString();
         }
         return playersLobby;
     }

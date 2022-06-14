@@ -41,39 +41,67 @@ public class Server {
 
     private final GameController gameController;
 
-    public void addNewGameLobby(GameLobby gameLobby) { lobbyGames.add(gameLobby); }
+    public void addNewGameLobby(GameLobby gameLobby) { synchronized (lobbyGames) { lobbyGames.add(gameLobby); } }
     public void startGame(GameLobby gameLobby) throws InvalidNewGameException {
-        if(gameLobby.canStart()) {
-            lobbyGames.remove(gameLobby);
-            GameHandler newGame = GameCreator.createGame(gameLobby.getPlayersWaiting(), gameLobby.getGameRules());
-            addGame(newGame);
+        synchronized (lobbyGames) {
+            if (gameLobby.canStart()) {
+                lobbyGames.remove(gameLobby);
+                GameHandler newGame = GameCreator.createGame(gameLobby.getPlayersWaiting(), gameLobby.getGameRules());
+                synchronized (newGame) {
+                    addGame(newGame);
 
-            for(PlayerLobby playerLobby : gameLobby.getPlayersWaiting()) {
-                addPlayerInGame(playerLobby.getPlayerId(), newGame,
-                        newGame.getGame().getPlayers().stream().filter(p -> p.getName().equals(playerLobby.getPlayerId())).findAny().get());
+                    for (PlayerLobby playerLobby : gameLobby.getPlayersWaiting()) {
+                        addPlayerInGame(playerLobby.getPlayerId(), newGame,
+                                newGame.getGame().getPlayers().stream().filter(p -> p.getName().equals(playerLobby.getPlayerId())).findAny().get());
+                    }
+                }
             }
         }
     }
     public List<GameLobby> getAllGameLobbys() { return lobbyGames; }
 
     public GameLobby getGameLobby(String lobbyId) {
-        return lobbyGames.stream().filter(lb -> lb.getGameLobbyId().equals(lobbyId)).findAny().orElse(null);
+        synchronized (lobbyGames) {
+            return lobbyGames.stream().filter(lb -> lb.getGameLobbyId().equals(lobbyId)).findAny().orElse(null);
+        }
     }
+
+    public GameLobby getFirstFreeLobby(int numberOfPlayers) {
+        synchronized (lobbyGames) {
+            GameLobby lb = null;
+            for(GameLobby gameLobby : Server.getInstance().getAllGameLobbys()) {
+                if(gameLobby.getLobbySize() == numberOfPlayers) {
+                    lb = gameLobby;
+                    break;
+                }
+            }
+            return lb;
+        }
+    }
+
     public void exitLobbys(String playerId) {
-        List<GameLobby> lobbyInGame = lobbyGames.stream().filter(l -> l.isPlayerWaiting(playerId)).toList();
-        for(GameLobby lb : lobbyInGame) {
-            lb.removePlayer(playerId);
-            if (lb.isEmpty()) {
-                lobbyGames.remove(lb);
-                System.out.println(ConsoleColor.YELLOW + "[" + lb.getGameLobbyId() + "] was empty. Lobby deleted" + ConsoleColor.RESET);
-            } // Removes if the lobby has become empty
+        synchronized (lobbyGames) {
+            List<GameLobby> lobbyInGame = lobbyGames.stream().filter(l -> l.isPlayerWaiting(playerId)).toList();
+            for (GameLobby lb : lobbyInGame) {
+                lb.removePlayer(playerId);
+                if (lb.isEmpty()) {
+                    lobbyGames.remove(lb);
+                    System.out.println(ConsoleColor.YELLOW + "[" + lb.getGameLobbyId() + "] was empty. Lobby deleted" + ConsoleColor.RESET);
+                } // Removes if the lobby has become empty
+            }
         }
     }
     public boolean isWaitingInALobby(String playerId) {
-        return lobbyGames.stream().anyMatch(l -> l.isPlayerWaiting(playerId));
+        synchronized (lobbyGames) {
+            return lobbyGames.stream().anyMatch(l -> l.isPlayerWaiting(playerId));
+        }
     }
 
-    public ClientNetworkHandler getClientNetHandler(String playerId) { synchronized (assignedConnections) { return assignedConnections.get(playerId); } }
+    public ClientNetworkHandler getClientNetHandler(String playerId) {
+        synchronized (assignedConnections) {
+            return assignedConnections.get(playerId);
+        }
+    }
 
     public void addClientConnection(ClientNetworkHandler clientConnection) {
         synchronized (clientConnections) {

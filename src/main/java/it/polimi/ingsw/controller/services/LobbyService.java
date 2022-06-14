@@ -86,12 +86,7 @@ public class LobbyService {
             lb = Server.getInstance().getGameLobby(action.getLobbyId());
         }
         else {
-            for(GameLobby gameLobby : Server.getInstance().getAllGameLobbys()) {
-                if(gameLobby.getGameRules().cloudsRules.numberOfClouds == action.getNumberOfPlayers()) {
-                    lb = gameLobby;
-                    break;
-                }
-            }
+            lb = Server.getInstance().getFirstFreeLobby(action.getNumberOfPlayers());
         }
 
         if(lb == null) {
@@ -182,9 +177,12 @@ public class LobbyService {
     }
 
     public static void getAllLobbys(GetAllLobbysAction action, ClientNetworkHandler clientNet) {
-        action.setGameLobbyList(Server.getInstance().getAllGameLobbys());
-        clientNet.send(ActionHandler.toJson(action));
-        System.out.println(clientNet + " requested lobbies list");
+        List<GameLobby> gameLobbyList = Server.getInstance().getAllGameLobbys();
+        synchronized (gameLobbyList) {
+            action.setGameLobbyList(gameLobbyList);
+            clientNet.send(ActionHandler.toJson(action));
+            System.out.println(clientNet + " requested lobbies list");
+        }
     }
 
 }
