@@ -137,46 +137,48 @@ public class LobbyService {
     public static void getGame(GetGameAction action) throws InvalidAction {
         Gson gson = new Gson();
         GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
-        ClientNetworkHandler clientNetworkHandler = Server.getInstance().getClientNetHandler(action.getPlayerId());
+        synchronized (gameHandler) {
+            ClientNetworkHandler clientNetworkHandler = Server.getInstance().getClientNetHandler(action.getPlayerId());
 
-        JsonElement jElem = gson.toJsonTree(gameHandler);
-        JsonObject jObj = jElem.getAsJsonObject();
-        jObj.addProperty("motherNatureIsOn", gameHandler.getGame().getMotherNature().isOn().getUuid());
+            JsonElement jElem = gson.toJsonTree(gameHandler);
+            JsonObject jObj = jElem.getAsJsonObject();
+            jObj.addProperty("motherNatureIsOn", gameHandler.getGame().getMotherNature().isOn().getUuid());
 
-        JsonArray powerCardsArray = new JsonArray();
-        for(PowerCard powerCard : gameHandler.getGame().getPowerCards()) {
-            powerCardsArray.add(gson.toJsonTree(powerCard, powerCard.getClass()));
-        }
-        JsonObject gameJObj = jObj.getAsJsonObject("game");
-        gameJObj.add("powerCards", powerCardsArray);
-
-        if (gameHandler instanceof GameHandler4P) {
-            // 4P game
-            Game4P game4P = (Game4P) gameHandler.getGame();
-            List<Team> teams = game4P.getTeams();
-
-            JsonArray team0Array = new JsonArray();
-            JsonArray team1Array = new JsonArray();
-
-            for(Player p : teams.get(0).getPlayers()) {
-                team0Array.add(p.getName());
+            JsonArray powerCardsArray = new JsonArray();
+            for (PowerCard powerCard : gameHandler.getGame().getPowerCards()) {
+                powerCardsArray.add(gson.toJsonTree(powerCard, powerCard.getClass()));
             }
-            for(Player p : teams.get(1).getPlayers()) {
-                team1Array.add(p.getName());
+            JsonObject gameJObj = jObj.getAsJsonObject("game");
+            gameJObj.add("powerCards", powerCardsArray);
+
+            if (gameHandler instanceof GameHandler4P) {
+                // 4P game
+                Game4P game4P = (Game4P) gameHandler.getGame();
+                List<Team> teams = game4P.getTeams();
+
+                JsonArray team0Array = new JsonArray();
+                JsonArray team1Array = new JsonArray();
+
+                for (Player p : teams.get(0).getPlayers()) {
+                    team0Array.add(p.getName());
+                }
+                for (Player p : teams.get(1).getPlayers()) {
+                    team1Array.add(p.getName());
+                }
+
+                gameJObj.addProperty("teams", true);
+                // gameJObj.addProperty("team0TowerPlayer", teams.get(0).getTowerPlayer().getName());
+                gameJObj.add("team0Players", team0Array);
+                // gameJObj.addProperty("team1TowerPlayer", teams.get(1).getTowerPlayer().getName());
+                gameJObj.add("team1Players", team1Array);
             }
 
-            gameJObj.addProperty("teams", true);
-            // gameJObj.addProperty("team0TowerPlayer", teams.get(0).getTowerPlayer().getName());
-            gameJObj.add("team0Players", team0Array);
-            // gameJObj.addProperty("team1TowerPlayer", teams.get(1).getTowerPlayer().getName());
-            gameJObj.add("team1Players", team1Array);
+
+            String gameHandlerSerializedInfo = gson.toJson(jObj);
+
+            clientNetworkHandler.send(ActionHandler.toJson(new GetGameAction(action.getPlayerId(), gameHandlerSerializedInfo)));
+            // returns MotherNature island position
         }
-
-        String gameHandlerSerializedInfo = gson.toJson(jObj);
-
-        clientNetworkHandler.send(ActionHandler.toJson(new GetGameAction(action.getPlayerId(), gameHandlerSerializedInfo)));
-        // returns MotherNature island position
-
     }
 
     public static void getAllLobbys(GetAllLobbysAction action, ClientNetworkHandler clientNet) {
