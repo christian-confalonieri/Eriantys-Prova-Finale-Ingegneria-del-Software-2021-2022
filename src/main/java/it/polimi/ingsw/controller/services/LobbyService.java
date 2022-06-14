@@ -40,14 +40,7 @@ public class LobbyService {
         GameRules gameRules = action.getGameRules();
         ClassLoader classLoader = LobbyService.class.getClassLoader();
         if(gameRules == null) {
-            /*
-             * The loading of the rules depends on 3 factors:
-             * 1) The server .jar file must be in the repo (in this case it is in the "out" folder).
-             * 2) The .json file of the rules must be in "src/main/resources/"
-             * 3) The name of the repo must be "ingsw2022-AM03"
-             * */
-            String[] absolutePath;
-            String disk,path,ruleJson,repoName = "ingsw2022-AM03";
+            String ruleJson;
             try {
                 ruleJson = switch (action.getNumberOfPlayers()) {
                     case 2 -> "Rules2P.json";
@@ -58,17 +51,6 @@ public class LobbyService {
                         throw new InvalidAction("NewGame: Invalid NumberOfPlayers without rules");
                     }
                 };
-//                if(!(new File(classLoader.getResource(ruleJson).getFile())).getPath().split(":")[1].contains("\\target\\classes")) {
-//                    // Case of starting the server from .jar file
-//                    absolutePath = (new File(classLoader.getResource(ruleJson).getFile())).getPath().split(repoName)[0].split(":");
-//                    disk = absolutePath[absolutePath.length-2].split("\\\\")[1] + ":";
-//                    path = disk + absolutePath[absolutePath.length-1] + repoName + "/src/main/resources/" + ruleJson;
-//                }
-//                else {
-                    // Case of starting the server from intellij
-                    //path = (new File(classLoader.getResource(ruleJson).getFile())).getPath();
-//                }
-//                String json = new String(Files.readAllBytes(Paths.get(path)));
 
                 InputStream inputStream = classLoader.getResourceAsStream(ruleJson);
                 String json =  new Scanner(inputStream).useDelimiter("\\A").next();
@@ -77,10 +59,6 @@ public class LobbyService {
                 Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.NEWGAME, "NewGame: Server standard rules are corrupted", false)));
                 throw new InvalidAction("NewGame: Server standard rules are corrupted");
             }
-//            } catch (IOException e) {
-//                Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.NEWGAME, "NewGame: Server failed to load standard rules", false)));
-//                throw new InvalidAction("NewGame: Server failed to load standard rules");
-//            }
 
         }
 

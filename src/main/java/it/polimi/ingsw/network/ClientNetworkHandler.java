@@ -27,18 +27,12 @@ public class ClientNetworkHandler implements Runnable {
 
     private ClientNetworkHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
-
-        // try {
-        //    clientSocket.setSoTimeout(10000); // Sets the timeout to 10s for reading operations
-        //} catch (SocketException e) {
-        //    e.printStackTrace();
-        //}
         shutdown = false;
     }
 
     /**
      * Construct a ClientNetworkHandler starting the listener thread and store new netHandler in the server
-     * @param clientSocket The socket to associate with the ClientNetHanlder
+     * @param clientSocket The socket to associate with the ClientNetHandler
      */
     public static void clientNetworkHandlerFactory(Socket clientSocket) {
         ClientNetworkHandler clientNetworkHandler = new ClientNetworkHandler(clientSocket);
