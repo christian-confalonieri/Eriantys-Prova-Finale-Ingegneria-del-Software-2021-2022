@@ -348,7 +348,7 @@ public class GUITableController {
 
     protected void disableStudentFromSchool(Student student) {
         ImageView studentImage = entranceStudentImageMap.get(student);
-        if (entranceStudentImageMap != null) {
+        if (entranceStudentImageMap != null && studentImage != null) {
             studentImage.setImage(getClickedStudentImage(student.getColor(), 40).getImage());
             studentImage.setOpacity(0.5);
             studentImage.setDisable(true);
@@ -357,7 +357,7 @@ public class GUITableController {
 
     protected void enableStudentFromSchool(Student student) {
         ImageView studentImage = entranceStudentImageMap.get(student);
-        if (entranceStudentImageMap != null) {
+        if (entranceStudentImageMap != null && studentImage != null) {
             studentImage.setImage(getStudentImage(student.getColor(), 40).getImage());
             studentImage.setOpacity(1);
             studentImage.setDisable(false);
