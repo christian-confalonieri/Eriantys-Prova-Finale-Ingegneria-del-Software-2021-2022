@@ -21,6 +21,8 @@ import java.util.Map;
 
 public class GameService {
     /**
+     * Method that plays the card on the client model and advances the state
+     * @param action The action received from the server
      * @author Christian Confalonieri
      */
     public static void playCard(PlayCardAction action) {
@@ -31,6 +33,8 @@ public class GameService {
     }
 
     /**
+     * Method that sends the request to the server in order to play the card
+     * @param card The card to be played on the client model
      * @author Christian Confalonieri
      */
     public static void playCardRequest(Card card) {
@@ -39,6 +43,8 @@ public class GameService {
     }
 
     /**
+     * Print the error message on the screen
+     * @param failedAck The ack of action failure
      * @author Christian Confalonieri
      */
     public static void failedPlayCard(ACK failedAck) {
@@ -47,6 +53,8 @@ public class GameService {
     }
 
     /**
+     * Method that move students on the client model and advances the state
+     * @param action The action received from the server
      * @author Christian Confalonieri
      */
     public static void moveStudents(MoveStudentsAction action) {
@@ -73,6 +81,9 @@ public class GameService {
     }
 
     /**
+     * Method that sends the request to the server in order to move students
+     * @param toDiningRoom Students to be moved to the dining room
+     * @param toIslands Students to be moved to the islands
      * @author Christian Confalonieri
      */
     public static void moveStudentsRequest(List<Student> toDiningRoom, Map<Student,String> toIslands) {
@@ -81,6 +92,8 @@ public class GameService {
     }
 
     /**
+     * Print the error message on the screen
+     * @param failedAck The ack of action failure
      * @author Christian Confalonieri
      */
     public static void failedMoveStudents(ACK failedAck) {
@@ -89,6 +102,8 @@ public class GameService {
     }
 
     /**
+     * Method that move Mother Nature on the client model and advances the state
+     * @param action The action received from the server
      * @author Christian Confalonieri
      */
     public static void moveMotherNature(MoveMotherNatureAction action) {
@@ -110,6 +125,8 @@ public class GameService {
     }
 
     /**
+     * Method that sends the request to the server in order to move Mother Nature
+     * @param steps Steps to be taken by mother nature
      * @author Christian Confalonieri
      */
     public static void moveMotherNatureRequest(int steps) {
@@ -118,6 +135,8 @@ public class GameService {
     }
 
     /**
+     * Print the error message on the screen
+     * @param failedAck The ack of action failure
      * @author Christian Confalonieri
      */
     public static void failedMoveMotherNature(ACK failedAck) {
@@ -126,6 +145,8 @@ public class GameService {
     }
 
     /**
+     * Method that moves cloud students on the client model and advances the state
+     * @param action The action received from the server
      * @author Christian Confalonieri
      */
     public static void moveCloud(MoveCloudAction action){
@@ -140,6 +161,8 @@ public class GameService {
     }
 
     /**
+     * Method that sends the request to the server in order to move the cloud students
+     * @param cloud The chosen cloud
      * @author Christian Confalonieri
      */
     public static void moveCloudRequest(Cloud cloud){
@@ -148,6 +171,8 @@ public class GameService {
     }
 
     /**
+     * Print the error message on the screen
+     * @param failedAck The ack of action failure
      * @author Christian Confalonieri
      */
     public static void failedMoveCloud(ACK failedAck) {
@@ -156,6 +181,8 @@ public class GameService {
     }
 
     /**
+     * Method that activates the chosen character on the client model and advances the state
+     * @param action The action received from the server
      * @author Christian Confalonieri
      */
     public static void power(PowerAction action) {
@@ -169,6 +196,8 @@ public class GameService {
     }
 
     /**
+     * Method that sends the request to the server in order to play the chosen character
+     * @param effectHandler The effectHandler with the appropriately modified attributes
      * @author Christian Confalonieri
      */
     public static void powerRequest(PowerType type, EffectHandler effectHandler) {
@@ -177,6 +206,8 @@ public class GameService {
     }
 
     /**
+     * Print the error message on the screen
+     * @param failedAck The ack of action failure
      * @author Christian Confalonieri
      */
     public static void failedPower(ACK failedAck) {

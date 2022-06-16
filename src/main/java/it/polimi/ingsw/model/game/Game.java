@@ -403,6 +403,9 @@ public class Game {
     }
 
     /**
+     * Converts an uuid code to the island object.
+     * @param uuid The code related to the island object to be returned
+     * @return An island object related to the uuid
      * @author Christian Confalonieri
      */
     public Island getIslandFromId(String uuid) {
@@ -415,6 +418,9 @@ public class Game {
     }
 
     /**
+     * Converts an uuid code to the cloud object.
+     * @param uuid The code related to the cloud object to be returned
+     * @return A cloud object related to the uuid
      * @author Christian Confalonieri
      */
     public Cloud getCloudFromId(String uuid) {
@@ -427,6 +433,9 @@ public class Game {
     }
 
     /**
+     * Converts an uuid code to the player object.
+     * @param uuid The code related to the player object to be returned
+     * @return A player object related to the uuid
      * @author Christian Confalonieri
      */
     public Player getPlayerFromId(String uuid) {

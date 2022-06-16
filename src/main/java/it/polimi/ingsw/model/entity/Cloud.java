@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Christian Confalonieri, Alessandro Ettore
+ * @author Christian Confalonieri
  */
 public class Cloud extends Entity {
 

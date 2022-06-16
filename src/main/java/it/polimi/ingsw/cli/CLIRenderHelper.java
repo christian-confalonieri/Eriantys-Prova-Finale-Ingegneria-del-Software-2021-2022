@@ -474,6 +474,8 @@ public class CLIRenderHelper {
 
 
     /**
+     * Prints character-related command help, if it is invoked before creating a game all characters are printed,
+     * otherwise only those in the current game
      * @author Christian Confalonieri
      */
     private void printPowersHelp() {
@@ -533,6 +535,7 @@ public class CLIRenderHelper {
     }
 
     /**
+     * Print help for commands related to the main menu
      * @author Christian Confalonieri
      */
     private void printMainMenuHelp() {
@@ -551,6 +554,7 @@ public class CLIRenderHelper {
     }
 
     /**
+     * Print help for commands related to the waiting lobby
      * @author Christian Confalonieri
      */
     private void printWaitingLobbyHelp() {
@@ -559,6 +563,7 @@ public class CLIRenderHelper {
     }
 
     /**
+     * Print help for commands related to moving student client state
      * @author Christian Confalonieri
      */
     private void printMoveStudentsHelp() {
@@ -571,6 +576,8 @@ public class CLIRenderHelper {
     }
 
     /**
+     * Print help related to keywords used for command invocation
+     * @param command The command entered by the user
      * @author Christian Confalonieri
      */
     private void printKeyWordsHelp(String[] command) {
@@ -626,6 +633,8 @@ public class CLIRenderHelper {
     }
 
     /**
+     * Printing generic help for using the commands
+     * @param command The command entered by the user
      * @author Christian Confalonieri
      */
     public void printHelp(String[] command) {

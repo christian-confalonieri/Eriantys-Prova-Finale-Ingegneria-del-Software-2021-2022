@@ -27,6 +27,11 @@ public class MoveStudentsAction extends PlayAction{
         return toDiningRoom;
     }
 
+    /**
+     * Returns a map by merging the information from the list studentsToIsland and IslandsUUID
+     * @return The map containing students and their destinations (islands)
+     * @author Christian Confalonieri
+     */
     public Map<Student, String> getToIsland() {
         Map<Student,String> toIsland = new HashMap<>();
         for(int i=0; i<studentsToIsland.size(); i++) {

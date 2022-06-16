@@ -17,6 +17,10 @@ public abstract class Pawn extends Entity {
     }
 
     /**
+     * Converts a color from string to PawnColor.
+     * @param color The color string to be converted
+     * @return PawnColor
+     * @throws InvalidColor
      * @author Christian Confalonieri
      */
     public static PawnColor parseColor(String color) throws InvalidColor {

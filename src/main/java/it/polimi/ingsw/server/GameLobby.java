@@ -91,6 +91,8 @@ public class GameLobby {
     synchronized public String toStringNoColors() {return numberOfPlayers + "P\t" + waitingPlayersToStringNoColor() + "\t"; }
 
     /**
+     * Returns a vector string containing the lobby information.
+     * @return A string vector containing the lobby information
      * @author Christian Confalonieri
      */
     synchronized public String[] toStringArrayPlayers()  {

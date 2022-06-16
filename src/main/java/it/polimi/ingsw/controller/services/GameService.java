@@ -67,6 +67,11 @@ public class GameService {
     }
 
     /**
+     * Method that moves students to the server model of the current game and advances the state.
+     * Before changing the model it does all the checks and in case it sends an ack.
+     * If successful (not failed ack) update all clients.
+     * @param action The action received from the client
+     * @throws InvalidAction
      * @author Christian Confalonieri
      */
     public static void moveStudents(MoveStudentsAction action) throws InvalidAction {
@@ -142,6 +147,11 @@ public class GameService {
     }
 
     /**
+     * Method that moves Mother Nature to the server model of the current game and advances the state.
+     * Before changing the model it does all the checks and in case it sends an ack.
+     * If successful (not failed ack) update all clients.
+     * @param action The action received from the client
+     * @throws InvalidAction
      * @author Christian Confalonieri
      */
     public static void moveMotherNature(MoveMotherNatureAction action) throws InvalidAction {
@@ -197,6 +207,11 @@ public class GameService {
     }
 
     /**
+     * Method that moves cloud students to the server model of the current game and advances the state.
+     * Before changing the model it does all the checks and in case it sends an ack.
+     * If successful (not failed ack) update all clients.
+     * @param action The action received from the client
+     * @throws InvalidAction
      * @author Christian Confalonieri
      */
     public static void moveCloud(MoveCloudAction action) throws InvalidAction {
@@ -236,6 +251,11 @@ public class GameService {
     }
 
     /**
+     * Method that activates the chosen character to the server model of the current game and advances the state.
+     * Before changing the model it does all the checks and in case it sends an ack.
+     * If successful (not failed ack) update all clients.
+     * @param action The action received from the client
+     * @throws InvalidAction
      * @author Christian Confalonieri
      */
     public static void power(PowerAction action) throws InvalidAction {

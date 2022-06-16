@@ -67,6 +67,7 @@ public class CLI {
     }
 
     /**
+     * It simply calls the method with the same name as the InputCLI class as long as it is not invoked shutdown
      * @author Christian Confalonieri
      */
     public void inputHandler() {
@@ -77,6 +78,7 @@ public class CLI {
     }
 
     /**
+     * For each client status it cleans the screen and prints the updated information
      * @author Christian Confalonieri
      */
     public void render() {

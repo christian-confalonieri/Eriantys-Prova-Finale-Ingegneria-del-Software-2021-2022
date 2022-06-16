@@ -27,6 +27,7 @@ public class Mailman extends PowerCard {
     }
 
     /**
+     * The method sets to true the value contained in effectHandler "mailmanActive"
      * @author Christian Confalonieri
      */
     @Override
@@ -36,6 +37,7 @@ public class Mailman extends PowerCard {
     }
 
     /**
+     * The method sets to false the value contained in effectHandler "mailmanActive"
      * @author Christian Confalonieri
      */
     @Override
