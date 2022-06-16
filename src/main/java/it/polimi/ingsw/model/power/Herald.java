@@ -38,7 +38,7 @@ public class Herald extends PowerCard {
         super.power();
         getGameHandler().getGame().conquerIsland(getGameHandler().getGame().getIslandFromId(getGameHandler().getGame().getEffectHandler().getChosenIslandUuid()));
 
-        Island currentIsland = getGameHandler().getGame().getMotherNature().isOn();
+        Island currentIsland = getGameHandler().getGame().getIslandFromId(getGameHandler().getGame().getEffectHandler().getChosenIslandUuid());
 
         if(currentIsland.checkUnifyNext()) {
             getGameHandler().getGame().unifyIsland(currentIsland,currentIsland.getNextIsland());
