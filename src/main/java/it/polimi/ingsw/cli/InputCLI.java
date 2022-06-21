@@ -19,6 +19,8 @@ import java.util.*;
 public class InputCLI {
     private static boolean globalCommand;
     /**
+     * Call the appropriate methods for each client state to handle input
+     * @param inputScanner The input scanner
      * @author Christian Confalonieri
      */
     public static void inputHandler(Scanner inputScanner) {
@@ -57,6 +59,8 @@ public class InputCLI {
     }
 
     /**
+     * After some checks on the fairness of the incoming string it sends a login request to the server
+     * @param command The current command
      * @author Christian Confalonieri
      */
     private static void cliLoginRequest(String[] command) {
@@ -68,6 +72,8 @@ public class InputCLI {
     }
 
     /**
+     * After some checks on the fairness of the incoming string it sends a logout request to the server
+     * @param command The current command
      * @author Christian Confalonieri
      */
     private static void cliLogoutRequest(String[] command) {
@@ -79,6 +85,8 @@ public class InputCLI {
     }
 
     /**
+     * After some checks on the fairness of the incoming string it sends a new game request to the server
+     * @param command The current command
      * @author Christian Confalonieri
      */
     private static void cliNewGameRequest(String[] command) {
@@ -95,6 +103,8 @@ public class InputCLI {
     }
 
     /**
+     * After some checks on the fairness of the incoming string it sends a join game request to the server
+     * @param command The current command
      * @author Christian Confalonieri
      */
     private static void cliJoinGameRequest(String[] command) {
@@ -111,7 +121,8 @@ public class InputCLI {
     }
 
     /**
-     * Request joining the lobby ID.
+     * After some checks on the fairness of the incoming string it sends a join game (ID) request to the server
+     * @param command The current command
      * @author Leonardo Airoldi, Christian Confalonieri
      */
     private static void cliJoinGameIdRequest(String[] command) {
@@ -125,6 +136,8 @@ public class InputCLI {
     }
 
     /**
+     * After some checks on the fairness of the incoming string it sends a play card request to the server
+     * @param command The current command
      * @author Christian Confalonieri
      */
     private static void cliPlayCardRequest(String[] command) {
@@ -154,6 +167,8 @@ public class InputCLI {
     }
 
     /**
+     * After some checks on the fairness of the incoming string it sends a move students request to the server
+     * @param command The current command
      * @author Christian Confalonieri
      */
     private static void cliMoveStudentsRequest(String[] command) {
@@ -190,6 +205,8 @@ public class InputCLI {
     }
 
     /**
+     * After some checks on the fairness of the incoming string it sends a move mother nature request to the server
+     * @param command The current command
      * @author Christian Confalonieri
      */
     private static void cliMoveMotherNatureRequest(String[] command) {
@@ -202,6 +219,8 @@ public class InputCLI {
     }
 
     /**
+     * After some checks on the fairness of the incoming string it sends a move cloud request to the server
+     * @param command The current command
      * @author Christian Confalonieri
      */
     private static void cliMoveCloudRequest(String[] command) {
@@ -214,6 +233,8 @@ public class InputCLI {
     }
 
     /**
+     * After some checks on the fairness of the incoming string it sends a power request to the server
+     * @param command The current command
      * @author Christian Confalonieri
      */
     private static void cliPowersRequest(String[] command) {
@@ -357,6 +378,11 @@ public class InputCLI {
     }
 
     /**
+     * Handles request invocation for methods that can be invoked in almost any client state.
+     * It is a boolean method because the returned value will be used by the other methods
+     * to avoid triggering when global methods are invoked.
+     * @param command The current command
+     * @return True if one of the cases within the switch is invoked otherwise false
      * @author Christian Confalonieri
      */
     private static boolean globalCommand(String[] command) {
@@ -395,7 +421,9 @@ public class InputCLI {
     }
 
     /**
-     * @autho Christian Confalonieri
+     * Handles the invocation of methods in the Main Menu state
+     * @param command The current command
+     * @author Christian Confalonieri
      */
     private static void mainMenu(String[] command) {
         if(globalCommand) return;
@@ -411,6 +439,8 @@ public class InputCLI {
     }
 
     /**
+     * Handles the invocation of methods in the Game state
+     * @param command The current command
      * @author Christian Confalonieri
      */
     private static void inGame(String[] command) {

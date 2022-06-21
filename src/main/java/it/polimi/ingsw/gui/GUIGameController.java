@@ -276,6 +276,7 @@ public class GUIGameController {
     }
 
     /**
+     * Sends a logout request to the server
      * @author Christian Confalonieri
      */
     @FXML

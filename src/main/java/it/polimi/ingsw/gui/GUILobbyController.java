@@ -22,6 +22,7 @@ public class GUILobbyController {
     private ListView<String> lstWaitingLobby;
 
     /**
+     * Initialize the lobby scene and call the method to update the connected players
      * @author Christian Confalonieri
      */
     @FXML
@@ -46,6 +47,7 @@ public class GUILobbyController {
     }
 
     /**
+     * Sends a logout request to the server
      * @author Christian Confalonieri
      */
     @FXML
@@ -54,6 +56,7 @@ public class GUILobbyController {
     }
 
     /**
+     * Updates the displayed list and the displayed number of connected players
      * @author Christian Confalonieri
      */
     public void updateConnectedPlayers(GameLobby gameLobby) {

@@ -51,6 +51,7 @@ public class GUICloudController {
     }
 
     /**
+     * Removes the current cloud from the display
      * @author Christian Confalonieri
      */
     public void remove() {
@@ -59,6 +60,7 @@ public class GUICloudController {
     }
 
     /**
+     * The outline opacity becomes 1 and the move cloud request is sent to the server
      * @author Christian Confalonieri
      */
     @FXML
@@ -68,6 +70,7 @@ public class GUICloudController {
     }
 
     /**
+     * The outline opacity becomes 0.5
      * @author Christian Confalonieri
      */
     @FXML
@@ -76,6 +79,7 @@ public class GUICloudController {
     }
 
     /**
+     * The outline opacity becomes 0
      * @author Christian Confalonieri
      */
     @FXML
@@ -85,6 +89,8 @@ public class GUICloudController {
 
 
     /**
+     * Based on the number that is entered sets a different background to the cloud with the corresponding number
+     * @param number the number of the cloud
      * @author Christian Confalonieri
      */
     @FXML
@@ -98,6 +104,7 @@ public class GUICloudController {
     }
 
     /**
+     * Takes care of printing the students present on the current cloud
      * @author Christian Confalonieri
      */
     @FXML
@@ -111,6 +118,9 @@ public class GUICloudController {
     }
 
     /**
+     * Returns the ImageView corresponding to the input position
+     * @param number the number of the student
+     * @return The corresponding ImageView at the entered position
      * @author Christian Confalonieri
      */
     private ImageView getGUIStudent(int number) {
@@ -124,6 +134,9 @@ public class GUICloudController {
     }
 
     /**
+     * Through an incoming student returns the Image corresponding to the color
+     * @param student The student to get color from
+     * @return The Image corresponding to the student's color
      * @author Christian Confalonieri
      */
     private Image getStudentImage(Student student) {
@@ -137,6 +150,7 @@ public class GUICloudController {
     }
 
     /**
+     * Hides all students from the cloud
      * @author Christian Confalonieri
      */
     private void clearStudents() {
