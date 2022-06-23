@@ -55,6 +55,7 @@ public class GUIPowerController {
     }
 
     /**
+     * Opens the banner of the current character
      * @author Christian Confalonieri
      */
     public void selectPower() {
@@ -73,6 +74,7 @@ public class GUIPowerController {
     }
 
     /**
+     * Select on mouseover the current character
      * @author Christian Confalonieri
      */
     @FXML
@@ -90,6 +92,7 @@ public class GUIPowerController {
     }
 
     /**
+     * Deselects the current character on mouse exit
      * @author Christian Confalonieri
      */
     @FXML

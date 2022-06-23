@@ -23,6 +23,7 @@ public class GUILobbyController {
 
     /**
      * Initialize the lobby scene and call the method to update the connected players
+     * @param stage The stage in which to open the scene
      * @author Christian Confalonieri
      */
     @FXML

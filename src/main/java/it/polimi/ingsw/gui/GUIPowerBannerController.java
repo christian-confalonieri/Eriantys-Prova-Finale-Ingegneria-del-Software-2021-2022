@@ -83,6 +83,8 @@ public class GUIPowerBannerController {
 
 
     /**
+     * Takes care of updating and displaying a character taken in input
+     * @param powerCard the character to be displayed
      * @author Christian Confalonieri
      */
     private void renderPower(PowerCard powerCard) {
@@ -100,6 +102,8 @@ public class GUIPowerBannerController {
     }
 
     /**
+     * It is responsible for displaying and updating the students or no entry cards present on a given character
+     * @param powerCard The current character
      * @author Christian Confalonieri
      */
     private void renderCardStudents(PowerCard powerCard) {
@@ -145,6 +149,8 @@ public class GUIPowerBannerController {
     }
 
     /**
+     * Is responsible for showing and updating students present at the school entrance
+     * @param powerCard The current character
      * @author Christian Confalonieri
      */
     private void renderEntranceStudents(PowerCard powerCard) {
@@ -171,6 +177,8 @@ public class GUIPowerBannerController {
     }
 
     /**
+     * It is responsible for displaying and updating the ChoiceBox for island choice
+     * @param powerCard The current character
      * @author Christian Confalonieri
      */
     private  void renderIslandChoiceBox(PowerCard powerCard) {
@@ -191,6 +199,8 @@ public class GUIPowerBannerController {
     }
 
     /**
+     * It is responsible for displaying and updating CheckBoxes intended for choosing one or more dining room colors
+     * @param powerCard The current character
      * @author Christian Confalonieri
      */
     private void renderDiningRoomCheckBox(PowerCard powerCard) {
@@ -241,6 +251,8 @@ public class GUIPowerBannerController {
     }
 
     /**
+     * Manages the positioning in the scene of various objects
+     * @param powerCard The current character
      * @author Christian Confalonieri
      */
     private void renderInputPosition(PowerCard powerCard) {
@@ -296,6 +308,8 @@ public class GUIPowerBannerController {
     }
 
     /**
+     * It takes care of showing and updating the effect of the selected character
+     * @param powerCard The current character
      * @author Christian Confalonieri
      */
     private String setPowerEffect(PowerCard powerCard) {
@@ -327,6 +341,8 @@ public class GUIPowerBannerController {
     }
 
     /**
+     * For each character prints a different prompt message to the user
+     * @param powerCard The current character
      * @author Christian Confalonieri
      */
     private String getPowerMessage(PowerCard powerCard) {
@@ -342,6 +358,9 @@ public class GUIPowerBannerController {
     }
 
     /**
+     * Handles the selection of students
+     * @param mouseEvent
+     * @param student The student clicked by the user
      * @author Christian Confalonieri
      */
     @FXML
@@ -406,6 +425,7 @@ public class GUIPowerBannerController {
     }
 
     /**
+     * It is responsible for sending the character activation request to the server
      * @author Christian Confalonieri
      */
     @FXML
@@ -479,6 +499,9 @@ public class GUIPowerBannerController {
     }
 
     /**
+     * Given as input a color of type PawnColor returns the corresponding CheckBox
+     * @param color the chosen color
+     * @return The CheckBox corresponding to the chosen color
      * @author Christian Confalonieri
      */
     private CheckBox getColorCheckBox(PawnColor color) {
@@ -492,6 +515,7 @@ public class GUIPowerBannerController {
     }
 
     /**
+     * Closes the character banner window
      * @author Christian Confalonieri
      */
     @FXML

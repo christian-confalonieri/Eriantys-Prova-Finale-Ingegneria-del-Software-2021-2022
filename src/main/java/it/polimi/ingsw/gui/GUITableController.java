@@ -189,6 +189,7 @@ public class GUITableController {
     private GUIPowerController power3Controller;
 
     /**
+     * Initializes the table by showing and updating all items on it
      * @author Leonardo Airoldi, Christian Confalonieri
      */
     protected void initializeTable() {
@@ -261,6 +262,7 @@ public class GUITableController {
 
 
     /**
+     * Show and update all items on the table
      * @author Leonardo Airoldi, Christian Confalonieri
      */
     public void render() {
@@ -415,6 +417,11 @@ public class GUITableController {
     }
 
     /**
+     * Show and update clouds
+     * @param cloudPane The cloud box
+     * @param cloudController The cloud controller
+     * @param x The position on the x-axis
+     * @param y The position on the y-axis
      * @author Christian Confalonieri
      */
     private void renderCloud(AnchorPane cloudPane, GUICloudController cloudController, double x, double y) {
@@ -448,9 +455,6 @@ public class GUITableController {
         }
     }
 
-    /**
-     * @author Christian Confalonieri
-     */
     public void allCloudExecute(BiConsumer<AnchorPane, GUICloudController> function) {
         Iterator<AnchorPane> cloudAnchorPaneIt = cloudAnchorPanes.iterator();
         Iterator<GUICloudController> cloudControllerIt = cloudControllers.iterator();
@@ -478,8 +482,10 @@ public class GUITableController {
         }
     }
 
-
     /**
+     * Given a number from 1 to 4 returns the corresponding cloud controller
+     * @param number a number from 1 to 4
+     * @return the corresponding cloud controller of the chosen number
      * @author Christian Confalonieri
      */
     private GUICloudController getCloudController(int number) {
@@ -493,6 +499,9 @@ public class GUITableController {
     }
 
     /**
+     * Given a number from 1 to 3 returns the corresponding character controller
+     * @param number a number from 1 to 3
+     * @return the corresponding character controller of the chosen number
      * @author Christian Confalonieri
      */
     private GUIPowerController getPowerController(int number) {
@@ -505,6 +514,7 @@ public class GUITableController {
     }
 
     /**
+     * He is in charge of showing and updating the professors on the table
      * @author Christian Confalonieri
      */
     private void setProfessors() {
@@ -517,6 +527,9 @@ public class GUITableController {
     }
 
     /**
+     * Given a number from 1 to 5 returns the corresponding ImageView
+     * @param number a number from 1 to 5
+     * @return the corresponding ImageView of the chosen number
      * @author Christian Confalonieri
      */
     private ImageView getGUIProfessor(int number) {
@@ -531,6 +544,9 @@ public class GUITableController {
     }
 
     /**
+     * Given a professor returns the corresponding Image
+     * @param professor The professor from which to obtain an image
+     * @return the corresponding Image of the chosen professor
      * @author Christian Confalonieri
      */
     private Image getProfessorImage(Professor professor) {
@@ -570,6 +586,7 @@ public class GUITableController {
     }
 
     /**
+     * Delete all professors from the table
      * @author Christian Confalonieri
      */
     private void clearProfessors() {

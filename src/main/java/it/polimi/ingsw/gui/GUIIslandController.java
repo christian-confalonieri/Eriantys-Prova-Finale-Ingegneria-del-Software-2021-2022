@@ -136,6 +136,7 @@ public class GUIIslandController {
     }
 
     /**
+     * Place students on the current island
      * @author Christian Confalonieri
      */
     @FXML
@@ -165,6 +166,7 @@ public class GUIIslandController {
     }
 
     /**
+     * Delete all students from the island
      * @author Christian Confalonieri
      */
     private void clearStudents() {
@@ -175,6 +177,8 @@ public class GUIIslandController {
     }
 
     /**
+     * Returns the ImageView corresponding to the first free student position on the island (and which can be filled)
+     * @return the ImageView corresponding to the first free student position on the island
      * @author Christian Confalonieri
      */
     private ImageView getFirstBlankStudentSpace() {
@@ -189,6 +193,9 @@ public class GUIIslandController {
     }
 
     /**
+     * Given a number from 1 to 5 returns the corresponding ImageView
+     * @param number a number from 1 to 5
+     * @return the corresponding ImageView
      * @author Christian Confalonieri
      */
     private ImageView getGUIStudent(int number) {
@@ -203,6 +210,9 @@ public class GUIIslandController {
     }
 
     /**
+     * Given a number from 1 to 5 returns the corresponding Label
+     * @param number a number from 1 to 5
+     * @return the corresponding Label
      * @author Christian Confalonieri
      */
     private Label getGUILabelStudent(int number) {
@@ -217,6 +227,9 @@ public class GUIIslandController {
     }
 
     /**
+     * Given a student returns the corresponding Image (color)
+     * @param student the student to take color from
+     * @return the corresponding Image
      * @author Christian Confalonieri
      */
     private Image getStudentImage(Student student) {
@@ -230,6 +243,7 @@ public class GUIIslandController {
     }
 
     /**
+     * Place towers on the current island
      * @author Christian Confalonieri
      */
     @FXML
@@ -247,6 +261,9 @@ public class GUIIslandController {
     }
 
     /**
+     * Given a tower returns the corresponding Image (color)
+     * @param tower the tower to take color from
+     * @return the corresponding Image
      * @author Christian Confalonieri
      */
     private Image getTowerImage(Tower tower) {
@@ -258,6 +275,7 @@ public class GUIIslandController {
     }
 
     /**
+     * Delete all towers from the island
      * @author Christian Confalonieri
      */
     private void clearTowers() {
@@ -266,6 +284,7 @@ public class GUIIslandController {
     }
 
     /**
+     * Place Mother Nature on the current island
      * @author Christian Confalonieri
      */
     @FXML
@@ -277,6 +296,7 @@ public class GUIIslandController {
     }
 
     /**
+     * Place No Entry Card on the current island
      * @author Christian Confalonieri
      */
     @FXML

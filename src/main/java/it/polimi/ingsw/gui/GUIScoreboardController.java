@@ -74,6 +74,7 @@ public class GUIScoreboardController {
     }
 
     /**
+     * Sends a logout request to the server
      * @author Christian Confalonieri
      */
     @FXML

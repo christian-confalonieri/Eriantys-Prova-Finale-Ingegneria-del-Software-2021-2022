@@ -36,6 +36,8 @@ public class GUIMainMenuController {
     private ImageView wizardCardView;
 
     /**
+     * Initialize the main menu scene and call the method to update the lobbies (and refresh the wizards)
+     * @param stage The stage in which to open the scene
      * @author Christian Confalonieri
      */
     public static void initSceneAndController(Stage stage) {
@@ -60,6 +62,7 @@ public class GUIMainMenuController {
     }
 
     /**
+     * Send to server a new game request
      * @author Christian Confalonieri
      */
     @FXML
@@ -73,6 +76,7 @@ public class GUIMainMenuController {
     }
 
     /**
+     * Send to server a join game request
      * @author Christian Confalonieri
      */
     @FXML
@@ -96,6 +100,7 @@ public class GUIMainMenuController {
     }
 
     /**
+     * Delete selection in the lobby list
      * @author Christian Confalonieri
      */
     @FXML
@@ -104,6 +109,7 @@ public class GUIMainMenuController {
     }
 
     /**
+     * Update the displayed lobbies
      * @author Christian Confalonieri
      */
     public void updateLobbies() {
@@ -113,6 +119,8 @@ public class GUIMainMenuController {
     }
 
     /**
+     * Gets a string to print as an error
+     * @param string the string to print as an error
      * @author Christian Confalonieri
      */
     public void errorLabelWrite(String string) {
@@ -121,6 +129,7 @@ public class GUIMainMenuController {
     }
 
     /**
+     * Sends a logout request to the server
      * @author Christian Confalonieri
      */
     @FXML

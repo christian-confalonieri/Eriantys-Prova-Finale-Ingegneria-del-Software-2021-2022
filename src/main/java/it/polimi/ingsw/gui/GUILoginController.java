@@ -22,6 +22,8 @@ public class GUILoginController {
     private TextField txtUsername;
 
     /**
+     * After doing a simple check on the entered text it sends the login request to the server
+     * @throws IOException
      * @author Christian Confalonieri
      */
     @FXML
