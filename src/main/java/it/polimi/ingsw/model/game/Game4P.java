@@ -2,12 +2,11 @@ package it.polimi.ingsw.model.game;
 
 import it.polimi.ingsw.exceptions.EmptyBagException;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
-import it.polimi.ingsw.model.entity.Player;
-import it.polimi.ingsw.model.entity.School;
-import it.polimi.ingsw.model.entity.Team;
-import it.polimi.ingsw.model.entity.Tower;
+import it.polimi.ingsw.model.entity.*;
+import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.enumeration.TowerColor;
 import it.polimi.ingsw.model.game.rules.GameRules;
+import it.polimi.ingsw.model.power.Herbalist;
 import it.polimi.ingsw.server.PlayerLobby;
 
 import java.util.ArrayList;
@@ -20,6 +19,10 @@ public class Game4P extends Game{
 
     public List<Team> getTeams() {
         return teams;
+    }
+
+    public Team getTeamFromPlayer(Player player) {
+        return teams.stream().filter(team -> team.getPlayers().contains(player)).findAny().get();
     }
 
     public void setTeams(List<Team> teams) {
@@ -103,4 +106,32 @@ public class Game4P extends Game{
         teams.add(new Team(teamTwoList));
     }
 
+    @Override
+    public void conquerIsland(Island island) {
+        Team previousOwnerTeam;
+        Team influenceTeam = island.getInfluenceTeam(teams, effectHandler);
+
+        if (island.isNoEntry()) {
+            island.setNoEntry(false);
+            Herbalist herbalist = (Herbalist) powerCards.stream().filter(p -> p.getType().equals(PowerType.HERBALIST)).findAny().get();
+            herbalist.setNoEntryCards(herbalist.getNoEntryCards() + 1);
+            return;
+        }
+
+        if(!island.getTowers().isEmpty()) {
+            previousOwnerTeam = getTeamFromPlayer(island.getTowers().get(0).getOwner());
+            if(previousOwnerTeam != influenceTeam) {
+                int sizeIsland = island.getIslandSize();
+                island.moveTowers();
+                for (int i = 0; i < sizeIsland; i++) {
+                    influenceTeam.getTowerPlayer().getSchool().moveTower(island);
+                }
+            }
+        }
+        else {
+            if(influenceTeam != null) {
+                influenceTeam.getTowerPlayer().getSchool().moveTower(island);
+            }
+        }
+    }
 }

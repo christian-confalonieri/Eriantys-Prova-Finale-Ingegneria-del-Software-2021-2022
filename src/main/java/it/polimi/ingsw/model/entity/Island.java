@@ -226,7 +226,7 @@ public class Island extends Entity {
      * If there are towers on the island I compare the previous influence points with the new ones
      * and return the dominant team, in case of a tie I keep the current one.
      * If there are no towers on the island, I return the team with the most influence points.
-     *If no team has influence on the island return null
+     * If no team has influence on the island return null
      *
      * @return the team with the most influence on the island
      * @author Christian Confalonieri
