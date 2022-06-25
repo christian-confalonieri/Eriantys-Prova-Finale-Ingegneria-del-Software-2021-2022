@@ -17,6 +17,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -312,9 +313,12 @@ public class GUITableController {
 
     private void renderGamePhaseLabel() {
         if(!Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(Client.getInstance().getPlayerId())) {
+            gamePhaseLabel.setTextFill(Color.WHITE);
             gamePhaseLabel.setText("WAIT YOUR TURN...");
             return;
         }
+
+        gamePhaseLabel.setTextFill(Color.YELLOW);
         if(Client.getInstance().getGameHandler().getGamePhase() == GamePhase.PREPARATION) {
             gamePhaseLabel.setText("PLAY A CARD");
             return;
