@@ -305,7 +305,10 @@ public class GUI extends Application {
 
     public void notifyStateChange() {
         Platform.runLater( () -> {
-            if(Stage.getWindows().size() > 1) Stage.getWindows().forEach(window -> ((Stage) window).close());
+            if(Stage.getWindows().size() > 1) {
+                try { Stage.getWindows().forEach(window -> ((Stage) window).close()); }
+                catch (Exception e) { System.out.println("Tried closing windows out of bounds");}
+            }
             Stage currentStageWindow = Stage.getWindows().size() != 0 ? ((Stage)(Stage.getWindows().get(0))) : new Stage();
 
             currentStageWindow.setOnCloseRequest(windowEvent -> {

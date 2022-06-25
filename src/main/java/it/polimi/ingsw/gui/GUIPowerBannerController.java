@@ -374,27 +374,30 @@ public class GUIPowerBannerController {
             case FRIAR -> powerStudents = ((Friar) powerCard).getStudents();
         }
 
+        Image newStudentImage;
         if(powerStudents.contains(student)) {
             if(!clickedCardStudents.contains(student)) {
                 clickedCardStudents.add(student);
+                newStudentImage = getClickedStudentImage(student.getColor(), 20).getImage();
+
             }
             else {
                 clickedCardStudents.remove(student);
+                newStudentImage = getStudentImage(student.getColor(), 20).getImage();
             }
         }
         else {
             if(!clickedEntranceStudents.contains(student)) {
                 clickedEntranceStudents.add(student);
+                newStudentImage = getClickedStudentImage(student.getColor(), 20).getImage();
             }
             else {
                 clickedEntranceStudents.remove(student);
+                newStudentImage = getStudentImage(student.getColor(), 20).getImage();
             }
         }
 
-        ImageView studentImageView = ((ImageView) mouseEvent.getSource());
-        Image studentImageSelected = getClickedStudentImage(student.getColor(), 20).getImage();
-        Image studentImageStandard = getStudentImage(student.getColor(), 20).getImage();
-        Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.powerStudentClicked(studentImageView, student, studentImageSelected, studentImageStandard));
+        ((ImageView) mouseEvent.getSource()).setImage(newStudentImage);
     }
 
 

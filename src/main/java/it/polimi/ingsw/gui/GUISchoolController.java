@@ -66,8 +66,6 @@ public class GUISchoolController {
     @FXML
     private HBox blueHBox;
 
-    private PawnColor laneSelected;
-
 
     /**
      * CARDS
@@ -357,100 +355,6 @@ public class GUISchoolController {
 
     private void resetErrors() {
         errorLabel.setText("");
-    }
-
-
-    @FXML
-    private void laneHighLight(MouseEvent mouseEvent) {
-        if (!((HBox) mouseEvent.getSource()).getStyle().contains("WHITE"))
-            ((HBox) mouseEvent.getSource()).setStyle("-fx-border-color: rgba(255,255,255,0.5); -fx-border-width: 5;");
-    }
-
-    @FXML
-    private void laneUnhighlight(MouseEvent mouseEvent) {
-        if (!((HBox) mouseEvent.getSource()).getStyle().contains("WHITE"))
-            ((HBox) mouseEvent.getSource()).setStyle("");
-    }
-
-
-    public void selectLaneGreen() {
-        if (laneSelected != PawnColor.GREEN) {
-            greenHBox.setStyle("-fx-border-color: WHITE; -fx-border-width: 5;");
-            if(laneSelected != null) getHBoxFromColor(laneSelected).setStyle("");
-            laneSelected = PawnColor.GREEN;
-            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.setSelectedLane(PawnColor.GREEN));
-        }
-        else {
-            laneSelected = null;
-            greenHBox.setStyle("");
-            Client.getInstance().getGui().guiCallGame(GUIGameController::clearSelectedLane);
-        }
-    }
-
-    public void selectLaneRed() {
-        if (laneSelected != PawnColor.RED) {
-            redHBox.setStyle("-fx-border-color: WHITE; -fx-border-width: 5;");
-            if(laneSelected != null) getHBoxFromColor(laneSelected).setStyle("");
-            laneSelected = PawnColor.RED;
-            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.setSelectedLane(PawnColor.RED));
-        }
-        else {
-            laneSelected = null;
-            redHBox.setStyle("");
-            Client.getInstance().getGui().guiCallGame(GUIGameController::clearSelectedLane);
-        }
-    }
-
-    public void selectLaneYellow() {
-        if (laneSelected != PawnColor.YELLOW) {
-            yellowHBox.setStyle("-fx-border-color: WHITE; -fx-border-width: 5;");
-            if(laneSelected != null) getHBoxFromColor(laneSelected).setStyle("");
-            laneSelected = PawnColor.YELLOW;
-            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.setSelectedLane(PawnColor.YELLOW));
-        }
-        else {
-            laneSelected = null;
-            yellowHBox.setStyle("");
-            Client.getInstance().getGui().guiCallGame(GUIGameController::clearSelectedLane);
-        }
-    }
-
-    public void selectLanePink() {
-        if (laneSelected != PawnColor.PINK) {
-            pinkHBox.setStyle("-fx-border-color: WHITE; -fx-border-width: 5;");
-            if(laneSelected != null) getHBoxFromColor(laneSelected).setStyle("");
-            laneSelected = PawnColor.PINK;
-            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.setSelectedLane(PawnColor.PINK));
-        }
-        else {
-            laneSelected = null;
-            pinkHBox.setStyle("");
-            Client.getInstance().getGui().guiCallGame(GUIGameController::clearSelectedLane);
-        }
-    }
-
-    public void selectLaneBlue() {
-        if (laneSelected != PawnColor.BLUE) {
-            blueHBox.setStyle("-fx-border-color: WHITE; -fx-border-width: 5;");
-            if(laneSelected != null) getHBoxFromColor(laneSelected).setStyle("");
-            laneSelected = PawnColor.BLUE;
-            Client.getInstance().getGui().guiCallGame(guiGameController -> guiGameController.setSelectedLane(PawnColor.BLUE));
-        }
-        else {
-            laneSelected = null;
-            blueHBox.setStyle("");
-            Client.getInstance().getGui().guiCallGame(GUIGameController::clearSelectedLane);
-        }
-    }
-
-    private HBox getHBoxFromColor(PawnColor color) {
-        return switch (color) {
-            case YELLOW -> yellowHBox;
-            case GREEN -> greenHBox;
-            case RED -> redHBox;
-            case PINK -> pinkHBox;
-            case BLUE -> blueHBox;
-        };
     }
 
 

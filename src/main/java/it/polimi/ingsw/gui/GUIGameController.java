@@ -30,12 +30,8 @@ public class GUIGameController {
 
     private List<Island> selectedIslands = new ArrayList<>();
 
-    private PowerCard selectedPower = null;
-    
     private List<Student> selectedPowerStudents = new ArrayList<>();
-    
 
-    private PawnColor selectedLane;
 
     private List<Student> selectedEntranceToSchoolStudents = new ArrayList<>();
     private Map<Student, String> selectedEntranceToIslandStudents = new HashMap<>();
@@ -164,10 +160,6 @@ public class GUIGameController {
 
     }
 
-    protected void renderTable() {
-        tableController.render();
-    }
-
     public void render() {
         clearSelectedStudents();
 
@@ -191,27 +183,6 @@ public class GUIGameController {
     public void clearSelectedIslands() {
         selectedIslands.clear();
     }
-
-
-    public void addSelectedPower(PowerCard power,Label cost, GridPane powerStudentGrid) {
-        selectedPower = power;
-
-        //Opens the power banner
-    }
-
-    public void removeSelectedPower() {
-        selectedPower = null;
-    }
-
-    public void setSelectedLane(PawnColor selectedLane) {
-        this.selectedLane = selectedLane;
-    }
-
-    public void clearSelectedLane() {
-        this.selectedLane = null;
-    }
-
-
 
 
     protected void studentOnSchoolClicked(ImageView studentImage, Student student, Image studentSelectedImage, Image studentStandardImage) {
@@ -254,25 +225,6 @@ public class GUIGameController {
         selectedEntranceToSchoolStudents.clear();
         selectedPowerStudents.clear();
         selectedEntranceToIslandStudents.clear();
-    }
-
-    
-    protected void powerStudentClicked(ImageView studentImage, Student student, Image studentSelectedImage, Image studentStandardImage) {
-        if(!selectedPowerStudents.contains(student)) {
-            studentImage.setImage(studentSelectedImage);
-            addSelectedPowerStudent(student);
-        }
-        else {
-            studentImage.setImage(studentStandardImage);
-            removeSelectedPowerStudent(student);
-        }
-    }
-
-    public void addSelectedPowerStudent(Student student) {
-        selectedPowerStudents.add(student);
-    }
-    public void removeSelectedPowerStudent(Student student) {
-        selectedPowerStudents.remove(student);
     }
 
     /**
