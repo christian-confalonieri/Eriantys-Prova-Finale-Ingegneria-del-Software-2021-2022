@@ -176,6 +176,7 @@ public class School extends Entity {
      * @param island is where the tower has to be moved
      */
     public void moveTower(Island island) {
+        if(this.towers.size() <= 0) return;
         // The first tower is removed from the list in this class and is placed on the island
         island.addTower(this.towers.get(0));
         this.towers.remove(0);
