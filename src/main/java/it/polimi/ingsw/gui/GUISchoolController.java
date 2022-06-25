@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.controller.services.GameService;
 import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.*;
+import javafx.css.converter.PaintConverter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -12,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -99,23 +101,27 @@ public class GUISchoolController {
     }
 
     private void renderGamePhaseLabel() {
+        boolean schoolOfClient = true;
         if(!Client.getInstance().getPlayerId().equals(playerModel.getName())) {
-            gamePhaseLabel.setOpacity(0);
+            schoolOfClient = false;
+            gamePhaseLabel.setOpacity(0.5);
             errorLabel.setOpacity(0);
-            return;
         }
         if(!Client.getInstance().getGameHandler().getCurrentPlayer().getName().equals(playerModel.getName())) {
-            gamePhaseLabel.setText("WAIT YOUR TURN...");
+            gamePhaseLabel.setTextFill(Color.WHITE);
+            gamePhaseLabel.setText(schoolOfClient ? "WAIT YOUR TURN..." : "IS WAITING HIS TURN...");
             return;
         }
         if(Client.getInstance().getGameHandler().getGamePhase() == GamePhase.PREPARATION) {
-            gamePhaseLabel.setText("PLAY A CARD");
+            gamePhaseLabel.setTextFill(Color.YELLOW);
+            gamePhaseLabel.setText(schoolOfClient ? "PLAY A CARD" : "IS PLAYING A CARD...");
             return;
         }
+        gamePhaseLabel.setTextFill(Color.YELLOW);
         switch (Client.getInstance().getGameHandler().getTurnPhase()) {
-            case MOVESTUDENTS -> gamePhaseLabel.setText("MOVE STUDENTS");
-            case MOVEMOTHER -> gamePhaseLabel.setText("MOVE MOTHER NATURE");
-            case MOVEFROMCLOUD -> gamePhaseLabel.setText("PICK A CLOUD");
+            case MOVESTUDENTS -> gamePhaseLabel.setText(schoolOfClient ? "MOVE STUDENTS" : "IS MOVING STUDENTS...");
+            case MOVEMOTHER -> gamePhaseLabel.setText(schoolOfClient ? "MOVE MOTHER NATURE" : "IS MOVING MOTHER NATURE...");
+            case MOVEFROMCLOUD -> gamePhaseLabel.setText(schoolOfClient ? "PICK A CLOUD" : "IS PICKING A CLOUD...");
         }
     }
 
@@ -321,6 +327,18 @@ public class GUISchoolController {
         imageView.setFitHeight(height);
         imageView.setFitWidth(width);
         return imageView;
+    }
+
+    @FXML
+    private void lastCardHighlight(MouseEvent mouseEvent) {
+        lastPlayedCard.setScaleX(1.75);
+        lastPlayedCard.setScaleY(1.75);
+    }
+
+    @FXML
+    private void lastCardUnhighlight(MouseEvent mouseEvent) {
+        lastPlayedCard.setScaleX(1);
+        lastPlayedCard.setScaleY(1);
     }
 
     @FXML

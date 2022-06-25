@@ -171,7 +171,7 @@
       </effect>
    </HBox>
 
-   <ImageView fx:id="lastPlayedCard" fitHeight="100" fitWidth="70" layoutX="792.0" layoutY="443.0">
+   <ImageView fx:id="lastPlayedCard" fitHeight="100" fitWidth="70" layoutX="792.0" layoutY="443.0" onMouseEntered="#lastCardHighlight" onMouseExited="#lastCardUnhighlight">
       <Image url="@../../../assets/assistantCards/one.png" />
       <effect>
          <DropShadow />
