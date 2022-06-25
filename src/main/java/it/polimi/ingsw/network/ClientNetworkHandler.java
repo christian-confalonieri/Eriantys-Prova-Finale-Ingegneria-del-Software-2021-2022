@@ -18,6 +18,8 @@ import java.util.Scanner;
  *
  */
 public class ClientNetworkHandler implements Runnable {
+    private static final int WAIT_PONG_FOR_MS = 20000;
+
     private Socket clientSocket;
     Thread listenerThread;
     private boolean shutdown;
@@ -114,14 +116,14 @@ public class ClientNetworkHandler implements Runnable {
         // In case the timer did not start before but is set as false this old timer will perform the same action
         // As the new timer (Wait for 10s and check so no prob)
         try {
-            Thread.sleep(10000);
+            Thread.sleep(WAIT_PONG_FOR_MS);
         } catch (InterruptedException e) {
             // Thread interrupted by a pong receive
             ponged = true;
             return;
         }
         if(!ponged) {
-            System.out.println(ConsoleColor.RED + this + " did not ponged back in 10s" + ConsoleColor.RESET);
+            System.out.println(ConsoleColor.RED + this + " did not ponged back in " + (WAIT_PONG_FOR_MS / 1000) + "s" + ConsoleColor.RESET);
             if (Server.getInstance().isAssigned(this)) {
                 Server.getInstance().getGameController().actionExecutor(ActionHandler.toJson(
                         new LogoutAction(Server.getInstance().getAssignedPlayerId(this))), this);

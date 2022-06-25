@@ -12,6 +12,7 @@ import java.net.Socket;
  * to each new client connected
  */
 public class ServerNetworkHandler implements Runnable {
+    private static final int PING_EVERY_MS = 30000;
 
     private final ServerSocket serverSocket;
     private boolean shutdown;
@@ -56,7 +57,7 @@ public class ServerNetworkHandler implements Runnable {
             Server.getInstance().forEachClientConnection(ClientNetworkHandler::startTimerPongResponse);
 
             try {
-                Thread.sleep(20000);
+                Thread.sleep(PING_EVERY_MS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

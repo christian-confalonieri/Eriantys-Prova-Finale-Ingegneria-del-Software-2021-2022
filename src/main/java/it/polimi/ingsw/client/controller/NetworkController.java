@@ -17,6 +17,9 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class NetworkController implements Runnable {
+    private static final int PING_EVERY_MS = 30000;
+    private static final int WAIT_PONG_FOR_MS = 20000;
+
     private final Socket socket;
     private Thread listenerThread;
     private boolean shutdown;
@@ -88,14 +91,14 @@ public class NetworkController implements Runnable {
         // In case the timer did not start before but is set as false this old timer will perform the same action
         // As the new timer (Wait for 10s and check so no prob)
         try {
-            Thread.sleep(10000);
+            Thread.sleep(WAIT_PONG_FOR_MS);
         } catch (InterruptedException e) {
             // Thread interrupted by a pong receive
             ponged = true;
             return;
         }
         if(!ponged) {
-            System.out.println(ConsoleColor.RED + "Server did not ponged back in 10s. Logging out and resetting" + ConsoleColor.RESET);
+            System.out.println(ConsoleColor.RED + "Server did not ponged back in " + (WAIT_PONG_FOR_MS / 1000) + "s. Logging out and resetting" + ConsoleColor.RESET);
 
             LoginService.logout(new LogoutAction(Client.getInstance().getPlayerId())); // Logout te client without contacting the server (as its not respoding)
 
@@ -123,7 +126,7 @@ public class NetworkController implements Runnable {
             Client.getInstance().getNetworkController().startTimerPongResponse();
             if(Client.getInstance().isPollAllLobbies()) LobbyService.getAllLobbysRequest();
             try {
-                Thread.sleep(20000);
+                Thread.sleep(PING_EVERY_MS);
             } catch (InterruptedException e) {
                 System.out.println(ConsoleColor.YELLOW + "PollingPingThread interrupted" + ConsoleColor.RESET);
             }
