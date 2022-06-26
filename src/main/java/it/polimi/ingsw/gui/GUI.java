@@ -313,6 +313,7 @@ public class GUI extends Application {
 
             currentStageWindow.setOnCloseRequest(windowEvent -> {
                         Client.getInstance().getNetworkController().shutdown();
+                        Client.getInstance().interruptReconnection();
                     }
             );
 

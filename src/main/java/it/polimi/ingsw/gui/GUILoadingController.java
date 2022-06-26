@@ -38,6 +38,7 @@ public class GUILoadingController {
 
         stage.setOnCloseRequest(windowEvent -> {
                     Client.getInstance().interruptReconnection();
+                    if (Client.getInstance().getNetworkController() != null) Client.getInstance().getNetworkController().shutdown();
                 }
         );
 

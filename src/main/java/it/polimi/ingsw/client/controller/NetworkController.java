@@ -41,8 +41,12 @@ public class NetworkController implements Runnable {
     }
 
     public void start() {
-        this.listenerThread.start();
-        this.pollingPingThread.start();
+        try {
+            this.listenerThread.start();
+            this.pollingPingThread.start();
+        } catch (IllegalThreadStateException e) {
+            System.out.println("Network threads not started as threads were interrupted");
+        }
     }
 
     public void shutdown() {
