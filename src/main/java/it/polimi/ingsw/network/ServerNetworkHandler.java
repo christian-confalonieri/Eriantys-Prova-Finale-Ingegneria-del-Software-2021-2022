@@ -12,7 +12,7 @@ import java.net.Socket;
  * to each new client connected
  */
 public class ServerNetworkHandler implements Runnable {
-    private static final int PING_EVERY_MS = 30000;
+    private static final int PING_EVERY_MS = 10000;
 
     private final ServerSocket serverSocket;
     private boolean shutdown;

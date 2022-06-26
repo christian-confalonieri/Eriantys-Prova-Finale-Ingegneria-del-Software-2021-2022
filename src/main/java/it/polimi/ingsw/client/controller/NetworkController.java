@@ -17,8 +17,8 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class NetworkController implements Runnable {
-    private static final int PING_EVERY_MS = 30000;
-    private static final int WAIT_PONG_FOR_MS = 20000;
+    private static final int PING_EVERY_MS = 10000;
+    private static final int WAIT_PONG_FOR_MS = 5000;
 
     private final Socket socket;
     private Thread listenerThread;

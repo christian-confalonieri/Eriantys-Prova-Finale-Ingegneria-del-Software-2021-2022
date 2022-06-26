@@ -18,7 +18,7 @@ import java.util.Scanner;
  *
  */
 public class ClientNetworkHandler implements Runnable {
-    private static final int WAIT_PONG_FOR_MS = 20000;
+    private static final int WAIT_PONG_FOR_MS = 5000;
 
     private Socket clientSocket;
     Thread listenerThread;
