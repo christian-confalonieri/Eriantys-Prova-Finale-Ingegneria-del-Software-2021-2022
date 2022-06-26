@@ -16,6 +16,7 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 public class Client implements Runnable {
+    private static final int CONNECTION_RETRY_MS = 5000;
 
     public static Client getInstance() {
         return singleton;
@@ -92,10 +93,9 @@ public class Client implements Runnable {
             } catch (IOException e) {
                 System.out.println(ConsoleColor.RED + "Failed to connect to the server. Retrying in 10s" + ConsoleColor.RESET);
 
-                while (gui == null) Thread.onSpinWait();
-                gui.guiCallLoading(guiLoadingController -> guiLoadingController.setConnectionLogLabel("Failed to connect to the server. Retrying in 10s"));
+                if(gui != null) gui.guiCallLoading(guiLoadingController -> guiLoadingController.setConnectionLogLabel("Failed to connect to the server. Retrying in " + (CONNECTION_RETRY_MS / 1000) + "s"));
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(CONNECTION_RETRY_MS);
                 } catch (InterruptedException ex) {
                     //
                 }
