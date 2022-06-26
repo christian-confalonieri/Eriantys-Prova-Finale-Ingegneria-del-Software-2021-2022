@@ -11,7 +11,7 @@ public class NetworkService {
     }
 
     public static void recvPong(PONG pong) {
-        Client.getInstance().getNetworkController().setPonged(true);
+        Client.getInstance().getNetworkController().setPonged();
         Client.getInstance().getNetworkController().stopPongTimerThread();
     }
 }

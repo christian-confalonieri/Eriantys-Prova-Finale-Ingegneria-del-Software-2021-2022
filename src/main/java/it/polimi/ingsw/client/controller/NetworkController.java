@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Scanner;
 
 public class NetworkController implements Runnable {
@@ -24,8 +26,10 @@ public class NetworkController implements Runnable {
     private Thread listenerThread;
     private boolean shutdown;
     private volatile Thread timerThread;
-    private boolean ponged;
+
     private Thread pollingPingThread;
+
+    private long lastPongedTime;
 
     private NetworkController(Socket socket) {
         this.socket = socket;
@@ -83,7 +87,6 @@ public class NetworkController implements Runnable {
     }
 
     public void startTimerPongResponse() {
-        ponged = false;
         this.send(ClientActionHandler.toJson(new PING()));
         timerThread = new Thread(this::pongTimer);
         timerThread.start();
@@ -91,20 +94,22 @@ public class NetworkController implements Runnable {
 
     private void pongTimer() {
         try {
-            if(ponged) return; // PONG received before starting of the timer, check if pong already arrived
-            // In case the timer did not start before but is set as false this old timer will perform the same action
-            // As the new timer (Wait for 10s and check so no prob)
+            long startTimer = System.currentTimeMillis();
 
             Thread.sleep(WAIT_PONG_FOR_MS);
 
-            if(!ponged) {
+            boolean hasBeenPonged;
+            synchronized( this ) {
+                hasBeenPonged = lastPongedTime > startTimer;
+            }
+
+            if(!hasBeenPonged) {
                 System.out.println(ConsoleColor.RED + "Server did not ponged back in " + (WAIT_PONG_FOR_MS / 1000) + "s. Logging out and resetting" + ConsoleColor.RESET);
                 LoginService.logout(new LogoutAction(Client.getInstance().getPlayerId())); // Logout te client without contacting the server (as its not respoding)
                 Client.getInstance().restartNetwork(Client.getInstance().serverIp, Client.getInstance().serverPort);
             }
         } catch (InterruptedException e) {
             // Thread interrupted by a pong receive
-            ponged = true;
         }
     }
 
@@ -113,8 +118,8 @@ public class NetworkController implements Runnable {
         timerThread.interrupt();
     }
 
-    public void setPonged(boolean ponged) {
-        this.ponged = ponged;
+    synchronized public void setPonged() {
+        lastPongedTime = System.currentTimeMillis();
     }
 
     private void pollingPing() {

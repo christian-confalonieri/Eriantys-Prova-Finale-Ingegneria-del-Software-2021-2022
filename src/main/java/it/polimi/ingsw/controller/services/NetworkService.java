@@ -13,7 +13,7 @@ public class NetworkService {
     }
 
     public static void recvPong(PONG action, ClientNetworkHandler clientNet) {
-        clientNet.setPonged(true);
+        clientNet.setPonged();
         clientNet.stopPongTimerThread();
         System.out.println(ConsoleColor.GREEN + clientNet + " ponged back" + ConsoleColor.RESET);
     }

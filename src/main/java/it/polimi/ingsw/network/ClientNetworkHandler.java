@@ -24,8 +24,9 @@ public class ClientNetworkHandler implements Runnable {
     Thread listenerThread;
     private boolean shutdown;
 
-    Thread timerThread;
-    private boolean ponged;
+    volatile Thread timerThread;
+
+    private long lastPongedTime;
 
     private ClientNetworkHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -105,48 +106,43 @@ public class ClientNetworkHandler implements Runnable {
      * If the response has not arrived at the end of the timer, the client is set as offline and disconnected
      */
     public void startTimerPongResponse() {
-        ponged = false;
         this.send(ActionHandler.toJson(new PING()));
         timerThread = new Thread(this::pongTimer);
         timerThread.start();
     }
 
     private void pongTimer() {
-        if(ponged) return; // PONG received before starting of the timer, check if pong already arrived
-        // In case the timer did not start before but is set as false this old timer will perform the same action
-        // As the new timer (Wait for 10s and check so no prob)
         try {
+            long startTimer = System.currentTimeMillis();
+
             Thread.sleep(WAIT_PONG_FOR_MS);
-        } catch (InterruptedException e) {
-            // Thread interrupted by a pong receive
-            ponged = true;
-            return;
-        }
-        if(!ponged) {
-            System.out.println(ConsoleColor.RED + this + " did not ponged back in " + (WAIT_PONG_FOR_MS / 1000) + "s" + ConsoleColor.RESET);
-            if (Server.getInstance().isAssigned(this)) {
-                Server.getInstance().getGameController().actionExecutor(ActionHandler.toJson(
-                        new LogoutAction(Server.getInstance().getAssignedPlayerId(this))), this);
+
+            boolean hasBeenPonged;
+            synchronized( this ) {
+                hasBeenPonged = lastPongedTime > startTimer;
             }
-            this.shutdown();
-            return;
+
+            if (!hasBeenPonged) {
+                System.out.println(ConsoleColor.RED + this + " did not ponged back in " + (WAIT_PONG_FOR_MS / 1000) + "s" + ConsoleColor.RESET);
+                if (Server.getInstance().isAssigned(this)) {
+                    Server.getInstance().getGameController().actionExecutor(ActionHandler.toJson(
+                            new LogoutAction(Server.getInstance().getAssignedPlayerId(this))), this);
+                }
+                this.shutdown();
+            }
         }
-        else {
-            return;
+        catch (InterruptedException e) {
+            // Thread interrupted by a pong receive
         }
     }
 
     public void stopPongTimerThread() {
-        try {
-            timerThread.interrupt();
-        } catch (NullPointerException exception) {
-            // TODO Pong recieved before starting the new timer thread.
-            // If ignored the system should continue without problems (The thread will not interrupt but will see)
-        }
+        while (timerThread == null) Thread.onSpinWait();
+        timerThread.interrupt();
     }
 
-    public void setPonged(boolean ponged) {
-        this.ponged = ponged;
+    synchronized public void setPonged() {
+        lastPongedTime = System.currentTimeMillis();
     }
 
     @Override
