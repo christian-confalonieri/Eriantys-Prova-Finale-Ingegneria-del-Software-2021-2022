@@ -83,21 +83,22 @@ public class Client implements Runnable {
     public void attachNetwork() {
         while (!connected){
             try {
+                System.out.println(ConsoleColor.CYAN + "Attaching NetworkController" + ConsoleColor.RESET);
                 Socket socket = new Socket(serverIp, serverPort);
                 networkController = NetworkController.networkControllerFactory(socket);
+                System.out.println(ConsoleColor.GREEN + "NetworkController Attached" + ConsoleColor.RESET);
                 connected = true;
-
             } catch (UnknownHostException e) {
                 System.out.println(ConsoleColor.RED + "Unknown server address" + ConsoleColor.RESET);
                 return;
             } catch (IOException e) {
-                System.out.println(ConsoleColor.RED + "Failed to connect to the server. Retrying in 10s" + ConsoleColor.RESET);
+                System.out.println(ConsoleColor.RED + "Failed to connect to the server. Retrying in " + (CONNECTION_RETRY_MS / 1000) + "s" + ConsoleColor.RESET);
 
                 if(gui != null) gui.guiCallLoading(guiLoadingController -> guiLoadingController.setConnectionLogLabel("Failed to connect to the server. Retrying in " + (CONNECTION_RETRY_MS / 1000) + "s"));
                 try {
                     Thread.sleep(CONNECTION_RETRY_MS);
                 } catch (InterruptedException ex) {
-                    //
+                    System.out.println(ConsoleColor.RED + "Attaching Interrupted" + ConsoleColor.RESET);
                 }
             }
         }
