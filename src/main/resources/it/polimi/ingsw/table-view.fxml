@@ -12,17 +12,6 @@
       <Image url="@../../../assets/table/background.png" />
    </ImageView>
 
-   <ImageView fx:id="entranceBackground" fitWidth="100.0" layoutX="338.0" layoutY="252.0" preserveRatio="true" rotate="-90">
-      <Image url="@../../../assets/school/entranceOnly.png" />
-      <effect>
-         <InnerShadow blurType="ONE_PASS_BOX" choke="0.67" height="227.07" radius="91.91" width="142.57">
-            <color>
-               <Color red="0.4117647111415863" green="0.729411780834198" blue="0.9137254953384399" />
-            </color>
-         </InnerShadow>
-      </effect>
-   </ImageView>
-
    <fx:include fx:id="island1" source="island-view.fxml" />
    <fx:include fx:id="island2" source="island-view.fxml" />
    <fx:include fx:id="island3" source="island-view.fxml" />
@@ -75,6 +64,17 @@
       <image>
          <Image url="@../../../assets/professors/green.png" />
       </image>
+   </ImageView>
+
+   <ImageView fx:id="entranceBackground" fitWidth="100.0" layoutX="338.0" layoutY="252.0" preserveRatio="true" rotate="-90" mouseTransparent="true">
+      <Image url="@../../../assets/school/entranceOnly.png" />
+      <effect>
+         <InnerShadow blurType="ONE_PASS_BOX" choke="0.67" height="227.07" radius="91.91" width="142.57">
+            <color>
+               <Color red="0.4117647111415863" green="0.729411780834198" blue="0.9137254953384399" />
+            </color>
+         </InnerShadow>
+      </effect>
    </ImageView>
 
    <GridPane fx:id="entranceGrid" layoutX="341.0" layoutY="234.0" prefHeight="300.0" prefWidth="97.0" rotate="-90" scaleX="0.7" scaleY="0.7" vgap="20.0">
