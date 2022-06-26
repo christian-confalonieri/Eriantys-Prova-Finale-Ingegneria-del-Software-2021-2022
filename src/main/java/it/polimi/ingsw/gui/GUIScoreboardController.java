@@ -43,9 +43,11 @@ public class GUIScoreboardController {
     public void renderScoreBoard(List<String> scoreboardIds) {
         List<Player> playersScoreboard = scoreboardIds.stream().map(id -> Client.getInstance().getGameHandler().getGame().getPlayerFromId(id)).toList();
         int count = 1;
+        boolean teams = scoreboardIds.size() == 4;
         leaderboardVBox.getChildren().clear();
         for(Player player : playersScoreboard) {
-            AnchorPane anchorPane = loadLeaderboardBox(count, player.getWizard(), player.getName());
+            int position = !teams ? count : (((count - 1) / 2) + 1);
+            AnchorPane anchorPane = loadLeaderboardBox(position, player.getWizard(), player.getName());
             leaderboardVBox.getChildren().add(anchorPane);
             count++;
         }
@@ -63,7 +65,7 @@ public class GUIScoreboardController {
        try {
            anchorPane = loader.load();
        }catch(IOException e) {
-           //
+           e.printStackTrace();
        }
        GUIScoreboardboxController guiScoreboardboxController = loader.getController();
        guiScoreboardboxController.setBackground(position);

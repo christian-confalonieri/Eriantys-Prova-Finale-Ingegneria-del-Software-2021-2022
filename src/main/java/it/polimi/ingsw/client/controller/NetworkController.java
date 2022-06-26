@@ -23,7 +23,7 @@ public class NetworkController implements Runnable {
     private final Socket socket;
     private Thread listenerThread;
     private boolean shutdown;
-    private Thread timerThread;
+    private volatile Thread timerThread;
     private boolean ponged;
     private Thread pollingPingThread;
 
@@ -70,8 +70,7 @@ public class NetworkController implements Runnable {
         Scanner s = new Scanner(inputStream).useDelimiter("\n");
 
         while(!shutdown) {
-            // TODO Define a close connection message and a ack system to close broken connections
-            if(s.hasNext()) { // Blocking:waits for input (But if server disconnects deadlock)
+            if(s.hasNext()) {
                 Client.getInstance().getClientController().actionExecutor(s.next());
             }
         }
@@ -87,34 +86,27 @@ public class NetworkController implements Runnable {
     }
 
     private void pongTimer() {
-        if(ponged) return; // PONG received before starting of the timer, check if pong already arrived
-        // In case the timer did not start before but is set as false this old timer will perform the same action
-        // As the new timer (Wait for 10s and check so no prob)
         try {
+            if(ponged) return; // PONG received before starting of the timer, check if pong already arrived
+            // In case the timer did not start before but is set as false this old timer will perform the same action
+            // As the new timer (Wait for 10s and check so no prob)
+
             Thread.sleep(WAIT_PONG_FOR_MS);
+
+            if(!ponged) {
+                System.out.println(ConsoleColor.RED + "Server did not ponged back in " + (WAIT_PONG_FOR_MS / 1000) + "s. Logging out and resetting" + ConsoleColor.RESET);
+                LoginService.logout(new LogoutAction(Client.getInstance().getPlayerId())); // Logout te client without contacting the server (as its not respoding)
+                Client.getInstance().restartNetwork(Client.getInstance().serverIp, Client.getInstance().serverPort);
+            }
         } catch (InterruptedException e) {
             // Thread interrupted by a pong receive
             ponged = true;
-            return;
         }
-        if(!ponged) {
-            System.out.println(ConsoleColor.RED + "Server did not ponged back in " + (WAIT_PONG_FOR_MS / 1000) + "s. Logging out and resetting" + ConsoleColor.RESET);
-
-            LoginService.logout(new LogoutAction(Client.getInstance().getPlayerId())); // Logout te client without contacting the server (as its not respoding)
-
-            Client.getInstance().restartNetwork(Client.getInstance().serverIp, Client.getInstance().serverPort);
-        }
-
-        return;
     }
 
     public void stopPongTimerThread() {
-        try {
-            timerThread.interrupt();
-        } catch (NullPointerException exception) {
-            // TODO Pong recieved before starting the new timer thread.
-            // If ignored the system should continue without problems (The thread will not interrupt but will see)
-        }
+        while (timerThread == null) Thread.onSpinWait();
+        timerThread.interrupt();
     }
 
     public void setPonged(boolean ponged) {
