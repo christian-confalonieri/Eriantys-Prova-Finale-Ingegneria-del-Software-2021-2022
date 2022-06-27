@@ -59,7 +59,9 @@ public class Bag {
     }
 
     /**
-     *
+     * Get a new Bag filled only with the students that are used to create the new islands
+     * @param gameRules the rules of the game
+     * @return the Bag
      */
     public static Bag getNewStartingBag(GameRules gameRules) {
         double nOfStartingStudents = (double)(gameRules.islandsRules.numberOfIslands - 2) * (gameRules.studentsRules.startingStudentsOnIsland) / PawnColor.values().length;
@@ -67,6 +69,13 @@ public class Bag {
         return new Bag(Student.generateNStudentsPerColor(roundedNOfStartingStudents));
     }
 
+    /**
+     * Given a used starting bag used to create the islands, refills it according to the game rules.
+     * @param startingBag Initial bag used to set up the game
+     * @param gameRules Game rules
+     * @return The filled bag
+     * @throws InvalidNewGameException Game Rules are not consistent
+     */
     public static Bag getRefilledGameBag(Bag startingBag, GameRules gameRules) throws InvalidNewGameException {
         double nOfStartingStudents = (double)(gameRules.islandsRules.numberOfIslands - 2) * (gameRules.studentsRules.startingStudentsOnIsland) / PawnColor.values().length;
         int roundedNOfStartingStudents = (int) Math.ceil(nOfStartingStudents) * PawnColor.values().length;

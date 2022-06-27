@@ -66,6 +66,10 @@ public class Player {
         return handCards;
     }
 
+    /**
+     * Get the last played card in from the player if exists, otherwise return null.
+     * @return the last played card from the player or null.
+     */
     public Card getLastPlayedCard() {
         return usedCards.size() != 0 ? usedCards.get(usedCards.size() - 1) : null;
     }

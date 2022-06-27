@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * GameHandler is a wrapper class around game that stores the information about the state of the match.
+ * Game stores all the objects and the data relative to the game, while its gameHandler stores its state and
+ * handles the turn progressions.
+ */
 public class GameHandler {
 
     protected Player currentPlayer;

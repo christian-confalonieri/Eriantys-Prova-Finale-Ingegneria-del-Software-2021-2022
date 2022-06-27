@@ -106,6 +106,12 @@ public class Game4P extends Game{
         teams.add(new Team(teamTwoList));
     }
 
+    /**
+     * Given an island, calculates and move the towers if a player has conquered that island
+     * and give the towers back to the previous owner
+     *
+     * @param island the island to be conquered
+     */
     @Override
     public void conquerIsland(Island island) {
         Team previousOwnerTeam;

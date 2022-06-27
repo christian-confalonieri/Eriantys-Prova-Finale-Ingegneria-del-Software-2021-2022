@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
+ * Power card represents the power characters in the expert game
+ *
  * @author Christian Confalonieri
  */
 public class PowerCard {
@@ -29,7 +31,7 @@ public class PowerCard {
     }
 
     /**
-     * This method increases the cost of the card
+     * Activates the power and increase the cost of the powerCard
      *
      * @author Christian Confalonieri
      */
@@ -77,6 +79,11 @@ public class PowerCard {
         this.gameHandler = gameHandler;
     }
 
+    /**
+     * Constructs three random power cards for the game
+     * @param gameHandler the game associated to the powercards
+     * @return the list of the two powercards
+     */
     public static List<PowerCard> getThreeUniquePowerCards(GameHandler gameHandler) {
         List<PowerCard> powerCards = new ArrayList<>();
         Random cardGen = new Random();

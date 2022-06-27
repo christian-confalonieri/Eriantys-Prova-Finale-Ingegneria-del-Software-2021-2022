@@ -2,6 +2,11 @@ package it.polimi.ingsw.model.entity;
 
 import java.util.UUID;
 
+/**
+ * Entity is the super type of all the "table objects" in the game.
+ * It defines a equal relation based of an Unique Identifier, so that
+ * the relation is valid even after serialization of the objects.
+ */
 public abstract class Entity {
     private final String uuid;
 

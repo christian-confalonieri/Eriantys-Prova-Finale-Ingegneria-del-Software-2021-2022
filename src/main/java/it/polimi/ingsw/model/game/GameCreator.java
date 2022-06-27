@@ -7,6 +7,13 @@ import it.polimi.ingsw.server.PlayerLobby;
 import java.util.List;
 
 public class GameCreator {
+    /**
+     * Creates a new game given the rules and the players' names and wizards.
+     * @param playersData The list of players in a lobby with the info on their name and wizard
+     * @param gameRules The rules of the game
+     * @return A new gameHandler
+     * @throws InvalidNewGameException if the player are not 2, 3, 4 or the game creation failed.
+     */
     public static GameHandler createGame(List<PlayerLobby> playersData, GameRules gameRules) throws InvalidNewGameException {
         switch (playersData.size()) {
             case 2:

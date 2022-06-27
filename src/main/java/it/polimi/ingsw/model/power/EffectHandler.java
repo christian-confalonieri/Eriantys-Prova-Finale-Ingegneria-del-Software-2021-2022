@@ -8,6 +8,8 @@ import it.polimi.ingsw.model.entity.Student;
 import java.util.List;
 
 /**
+ * Effect handler contains all the information to activate a power.
+ *
  * @author Christian Confalonieri
  */
 public class EffectHandler {

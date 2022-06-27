@@ -230,7 +230,7 @@ public class Game {
      * Given an island, calculates and move the towers if a player has conquered that island
      * and give the towers back to the previous owner
      *
-     * @param island the island to conquered
+     * @param island the island to be conquered
      */
     public void conquerIsland(Island island) {
         Player previousOwner;
