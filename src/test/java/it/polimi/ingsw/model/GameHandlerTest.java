@@ -327,15 +327,26 @@ class GameHandlerTest {
         assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
         assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVESTUDENTS);
         assertEquals(gameHandler.getCurrentPlayer().getName(), "Abbate");
+
+        // Pippo moves 3 student MOVESTUDENTS
+        Student s1 = gameHandler.getCurrentPlayer().getSchool().getEntrance().get(0);
+        Student s2 = gameHandler.getCurrentPlayer().getSchool().getEntrance().get(1);
+        Student s3 = gameHandler.getCurrentPlayer().getSchool().getEntrance().get(2);
+        gameHandler.getCurrentPlayer().getSchool().entranceToDiningRoom(s1);
+        gameHandler.getCurrentPlayer().getSchool().entranceToDiningRoom(s2);
+        gameHandler.getCurrentPlayer().getSchool().entranceToIsland(s3, gameHandler.getGame().getIslands().get(1));
+        assertEquals(gameHandler.getGame().getIslands().get(1).getStudents().size(), 2);
+
+
+        gameHandler.getGame().professorRelocate(); // Pippo earnes professors
+        assertTrue(gameHandler.getCurrentPlayer().getSchool().getProfessorTable().size() >= 1);
         gameHandler.advance();
-        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
-        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVEMOTHER);
-        assertEquals(gameHandler.getCurrentPlayer().getName(), "Abbate");
-        gameHandler.advance();
-        assertEquals(gameHandler.getGamePhase(), GamePhase.TURN);
-        assertEquals(gameHandler.getTurnPhase(), TurnPhase.MOVEFROMCLOUD);
-        assertEquals(gameHandler.getCurrentPlayer().getName(), "Abbate");
-        gameHandler.advance();
+
+        // Pippo moves mothernature MOVEMOTHER
+        gameHandler.getGame().getMotherNature().move(1);
+
+        // Call to conquerIsland(isOn)
+        gameHandler.getGame().conquerIsland(gameHandler.getGame().getMotherNature().isOn());
     }
 
     @Test

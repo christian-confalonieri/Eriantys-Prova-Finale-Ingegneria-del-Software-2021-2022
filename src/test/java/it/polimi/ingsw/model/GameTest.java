@@ -261,6 +261,7 @@ class GameTest {
         assertEquals(winner, pippo);
     }
 
+
     @Test
     void refillClouds() {
     }
