@@ -32,3 +32,17 @@ Software Engineering Final Project
 
 #### Legend
 🔴 Not Implemented &nbsp;&nbsp;&nbsp;&nbsp;🟡 Implementing&nbsp;&nbsp;&nbsp;&nbsp;🟢 Implemented
+
+## Test cases
+All tests cover **100%** of model's classes and **81%** of model methods.
+
+**Coverage criteria: code lines.**
+
+| Package | Coverage |
+|:-----------------------|:------------------------------------:|
+| **Model (All)** | **696/867 (81%)** |
+| Entity | 221/241 (91%) |
+| Enumeration | 27/34 (79%) |
+| Game | 245/345 (71%) |
+| Power | 203/247 (82%) |
+
