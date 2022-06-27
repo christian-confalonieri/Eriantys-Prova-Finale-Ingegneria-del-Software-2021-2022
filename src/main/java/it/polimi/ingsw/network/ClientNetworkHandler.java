@@ -88,6 +88,10 @@ public class ClientNetworkHandler implements Runnable {
         System.out.println(ConsoleColor.RED + this.toString() + " listening thread closed" + ConsoleColor.RESET);
     }
 
+    /**
+     * Send a string object over the network socket.
+     * @param obj the string to send over the network
+     */
     public void send(String obj) {
         if (obj != null) {
             try {
@@ -106,14 +110,17 @@ public class ClientNetworkHandler implements Runnable {
      * If the response has not arrived at the end of the timer, the client is set as offline and disconnected
      */
     public void startTimerPongResponse() {
-        this.send(ActionHandler.toJson(new PING()));
-        timerThread = new Thread(this::pongTimer);
+        long startTimer = System.currentTimeMillis();
+        timerThread = new Thread(() -> this.pongTimer(startTimer));
         timerThread.start();
+        this.send(ActionHandler.toJson(new PING()));
     }
 
-    private void pongTimer() {
+    /**
+     * This timer routine stops for WAIT_TIME and checks if the
+     */
+    private void pongTimer(long startTimer) {
         try {
-            long startTimer = System.currentTimeMillis();
 
             Thread.sleep(WAIT_PONG_FOR_MS);
 

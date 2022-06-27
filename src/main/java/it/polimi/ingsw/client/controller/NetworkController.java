@@ -87,14 +87,14 @@ public class NetworkController implements Runnable {
     }
 
     public void startTimerPongResponse() {
-        this.send(ClientActionHandler.toJson(new PING()));
-        timerThread = new Thread(this::pongTimer);
+        long startTimer = System.currentTimeMillis();
+        timerThread = new Thread(() -> this.pongTimer(startTimer));
         timerThread.start();
+        this.send(ClientActionHandler.toJson(new PING()));
     }
 
-    private void pongTimer() {
+    private void pongTimer(long startTimer) {
         try {
-            long startTimer = System.currentTimeMillis();
 
             Thread.sleep(WAIT_PONG_FOR_MS);
 
