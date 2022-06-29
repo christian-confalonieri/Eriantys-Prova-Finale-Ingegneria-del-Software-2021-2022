@@ -28,6 +28,7 @@ public class GameHandler {
     protected boolean ended;
     protected Game game;
 
+
     /**
      * Advance the state of the game after all the actions in the current state has been performed
      */

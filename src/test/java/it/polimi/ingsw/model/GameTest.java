@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.EmptyBagException;
 import it.polimi.ingsw.exceptions.InvalidNewGameException;
 import it.polimi.ingsw.exceptions.InvalidRulesException;
 import it.polimi.ingsw.model.entity.*;
+import it.polimi.ingsw.model.enumeration.GamePhase;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.Wizard;
 import it.polimi.ingsw.model.game.Game;
@@ -16,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static it.polimi.ingsw.model.enumeration.GamePhase.TURN;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
@@ -263,10 +266,115 @@ class GameTest {
 
 
     @Test
-    void refillClouds() {
+    void refillClouds2P() throws InvalidRulesException, InvalidNewGameException {
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
+
+        String rulesJson = null;
+        try {
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameHandler gameHandler = null;
+
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
+
+        List<Cloud> clouds = gameHandler.getGame().getClouds();
+        clouds.get(0).pickAllStudents();
+
+        gameHandler.getGame().refillClouds();
+
+        assertEquals(clouds.get(0).getStudents().size(), 3);
+
     }
 
     @Test
-    void checkEndGame() {
+    void refillClouds3P() throws InvalidRulesException, InvalidNewGameException {
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
+        playerData.add(new PlayerLobby("Pluto", Wizard.PURPLE));
+
+        String rulesJson = null;
+        try {
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules3P.json")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameHandler gameHandler = null;
+
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
+
+        List<Cloud> clouds = gameHandler.getGame().getClouds();
+        clouds.get(0).pickAllStudents();
+
+        gameHandler.getGame().refillClouds();
+
+        assertEquals(clouds.get(0).getStudents().size(), 4);
+
+    }
+
+    @Test
+    void refillClouds4P() throws InvalidRulesException, InvalidNewGameException {
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
+        playerData.add(new PlayerLobby("Pluto", Wizard.PURPLE));
+        playerData.add(new PlayerLobby("Umbo", Wizard.BLUE));
+
+        String rulesJson = null;
+        try {
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules4P.json")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameHandler gameHandler = null;
+
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
+
+        List<Cloud> clouds = gameHandler.getGame().getClouds();
+        clouds.get(0).pickAllStudents();
+
+        gameHandler.getGame().refillClouds();
+
+        assertEquals(clouds.get(0).getStudents().size(), 3);
+
+    }
+
+
+    @Test
+    void checkEndGame()  throws InvalidRulesException, InvalidNewGameException, EmptyBagException {
+        List<PlayerLobby> playerData = new ArrayList<>();
+        playerData.add(new PlayerLobby("Pippo", Wizard.YELLOW));
+        playerData.add(new PlayerLobby("Topolino", Wizard.GREEN));
+
+        String rulesJson = null;
+        try {
+            rulesJson = new String(Files.readAllBytes(Paths.get("src/main/resources/Rules2P.json")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        GameHandler gameHandler = null;
+
+        GameRules gameRules = GameRules.fromJson(rulesJson);
+        gameHandler = GameCreator.createGame(playerData, gameRules);
+
+        Bag bag = gameHandler.getGame().getBag();
+        Student student;
+        while (bag.getStudents().size() > 0) {
+            student = bag.pickStudent();
+        }
+
+
+        assertEquals(gameHandler.checkEndGame(), false);
     }
 }
