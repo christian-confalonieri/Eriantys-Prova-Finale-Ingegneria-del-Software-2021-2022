@@ -16,6 +16,7 @@ public class EffectHandler {
 
     private boolean effectActive;
     private boolean mailmanActive;
+    private boolean farmerActive;
     private PawnColor harvesterColor;
     private PawnColor thiefColor;
     private List<Student> chosenStudents1;
@@ -32,6 +33,7 @@ public class EffectHandler {
 
         effectActive = false;
         mailmanActive = false;
+        farmerActive = false;
         harvesterColor = null;
         thiefColor = null;
         // I have added two lists of students, basically you will use the first one, the second one is needed in case of exchanges
@@ -47,10 +49,11 @@ public class EffectHandler {
     /**
      * @author Christian Confalonieri
      */
-    public EffectHandler(boolean effectActive, boolean mailmanActive, PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2,
+    public EffectHandler(boolean effectActive, boolean mailmanActive, boolean farmerActive, PawnColor harvesterColor, PawnColor thiefColor, List<Student> chosenStudents1, List<Student> chosenStudents2,
                          Island chosenIsland, int additionalInfluence, boolean skipTowers, Player effectPlayer) {
         this.effectActive = effectActive;
         this.mailmanActive = mailmanActive;
+        this.farmerActive = farmerActive;
         this.harvesterColor = harvesterColor;
         this.thiefColor = thiefColor;
         this.chosenStudents1 = chosenStudents1;
@@ -75,6 +78,14 @@ public class EffectHandler {
 
     public void setMailmanActive(boolean mailmanActive) {
         this.mailmanActive = mailmanActive;
+    }
+
+    public boolean isFarmerActive() {
+        return farmerActive;
+    }
+
+    public void setFarmerActive(boolean farmerActive) {
+        this.farmerActive = farmerActive;
     }
 
     public PawnColor getHarvesterColor() {

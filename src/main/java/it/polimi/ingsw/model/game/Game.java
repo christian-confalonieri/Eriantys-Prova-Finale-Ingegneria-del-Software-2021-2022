@@ -105,9 +105,17 @@ public class Game {
             for (Player p : players)
             {
                 if (p.getSchool().getStudentsNumber(color) > 0) allZero = false;
-                if (p.getSchool().getStudentsNumber(color) > maxPlayerColor.getSchool().getStudentsNumber(color)) {
-                    maxPlayerColor = p;
-                    allZero = false;
+                if(getEffectHandler().isFarmerActive() && getEffectHandler().getEffectPlayer().getName().equals(p.getName())) {
+                    if (p.getSchool().getStudentsNumber(color) >= maxPlayerColor.getSchool().getStudentsNumber(color) && p.getSchool().getStudentsNumber(color) != 0) {
+                        maxPlayerColor = p;
+                        allZero = false;
+                    }
+                }
+                else {
+                    if (p.getSchool().getStudentsNumber(color) > maxPlayerColor.getSchool().getStudentsNumber(color)) {
+                        maxPlayerColor = p;
+                        allZero = false;
+                    }
                 }
             }
 
