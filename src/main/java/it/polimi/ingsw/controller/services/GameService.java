@@ -399,6 +399,15 @@ public class GameService {
         }
     }
 
+    /**
+     * This method is used to check whether the dining room can overflow,
+     * in which case it returns true.
+     *
+     * @param gameHandler The current game
+     * @param action The action sent
+     * @return True if the dining room overflows
+     * @author Christian Confalonieri
+     */
     private static boolean laneOverflowCheck(GameHandler gameHandler, Action action) {
 
         List<Student> studentsToDiningRoom = new ArrayList<>();
