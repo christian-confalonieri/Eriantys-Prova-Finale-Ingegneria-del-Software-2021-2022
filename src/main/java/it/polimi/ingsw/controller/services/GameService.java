@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.entity.Player;
 import it.polimi.ingsw.model.entity.Student;
 import it.polimi.ingsw.model.enumeration.GamePhase;
 import it.polimi.ingsw.model.enumeration.PawnColor;
+import it.polimi.ingsw.model.enumeration.PowerType;
 import it.polimi.ingsw.model.enumeration.TurnPhase;
 import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.model.power.PowerCard;
@@ -313,6 +314,55 @@ public class GameService {
                 Server.getInstance().getClientNetHandler(action.getPlayerId())
                         .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "the player does not have enough coins to pay for the activation of this power", false)));
                 throw new InvalidAction("Power: the player does not have enough coins to pay for the activation of this power");
+            }
+
+            if(action.getType() == PowerType.FRIAR || action.getType() == PowerType.PRINCESS) {
+                if(action.getEffectHandler().getChosenStudents1().size() != 1) {
+                    Server.getInstance().getClientNetHandler(action.getPlayerId())
+                            .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "Invalid number of students", false)));
+                    throw new InvalidAction("Power: Invalid number of students");
+                }
+            }
+
+            if(action.getType() == PowerType.JESTER) {
+                if(action.getEffectHandler().getChosenStudents1().size() > 3) {
+                    Server.getInstance().getClientNetHandler(action.getPlayerId())
+                            .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "Too many students were entered (max 3)", false)));
+                    throw new InvalidAction("Power: Too many students were entered (max 3)");
+                }
+                if(action.getEffectHandler().getChosenStudents1().size() != action.getEffectHandler().getChosenStudents2().size()) {
+                    Server.getInstance().getClientNetHandler(action.getPlayerId())
+                            .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "Lists with different numbers of students", false)));
+                    throw new InvalidAction("Power: Lists with different numbers of students");
+                }
+            }
+
+            if(action.getType() == PowerType.MINSTREL) {
+                if(action.getEffectHandler().getChosenStudents1().size() > 2) {
+                    Server.getInstance().getClientNetHandler(action.getPlayerId())
+                            .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "Too many students were entered (max 2)", false)));
+                    throw new InvalidAction("Power: Too many students were entered (max 2)");
+                }
+                if(action.getEffectHandler().getChosenStudents1().size() != action.getEffectHandler().getChosenStudents2().size()) {
+                    Server.getInstance().getClientNetHandler(action.getPlayerId())
+                            .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "Lists with different numbers of students", false)));
+                    throw new InvalidAction("Power: Lists with different numbers of students");
+                }
+
+                boolean laneOverflow = false;
+
+                for(PawnColor color : PawnColor.values()) {
+                    int laneSize = gameHandler.getGame().getPlayerFromId(action.getPlayerId()).getSchool().getStudentsDiningRoom(color).size();
+                    if(action.getEffectHandler().getChosenStudents1().contains(color) && laneSize == 10) {
+                        laneOverflow = true;
+                    }
+                }
+
+                if(laneOverflow) {
+                    Server.getInstance().getClientNetHandler(action.getPlayerId())
+                            .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "At least one of the students entered cannot be added to the dining room", false)));
+                    throw new InvalidAction("Power: At least one of the students entered cannot be added to the dining room");
+                }
             }
 
             if (gameHandler.getGamePhase().equals(GamePhase.TURN)) {

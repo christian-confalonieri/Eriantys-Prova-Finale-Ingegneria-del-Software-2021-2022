@@ -438,19 +438,11 @@ public class GUIPowerBannerController {
         List<Student> diningRoomStudents = new ArrayList<>();
         switch (powerType) {
             case FRIAR -> {
-                if(clickedCardStudents.size() != 1) {
-                    messageLabel.setText("Students selected incorrectly, please try again");
-                    return;
-                }
                 effectHandler.setChosenStudents1(clickedCardStudents);
                 effectHandler.setChosenIslandUuid(Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(islandChoiceBox.getValue())-1).getUuid());
             }
             case HERALD, HERBALIST -> effectHandler.setChosenIslandUuid(Client.getInstance().getGameHandler().getGame().getIslands().get(Integer.parseInt(islandChoiceBox.getValue())-1).getUuid());
             case JESTER -> {
-                if(clickedCardStudents.size() > 3 || clickedCardStudents.size()!=clickedEntranceStudents.size()) {
-                    messageLabel.setText("Students selected incorrectly, please try again");
-                    return;
-                }
                 effectHandler.setChosenStudents1(clickedCardStudents);
                 effectHandler.setChosenStudents2(clickedEntranceStudents);
             }
@@ -479,20 +471,12 @@ public class GUIPowerBannerController {
                             diningRoomStudents.add(playerSchool.getStudentsDiningRoom(checkedColors.get(i)).get(0));
                         }
                     }
-                    else {
-                        messageLabel.setText("Students selected incorrectly, please try again");
-                        return;
-                    }
                 }
 
                 effectHandler.setChosenStudents1(clickedEntranceStudents);
                 effectHandler.setChosenStudents2(diningRoomStudents);
             }
             case PRINCESS -> {
-                if(clickedCardStudents.size() != 1) {
-                    messageLabel.setText("Students selected incorrectly, please try again");
-                    return;
-                }
                 effectHandler.setChosenStudents1(clickedCardStudents);
             }
             case THIEF -> effectHandler.setThiefColor(PawnColor.valueOf(colorChoiceBox.getValue()));
