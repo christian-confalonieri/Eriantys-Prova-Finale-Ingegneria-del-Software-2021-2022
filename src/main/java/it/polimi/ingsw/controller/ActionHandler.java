@@ -8,6 +8,8 @@ import it.polimi.ingsw.controller.services.LobbyService;
 import it.polimi.ingsw.controller.services.LoginService;
 import it.polimi.ingsw.controller.services.NetworkService;
 import it.polimi.ingsw.exceptions.InvalidAction;
+import it.polimi.ingsw.model.entity.Player;
+import it.polimi.ingsw.model.game.GameHandler;
 import it.polimi.ingsw.network.ClientNetworkHandler;
 import it.polimi.ingsw.server.Server;
 
@@ -107,10 +109,14 @@ public class ActionHandler {
     private static boolean ignorePlayAction (Action action) {
         if (action instanceof PlayAction) {
             if (Server.getInstance().isInGame(action.getPlayerId())) {
-                String actionPlayerName = Server.getInstance().getInGamePlayer(action.getPlayerId()).getName();
-                String currentPlayerName = Server.getInstance().getGameHandler(action.getPlayerId()).getCurrentPlayer().getName();
+                Player inGamePlayer = Server.getInstance().getInGamePlayer(action.getPlayerId());
+                GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
+                synchronized (gameHandler) {
+                    String actionPlayerName = inGamePlayer.getName();
+                    String currentPlayerName = gameHandler.getCurrentPlayer().getName();
 
-                return !actionPlayerName.equals(currentPlayerName); // returns if the player is the current player
+                    return !actionPlayerName.equals(currentPlayerName); // returns if the player is the current player
+                }
             }
             else return true; // Player is not in a game
         }
