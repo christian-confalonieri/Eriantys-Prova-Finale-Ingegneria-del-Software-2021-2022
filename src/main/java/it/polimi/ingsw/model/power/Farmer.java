@@ -43,7 +43,6 @@ public class Farmer extends PowerCard {
     @Override
     public void power() {
         super.power();
-        getGameHandler().getGame().getEffectHandler().setFarmerActive(true);
 
         Player effectPlayer = getGameHandler().getGame().getEffectHandler().getEffectPlayer();
         School effectPlayerSchool = effectPlayer.getSchool();
@@ -67,17 +66,6 @@ public class Farmer extends PowerCard {
                 }
             }
         }
-    }
-
-    /**
-     * This method simply puts to false farmerActive
-     *
-     * @author Christian Confalonieri
-     */
-    @Override
-    public void endPower() {
-        super.endPower();
-        getGameHandler().getGame().getEffectHandler().setFarmerActive(false);
     }
 
 }
