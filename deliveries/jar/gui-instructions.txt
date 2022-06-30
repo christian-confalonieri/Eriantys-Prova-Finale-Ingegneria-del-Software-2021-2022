@@ -1,0 +1,77 @@
+-------------------------------------------------------------------------------------------------
+--------------------------------------GUI Instructions-------------------------------------------
+-------------------------------------------------------------------------------------------------
+
+1. If you want to start only the cli add the option: --cli
+2. If you want to start only the gui add the option: --gui
+3. If you want to start both cli and gui add the option: --debug
+
+If no options are added only the gui will be started.
+
+You can also set the address and port via options:
+1. -a / --address
+2. -p / --port
+
+----------------------------------------MAIN MENU------------------------------------------------
+
+- NEW GAME: Create a new lobby using the player number and wizard selected
+- JOIN GAME: Join a lobby using the wizard selected:
+	- If a lobby is selected join the selected lobby
+	- If no lobby is selected, join the first free lobby with the number of player selected
+- LOGOUT: log off
+
+------------------------------------------LOBBY--------------------------------------------------
+
+The lobby screen shows all the players connected in the lobby
+
+- LOGOUT: log off
+
+-------------------------------------------------------------------------------------------------
+--------------------------------------------GAME-------------------------------------------------
+-------------------------------------------------------------------------------------------------
+
+
+------------------------------------------Play Card----------------------------------------------
+
+Select a card from the deck located on your school screen
+Your school will always be the first after the table tab
+
+----------------------------------------Move Students--------------------------------------------
+
+- To move a student from your entrance to the your dining room, click the student or drag it
+  to your school dining room to select it
+- To move a student to an island drag it onto the desired island and drop it there.
+
+- To deselect a student that goes to the dining room click it or drag it
+- To deselect a student that goes to an island, drag it onto an island
+
+- After all the students that need to be moved are selected, the movement will be confirmed
+
+
+----------------------------------------Move Students--------------------------------------------
+
+- To move a student from your entrance to the your dining room, click the student or drag it
+  to your school dining room to select it
+- To move a student to an island drag it onto the desired island and drop it there.
+
+- To deselect a student that goes to the dining room click it or drag it
+- To deselect a student that goes to an island, drag it onto an island
+
+- After all the students that need to be moved are selected, the movement will be confirmed
+
+
+----------------------------------------Move Mother Nature----------------------------------------
+
+- To move mother nature, click on the island you want her to go
+
+
+----------------------------------------Pick a Cloud----------------------------------------------
+
+- To pick a cloud, click on it
+
+
+----------------------------------------Power-----------------------------------------------------
+
+- To use a power, select a card from the table view and follow the instructions on the banner.
+  To confirm its usage, select ok
+
