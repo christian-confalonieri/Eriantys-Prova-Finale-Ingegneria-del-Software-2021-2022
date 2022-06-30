@@ -121,8 +121,18 @@ public class GameService {
 
                 for(PawnColor color : PawnColor.values()) {
                     int laneSize = gameHandler.getGame().getPlayerFromId(action.getPlayerId()).getSchool().getStudentsDiningRoom(color).size();
-                    if(studentsToDiningRoom.contains(color) && laneSize == 10) {
-                        laneOverflow = true;
+                    int colorSize = 0;
+
+                    if(studentsToDiningRoom.contains(color)) {
+                        for(Student student : studentsToDiningRoom) {
+                            if(student.getColor() == color) {
+                                colorSize++;
+                            }
+                        }
+
+                        if((laneSize + colorSize) > 10) {
+                            laneOverflow = true;
+                        }
                     }
                 }
 
@@ -353,15 +363,19 @@ public class GameService {
 
                 for(PawnColor color : PawnColor.values()) {
                     int laneSize = gameHandler.getGame().getPlayerFromId(action.getPlayerId()).getSchool().getStudentsDiningRoom(color).size();
-                    if(action.getEffectHandler().getChosenStudents1().contains(color) && laneSize == 10) {
-                        laneOverflow = true;
-                    }
-                }
+                    int colorSize = 0;
 
-                if(laneOverflow) {
-                    Server.getInstance().getClientNetHandler(action.getPlayerId())
-                            .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "At least one of the students entered cannot be added to the dining room", false)));
-                    throw new InvalidAction("Power: At least one of the students entered cannot be added to the dining room");
+                    if(action.getEffectHandler().getChosenStudents1().contains(color)) {
+                        for(Student student : action.getEffectHandler().getChosenStudents1()) {
+                            if(student.getColor() == color) {
+                                colorSize++;
+                            }
+                        }
+
+                        if((laneSize + colorSize) > 10) {
+                            laneOverflow = true;
+                        }
+                    }
                 }
             }
 
