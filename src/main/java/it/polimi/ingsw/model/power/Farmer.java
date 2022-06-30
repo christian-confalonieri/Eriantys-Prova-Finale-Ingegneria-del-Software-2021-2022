@@ -56,7 +56,7 @@ public class Farmer extends PowerCard {
 
         for(Player player : players) {
             playerSchool = player.getSchool();
-            playerProfessors = playerSchool.getProfessorTable();
+            playerProfessors = new ArrayList<>(playerSchool.getProfessorTable());
 
             for(Professor professor : playerProfessors) {
                 color = professor.getColor();
