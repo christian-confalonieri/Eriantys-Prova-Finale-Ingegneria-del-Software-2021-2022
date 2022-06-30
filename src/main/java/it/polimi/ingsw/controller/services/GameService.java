@@ -4,10 +4,7 @@ import it.polimi.ingsw.action.*;
 import it.polimi.ingsw.cli.ConsoleColor;
 import it.polimi.ingsw.controller.ActionHandler;
 import it.polimi.ingsw.exceptions.InvalidAction;
-import it.polimi.ingsw.model.entity.Cloud;
-import it.polimi.ingsw.model.entity.Island;
-import it.polimi.ingsw.model.entity.Player;
-import it.polimi.ingsw.model.entity.Student;
+import it.polimi.ingsw.model.entity.*;
 import it.polimi.ingsw.model.enumeration.GamePhase;
 import it.polimi.ingsw.model.enumeration.PawnColor;
 import it.polimi.ingsw.model.enumeration.PowerType;
@@ -117,26 +114,8 @@ public class GameService {
                     throw new InvalidAction("MoveStudentsAction: Duplicate student to island and to dining room");
                 }
 
-                boolean laneOverflow = false;
 
-                for(PawnColor color : PawnColor.values()) {
-                    int laneSize = gameHandler.getGame().getPlayerFromId(action.getPlayerId()).getSchool().getStudentsDiningRoom(color).size();
-                    int colorSize = 0;
-
-                    if(studentsToDiningRoom.contains(color)) {
-                        for(Student student : studentsToDiningRoom) {
-                            if(student.getColor() == color) {
-                                colorSize++;
-                            }
-                        }
-
-                        if((laneSize + colorSize) > 10) {
-                            laneOverflow = true;
-                        }
-                    }
-                }
-
-                if(laneOverflow) {
+                if(laneOverflowCheck(gameHandler,action)) {
                     Server.getInstance().getClientNetHandler(action.getPlayerId())
                             .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.MOVESTUDENTS, "At least one of the students entered cannot be added to the dining room", false)));
                     throw new InvalidAction("MoveStudentsAction: At least one of the students entered cannot be added to the dining room");
@@ -334,6 +313,14 @@ public class GameService {
                 }
             }
 
+            if(action.getType() == PowerType.PRINCESS) {
+                if(laneOverflowCheck(gameHandler,action)) {
+                    Server.getInstance().getClientNetHandler(action.getPlayerId())
+                            .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "At least one of the students entered cannot be added to the dining room", false)));
+                    throw new InvalidAction("Power: At least one of the students entered cannot be added to the dining room");
+                }
+            }
+
             if(action.getType() == PowerType.JESTER) {
                 if(action.getEffectHandler().getChosenStudents1().size() > 3) {
                     Server.getInstance().getClientNetHandler(action.getPlayerId())
@@ -359,23 +346,10 @@ public class GameService {
                     throw new InvalidAction("Power: Lists with different numbers of students");
                 }
 
-                boolean laneOverflow = false;
-
-                for(PawnColor color : PawnColor.values()) {
-                    int laneSize = gameHandler.getGame().getPlayerFromId(action.getPlayerId()).getSchool().getStudentsDiningRoom(color).size();
-                    int colorSize = 0;
-
-                    if(action.getEffectHandler().getChosenStudents1().contains(color)) {
-                        for(Student student : action.getEffectHandler().getChosenStudents1()) {
-                            if(student.getColor() == color) {
-                                colorSize++;
-                            }
-                        }
-
-                        if((laneSize + colorSize) > 10) {
-                            laneOverflow = true;
-                        }
-                    }
+                if(laneOverflowCheck(gameHandler,action)) {
+                    Server.getInstance().getClientNetHandler(action.getPlayerId())
+                            .send(ActionHandler.toJson(new ACK(action.getPlayerId(), ActionType.POWER, "At least one of the students entered cannot be added to the dining room", false)));
+                    throw new InvalidAction("Power: At least one of the students entered cannot be added to the dining room");
                 }
             }
 
@@ -423,5 +397,38 @@ public class GameService {
                 Server.getInstance().removeGame(gameHandler);
             }
         }
+    }
+
+    private static boolean laneOverflowCheck(GameHandler gameHandler, Action action) {
+
+        List<Student> studentsToDiningRoom = new ArrayList<>();
+
+        if(action.getActionType() == ActionType.POWER ) {
+            studentsToDiningRoom = ((PowerAction) action).getEffectHandler().getChosenStudents1();
+        }
+        else {
+            if(action.getActionType() == ActionType.MOVESTUDENTS) {
+                studentsToDiningRoom = ((MoveStudentsAction) action).getToDiningRoom();
+            }
+        }
+
+        for(PawnColor color : PawnColor.values()) {
+            int laneSize = gameHandler.getGame().getPlayerFromId(action.getPlayerId()).getSchool().getStudentsDiningRoom(color).size();
+            int colorSize = 0;
+
+            if(studentsToDiningRoom.stream().map(Pawn::getColor).toList().contains(color)) {
+                for(Student student : studentsToDiningRoom) {
+                    if(student.getColor() == color) {
+                        colorSize++;
+                    }
+                }
+
+                if((laneSize + colorSize) > 10) {
+                    return true;
+                }
+            }
+        }
+        return false;
+
     }
 }
