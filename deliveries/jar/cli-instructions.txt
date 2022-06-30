@@ -1,0 +1,101 @@
+-------------------------------------------------------------------------------------------------
+--------------------------------------CLI Instructions-------------------------------------------
+-------------------------------------------------------------------------------------------------
+
+1. If you want to start only the cli add the option: --cli
+2. If you want to start only the gui add the option: --gui
+3. If you want to start both cli and gui add the option: --debug
+
+If no options are added only the gui will be started.
+
+You can also set the address and port via options:
+1. -a / --address
+2. -p / --port
+
+-------------------------------------------------------------------------------------------------
+-----------------------------List of commands (case-insensitive)---------------------------------
+-------------------------------------------------------------------------------------------------
+
+The commands are formed by combinations of keywords:
+- help keyword: HELP / TIPS / H / T
+- characters keyword: CHARACTERS / POWERS / CHARACTER / POWER / CHAR / C / P
+- mainmenu keyword: MAINMENU / GAME / MM
+- waitinglobby keyword: WAITINGLOBBY / WAITING / WAIT / W / WL
+- movestudents keyword: MOVESTUDENTS / MOVE / STUDENTS / MS
+- logout keyword: LOGOUT / L / LG
+- newgame keyword: NEWGAME / N / NEW / NG
+- joingameID keyword: JOINGAMEID / JID / JOINID
+- joingame keyword: JOINGAME / J / JOIN / JG
+- keywords keyword: KEYWORDS / KEY / K / KW
+
+----------------------------------------Help commands--------------------------------------------
+
+- help keyword: all the various helps available will be printed;
+- help keyword + " " + characters keyword: the list of usable commands related to the characters
+will be printed;
+- help keyword + " " + mainmenu keyword:  the list of usable commands related to the main-menu
+will be printed;
+- help keyword + " " + waitinglobby keyword:  the list of usable commands related to the
+waiting-lobby will be printed;
+- help keyword + " " + movestudents keyword:  the list of usable commands related to the
+move-students phase will be printed;
+- help keyword + " " + keywords keyword:  the list of usable commands related to the keywords
+will be printed;
+
+-------------------------------------Characters commands-----------------------------------------
+
+character name: FRIAR, FARMER, HERALD, MAILMAN, HERBALIST, CENTAUR, JESTER, KNIGHT, HARVESTER,
+MINSTREL, PRINCESS, THIEF
+
+pawn color: RED / R, BLUE / B, GREEN / G, PINK / P, YELLOW / Y
+
+island number: 1,2,3,4,5,6,7,8,9,10,11,12
+
+- characters keyword + " " + FRIAR + " " + pawn color + " " + island number: to activate the
+power of FRIAR;
+- characters keyword + " " + FARMER: to activate the power of FARMER;
+- characters keyword + " " + HERALD + " " + island number: to activate the power of HERALD;
+- characters keyword + " " + MAILMAN: to activate the power of MAILMAN;
+- characters keyword + " " + HERBALIST + " " + island number: to activate the power of HERBALIST;
+- characters keyword + " " + CENTAUR: to activate the power of CENTAUR;
+- characters keyword + " " + JESTER + " " + E + " " + pawn color + " " + E + " " + pawn color
++ " " + E + " " + pawn color + " " + J + " " + pawn color + " " + J + " " + pawn color
++ " " + J + " " + pawn color: to activate the power of JESTER, where E is for entrance and J is
+for jester (you can type students in your preferred order);
+- characters keyword + " " + KNIGHT: to activate the power of KNIGHT;
+- characters keyword + " " + HARVESTER + " " + pawn color: to activate the power of HARVESTER;
+- characters keyword + " " + MINSTREL + " " + E + " " + pawn color + " " + E + " " + pawn color
++ " " + D + " " + pawn color + " " + D + " " + pawn color: to activate the power of MINSTREL,
+where E is for entrance and D is for dining room (you can type students in your preferred order);
+- characters keyword + " " + PRINCESS + " " + pawn color: to activate the power of PRINCESS;
+- characters keyword + " " + THIEF + " " + pawn color: to activate the power of THIEF;
+
+-------------------------------------Main-Menu commands------------------------------------------
+
+number of players: 2,3,4
+
+number of the chosen lobby: 1,2,3,...
+
+wizard: BLUE / B, PURPLE / P, YELLOW / Y, GREEN / G
+
+- logout keyword: log off
+- newgame keyword + " " + number of players + " " + wizard: start a new game
+- joingame keyword + " " + number of players + " " + wizard: join the first available game with
+the specified number of players
+- joingameID keyword + " " + number of the chosen lobby + " " + wizard: join in the lobby game
+corresponding to the chosen number
+
+----------------------------------Move-Students commands-----------------------------------------
+
+pawn color: RED / R, BLUE / B, GREEN / G, PINK / P, YELLOW / Y
+
+island number: 1,2,3,4,5,6,7,8,9,10,11,12
+
+- D + " " + pawn color + " " + D + " " + pawn color + " " + island number + " " + pawn color: move
+students to a specified destination (D is for dining room); you can choose students in any
+destination and in any order;
+
+---------------------------------------Other inputs----------------------------------------------
+
+For all other requests in the game (pick a card, move mother nature, and pick a cloud),
+just type the corresponding number (card number, number of steps and cloud number).

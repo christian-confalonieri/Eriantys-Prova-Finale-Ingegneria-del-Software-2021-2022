@@ -501,7 +501,7 @@ public class CLIRenderHelper {
         String harvester = "\nTo activate the power of \"HARVESTER\" type the command:\n" +
                 "\"CHARACTER HARVESTER RED\", where \"RED\" is the color of a student of your choice.\n";
         String minstrel = "\nTo activate the power of \"MINSTREL\" type the command:\n" +
-                "\"CHARACTER MINSTREL E RED E BLUE E GREEN D RED D BLUE D GREEN\",\n where \"E RED\" is, " +
+                "\"CHARACTER MINSTREL E RED E BLUE D RED D BLUE\",\n where \"E RED\" is, " +
                 "for example, the color of a student in your entry\n and \"D BLUE\" is he color of a student in your dining room " +
                 "(you can type students in your preferred order).\n";
         String princess = "\nTo activate the power of \"PRINCESS\" type the command:\n" +
