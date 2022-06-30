@@ -61,7 +61,7 @@ public class Farmer extends PowerCard {
 
             for(Professor professor : playerProfessors) {
                 color = professor.getColor();
-                if(effectPlayerSchool.getStudentsDiningRoom(color).size() == playerSchool.getStudentsDiningRoom(color).size()) {
+                if(effectPlayerSchool.getStudentsDiningRoom(color).size() == playerSchool.getStudentsDiningRoom(color).size() && effectPlayerSchool.getStudentsDiningRoom(color).size()!=0) {
                     playerSchool.removeProfessor(professor);
                     effectPlayerSchool.addProfessor(professor);
                 }
