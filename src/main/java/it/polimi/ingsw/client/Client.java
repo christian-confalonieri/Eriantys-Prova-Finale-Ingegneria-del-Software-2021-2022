@@ -77,9 +77,14 @@ public class Client implements Runnable {
     }
 
     private volatile boolean connected = false;
+
     public void interruptReconnection() {
         connected = true;
     }
+
+    /**
+     * Attach a network controller to the client and tries connecting to the server
+     */
     public void attachNetwork() {
         while (!connected){
             try {
@@ -104,6 +109,9 @@ public class Client implements Runnable {
         }
     }
 
+    /**
+     * Runs the client and the associated threads
+     */
     @Override
     public void run() {
         cli.start();
@@ -147,6 +155,10 @@ public class Client implements Runnable {
         CLI, GUI, DEBUG
     }
 
+    /**
+     * Starts the client application
+     * @param args Application arguments
+     */
     public static void main(String[] args) {
         String hostname = parseArg(args, "-a", "--address");
         String port = parseArg(args, "-p", "--port");
