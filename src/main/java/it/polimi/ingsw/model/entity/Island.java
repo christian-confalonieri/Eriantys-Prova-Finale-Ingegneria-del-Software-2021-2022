@@ -100,7 +100,7 @@ public class Island extends Entity {
     }
 
     /**
-     * Returns the getInfluencePoints(List<Professor> professors) method which returns the number
+     * Returns the getInfluencePoints(professors) method which returns the number
      * of students of the color on which the player has the most influence.
      *
      * @param player the player on which to calculate the influence points
@@ -128,7 +128,7 @@ public class Island extends Entity {
     /**
      * method for the 4-player mode
      *
-     * Returns the getInfluencePoints(List<Professor> professors) method which returns the number
+     * Returns the getInfluencePoints(professors) method which returns the number
      * of students of the color on which the team has the most influence.
      *
      * @param team the team on which to calculate the influence points
