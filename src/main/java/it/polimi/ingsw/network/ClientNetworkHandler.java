@@ -81,8 +81,7 @@ public class ClientNetworkHandler implements Runnable {
         String ipAddress = clientSocket.getInetAddress().toString();
 
         while (!shutdown) {
-            // TODO Define a close connection message and a ack system to close broken connections
-            if(s.hasNext()) // Blocking:waits for input (But if client disconnects deadlock)
+            if(s.hasNext())
                 Server.getInstance().getGameController().actionExecutor(s.next(), this);
         }
         System.out.println(ConsoleColor.RED + this.toString() + " listening thread closed" + ConsoleColor.RESET);
@@ -143,6 +142,10 @@ public class ClientNetworkHandler implements Runnable {
         }
     }
 
+    /**
+     * Stops the timer that is counting the seconds from the last ping.
+     * Is called when a pong arrives
+     */
     public void stopPongTimerThread() {
         while (timerThread == null) Thread.onSpinWait();
         timerThread.interrupt();

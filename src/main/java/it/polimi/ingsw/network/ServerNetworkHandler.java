@@ -27,6 +27,9 @@ public class ServerNetworkHandler implements Runnable {
         shutdown = true;
     }
 
+    /**
+     * Routine that listens for all the clients connecting on the server port and assigning them a ClientNetworkHandler.
+     */
     public void run() {
         System.out.println(ConsoleColor.GREEN + "ServerNetworkHandler started on port " + serverSocket.getLocalPort() + ConsoleColor.RESET);
 
@@ -50,6 +53,9 @@ public class ServerNetworkHandler implements Runnable {
         System.out.println(ConsoleColor.RED + "ServerNetworkHandler stopped: Not accepting new connections" + ConsoleColor.RESET);
     }
 
+    /**
+     * Routine that ping every connected client every PING_EVERY_MS Seconds
+     */
     private void pollingPing() {
         while(!shutdown) {
             System.out.println(ConsoleColor.PURPLE + "Pinging all [" + Server.getInstance().getClientConnectionsSize()
