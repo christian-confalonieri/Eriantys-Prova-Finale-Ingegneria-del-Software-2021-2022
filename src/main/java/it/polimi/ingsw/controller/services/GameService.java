@@ -20,6 +20,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameService {
+    /**
+     * If the action is valid, plays a card on the game linked to the player
+     * @param action The action received from the client
+     * @throws InvalidAction
+     *
+     */
     public static void playCard(PlayCardAction action) throws InvalidAction {
         GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
         synchronized (gameHandler) {
@@ -375,6 +381,12 @@ public class GameService {
         }
     }
 
+    /**
+     * Notify all the players connected to the game that the game has ended sending them the leaderboard and closes
+     * the gameHandler on the server.
+     * @param gameHandler Game to close
+     * @param playerIdToExclude if the match ended because of a disconnection, put this player in the last place
+     */
     public static void notifyAndCloseGameEnd(GameHandler gameHandler, String playerIdToExclude) {
         synchronized (gameHandler) {
             Server.getInstance().getConnectionsForGameBroadcast(gameHandler).forEach(net -> {

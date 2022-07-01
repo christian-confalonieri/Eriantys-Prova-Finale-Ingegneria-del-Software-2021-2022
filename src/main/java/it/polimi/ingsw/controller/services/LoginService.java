@@ -11,6 +11,12 @@ import it.polimi.ingsw.server.Server;
 
 public class LoginService {
 
+    /**
+     * Logs a client connection in the server assigning it its chosen nickname
+     * @param action The Login Action
+     * @param netHandler The client network handler that sent the action
+     * @throws InvalidAction If the login failed
+     */
     public static void clientLogin(LoginAction action, ClientNetworkHandler netHandler) throws InvalidAction {
         if(Server.getInstance().isAssigned(netHandler)) {
             System.out.println(ConsoleColor.YELLOW + netHandler.toString() + " client already logged in" + ConsoleColor.RESET);
@@ -37,6 +43,12 @@ public class LoginService {
         // For persistence check if the player is in game and if so replay the game
     }
 
+    /**
+     * Logs out a client from his nickname unassigning its connection
+     * @param action The logout action
+     * @param networkHandler The client network handler associated with the request
+     * @throws InvalidAction if the unassignement failed
+     */
     public static void clientLogout(LogoutAction action, ClientNetworkHandler networkHandler) throws InvalidAction {
         if (Server.getInstance().isAssigned(action.getPlayerId())) {
             Server.getInstance().unassignConnection(action.getPlayerId());

@@ -34,6 +34,9 @@ import java.util.Scanner;
 
 public class LobbyService {
     /**
+     * Create a new lobby
+     * @param action The NewGame action
+     * @throws InvalidAction if the game creation failed
      * @author Leonardo Airoldi, Christian Confalonieri
      */
     public static void newGame(NewGameAction action) throws InvalidAction {
@@ -70,6 +73,13 @@ public class LobbyService {
         joinGame(new JoinGameAction(action.getPlayerId(), lobby.getGameRules().cloudsRules.numberOfClouds , action.getWizard()),lobby);
     }
 
+    /**
+     * Join a lobby.
+     * If the lobby is full, start the game notifying all players
+     * @param action The JoinGame Action
+     * @param newGameLobby Joins this specifi lobby if not null
+     * @throws InvalidAction if the game start failed
+     */
     public static void joinGame(JoinGameAction action, GameLobby newGameLobby) throws InvalidAction {
         if(Server.getInstance().isWaitingInALobby(action.getPlayerId())) {
             Server.getInstance().getClientNetHandler(action.getPlayerId()).send(ActionHandler.toJson(
@@ -129,6 +139,11 @@ public class LobbyService {
         }
     }
 
+    /**
+     * Respond to the client with all the game info
+     * @param action The GetGame Action
+     * @throws InvalidAction If the serialization failed
+     */
     public static void getGame(GetGameAction action) throws InvalidAction {
         Gson gson = new Gson();
         GameHandler gameHandler = Server.getInstance().getGameHandler(action.getPlayerId());
@@ -176,6 +191,11 @@ public class LobbyService {
         }
     }
 
+    /**
+     * Responds to the client with the list of open lobbies in the server
+     * @param action The getAllLobbys Action
+     * @param clientNet The ClientNetworkHandler associated with the request
+     */
     public static void getAllLobbys(GetAllLobbysAction action, ClientNetworkHandler clientNet) {
         List<GameLobby> gameLobbyList = Server.getInstance().getAllGameLobbys();
         synchronized (gameLobbyList) {
