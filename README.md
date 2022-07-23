@@ -1,6 +1,6 @@
 # Eriantys Board Game
 
-![GitHub](https://img.shields.io/github/license/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022)
+[![License: MIT][license-image]][license]
 
 <img src="https://www.craniocreations.it/wp-content/uploads/2021/06/Eriantys_scatolaFrontombra-600x600.png" width=192px height=192 px align="right" />
 
@@ -76,8 +76,10 @@ All tests cover **100%** of model's classes and **81%** of model methods.
 
 This project is copyright 2022.
 
-Licensed under the **[MIT License](https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/LICENSE)**; you may not use this software except in compliance with the License.
+Licensed under the **[MIT License][license]**; you may not use this software except in compliance with the License.
 
+[license]: https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/LICENSE
+[license-image]: https://img.shields.io/badge/License-MIT-blue.svg
 [cli-instructions-link]: https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/deliveries/jar/cli-instructions.txt
 [gui-instructions-link]: https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/deliveries/jar/gui-instructions.txt
 [javadoc-instructions-link]: https://github.com/christian-confalonieri/ingsw2022-AM03/tree/main/deliveries/JavaDoc
