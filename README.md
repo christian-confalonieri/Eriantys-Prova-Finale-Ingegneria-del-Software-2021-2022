@@ -1,5 +1,7 @@
 # Eriantys Board Game
 
+![GitHub](https://img.shields.io/github/license/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022)
+
 <img src="https://www.craniocreations.it/wp-content/uploads/2021/06/Eriantys_scatolaFrontombra-600x600.png" width=192px height=192 px align="right" />
 
 Eriantys Board Game is the final test of **"Software Engineering"**, course of **"Computer Science Engineering"** held at Politecnico di Milano (2021/2022).
@@ -69,6 +71,12 @@ All tests cover **100%** of model's classes and **81%** of model methods.
 | Leonardo Airoldi        | leonardo.airoldi@mail.polimi.it       |
 | Christian Confalonieri  | christian.confalonieri@mail.polimi.it |
 | Alessandro Ettore       | alessandro.ettore@mail.polimi.it      |
+
+## Copyright and license
+
+This project is copyright 2022.
+
+Licensed under the **[MIT License](https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/LICENSE)**; you may not use this software except in compliance with the License.
 
 [cli-instructions-link]: https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/deliveries/jar/cli-instructions.txt
 [gui-instructions-link]: https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/deliveries/jar/gui-instructions.txt
