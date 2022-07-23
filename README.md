@@ -20,10 +20,6 @@ The final version includes:
 * source code of the implementation;
 * source code of unity tests.
 
-## Find out more
-
-TODO
-
 ## Features
 | Functionality | Status |
 |:-----------------------|:------------------------------------:|
@@ -61,9 +57,22 @@ All tests cover **100%** of model's classes and **81%** of model methods.
 ### Client
 `java -jar EryantisClient.jar [-p|--port #PORTNUMBER] [-a|--address #ADDRESS] [-cli|-gui|-debug]`
 
+## Instructions
+
+| **[CLI][cli-instructions-link]**     | **[GUI][gui-instructions-link]**     | **[JAVADOC][javadoc-instructions-link]**
+|-------------------------------------|-------------------------------------|-------------------------------------|
+| [![i1][cli-image]][cli-instructions-link] | [![i2][gui-image]][gui-instructions-link] | [![i3][javadoc-image]][javadoc-instructions-link]
+
 ## Team
 |   Name                  |   Email                               |
 |-------------------------|---------------------------------------|
 | Leonardo Airoldi        | leonardo.airoldi@mail.polimi.it       |
 | Christian Confalonieri  | christian.confalonieri@mail.polimi.it |
 | Alessandro Ettore       | alessandro.ettore@mail.polimi.it      |
+
+[cli-instructions-link]: https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/deliveries/jar/cli-instructions.txt
+[cli-image]: https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/blueWizard.jpg
+[gui-instructions-link]: https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/deliveries/jar/gui-instructions.txt
+[gui-image]: https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/greenWizard.jpg
+[javadoc-instructions-link]: https://github.com/christian-confalonieri/ingsw2022-AM03/tree/main/deliveries/JavaDoc
+[javadoc-image]: https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/purpleWizard.jpg
