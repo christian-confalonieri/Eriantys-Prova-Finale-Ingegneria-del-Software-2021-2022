@@ -61,7 +61,7 @@ All tests cover **100%** of model's classes and **81%** of model methods.
 
 | **[CLI][cli-instructions-link]**     | **[GUI][gui-instructions-link]**     | **[JAVADOC][javadoc-instructions-link]**
 |-------------------------------------|-------------------------------------|-------------------------------------|
-|[<img width="40px" src=[cli-image] />][cli-instruction-link] | <img src=[gui-image] width="200"/>[gui-instructions-link] | <img src=[javadoc-image] width="200"/>[javadoc-instructions-link]
+|[<img width="40px" src="https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/blueWizard.jpg" />](https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/deliveries/jar/cli-instructions.txt) | <img src=[gui-image] width="200"/>[gui-instructions-link] | <img src=[javadoc-image] width="200"/>[javadoc-instructions-link]
 
 ## Team
 |   Name                  |   Email                               |
