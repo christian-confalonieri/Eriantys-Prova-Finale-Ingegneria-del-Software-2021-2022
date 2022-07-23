@@ -61,7 +61,7 @@ All tests cover **100%** of model's classes and **81%** of model methods.
 
 | **[CLI][cli-instructions-link]**     | **[GUI][gui-instructions-link]**     | **[JAVADOC][javadoc-instructions-link]**
 |-------------------------------------|-------------------------------------|-------------------------------------|
-|[<img width="150px" src="https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/blueWizard.jpg" />]([cli-instructions-link]) |[<img width="150px" src="https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/greenWizard.jpg" />](https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/deliveries/jar/gui-instructions.txt) |[<img width="150px" src="https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/pinkWizard.jpg" />](https://github.com/christian-confalonieri/ingsw2022-AM03/tree/main/deliveries/JavaDoc) 
+|[<img width="150px" src="https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/blueWizard.jpg" />][cli-instructions-link] |[<img width="150px" src="https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/greenWizard.jpg" />](https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/deliveries/jar/gui-instructions.txt) |[<img width="150px" src="https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/purpleWizard.jpg" />](https://github.com/christian-confalonieri/ingsw2022-AM03/tree/main/deliveries/JavaDoc) 
 
 ## Team
 |   Name                  |   Email                               |
