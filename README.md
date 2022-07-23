@@ -61,7 +61,7 @@ All tests cover **100%** of model's classes and **81%** of model methods.
 
 | **[CLI][cli-instructions-link]**     | **[GUI][gui-instructions-link]**     | **[JAVADOC][javadoc-instructions-link]**
 |-------------------------------------|-------------------------------------|-------------------------------------|
-|<img src=[cli-image] width="200"/>[cli-instructions-link] | <img src=[gui-image] width="200"/>[gui-instructions-link] | <img src=[javadoc-image] width="200"/>[javadoc-instructions-link]
+|[<img width="40px" src=[cli-image] />][cli-instruction-link] | <img src=[gui-image] width="200"/>[gui-instructions-link] | <img src=[javadoc-image] width="200"/>[javadoc-instructions-link]
 
 ## Team
 |   Name                  |   Email                               |
