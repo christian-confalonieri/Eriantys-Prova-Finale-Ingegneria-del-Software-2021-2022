@@ -2,7 +2,7 @@
 
 [![License: MIT][license-image]][license]
 
-<img src="https://www.craniocreations.it/storage/media/products/50/104/Eriantys_scatola3D+ombra.png" width=192px height=192 px align="right" />
+<img src="https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/src/main/resources/assets/Eriantys_scatola3D%2Bombra.png" width=192px height=192 px align="right" />
 
 Eriantys Board Game is the final test of **"Software Engineering"**, course of **"Computer Science Engineering"** held at Politecnico di Milano (2021/2022).
 
@@ -63,7 +63,7 @@ All tests cover **100%** of model's classes and **81%** of model methods.
 
 | **[CLI][cli-instructions-link]**     | **[GUI][gui-instructions-link]**     | **[JAVADOC][javadoc-instructions-link]**
 |-------------------------------------|-------------------------------------|-------------------------------------|
-|[<img width="120px" src="https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/blueWizard.jpg" />][cli-instructions-link] |[<img width="120px" src="https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/greenWizard.jpg" />][gui-instructions-link] |[<img width="120px" src="https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/src/main/resources/assets/wizards/purpleWizard.jpg" />][javadoc-instructions-link] 
+|[<img width="120px" src="https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/src/main/resources/assets/wizards/blueWizard.jpg" />][cli-instructions-link] |[<img width="120px" src="https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/src/main/resources/assets/wizards/greenWizard.jpg" />][gui-instructions-link] |[<img width="120px" src="https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/src/main/resources/assets/wizards/purpleWizard.jpg" />][javadoc-instructions-link] 
 
 ## Team
 |   Name                  |   Email                               |
@@ -80,6 +80,6 @@ Licensed under the **[MIT License][license]**; you may not use this software exc
 
 [license]: https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/LICENSE
 [license-image]: https://img.shields.io/badge/License-MIT-blue.svg
-[cli-instructions-link]: https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/deliveries/jar/cli-instructions.txt
-[gui-instructions-link]: https://github.com/christian-confalonieri/ingsw2022-AM03/blob/main/deliveries/jar/gui-instructions.txt
-[javadoc-instructions-link]: https://github.com/christian-confalonieri/ingsw2022-AM03/tree/main/deliveries/JavaDoc
+[cli-instructions-link]: https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/deliveries/jar/cli-instructions.txt
+[gui-instructions-link]: https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/deliveries/jar/gui-instructions.txt
+[javadoc-instructions-link]: https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/tree/main/deliveries/JavaDoc
