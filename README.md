@@ -2,7 +2,7 @@
 
 [![License: MIT][license-image]][license]
 
-<img src="https://www.craniocreations.it/wp-content/uploads/2021/06/Eriantys_scatolaFrontombra-600x600.png" width=192px height=192 px align="right" />
+<img src="https://www.craniocreations.it/storage/media/products/50/104/Eriantys_scatola3D+ombra.png" width=192px height=192 px align="right" />
 
 Eriantys Board Game is the final test of **"Software Engineering"**, course of **"Computer Science Engineering"** held at Politecnico di Milano (2021/2022).
 
