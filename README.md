@@ -1,6 +1,6 @@
-# Eriantys Board Game
-
 [![License: MIT][license-image]][license]
+
+# Eriantys Board Game
 
 <img src="https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/src/main/resources/assets/Eriantys_scatola3D%2Bombra.png" width=192px height=192 px align="right" />
 
