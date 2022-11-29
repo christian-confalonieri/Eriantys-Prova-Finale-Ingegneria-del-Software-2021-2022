@@ -4,7 +4,7 @@
 
 [![License: MIT][license-image]][license]
 
-Eriantys Board Game is the final test of **"Software Engineering"**, course of **"Computer Science Engineering"** held at Politecnico di Milano (2021/2022).
+Eriantys Board Game is the final test of **"Software Engineering"**, course of **"Computer Engineering"** held at Politecnico di Milano (2021/2022).
 
 **Professor**: Alessandro Margara
 
