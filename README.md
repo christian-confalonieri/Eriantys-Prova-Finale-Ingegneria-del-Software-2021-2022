@@ -68,7 +68,7 @@ All tests cover **100%** of model's classes and **81%** of model methods.
 ## Team
 |                         |                         |                         |
 |-------------------------|-------------------------|-------------------------|
-| Leonardo Airoldi        | Christian Confalonieri  | Alessandro Ettore       |
+| [Leonardo Airoldi][github-link-1]        | [Christian Confalonieri][github-link-2]  | [Alessandro Ettore][github-link-3]       |
 |                         |                         |                         |
 
 ## Copyright and license
@@ -82,3 +82,6 @@ Licensed under the **[MIT License][license]**; you may not use this software exc
 [cli-instructions-link]: https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/deliveries/jar/cli-instructions.txt
 [gui-instructions-link]: https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/deliveries/jar/gui-instructions.txt
 [javadoc-instructions-link]: https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/tree/main/deliveries/JavaDoc
+[github-link-1]: https://github.com/LeonardoAiroldi-Polimi
+[github-link-2]: https://github.com/christian-confalonieri
+[github-link-3]: https://github.com/aleetto
