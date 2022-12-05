@@ -1,10 +1,10 @@
 # Eriantys Board Game
 
-<img src="https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/src/main/resources/assets/Eriantys_scatola3D%2Bombra.png" width=192px height=192 px align="right" />
+<img src="https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/src/main/resources/assets/Eriantys_scatola3D%2Bombra.png" width=192px height=192px align="right" />
 
 [![License: MIT][license-image]][license]
 
-Eriantys Board Game is the final test of **"Software Engineering"**, course of **"Computer Engineering"** held at Politecnico di Milano (2021/2022).
+This is the final test of **"Software Engineering"**, course of **"Computer Engineering"** held at Politecnico di Milano (2021/2022).
 
 **Professor**: Alessandro Margara
 
@@ -66,11 +66,10 @@ All tests cover **100%** of model's classes and **81%** of model methods.
 |[<img width="120px" src="https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/src/main/resources/assets/wizards/blueWizard.jpg" />][cli-instructions-link] |[<img width="120px" src="https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/src/main/resources/assets/wizards/greenWizard.jpg" />][gui-instructions-link] |[<img width="120px" src="https://github.com/christian-confalonieri/Eriantys-Prova-Finale-Ingegneria-del-Software-2021-2022/blob/main/src/main/resources/assets/wizards/purpleWizard.jpg" />][javadoc-instructions-link] 
 
 ## Team
-|   Name                  |   Email                               |
-|-------------------------|---------------------------------------|
-| Leonardo Airoldi        | leonardo.airoldi@mail.polimi.it       |
-| Christian Confalonieri  | christian.confalonieri@mail.polimi.it |
-| Alessandro Ettore       | alessandro.ettore@mail.polimi.it      |
+|                         |                         |                         |
+|-------------------------|-------------------------|-------------------------|
+| Leonardo Airoldi        | Christian Confalonieri  | Alessandro Ettore       |
+|                         |                         |                         |
 
 ## Copyright and license
 
