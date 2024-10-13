@@ -4,7 +4,7 @@
 
 [![License: MIT][license-image]][license]
 
-This is the final test of **"Software Engineering"**, course of "**Computer Science and Engineering**" (BSc) held at Politecnico di Milano (2021/2022).
+This is the final test of **"Software Engineering"**, course of "**Engineering of Computing Systems**" (BSc) held at Politecnico di Milano (2021/2022).
 
 **Professor**: Alessandro Margara
 
